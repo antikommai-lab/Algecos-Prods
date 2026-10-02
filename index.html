@@ -238,7 +238,7 @@ document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{if(e.target===m)m.c
 
 function play(t){
  $('pTitle').textContent='▶ '+t.title;
- const a=$('audio');a.src=t.file;a.play();
+ const a=$('audio');a.src=encodeURI(t.file);a.play();
  $('player').classList.add('show');
  a.onended=()=>{
   const q=$('q').value.toLowerCase().trim();
