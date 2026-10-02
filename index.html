@@ -104,7 +104,7 @@ audio{width:min(560px,60%)}
 <input id="aiKey" type="password" placeholder="sk-or-…">
 <label>Modèle</label>
 <select id="aiModel">
-<option value="google/gemini-2.0-flash-001">Gemini 2.0 Flash</option>
+<option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
 <option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
 <option value="openai/gpt-4o-mini">GPT-4o mini</option>
 <option value="mistralai/mistral-small">Mistral Small</option>
@@ -171,13 +171,14 @@ audio{width:min(560px,60%)}
 <script>
 var OWNER='antikommai-lab',REPO='Algecos-Prods',BRANCH='main';
 var TRACKS=[],activeTag='',TOKEN=localStorage.getItem('gh_token')||'',ME=null,editIdx=-1;
-var AIKEY=localStorage.getItem('or_key')||'',AIMODEL=localStorage.getItem('or_model')||'google/gemini-2.0-flash-001';
+var AIMODEL=localStorage.getItem('or_model')||'google/gemini-2.5-flash';
+if(AIMODEL==='google/gemini-2.0-flash-001')AIMODEL='google/gemini-2.5-flash';
+var AIKEY=localStorage.getItem('or_key')||'';
 function $(id){return document.getElementById(id);}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function api(p,opt){opt=opt||{};var h={Authorization:'token '+TOKEN,'Accept':'application/vnd.github+json'};
  if(opt.headers)for(var k in opt.headers)h[k]=opt.headers[k];
  return fetch('https://api.github.com'+p,{method:opt.method||'GET',headers:h,body:opt.body?JSON.stringify(opt.body):undefined});}
-
 function renderAuth(){
  if(TOKEN&&ME){
   $('authZone').innerHTML='<div style="font-size:.8rem;color:var(--acc2);padding:8px 0">Connecté : <b>'+esc(ME.login)+'</b></div>'+'<button class="mitem danger" onclick="logout()">Déconnexion</button>';
@@ -195,14 +196,12 @@ async function login(){
  $('authStatus').className='status ok';$('authStatus').textContent='Connecté';
  renderAuth();render();}
 function logout(){TOKEN='';ME=null;localStorage.removeItem('gh_token');renderAuth();render();}
-
 async function saveTracks(msg){
  var r=await api('/repos/'+OWNER+'/'+REPO+'/contents/tracks.json?ref='+BRANCH);
  var meta=await r.json();
  var c=btoa(unescape(encodeURIComponent(JSON.stringify(TRACKS,null,2))));
  var pu=await api('/repos/'+OWNER+'/'+REPO+'/contents/tracks.json',{method:'PUT',body:{message:msg,content:c,sha:meta.sha,branch:BRANCH}});
  if(!pu.ok)throw new Error('commit KO ('+pu.status+')');}
-
 function match(t,q){
  q=q.toLowerCase();
  var hay=[t.title,(t.tags||[]).join(' '),t.desc||'',t.style||'',t.version||'',t.lyricsCreator||'',t.soundCreator||''].join(' ').toLowerCase();
@@ -243,7 +242,6 @@ function render(){
   var i=+el.getAttribute('data-i'),s=+sp.getAttribute('data-s');TRACKS[i].rating=s;
   try{await saveTracks('note '+s+'/5 : '+TRACKS[i].title);render();}catch(e){alert('Erreur : '+e.message);}
  };});});}
-
 function play(t){
  $('pTitle').textContent='▶ '+t.title+(t.version?' ['+t.version+']':'');
  var a=$('audio');a.src=encodeURI(t.file);a.play();
@@ -252,7 +250,6 @@ function play(t){
   var q=$('q').value.toLowerCase().trim();
   var list=TRACKS.filter(function(x){return (!q||match(x,q))&&(!activeTag||(x.tags||[]).indexOf(activeTag)>-1);});
   var n=list.indexOf(t);if(n>-1&&list[n+1])play(list[n+1]);};}
-
 function openEdit(i){editIdx=i;var t=TRACKS[i];
  $('f_title').value=t.title;$('f_file').value=t.file;$('f_tags').value=(t.tags||[]).join(', ');
  $('f_style').value=t.style||'';$('f_version').value=t.version||'';$('f_desc').value=t.desc||'';
@@ -291,7 +288,6 @@ async function addSong(){
  TRACKS.push(nt);
  try{await saveTracks('add : '+title);closeModal('addModal');load();}
  catch(e){$('aStatus').className='status err';$('aStatus').textContent=e.message;}}
-
 function toggleAI(){$('aiPanel').classList.toggle('open');if($('aiPanel').classList.contains('open'))$('aiInput').focus();}
 function aiLog(cls,txt){var d=document.createElement('div');d.className=cls;d.textContent=txt;$('aiLog').appendChild(d);$('aiLog').scrollTop=99999;}
 function saveAIKey(){AIKEY=$('aiKey').value.trim();AIMODEL=$('aiModel').value;
@@ -353,7 +349,6 @@ function execAction(a){
     if(a.fields.tags)t3.tags=a.fields.tags;if(a.fields.desc)t3.desc=a.fields.desc;}
    openEdit(a.i);}
  }catch(e){aiLog('e','❌ '+e.message);}}
-
 function toggleMenu(){$('menu').classList.toggle('open');renderAuth();}
 function openModal(id){$(id).classList.add('open');}
 function closeModal(id){$(id).classList.remove('open');}
@@ -363,7 +358,6 @@ $('q').addEventListener('input',render);
 $('btnReset').onclick=function(){$('q').value='';activeTag='';
  document.querySelectorAll('.tag').forEach(function(x){x.classList.remove('on');});render();};
 $('aiInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiSend();}});
-
 $('aiKey').value=AIKEY;$('aiModel').value=AIMODEL;
 (async function(){if(TOKEN){var r=await api('/user');if(r.ok){ME=await r.json();renderAuth();render();return;}}renderAuth();})();
 load();
