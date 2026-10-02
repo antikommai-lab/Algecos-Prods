@@ -5,40 +5,91 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Algecos Prods — Bibliothèque Audio</title>
 <style>
-:root{--bg:#0a0e12;--card:#111820;--acc:#00e5ff;--acc2:#39ff14;--txt:#d7e2ea;--dim:#5a6b78}
+:root{--bg:#0a0e12;--card:#111820;--acc:#00e5ff;--acc2:#39ff14;--txt:#d7e2ea;--dim:#5a6b78;--warn:#ff4d5e}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
-header{padding:24px 20px;text-align:center;border-bottom:1px solid #1b2733}
+header{padding:24px 20px 18px;text-align:center;border-bottom:1px solid #1b2733;position:relative}
 h1{font-size:1.6rem;letter-spacing:.15em;text-transform:uppercase}
 h1 span{color:var(--acc)}
 .sub{color:var(--dim);font-size:.8rem;margin-top:4px}
+.sub b{color:var(--acc2);font-weight:600}
+#burger{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:10px;border:1px solid #233240;background:var(--card);color:var(--acc);font-size:1.4rem;cursor:pointer;z-index:30}
+#burger:hover{border-color:var(--acc)}
+#menu{position:fixed;inset:0;background:rgba(4,8,12,.72);display:none;z-index:20}
+#menu.open{display:block}
+#panel{position:absolute;top:0;right:0;width:min(340px,88vw);height:100%;background:#0d141b;border-left:1px solid #1b2733;padding:20px;overflow-y:auto}
+#panel h2{font-size:.85rem;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;margin:18px 0 10px}
+#panel button.mitem{display:block;width:100%;text-align:left;margin-bottom:8px;padding:12px 14px;border-radius:10px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:.9rem;cursor:pointer}
+#panel button.mitem:hover{border-color:var(--acc)}
+#panel button.mitem.danger{color:var(--warn);border-color:#3a1e23}
+#panel input,#panel textarea{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:.85rem;margin-bottom:8px}
+#panel label{display:block;font-size:.72rem;color:var(--dim);margin:8px 0 4px}
+.btn{padding:10px 16px;border:none;border-radius:8px;background:var(--acc);color:#001318;font-weight:700;cursor:pointer}
+.btn2{padding:10px 16px;border:1px solid #233240;border-radius:8px;background:transparent;color:var(--dim);cursor:pointer}
+.status{font-size:.75rem;margin-top:8px;min-height:1em}
+.ok{color:var(--acc2)}.err{color:var(--warn)}
 .search-bar{max-width:720px;margin:20px auto;padding:0 20px;display:flex;gap:10px;flex-wrap:wrap}
 input[type=text]{flex:1;min-width:200px;padding:12px 16px;border-radius:10px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:1rem}
-input:focus{outline:none;border-color:var(--acc)}
+input[type=text]:focus{outline:none;border-color:var(--acc)}
 #btnSearch{padding:12px 20px;border:none;border-radius:10px;background:var(--acc);color:#001318;font-weight:700;cursor:pointer}
-#btnSearch:hover{box-shadow:0 0 12px var(--acc)}
 #btnReset{padding:12px 16px;border:1px solid #233240;border-radius:10px;background:transparent;color:var(--dim);cursor:pointer}
 .tags{max-width:720px;margin:0 auto 12px;padding:0 20px;display:flex;gap:8px;flex-wrap:wrap}
 .tag{font-size:.75rem;padding:5px 12px;border-radius:20px;border:1px solid #233240;color:var(--dim);cursor:pointer;transition:.15s}
 .tag:hover,.tag.on{color:var(--acc2);border-color:var(--acc2)}
-#grid{max-width:1000px;margin:0 auto;padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid #1b2733;border-radius:14px;padding:16px;transition:.15s}
+#grid{max-width:1000px;margin:0 auto;padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid #1b2733;border-radius:14px;padding:16px;transition:.15s;position:relative}
 .card:hover{border-color:var(--acc)}
-.card h3{font-size:1rem;margin-bottom:6px}
-.card .meta{color:var(--dim);font-size:.75rem;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:6px}
+.card h3{font-size:1rem;margin-bottom:6px;padding-right:60px}
+.card .meta{color:var(--dim);font-size:.75rem;margin-bottom:8px;display:flex;flex-wrap:wrap;gap:6px}
 .card .meta em{font-style:normal;border:1px solid #233240;border-radius:12px;padding:2px 8px}
+.card .info{font-size:.72rem;color:#8fa0af;margin-bottom:8px;line-height:1.5}
 .card .desc{font-size:.8rem;color:#8fa0af;margin-bottom:10px}
 .play{width:100%;padding:9px;border:none;border-radius:8px;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#001318;font-weight:700;cursor:pointer}
-#player{position:sticky;bottom:0;background:#0d141b;border-top:1px solid #1b2733;padding:12px 20px;display:none;align-items:center;gap:14px}
+.admin{display:flex;gap:6px;margin-top:8px}
+.admin button{flex:1;padding:7px;border-radius:8px;border:1px solid #233240;background:transparent;color:var(--dim);font-size:.75rem;cursor:pointer}
+.admin button:hover{color:var(--acc);border-color:var(--acc)}
+.admin button.del:hover{color:var(--warn);border-color:var(--warn)}
+.stars{position:absolute;top:14px;right:14px;font-size:1rem;letter-spacing:2px;cursor:pointer;user-select:none}
+.stars span{color:#2a3a47}
+.stars span.on{color:#ffd700}
+#player{position:sticky;bottom:0;background:#0d141b;border-top:1px solid #1b2733;padding:12px 20px;display:none;align-items:center;gap:14px;z-index:10}
 #player.show{display:flex}
 #pTitle{flex:1;font-size:.85rem;color:var(--acc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 audio{width:min(560px,60%)}
 #count{max-width:1000px;margin:0 auto;padding:0 20px 8px;color:var(--dim);font-size:.8rem}
 #empty{display:none;text-align:center;color:var(--dim);padding:40px}
+.modal{position:fixed;inset:0;background:rgba(4,8,12,.8);display:none;align-items:center;justify-content:center;z-index:40;padding:20px}
+.modal.open{display:flex}
+.mbox{background:#0d141b;border:1px solid #233240;border-radius:14px;padding:20px;width:min(420px,100%);max-height:90vh;overflow-y:auto}
+.mbox h3{margin-bottom:12px;color:var(--acc)}
+.mbox label{display:block;font-size:.72rem;color:var(--dim);margin:8px 0 4px}
+.mbox input,.mbox textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:.85rem}
+.mbox .row{display:flex;gap:8px;margin-top:14px}
+.close{float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer}
 </style>
 </head>
 <body>
-<header><h1>ALGECOS <span>PRODS</span></h1><div class="sub">Bibliothèque audio — recherche par titre &amp; mots-clés</div></header>
+<header>
+<h1>ALGECOS <span>PRODS</span></h1>
+<div class="sub">Division de <b>ANTIKOMM</b> — Bibliothèque audio : recherche par titre &amp; mots-clés</div>
+<button id="burger" onclick="toggleMenu()">☰</button>
+</header>
+
+<div id="menu" onclick="if(event.target.id==='menu')toggleMenu()">
+ <div id="panel">
+  <button style="float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer" onclick="toggleMenu()">✕</button>
+  <h2>Navigation</h2>
+  <button class="mitem" onclick="toggleMenu();window.scrollTo({top:0,behavior:'smooth'})">📋 Consulter la liste</button>
+  <h2>Compte GitHub</h2>
+  <div id="authZone"></div>
+  <div class="status" id="authStatus"></div>
+  <h2 id="admTitle" style="display:none">Administration</h2>
+  <div id="admZone" style="display:none">
+   <button class="mitem" onclick="openAdd()">➕ Ajouter un morceau</button>
+  </div>
+ </div>
+</div>
+
 <div class="search-bar">
 <input id="q" type="text" placeholder="Titre ou mot-clé…" autocomplete="off">
 <button id="btnSearch">Rechercher</button>
@@ -48,42 +99,159 @@ audio{width:min(560px,60%)}
 <div id="count"></div>
 <div id="grid"></div><div id="empty">Aucun morceau trouvé.</div>
 <div id="player"><span id="pTitle"></span><audio id="audio" controls></audio></div>
+
+<div class="modal" id="editModal"><div class="mbox">
+<button class="close" onclick="closeModal('editModal')">✕</button>
+<h3 id="mTitle">Éditer le morceau</h3>
+<label>Titre</label><input id="f_title">
+<label>Fichier (chemin)</label><input id="f_file">
+<label>Mots-clés (séparés par virgule)</label><input id="f_tags">
+<label>Description</label><textarea id="f_desc" rows="2"></textarea>
+<label>ID créateur des paroles</label><input id="f_lyr">
+<label>ID créateur du son</label><input id="f_snd">
+<label>Date d'enregistrement</label><input id="f_date" type="date">
+<label>Note (1-5 étoiles)</label><input id="f_rating" type="number" min="1" max="5">
+<div class="row"><button class="btn" onclick="saveSong()">💾 Enregistrer</button><button class="btn2" onclick="closeModal('editModal')">Annuler</button></div>
+<div class="status" id="mStatus"></div>
+</div></div>
+
+<div class="modal" id="addModal"><div class="mbox">
+<button class="close" onclick="closeModal('addModal')">✕</button>
+<h3>➕ Ajouter un morceau</h3>
+<label>Fichier audio (mp3, ogg, wav…)</label><input id="a_file" type="file" accept="audio/*">
+<label>Titre</label><input id="a_title">
+<label>Mots-clés (virgules)</label><input id="a_tags">
+<label>Description</label><textarea id="a_desc" rows="2"></textarea>
+<label>ID créateur des paroles</label><input id="a_lyr">
+<label>ID créateur du son</label><input id="a_snd">
+<label>Date d'enregistrement</label><input id="a_date" type="date">
+<label>Note (1-5)</label><input id="a_rating" type="number" min="1" max="5" value="3">
+<div class="row"><button class="btn" onclick="addSong()">⬆ Uploader &amp; ajouter</button><button class="btn2" onclick="closeModal('addModal')">Annuler</button></div>
+<div class="status" id="aStatus"></div>
+</div></div>
+
 <script>
-let TRACKS=[],activeTag='';
+/* ===== Config & état ===== */
+const OWNER='antikommai-lab',REPO='Algecos-Prods',BRANCH='main';
+let TRACKS=[],activeTag='',TOKEN=localStorage.getItem('gh_token')||'',ME=null,editIdx=-1;
 const $=id=>document.getElementById(id);
+const api=(p,opt={})=>fetch('https://api.github.com'+p,{...opt,headers:{Authorization:'token '+TOKEN,'Accept':'application/vnd.github+json',...(opt.headers||{})}});
+
+/* ===== Auth ===== */
+function renderAuth(){
+ if(TOKEN&&ME){
+  $('authZone').innerHTML='<div style="font-size:.8rem;color:var(--acc2);padding:8px 0">✅ Connecté : <b>'+ME.login+'</b></div><button class="mitem danger" onclick="logout()">Déconnexion</button>';
+  $('admTitle').style.display='block';$('admZone').style.display='block';
+ }else{
+  $('authZone').innerHTML='<label>Token GitHub (PAT, scope "repo")</label><input id="tok" type="password" placeholder="ghp_…"><button class="btn" style="width:100%" onclick="login()">S'identifier</button><div style="font-size:.7rem;color:var(--dim);margin-top:6px">Crée un token sur github.com/settings/tokens (coche "repo"). Stocké uniquement dans ton navigateur.</div>';
+  $('admTitle').style.display='none';$('admZone').style.display='none';
+ }
+}
+async function login(){
+ TOKEN=$('tok').value.trim();
+ if(!TOKEN){$('authStatus').className='status err';$('authStatus').textContent='Token requis';return;}
+ const r=await api('/user');
+ if(!r.ok){TOKEN='';$('authStatus').className='status err';$('authStatus').textContent='Token invalide';return;}
+ ME=await r.json();localStorage.setItem('gh_token',TOKEN);
+ $('authStatus').className='status ok';$('authStatus').textContent='Connecté ✓';
+ renderAuth();render();
+}
+function logout(){TOKEN='';ME=null;localStorage.removeItem('gh_token');renderAuth();render();}
+
+/* ===== Sync tracks.json ===== */
+async function saveTracks(msg){
+ const r=await api('/repos/'+OWNER+'/'+REPO+'/contents/tracks.json?ref='+BRANCH);
+ const meta=await r.json();
+ const content=btoa(unescape(encodeURIComponent(JSON.stringify(TRACKS,null,2))));
+ const pu=await api('/repos/'+OWNER+'/'+REPO+'/contents/tracks.json',{method:'PUT',body:JSON.stringify({message:msg,content,sha:meta.sha,branch:BRANCH})});
+ if(!pu.ok)throw new Error('commit KO ('+pu.status+')');
+}
+
+/* ===== Data ===== */
 async function load(){
- try{const r=await fetch('tracks.json');TRACKS=await r.json();}
- catch(e){TRACKS=[];}
- const allTags=[...new Set(TRACKS.flatMap(t=>t.tags))].sort();
- $('tags').innerHTML=allTags.map(t=>'<span class="tag" data-t="'+t+'">'+t+'</span>').join('');
+ try{const r=await fetch('tracks.json',{cache:'no-store'});TRACKS=await r.json();}catch(e){TRACKS=[];}
+ $('tags').innerHTML=[...new Set(TRACKS.flatMap(t=>t.tags||[]))].sort().map(t=>'<span class="tag" data-t="'+t+'">'+t+'</span>').join('');
  document.querySelectorAll('.tag').forEach(el=>el.onclick=()=>{activeTag=activeTag===el.dataset.t?'':el.dataset.t;document.querySelectorAll('.tag').forEach(x=>x.classList.toggle('on',x.dataset.t===activeTag));render();});
  render();
 }
+function stars(n){let s='';for(let i=1;i<=5;i++)s+='<span class="'+(i<=(n||0)?'on':'')+'" data-s="'+i+'">★</span>';return s;}
 function render(){
  const q=$('q').value.toLowerCase().trim();
- const list=TRACKS.filter(t=>{
-  const okQ=!q||t.title.toLowerCase().includes(q)||t.tags.some(k=>k.toLowerCase().includes(q))||t.desc.toLowerCase().includes(q);
-  const okT=!activeTag||t.tags.includes(activeTag);
+ const list=TRACKS.map((t,i)=>({t,i})).filter(({t})=>{
+  const okQ=!q||t.title.toLowerCase().includes(q)||(t.tags||[]).some(k=>k.toLowerCase().includes(q))||(t.desc||'').toLowerCase().includes(q)||(t.lyricsCreator||'').toLowerCase().includes(q)||(t.soundCreator||'').toLowerCase().includes(q);
+  const okT=!activeTag||(t.tags||[]).includes(activeTag);
   return okQ&&okT;});
  $('count').textContent=list.length+' morceau(x)';
- $('grid').innerHTML=list.map((t,i)=>{const gi=TRACKS.indexOf(t);return '<div class="card"><h3>'+t.title+'</h3><div class="meta">'+t.tags.map(k=>'<em>'+k+'</em>').join('')+'</div><div class="desc">'+t.desc+'</div><button class="play" data-i="'+gi+'">▶ Écouter</button></div>';}).join('');
+ $('grid').innerHTML=list.map(({t,i})=>'<div class="card"><div class="stars" data-i="'+i+'">'+stars(t.rating)+'</div><h3>'+t.title+'</h3><div class="meta">'+(t.tags||[]).map(k=>'<em>'+k+'</em>').join('')+'</div><div class="info">🎤 Paroles : <b>'+(t.lyricsCreator||'—')+'</b> &nbsp; 🎵 Son : <b>'+(t.soundCreator||'—')+'</b><br>📅 '+(t.recordDate||'—')+'</div><div class="desc">'+(t.desc||'')+'</div><button class="play" data-i="'+i+'">▶ Écouter</button>'+(TOKEN&&ME?'<div class="admin"><button onclick="openEdit('+i+')">✏️ Éditer</button><button class="del" onclick="delSong('+i+')">🗑 Supprimer</button></div>':'')+'</div>').join('');
  $('empty').style.display=list.length?'none':'block';
  document.querySelectorAll('.play').forEach(b=>b.onclick=()=>play(TRACKS[b.dataset.i]));
+ document.querySelectorAll('.stars').forEach(el=>el.querySelectorAll('span').forEach(sp=>sp.onclick=async()=>{
+  if(!TOKEN||!ME){$('authStatus').className='status err';$('authStatus').textContent='Note enregistrée : connecte-toi pour noter.';toggleMenu();return;}
+  const i=+el.dataset.i,s=+sp.dataset.s;TRACKS[i].rating=s;
+  try{await saveTracks('note '+s+'/5 → '+TRACKS[i].title);render();}
+  catch(e){alert('Erreur : '+e.message);}
+ }));
 }
+
+/* ===== Actions admin ===== */
+function openEdit(i){editIdx=i;const t=TRACKS[i];
+ $('f_title').value=t.title;$('f_file').value=t.file;$('f_tags').value=(t.tags||[]).join(', ');
+ $('f_desc').value=t.desc||'';$('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';
+ $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||0;
+ $('mStatus').textContent='';openModal('editModal');}
+async function saveSong(){
+ const t=TRACKS[editIdx];
+ t.title=$('f_title').value;t.file=$('f_file').value;t.tags=$('f_tags').value.split(',').map(s=>s.trim()).filter(Boolean);
+ t.desc=$('f_desc').value;t.lyricsCreator=$('f_lyr').value;t.soundCreator=$('f_snd').value;
+ t.recordDate=$('f_date').value;t.rating=+$('f_rating').value||0;
+ $('mStatus').className='status ok';$('mStatus').textContent='⏳ Commit…';
+ try{await saveTracks('edit: '+t.title);closeModal('editModal');render();}
+ catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}
+}
+async function delSong(i){
+ if(!confirm('Supprimer "'+TRACKS[i].title+'" de tracks.json ? (le fichier audio reste sur GitHub)'))return;
+ TRACKS.splice(i,1);
+ try{await saveTracks('delete: index '+i);render();}
+ catch(e){alert('Erreur : '+e.message);}
+}
+function openAdd(){$('aStatus').textContent='';openModal('addModal');}
+async function addSong(){
+ const f=$('a_file').files[0];
+ if(!f){$('aStatus').className='status err';$('aStatus').textContent='Choisis un fichier audio';return;}
+ const title=$('a_title').value.trim()||f.name.replace(/\.[^.]+$/,'');
+ $('aStatus').className='status ok';$('aStatus').textContent='⏳ Upload 1/2 (audio)…';
+ const name=f.name.replace(/[^\w.-]/g,'_');
+ const b64=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(f);});
+ const up=await api('/repos/'+OWNER+'/'+REPO+'/contents/audio/'+name,{method:'PUT',body:JSON.stringify({message:'upload audio: '+name,content:b64,branch:BRANCH})});
+ if(!up.ok){$('aStatus').className='status err';$('aStatus').textContent='Upload échoué ('+up.status+')';return;}
+ $('aStatus').textContent='⏳ Commit 2/2 (tracks.json)…';
+ TRACKS.push({title,file:'audio/'+name,tags:$('a_tags').value.split(',').map(s=>s.trim()).filter(Boolean),desc:$('a_desc').value,lyricsCreator:$('a_lyr').value,soundCreator:$('a_snd').value,recordDate:$('a_date').value,rating:+$('a_rating').value||0});
+ try{await saveTracks('add: '+title);closeModal('addModal');load();}
+ catch(e){$('aStatus').className='status err';$('aStatus').textContent=e.message;}
+}
+
+/* ===== UI ===== */
+function toggleMenu(){$('menu').classList.toggle('open');renderAuth();}
+function openModal(id){$(id).classList.add('open');}
+function closeModal(id){$(id).classList.remove('open');}
+document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{if(e.target===m)m.classList.remove('open');});
+
 function play(t){
  $('pTitle').textContent='▶ '+t.title;
  const a=$('audio');a.src=t.file;a.play();
  $('player').classList.add('show');
  a.onended=()=>{
   const q=$('q').value.toLowerCase().trim();
-  const list=TRACKS.filter(x=>(!q||x.title.toLowerCase().includes(q)||x.tags.some(k=>k.toLowerCase().includes(q)))&&(!activeTag||x.tags.includes(activeTag)));
-  const nx=list[TRACKS.indexOf(t)+1];if(nx)play(nx);};
+  const list=TRACKS.filter(x=>(!q||x.title.toLowerCase().includes(q)||(x.tags||[]).some(k=>k.toLowerCase().includes(q)))&&(!activeTag||(x.tags||[]).includes(activeTag)));
+  const nx=list[list.indexOf(t)+1];if(nx)play(nx);};
 }
 $('btnSearch').onclick=render;
 $('q').addEventListener('input',render);
-$('q').addEventListener('keydown',e=>{if(e.key==='Enter')render();});
 $('btnReset').onclick=()=>{$('q').value='';activeTag='';document.querySelectorAll('.tag').forEach(x=>x.classList.remove('on'));render();};
-load();
+
+/* auto-login si token déjà stocké */
+(async()=>{if(TOKEN){const r=await api('/user');if(r.ok){ME=await r.json();renderAuth();render();}}})();
+renderAuth();load();
 </script>
 </body>
 </html>

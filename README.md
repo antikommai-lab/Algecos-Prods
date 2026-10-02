@@ -1,20 +1,33 @@
 # Algecos Prods — Bibliothèque Audio
 
-Site : https://antikommai-lab.github.io/Algecos-Prods/
+> Division de **ANTIKOMM** 🎹 Site : https://antikommai-lab.github.io/Algecos-Prods/
 
-## Ajouter un morceau
-1. Dépose le fichier audio dans le dossier `audio/` (mp3 conseillé, < 100 Mo).
-2. Ajoute une entrée dans `tracks.json` :
-   ```json
-   { "title": "Nom du morceau", "file": "audio/nom.mp3", "tags": ["hiphop", "2026"], "desc": "Description courte" }
-   ```
-3. Commit → le site se met à jour automatiquement (GitHub Pages).
+## Menu hamburger (☰)
+1. **Consulter la liste** — retour à la bibliothèque.
+2. **S'identifier GitHub** — colle un Personal Access Token (github.com/settings/tokens, scope **repo**). Stocké uniquement dans ton navigateur (localStorage).
+   Une fois connecté :
+   - ➕ **Ajouter** : upload du fichier audio + formulaire (titre, tags, description, créateur paroles, créateur son, date, note 1-5).
+   - ✏️ **Éditer** les data d'un morceau.
+   - 🗑 **Supprimer** un morceau de tracks.json.
+   - ⭐ **Noter 1-5 étoiles** directement sur chaque carte.
+
+## Champs par morceau (tracks.json)
+```json
+{
+  "title": "Nom",
+  "file": "audio/nom.mp3",
+  "tags": ["hiphop"],
+  "desc": "Description",
+  "lyricsCreator": "id paroles",
+  "soundCreator": "id son",
+  "recordDate": "2026-10-02",
+  "rating": 4
+}
+```
 
 ## Activer GitHub Pages (une seule fois)
-Repo → **Settings → Pages** → Source : `Deploy from a branch` → branche `main`, dossier `/ (root)` → Save.
+Settings → Pages → Deploy from a branch → `main` → `/ (root)` → Save.
 
-## Recherche
-- Champ texte : filtre par **titre, mots-clés ou description** (combinaison libre).
-- Tags cliquables : filtre par mot-clé exact.
-- Les deux se combinent (ex. texte + tag).
-- Lecture en chaîne automatique des résultats filtrés.
+## Notes
+- Les uploads audio passent par l'API GitHub (limite fichier ~100 Mo via API, mp3 recommandé).
+- La recherche croise titre + mots-clés + description + créateurs.
