@@ -1,0 +1,8 @@
+[
+  {
+    "title": "Exemple — remplace par ton morceau",
+    "file": "audio/exemple.mp3",
+    "tags": ["tag1", "tag2"],
+    "desc": "Description courte du morceau. Supprime cet exemple quand tu ajoutes tes vrais fichiers."
+  }
+]

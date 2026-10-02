@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algecos Prods — Bibliothèque Audio</title>
+<style>
+:root{--bg:#0a0e12;--card:#111820;--acc:#00e5ff;--acc2:#39ff14;--txt:#d7e2ea;--dim:#5a6b78}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+header{padding:24px 20px;text-align:center;border-bottom:1px solid #1b2733}
+h1{font-size:1.6rem;letter-spacing:.15em;text-transform:uppercase}
+h1 span{color:var(--acc)}
+.sub{color:var(--dim);font-size:.8rem;margin-top:4px}
+.search-bar{max-width:720px;margin:20px auto;padding:0 20px;display:flex;gap:10px;flex-wrap:wrap}
+input[type=text]{flex:1;min-width:200px;padding:12px 16px;border-radius:10px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:1rem}
+input:focus{outline:none;border-color:var(--acc)}
+#btnSearch{padding:12px 20px;border:none;border-radius:10px;background:var(--acc);color:#001318;font-weight:700;cursor:pointer}
+#btnSearch:hover{box-shadow:0 0 12px var(--acc)}
+#btnReset{padding:12px 16px;border:1px solid #233240;border-radius:10px;background:transparent;color:var(--dim);cursor:pointer}
+.tags{max-width:720px;margin:0 auto 12px;padding:0 20px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{font-size:.75rem;padding:5px 12px;border-radius:20px;border:1px solid #233240;color:var(--dim);cursor:pointer;transition:.15s}
+.tag:hover,.tag.on{color:var(--acc2);border-color:var(--acc2)}
+#grid{max-width:1000px;margin:0 auto;padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid #1b2733;border-radius:14px;padding:16px;transition:.15s}
+.card:hover{border-color:var(--acc)}
+.card h3{font-size:1rem;margin-bottom:6px}
+.card .meta{color:var(--dim);font-size:.75rem;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:6px}
+.card .meta em{font-style:normal;border:1px solid #233240;border-radius:12px;padding:2px 8px}
+.card .desc{font-size:.8rem;color:#8fa0af;margin-bottom:10px}
+.play{width:100%;padding:9px;border:none;border-radius:8px;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#001318;font-weight:700;cursor:pointer}
+#player{position:sticky;bottom:0;background:#0d141b;border-top:1px solid #1b2733;padding:12px 20px;display:none;align-items:center;gap:14px}
+#player.show{display:flex}
+#pTitle{flex:1;font-size:.85rem;color:var(--acc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+audio{width:min(560px,60%)}
+#count{max-width:1000px;margin:0 auto;padding:0 20px 8px;color:var(--dim);font-size:.8rem}
+#empty{display:none;text-align:center;color:var(--dim);padding:40px}
+</style>
+</head>
+<body>
+<header><h1>ALGECOS <span>PRODS</span></h1><div class="sub">Bibliothèque audio — recherche par titre &amp; mots-clés</div></header>
+<div class="search-bar">
+<input id="q" type="text" placeholder="Titre ou mot-clé…" autocomplete="off">
+<button id="btnSearch">Rechercher</button>
+<button id="btnReset">✕</button>
+</div>
+<div class="tags" id="tags"></div>
+<div id="count"></div>
+<div id="grid"></div><div id="empty">Aucun morceau trouvé.</div>
+<div id="player"><span id="pTitle"></span><audio id="audio" controls></audio></div>
+<script>
+let TRACKS=[],activeTag='';
+const $=id=>document.getElementById(id);
+async function load(){
+ try{const r=await fetch('tracks.json');TRACKS=await r.json();}
+ catch(e){TRACKS=[];}
+ const allTags=[...new Set(TRACKS.flatMap(t=>t.tags))].sort();
+ $('tags').innerHTML=allTags.map(t=>'<span class="tag" data-t="'+t+'">'+t+'</span>').join('');
+ document.querySelectorAll('.tag').forEach(el=>el.onclick=()=>{activeTag=activeTag===el.dataset.t?'':el.dataset.t;document.querySelectorAll('.tag').forEach(x=>x.classList.toggle('on',x.dataset.t===activeTag));render();});
+ render();
+}
+function render(){
+ const q=$('q').value.toLowerCase().trim();
+ const list=TRACKS.filter(t=>{
+  const okQ=!q||t.title.toLowerCase().includes(q)||t.tags.some(k=>k.toLowerCase().includes(q))||t.desc.toLowerCase().includes(q);
+  const okT=!activeTag||t.tags.includes(activeTag);
+  return okQ&&okT;});
+ $('count').textContent=list.length+' morceau(x)';
+ $('grid').innerHTML=list.map((t,i)=>{const gi=TRACKS.indexOf(t);return '<div class="card"><h3>'+t.title+'</h3><div class="meta">'+t.tags.map(k=>'<em>'+k+'</em>').join('')+'</div><div class="desc">'+t.desc+'</div><button class="play" data-i="'+gi+'">▶ Écouter</button></div>';}).join('');
+ $('empty').style.display=list.length?'none':'block';
+ document.querySelectorAll('.play').forEach(b=>b.onclick=()=>play(TRACKS[b.dataset.i]));
+}
+function play(t){
+ $('pTitle').textContent='▶ '+t.title;
+ const a=$('audio');a.src=t.file;a.play();
+ $('player').classList.add('show');
+ a.onended=()=>{
+  const q=$('q').value.toLowerCase().trim();
+  const list=TRACKS.filter(x=>(!q||x.title.toLowerCase().includes(q)||x.tags.some(k=>k.toLowerCase().includes(q)))&&(!activeTag||x.tags.includes(activeTag)));
+  const nx=list[TRACKS.indexOf(t)+1];if(nx)play(nx);};
+}
+$('btnSearch').onclick=render;
+$('q').addEventListener('input',render);
+$('q').addEventListener('keydown',e=>{if(e.key==='Enter')render();});
+$('btnReset').onclick=()=>{$('q').value='';activeTag='';document.querySelectorAll('.tag').forEach(x=>x.classList.remove('on'));render();};
+load();
+</script>
+</body>
+</html>
