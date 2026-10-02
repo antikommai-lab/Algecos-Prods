@@ -23,6 +23,7 @@ h1 span{color:var(--acc)}
 #panel button.mitem:hover{border-color:var(--acc)}
 #panel button.mitem.danger{color:var(--warn);border-color:#3a1e23}
 #panel input,#panel textarea{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:.85rem;margin-bottom:8px}
+#panel select{width:100%;padding:10px;border-radius:8px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:.85rem;margin-bottom:8px}
 #panel label{display:block;font-size:.72rem;color:var(--dim);margin:8px 0 4px}
 .btn{padding:10px 16px;border:none;border-radius:8px;background:var(--acc);color:#001318;font-weight:700;cursor:pointer}
 .btn2{padding:10px 16px;border:1px solid #233240;border-radius:8px;background:transparent;color:var(--dim);cursor:pointer}
@@ -36,12 +37,14 @@ input[type=text]:focus{outline:none;border-color:var(--acc)}
 .tags{max-width:720px;margin:0 auto 12px;padding:0 20px;display:flex;gap:8px;flex-wrap:wrap}
 .tag{font-size:.75rem;padding:5px 12px;border-radius:20px;border:1px solid #233240;color:var(--dim);cursor:pointer;transition:.15s}
 .tag:hover,.tag.on{color:var(--acc2);border-color:var(--acc2)}
-#grid{max-width:1000px;margin:0 auto;padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+#grid{max-width:1000px;margin:0 auto;padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .card{background:var(--card);border:1px solid #1b2733;border-radius:14px;padding:16px;transition:.15s;position:relative}
 .card:hover{border-color:var(--acc)}
-.card h3{font-size:1rem;margin-bottom:6px;padding-right:60px}
+.card h3{font-size:1rem;margin-bottom:6px;padding-right:110px}
+.ver{position:absolute;top:12px;left:14px;font-size:.62rem;color:#001318;background:var(--acc2);border-radius:10px;padding:2px 8px;font-weight:700}
 .card .meta{color:var(--dim);font-size:.75rem;margin-bottom:8px;display:flex;flex-wrap:wrap;gap:6px}
 .card .meta em{font-style:normal;border:1px solid #233240;border-radius:12px;padding:2px 8px}
+.card .style{font-size:.78rem;color:var(--acc);margin-bottom:6px}
 .card .info{font-size:.72rem;color:#8fa0af;margin-bottom:8px;line-height:1.5}
 .card .desc{font-size:.8rem;color:#8fa0af;margin-bottom:10px}
 .play{width:100%;padding:9px;border:none;border-radius:8px;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#001318;font-weight:700;cursor:pointer}
@@ -60,38 +63,61 @@ audio{width:min(560px,60%)}
 #empty{display:none;text-align:center;color:var(--dim);padding:40px}
 .modal{position:fixed;inset:0;background:rgba(4,8,12,.8);display:none;align-items:center;justify-content:center;z-index:40;padding:20px}
 .modal.open{display:flex}
-.mbox{background:#0d141b;border:1px solid #233240;border-radius:14px;padding:20px;width:min(420px,100%);max-height:90vh;overflow-y:auto}
+.mbox{background:#0d141b;border:1px solid #233240;border-radius:14px;padding:20px;width:min(440px,100%);max-height:90vh;overflow-y:auto}
 .mbox h3{margin-bottom:12px;color:var(--acc)}
 .mbox label{display:block;font-size:.72rem;color:var(--dim);margin:8px 0 4px}
-.mbox input,.mbox textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:.85rem}
+.mbox input,.mbox textarea,.mbox select{width:100%;padding:10px;border-radius:8px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:.85rem}
 .mbox .row{display:flex;gap:8px;margin-top:14px}
 .close{float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer}
+#aiFab{position:fixed;bottom:86px;right:20px;width:54px;height:54px;border-radius:50%;border:1px solid var(--acc);background:var(--card);color:var(--acc);font-size:1.4rem;cursor:pointer;z-index:15;box-shadow:0 0 14px rgba(0,229,255,.25)}
+#aiFab:hover{background:var(--acc);color:#001318}
+#aiPanel{position:fixed;bottom:86px;right:20px;width:min(400px,92vw);max-height:70vh;background:#0d141b;border:1px solid #233240;border-radius:14px;padding:16px;display:none;flex-direction:column;z-index:16;box-shadow:0 8px 30px rgba(0,0,0,.6)}
+#aiPanel.open{display:flex}
+#aiLog{flex:1;overflow-y:auto;font-size:.8rem;margin:10px 0;min-height:60px;max-height:40vh;line-height:1.6}
+#aiLog .u{color:var(--acc)}
+#aiLog .a{color:var(--acc2)}
+#aiLog .e{color:var(--warn)}
+#aiPanel textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #233240;background:var(--card);color:var(--txt);font-size:.85rem;resize:vertical;min-height:64px}
+#aiPanel .row{display:flex;gap:8px;margin-top:8px}
 </style>
 </head>
 <body>
 <header>
 <h1>ALGECOS <span>PRODS</span></h1>
-<div class="sub">Division de <b>ANTIKOMM</b> — Bibliothèque audio : recherche par titre &amp; mots-clés</div>
+<div class="sub">Division de <b>ANTIKOMM</b> — Expérimentations Suno AI : titres, styles, versions</div>
 <button id="burger" onclick="toggleMenu()">☰</button>
 </header>
 
 <div id="menu" onclick="if(event.target.id==='menu')toggleMenu()">
- <div id="panel">
-  <button style="float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer" onclick="toggleMenu()">✕</button>
-  <h2>Navigation</h2>
-  <button class="mitem" onclick="toggleMenu();window.scrollTo({top:0,behavior:'smooth'})">📋 Consulter la liste</button>
-  <h2>Compte GitHub</h2>
-  <div id="authZone"></div>
-  <div class="status" id="authStatus"></div>
-  <h2 id="admTitle" style="display:none">Administration</h2>
-  <div id="admZone" style="display:none">
-   <button class="mitem" onclick="openAdd()">➕ Ajouter un morceau</button>
-  </div>
- </div>
+<div id="panel">
+<button style="float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer" onclick="toggleMenu()">✕</button>
+<h2>Navigation</h2>
+<button class="mitem" onclick="toggleMenu();window.scrollTo({top:0,behavior:'smooth'})">📋 Consulter la liste</button>
+<h2>Compte GitHub</h2>
+<div id="authZone"></div>
+<div class="status" id="authStatus"></div>
+<h2 id="admTitle" style="display:none">Administration</h2>
+<div id="admZone" style="display:none">
+<button class="mitem" onclick="openAdd()">➕ Ajouter un morceau</button>
+</div>
+<h2>Assistant IA</h2>
+<label>Clé API OpenRouter (openrouter.ai/keys)</label>
+<input id="aiKey" type="password" placeholder="sk-or-…">
+<label>Modèle</label>
+<select id="aiModel">
+<option value="google/gemini-2.0-flash-001">Gemini 2.0 Flash</option>
+<option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
+<option value="openai/gpt-4o-mini">GPT-4o mini</option>
+<option value="mistralai/mistral-small">Mistral Small</option>
+<option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+</select>
+<button class="btn" style="width:100%;margin-top:6px" onclick="saveAIKey()">💾 Mémoriser</button>
+<div class="status" id="aiKeyStatus"></div>
+</div>
 </div>
 
 <div class="search-bar">
-<input id="q" type="text" placeholder="Titre ou mot-clé…" autocomplete="off">
+<input id="q" type="text" placeholder="Titre, style, mot-clé, version…" autocomplete="off">
 <button id="btnSearch">Rechercher</button>
 <button id="btnReset">✕</button>
 </div>
@@ -100,16 +126,27 @@ audio{width:min(560px,60%)}
 <div id="grid"></div><div id="empty">Aucun morceau trouvé.</div>
 <div id="player"><span id="pTitle"></span><audio id="audio" controls></audio></div>
 
+<button id="aiFab" onclick="toggleAI()">✨</button>
+<div id="aiPanel">
+<div><b style="color:var(--acc)">✨ Assistant</b> <span style="float:right;color:var(--dim);font-size:.75rem;cursor:pointer" onclick="toggleAI()">✕</span></div>
+<div id="aiLog"><span style="color:var(--dim)">Demande en langage naturel : « cherche haurrore mood hardtek », « joue la version DEF de Titita », « prépare une fiche : titre X, style samba, version v3 »…</span></div>
+<textarea id="aiInput" placeholder="Ta demande…"></textarea>
+<div class="row"><button class="btn" onclick="aiSend()">Envoyer</button><button class="btn2" onclick="toggleAI()">Fermer</button></div>
+<div class="status" id="aiStatus"></div>
+</div>
+
 <div class="modal" id="editModal"><div class="mbox">
 <button class="close" onclick="closeModal('editModal')">✕</button>
 <h3 id="mTitle">Éditer le morceau</h3>
 <label>Titre</label><input id="f_title">
 <label>Fichier (chemin)</label><input id="f_file">
 <label>Mots-clés (séparés par virgule)</label><input id="f_tags">
+<label>Style / mood (ex : raggamuffin punchy)</label><input id="f_style">
+<label>Version (ex : v1, DEF, punchy)</label><input id="f_version">
 <label>Description</label><textarea id="f_desc" rows="2"></textarea>
 <label>ID créateur des paroles</label><input id="f_lyr">
 <label>ID créateur du son</label><input id="f_snd">
-<label>Date d'enregistrement</label><input id="f_date" type="date">
+<label>Date d enregistrement</label><input id="f_date" type="date">
 <label>Note (1-5 étoiles)</label><input id="f_rating" type="number" min="1" max="5">
 <div class="row"><button class="btn" onclick="saveSong()">💾 Enregistrer</button><button class="btn2" onclick="closeModal('editModal')">Annuler</button></div>
 <div class="status" id="mStatus"></div>
@@ -121,137 +158,206 @@ audio{width:min(560px,60%)}
 <label>Fichier audio (mp3, ogg, wav…)</label><input id="a_file" type="file" accept="audio/*">
 <label>Titre</label><input id="a_title">
 <label>Mots-clés (virgules)</label><input id="a_tags">
+<label>Style / mood</label><input id="a_style">
+<label>Version</label><input id="a_version">
 <label>Description</label><textarea id="a_desc" rows="2"></textarea>
 <label>ID créateur des paroles</label><input id="a_lyr">
 <label>ID créateur du son</label><input id="a_snd">
-<label>Date d'enregistrement</label><input id="a_date" type="date">
+<label>Date d enregistrement</label><input id="a_date" type="date">
 <label>Note (1-5)</label><input id="a_rating" type="number" min="1" max="5" value="3">
 <div class="row"><button class="btn" onclick="addSong()">⬆ Uploader &amp; ajouter</button><button class="btn2" onclick="closeModal('addModal')">Annuler</button></div>
 <div class="status" id="aStatus"></div>
 </div></div>
 
 <script>
-/* ===== Config & état ===== */
-const OWNER='antikommai-lab',REPO='Algecos-Prods',BRANCH='main';
-let TRACKS=[],activeTag='',TOKEN=localStorage.getItem('gh_token')||'',ME=null,editIdx=-1;
-const $=id=>document.getElementById(id);
-const api=(p,opt={})=>fetch('https://api.github.com'+p,{...opt,headers:{Authorization:'token '+TOKEN,'Accept':'application/vnd.github+json',...(opt.headers||{})}});
+/* ===== Config ===== */
+var OWNER='antikommai-lab',REPO='Algecos-Prods',BRANCH='main';
+var TRACKS=[],activeTag='',TOKEN=localStorage.getItem('gh_token')||'',ME=null,editIdx=-1;
+var AIKEY=localStorage.getItem('or_key')||'',AIMODEL=localStorage.getItem('or_model')||'google/gemini-2.0-flash-001';
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function api(p,opt){opt=opt||{};var h={Authorization:'token '+TOKEN,'Accept':'application/vnd.github+json'};if(opt.headers)for(var k in opt.headers)h[k]=opt.headers[k];return fetch('https://api.github.com'+p,{method:opt.method||'GET',headers:h,body:opt.body?JSON.stringify(opt.body):undefined});}
 
 /* ===== Auth ===== */
 function renderAuth(){
  if(TOKEN&&ME){
-  $('authZone').innerHTML='<div style="font-size:.8rem;color:var(--acc2);padding:8px 0">✅ Connecté : <b>'+ME.login+'</b></div><button class="mitem danger" onclick="logout()">Déconnexion</button>';
+  $('authZone').innerHTML='<div style="font-size:.8rem;color:var(--acc2);padding:8px 0">Connecté : <b>'+esc(ME.login)+'</b></div><button class="mitem danger" onclick="logout()">Déconnexion</button>';
   $('admTitle').style.display='block';$('admZone').style.display='block';
  }else{
-  $('authZone').innerHTML='<label>Token GitHub (PAT, scope "repo")</label><input id="tok" type="password" placeholder="ghp_…"><button class="btn" style="width:100%" onclick="login()">S&#39;identifier</button><div style="font-size:.7rem;color:var(--dim);margin-top:6px">Crée un token sur github.com/settings/tokens (coche "repo"). Stocké uniquement dans ton navigateur.</div>';
+  $('authZone').innerHTML='<label>Token GitHub (PAT, scope repo)</label><input id="tok" type="password" placeholder="ghp_…"><button class="btn" style="width:100%" onclick="login()">S&#39;identifier</button><div style="font-size:.7rem;color:var(--dim);margin-top:6px">github.com/settings/tokens — scope repo. Stocké dans ton navigateur uniquement.</div>';
   $('admTitle').style.display='none';$('admZone').style.display='none';
  }
 }
 async function login(){
  TOKEN=$('tok').value.trim();
  if(!TOKEN){$('authStatus').className='status err';$('authStatus').textContent='Token requis';return;}
- const r=await api('/user');
+ var r=await api('/user');
  if(!r.ok){TOKEN='';$('authStatus').className='status err';$('authStatus').textContent='Token invalide';return;}
  ME=await r.json();localStorage.setItem('gh_token',TOKEN);
- $('authStatus').className='status ok';$('authStatus').textContent='Connecté ✓';
+ $('authStatus').className='status ok';$('authStatus').textContent='Connecté';
  renderAuth();render();
 }
 function logout(){TOKEN='';ME=null;localStorage.removeItem('gh_token');renderAuth();render();}
 
-/* ===== Sync tracks.json ===== */
+/* ===== Sync ===== */
 async function saveTracks(msg){
- const r=await api('/repos/'+OWNER+'/'+REPO+'/contents/tracks.json?ref='+BRANCH);
- const meta=await r.json();
- const content=btoa(unescape(encodeURIComponent(JSON.stringify(TRACKS,null,2))));
- const pu=await api('/repos/'+OWNER+'/'+REPO+'/contents/tracks.json',{method:'PUT',body:JSON.stringify({message:msg,content,sha:meta.sha,branch:BRANCH})});
+ var r=await api('/repos/'+OWNER+'/'+REPO+'/contents/tracks.json?ref='+BRANCH);
+ var meta=await r.json();
+ var content=btoa(unescape(encodeURIComponent(JSON.stringify(TRACKS,null,2))));
+ var pu=await api('/repos/'+OWNER+'/'+REPO+'/contents/tracks.json',{method:'PUT',body:{message:msg,content:content,sha:meta.sha,branch:BRANCH}});
  if(!pu.ok)throw new Error('commit KO ('+pu.status+')');
 }
 
-/* ===== Data ===== */
+/* ===== Data & rendu ===== */
+function match(t,q){
+ q=q.toLowerCase();
+ var hay=[t.title,(t.tags||[]).join(' '),t.desc||'',t.style||'',t.version||'',t.lyricsCreator||'',t.soundCreator||''].join(' ').toLowerCase();
+ return hay.indexOf(q)>-1;
+}
 async function load(){
- try{const r=await fetch('tracks.json',{cache:'no-store'});TRACKS=await r.json();}catch(e){TRACKS=[];}
- $('tags').innerHTML=[...new Set(TRACKS.flatMap(t=>t.tags||[]))].sort().map(t=>'<span class="tag" data-t="'+t+'">'+t+'</span>').join('');
- document.querySelectorAll('.tag').forEach(el=>el.onclick=()=>{activeTag=activeTag===el.dataset.t?'':el.dataset.t;document.querySelectorAll('.tag').forEach(x=>x.classList.toggle('on',x.dataset.t===activeTag));render();});
+ try{var r=await fetch('tracks.json',{cache:'no-store'});TRACKS=await r.json();}catch(e){TRACKS=[];}
+ var allTags=[];TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){if(allTags.indexOf(k)<0)allTags.push(k);});});
+ $('tags').innerHTML=allTags.sort().map(function(t){return '<span class="tag" data-t="'+esc(t)+'">'+esc(t)+'</span>';}).join('');
+ document.querySelectorAll('.tag').forEach(function(el){el.onclick=function(){activeTag=(activeTag===el.getAttribute('data-t'))?'':el.getAttribute('data-t');document.querySelectorAll('.tag').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-t')===activeTag);});render();};});
  render();
 }
-function stars(n){let s='';for(let i=1;i<=5;i++)s+='<span class="'+(i<=(n||0)?'on':'')+'" data-s="'+i+'">★</span>';return s;}
+function stars(n){var s='';for(var i=1;i<=5;i++)s+='<span class="'+(i<=(n||0)?'on':'')+'" data-s="'+i+'">★</span>';return s;}
 function render(){
- const q=$('q').value.toLowerCase().trim();
- const list=TRACKS.map((t,i)=>({t,i})).filter(({t})=>{
-  const okQ=!q||t.title.toLowerCase().includes(q)||(t.tags||[]).some(k=>k.toLowerCase().includes(q))||(t.desc||'').toLowerCase().includes(q)||(t.lyricsCreator||'').toLowerCase().includes(q)||(t.soundCreator||'').toLowerCase().includes(q);
-  const okT=!activeTag||(t.tags||[]).includes(activeTag);
+ var q=$('q').value.toLowerCase().trim();
+ var list=TRACKS.map(function(t,i){return {t:t,i:i};}).filter(function(o){
+  var okQ=!q||match(o.t,q);
+  var okT=!activeTag||(o.t.tags||[]).indexOf(activeTag)>-1;
   return okQ&&okT;});
- $('count').textContent=list.length+' morceau(x)';
- $('grid').innerHTML=list.map(({t,i})=>'<div class="card"><div class="stars" data-i="'+i+'">'+stars(t.rating)+'</div><h3>'+t.title+'</h3><div class="meta">'+(t.tags||[]).map(k=>'<em>'+k+'</em>').join('')+'</div><div class="info">🎤 Paroles : <b>'+(t.lyricsCreator||'—')+'</b> &nbsp; 🎵 Son : <b>'+(t.soundCreator||'—')+'</b><br>📅 '+(t.recordDate||'—')+'</div><div class="desc">'+(t.desc||'')+'</div><button class="play" data-i="'+i+'">▶ Écouter</button>'+(TOKEN&&ME?'<div class="admin"><button onclick="openEdit('+i+')">✏️ Éditer</button><button class="del" onclick="delSong('+i+')">🗑 Supprimer</button></div>':'')+'</div>').join('');
+ $('count').textContent=list.length+' morceau(x) — '+TRACKS.length+' au total';
+ var h=list.map(function(o){var t=o.t,i=o.i;
+  return '<div class="card">'+(t.version?'<span class="ver">'+esc(t.version)+'</span>':'')+'<div class="stars" data-i="'+i+'">'+stars(t.rating)+'</div><h3>'+esc(t.title)+'</h3>'+(t.style?'<div class="style">🎚 '+esc(t.style)+'</div>':'')+'<div class="meta">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div><div class="info">🎤 '+esc(t.lyricsCreator||'—')+' &nbsp; 🎵 '+esc(t.soundCreator||'—')+'<br>📅 '+esc(t.recordDate||'—')+'</div><div class="desc">'+esc(t.desc||'')+'</div><button class="play" data-i="'+i+'">▶ Écouter</button>'+(TOKEN&&ME?'<div class="admin"><button onclick="openEdit('+i+')">✏️ Éditer</button><button class="del" onclick="delSong('+i+')">🗑 Supprimer</button></div>':'')+'</div>';}).join('');
+ $('grid').innerHTML=h;
  $('empty').style.display=list.length?'none':'block';
- document.querySelectorAll('.play').forEach(b=>b.onclick=()=>play(TRACKS[b.dataset.i]));
- document.querySelectorAll('.stars').forEach(el=>el.querySelectorAll('span').forEach(sp=>sp.onclick=async()=>{
-  if(!TOKEN||!ME){$('authStatus').className='status err';$('authStatus').textContent='Note enregistrée : connecte-toi pour noter.';toggleMenu();return;}
-  const i=+el.dataset.i,s=+sp.dataset.s;TRACKS[i].rating=s;
-  try{await saveTracks('note '+s+'/5 → '+TRACKS[i].title);render();}
-  catch(e){alert('Erreur : '+e.message);}
- }));
+ document.querySelectorAll('.play').forEach(function(b){b.onclick=function(){play(TRACKS[+b.getAttribute('data-i')]);};});
+ document.querySelectorAll('.stars').forEach(function(el){el.querySelectorAll('span').forEach(function(sp){sp.onclick=async function(){
+  if(!TOKEN||!ME){alert('Connecte-toi (menu ☰) pour noter.');return;}
+  var i=+el.getAttribute('data-i'),s=+sp.getAttribute('data-s');TRACKS[i].rating=s;
+  try{await saveTracks('note '+s+'/5 : '+TRACKS[i].title);render();}catch(e){alert('Erreur : '+e.message);}
+ };});});
 }
 
-/* ===== Actions admin ===== */
-function openEdit(i){editIdx=i;const t=TRACKS[i];
+/* ===== Player ===== */
+function play(t){
+ $('pTitle').textContent='▶ '+t.title+(t.version?' ['+t.version+']':'');
+ var a=$('audio');a.src=encodeURI(t.file);a.play();
+ $('player').classList.add('show');
+ a.onended=function(){
+  var q=$('q').value.toLowerCase().trim();
+  var list=TRACKS.filter(function(x){return (!q||match(x,q))&&(!activeTag||(x.tags||[]).indexOf(activeTag)>-1);});
+  var n=list.indexOf(t);if(n>-1&&list[n+1])play(list[n+1]);};
+}
+
+/* ===== Admin ===== */
+function openEdit(i){editIdx=i;var t=TRACKS[i];
  $('f_title').value=t.title;$('f_file').value=t.file;$('f_tags').value=(t.tags||[]).join(', ');
- $('f_desc').value=t.desc||'';$('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';
+ $('f_style').value=t.style||'';$('f_version').value=t.version||'';$('f_desc').value=t.desc||'';
+ $('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';
  $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||0;
  $('mStatus').textContent='';openModal('editModal');}
 async function saveSong(){
- const t=TRACKS[editIdx];
- t.title=$('f_title').value;t.file=$('f_file').value;t.tags=$('f_tags').value.split(',').map(s=>s.trim()).filter(Boolean);
- t.desc=$('f_desc').value;t.lyricsCreator=$('f_lyr').value;t.soundCreator=$('f_snd').value;
- t.recordDate=$('f_date').value;t.rating=+$('f_rating').value||0;
+ var t=TRACKS[editIdx];
+ t.title=$('f_title').value;t.file=$('f_file').value;t.tags=$('f_tags').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+ t.style=$('f_style').value;t.version=$('f_version').value;t.desc=$('f_desc').value;
+ t.lyricsCreator=$('f_lyr').value;t.soundCreator=$('f_snd').value;t.recordDate=$('f_date').value;t.rating=+$('f_rating').value||0;
  $('mStatus').className='status ok';$('mStatus').textContent='⏳ Commit…';
- try{await saveTracks('edit: '+t.title);closeModal('editModal');render();}
+ try{await saveTracks('edit : '+t.title);closeModal('editModal');render();}
  catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}
 }
 async function delSong(i){
- if(!confirm('Supprimer "'+TRACKS[i].title+'" de tracks.json ? (le fichier audio reste sur GitHub)'))return;
+ if(!confirm('Supprimer « '+TRACKS[i].title+' » de tracks.json ? (le fichier audio reste)'))return;
  TRACKS.splice(i,1);
- try{await saveTracks('delete: index '+i);render();}
- catch(e){alert('Erreur : '+e.message);}
+ try{await saveTracks('delete : '+i);}catch(e){alert('Erreur : '+e.message);}
+ render();
 }
 function openAdd(){$('aStatus').textContent='';openModal('addModal');}
 async function addSong(){
- const f=$('a_file').files[0];
+ var f=$('a_file').files[0];
  if(!f){$('aStatus').className='status err';$('aStatus').textContent='Choisis un fichier audio';return;}
- const title=$('a_title').value.trim()||f.name.replace(/\.[^.]+$/,'');
+ var title=$('a_title').value.trim()||f.name.replace(/\.[^.]+$/,'');
  $('aStatus').className='status ok';$('aStatus').textContent='⏳ Upload 1/2 (audio)…';
- const name=f.name.replace(/[^\w.-]/g,'_');
- const b64=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(f);});
- const up=await api('/repos/'+OWNER+'/'+REPO+'/contents/audio/'+name,{method:'PUT',body:JSON.stringify({message:'upload audio: '+name,content:b64,branch:BRANCH})});
+ var name=f.name.replace(/[^\w.-]/g,'_');
+ var b64=await new Promise(function(res){var fr=new FileReader();fr.onload=function(){res(fr.result.split(',')[1]);};fr.readAsDataURL(f);});
+ var up=await api('/repos/'+OWNER+'/'+REPO+'/contents/audio/'+name,{method:'PUT',body:{message:'upload audio : '+name,content:b64,branch:BRANCH}});
  if(!up.ok){$('aStatus').className='status err';$('aStatus').textContent='Upload échoué ('+up.status+')';return;}
  $('aStatus').textContent='⏳ Commit 2/2 (tracks.json)…';
- TRACKS.push({title,file:'audio/'+name,tags:$('a_tags').value.split(',').map(s=>s.trim()).filter(Boolean),desc:$('a_desc').value,lyricsCreator:$('a_lyr').value,soundCreator:$('a_snd').value,recordDate:$('a_date').value,rating:+$('a_rating').value||0});
- try{await saveTracks('add: '+title);closeModal('addModal');load();}
+ TRACKS.push({title:title,file:'audio/'+name,tags:$('a_tags').value.split(',').map(function(s){return s.trim();}).filter(Boolean),style:$('a_style').value,version:$('a_version').value,desc:$('a_desc').value,lyricsCreator:$('a_lyr').value,soundCreator:$('a_snd').value,recordDate:$('a_date').value,rating:+$('a_rating').value||0});
+ try{await saveTracks('add : '+title);closeModal('addModal');load();}
  catch(e){$('aStatus').className='status err';$('aStatus').textContent=e.message;}
+}
+
+/* ===== Assistant IA (OpenRouter) ===== */
+function toggleAI(){$('aiPanel').classList.toggle('open');if($('aiPanel').classList.contains('open'))$('aiInput').focus();}
+function aiLog(cls,txt){var d=document.createElement('div');d.className=cls;d.textContent=txt;$('aiLog').appendChild(d);$('aiLog').scrollTop=99999;}
+function saveAIKey(){AIKEY=$('aiKey').value.trim();AIMODEL=$('aiModel').value;localStorage.setItem('or_key',AIKEY);localStorage.setItem('or_model',AIMODEL);$('aiKeyStatus').className='status ok';$('aiKeyStatus').textContent='Mémorisé ✓';}
+function trackIndexForAI(){return TRACKS.map(function(t,i){return {i:i,title:t.title,style:t.style||'',version:t.version||'',tags:t.tags||[],rating:t.rating||0};});}
+function sysPrompt(){
+ return 'Tu es l assistant de controle du site ALGECOS PRODS (division ANTIKOMM), bibliotheque d experimentations Suno AI. '+
+ 'Un meme titre peut avoir plusieurs styles et versions. Reponds UNIQUEMENT avec un objet JSON, sans texte autour. '+
+ 'Actions disponibles : '+
+ '{"action":"search","q":"texte","tag":"mot-cle exact optionnel"} — filtre la liste ; '+
+ '{"action":"play","i":<index>} — joue le morceau d index i ; '+
+ '{"action":"prefill_add","title":"","tags":[],"style":"","version":"","desc":"","lyricsCreator":"","soundCreator":"","recordDate":"","rating":3} — remplit le formulaire d ajout ; '+
+ '{"action":"prefill_edit","i":<index>,"fields":{"style":"","version":"","tags":[],"desc":""}} — remplit le formulaire d edition du morceau i ; '+
+ '{"action":"rate","i":<index>,"stars":<1-5>} — note un morceau. '+
+ 'Utilise les index de la liste fournie. Si la demande est vague, choisis search avec le mot pertinent. Liste : '+JSON.stringify(trackIndexForAI());
+}
+async function aiSend(){
+ var msg=$('aiInput').value.trim();
+ if(!msg)return;
+ if(!AIKEY){$('aiStatus').className='status err';$('aiStatus').textContent='Ajoute ta clé OpenRouter dans le menu ☰';return;}
+ aiLog('u','🙋 '+msg);$('aiInput').value='';
+ $('aiStatus').className='status ok';$('aiStatus').textContent='⏳ Réflexion…';
+ try{
+  var r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+AIKEY,'Content-Type':'application/json'},
+   body:JSON.stringify({model:AIMODEL,messages:[{role:'system',content:sysPrompt()},{role:'user',content:msg}],temperature:0.2})});
+  var j=await r.json();
+  if(!r.ok)throw new Error(j.error&&j.error.message||('HTTP '+r.status));
+  var txt=j.choices[0].message.content.trim();
+  var m=txt.match(/\{[\s\S]*\}/);
+  if(!m)throw new Error('réponse non JSON : '+txt.slice(0,120));
+  var act=JSON.parse(m[0]);
+  $('aiStatus').textContent='';
+  aiLog('a','🤖 '+describeAction(act));
+  execAction(act);
+ }catch(e){$('aiStatus').className='status err';$('aiStatus').textContent='';aiLog('e','❌ '+e.message);}
+}
+function describeAction(a){
+ if(a.action==='search')return 'Filtre : « '+(a.q||'')+(a.tag?' + tag '+a.tag:'')+' »';
+ if(a.action==='play')return 'Lecture : '+((TRACKS[a.i]||{}).title||'?');
+ if(a.action==='rate')return 'Note '+a.stars+'/5 : '+((TRACKS[a.i]||{}).title||'?');
+ if(a.action==='prefill_add')return 'Formulaire d ajout prérempli — vérifie puis valide.';
+ if(a.action==='prefill_edit')return 'Formulaire d édition prérempli — vérifie puis valide.';
+ return 'Action : '+a.action;
+}
+function execAction(a){
+ try{
+  if(a.action==='search'){$('q').value=a.q||'';activeTag=a.tag||'';document.querySelectorAll('.tag').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-t')===activeTag);});render();window.scrollTo({top:0,behavior:'smooth'});}
+  else if(a.action==='play'){var t=TRACKS[a.i];if(t)play(t);}
+  else if(a.action==='rate'){if(!TOKEN||!ME){aiLog('e','Connecte-toi (☰) pour noter.');return;}var t2=TRACKS[a.i];if(!t2)return;t2.rating=a.stars;saveTracks('note '+a.stars+'/5 : '+t2.title).then(render).catch(function(e){aiLog('e','❌ '+e.message);});}
+  else if(a.action==='prefill_add'){$('a_title').value=a.title||'';$('a_tags').value=(a.tags||[]).join(', ');$('a_style').value=a.style||'';$('a_version').value=a.version||'';$('a_desc').value=a.desc||'';$('a_lyr').value=a.lyricsCreator||'';$('a_snd').value=a.soundCreator||'';$('a_date').value=a.recordDate||'';$('a_rating').value=a.rating||3;openAdd();}
+  else if(a.action==='prefill_edit'){var t3=TRACKS[a.i];if(!t3)return;if(a.fields){if(a.fields.style)t3.style=a.fields.style;if(a.fields.version)t3.version=a.fields.version;if(a.fields.tags)t3.tags=a.fields.tags;if(a.fields.desc)t3.desc=a.fields.desc;}openEdit(a.i);}
+ }catch(e){aiLog('e','❌ '+e.message);}
 }
 
 /* ===== UI ===== */
 function toggleMenu(){$('menu').classList.toggle('open');renderAuth();}
 function openModal(id){$(id).classList.add('open');}
 function closeModal(id){$(id).classList.remove('open');}
-document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{if(e.target===m)m.classList.remove('open');});
-
-function play(t){
- $('pTitle').textContent='▶ '+t.title;
- const a=$('audio');a.src=encodeURI(t.file);a.play();
- $('player').classList.add('show');
- a.onended=()=>{
-  const q=$('q').value.toLowerCase().trim();
-  const list=TRACKS.filter(x=>(!q||x.title.toLowerCase().includes(q)||(x.tags||[]).some(k=>k.toLowerCase().includes(q)))&&(!activeTag||(x.tags||[]).includes(activeTag)));
-  const nx=list[list.indexOf(t)+1];if(nx)play(nx);};
-}
+document.querySelectorAll('.modal').forEach(function(m){m.onclick=function(e){if(e.target===m)m.classList.remove('open');};});
 $('btnSearch').onclick=render;
 $('q').addEventListener('input',render);
-$('btnReset').onclick=()=>{$('q').value='';activeTag='';document.querySelectorAll('.tag').forEach(x=>x.classList.remove('on'));render();};
+$('btnReset').onclick=function(){$('q').value='';activeTag='';document.querySelectorAll('.tag').forEach(function(x){x.classList.remove('on');});render();};
+$('aiInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiSend();}});
 
-/* auto-login si token déjà stocké */
-(async()=>{if(TOKEN){const r=await api('/user');if(r.ok){ME=await r.json();renderAuth();render();}}})();
-renderAuth();load();
+/* init */
+$('aiKey').value=AIKEY;$('aiModel').value=AIMODEL;
+(async function(){if(TOKEN){var r=await api('/user');if(r.ok){ME=await r.json();renderAuth();render();}}else renderAuth();})();
+load();
 </script>
 </body>
 </html>

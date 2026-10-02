@@ -6,6 +6,8 @@
       "raggamuffin",
       "accoustic"
     ],
+    "style": "raggamuffin pur",
+    "version": "v1",
     "desc": "Description courte du morceau.",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
@@ -13,13 +15,15 @@
     "rating": 3
   },
   {
-    "title": "haurrore (raggamuffin punchy )_v2",
+    "title": "haurrore (ragga muffin punchy )_v2",
     "file": "haurrore (ragga muffin punchy )_v2.mp3",
     "tags": [
       "raggamuffin",
       "punchy",
       "electro"
     ],
+    "style": "raggamuffin punchy electro",
+    "version": "v2",
     "desc": "Description courte du morceau.",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
@@ -34,6 +38,8 @@
       "samba",
       "dancehall"
     ],
+    "style": "ragga samba dancehall",
+    "version": "DEF",
     "desc": "La chanson de Tati",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
@@ -48,6 +54,8 @@
       "samba",
       "dancehall"
     ],
+    "style": "ragga samba dancehall",
+    "version": "Beta",
     "desc": "la chanson de tati vers beta",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
@@ -61,6 +69,8 @@
       "raggamuffin",
       "hardtek"
     ],
+    "style": "ragga hardtek",
+    "version": "occibots",
     "desc": "version haurrore ragga hardtek",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
@@ -75,6 +85,8 @@
       "reggae",
       "slam"
     ],
+    "style": "chanson slam reggae",
+    "version": "v5 officielle",
     "desc": "haurrore song - the migrant view",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
@@ -85,11 +97,14 @@
     "title": "pure instrumental rap piano lyric old school",
     "file": "audio/pure instrumental rap piano lyric old school.mp3",
     "tags": [
-      "ragga",
-      "samba",
-      "dancehall"
+      "instrumental",
+      "rap",
+      "old school",
+      "piano"
     ],
-    "desc": "La chanson de Tati",
+    "style": "rap piano old school",
+    "version": "v1",
+    "desc": "instru melancolic classic epic",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
     "recordDate": "2026-10-02",
@@ -104,6 +119,8 @@
       "old school",
       "piano"
     ],
+    "style": "rap piano old school",
+    "version": "v2",
     "desc": "instru melancolic classic epic",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
