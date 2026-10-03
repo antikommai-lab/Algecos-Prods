@@ -1,5 +1,177 @@
 [
   {
+    "title": haurrore core (métal hiphop) v1_2cut_txt1audio2.mp3
+    "file": "audio/haurrore core txtV0.2(métal hip-hop)v2_txt1.5audio2.mp3"
+    "tags": [
+      "metal",
+      "hiphop"
+    ],
+    "style": "metal hiphop",
+    "version": "metal hiphop",
+    "desc": "version haurrore metal hiphop",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": haurrore core (métal) v1_2cut_txt1audio2.mp3
+    "file": "audio/haurrore core (métal) v1_2cut_txt1audio2.mp3"
+    "tags": [
+      "metal"
+    ],
+    "style": "metal",
+    "version": "metal",
+    "desc": "version haurrore metal",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": haurrore rap old school classic epic v1_txt2son1.5
+    "file": "audio/haurrore rap old school classic epic v1_txt2son1.5.mp3"
+    "tags": [
+      "rap"
+    ],
+    "style": "rap old school",
+    "version": "1",
+    "desc": "version rap old school",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": haurrore rap old school piano.mp3
+    "file": "audio/haurrore rap old school piano.mp3"
+    "tags": [
+      "rap"
+    ],
+    "style": "rap old school",
+    "version": "rap",
+    "desc": "version rap old school",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": pure instrumental rap piano lyric old school v2
+    "file": "audio/pure instrumental rap piano lyric old school v2.mp3"
+    "tags": [
+      "rap",
+      "instru"
+    ],
+    "style": "rap old school",
+    "version": "instrumental 2",
+    "desc": "instru rap old school",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": pure instrumental rap piano lyric old school
+    "file": "audio/pure instrumental rap piano lyric old school.mp3"
+    "tags": [
+      "rap",
+      "instru"
+    ],
+    "style": "rap old school",
+    "version": "instrumental 1",
+    "desc": "instru rap old school",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": the migrant song (Haurrore Positive).mp3
+    "file": "audio/the migrant song (Haurrore Positive).mp3"
+    "tags": [
+      "rap"
+    ],
+    "style": "rock",
+    "version": "positive",
+    "desc": "version rock",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore core (ragga hardtek mix)_occibots",
+    "file": "audio/haurrore core (ragga hardtek mix)_occibots.mp3",
+    "tags": [
+      "raggamuffin",
+      "hardtek"
+    ],
+    "style": "ragga hardtek",
+    "version": "occibots",
+    "desc": "version haurrore ragga hardtek",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam)",
+    "file": "audio/the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam).mp3",
+    "tags": [
+      "chanson française",
+      "reggae",
+      "slam"
+    ],
+    "style": "chanson slam reggae",
+    "version": "v5 officielle",
+    "desc": "haurrore song - the migrant view",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": the migrant song v slam rock chanson.mp3,
+    "file": "audio/the migrant song v slam rock chanson.mp3"
+
+  },
+  {
+    "title": "haurrore core (dancehall electro, mauvais )v2.mp3",
+    "file": "audio/haurrore core (dancehall electro, mauvais )v2.mp3",
+    "tags": [
+      "dancehall",
+      "electro",
+      "mauvais",
+      "piano"
+    ],
+    "style": "dancehall electro",
+    "version": "bad",
+    "desc": "bad",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore accapella guitare sèche+beat",
+    "file": "audio/haurrore accapella guitare sèche+beat.mp3",
+    "tags": [
+      "accapella",
+      "accoustic",
+      "guitare"
+    ],
+    "style": "accapella guitare seche",
+    "version": "vtest",
+    "desc": "chanson accoustic",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  }
+]
+[
+  {
     "title": "haurrore (raggamuffin pure )_v1",
     "file": "haurrore (raggamuffin pure )_v1.mp3",
     "tags": [
@@ -31,7 +203,37 @@
     "rating": 3
   },
   {
-    "title": "Titita Titi Tati Tita_v.DEF",
+    "title": "haurore raggamuffin pure",
+    "file": "haurrore (ragga muffin pure )_v1.mp3",
+    "tags": [
+      "raggamuffin",
+      "accoustic"
+    ],
+    "style": "raggamuffin pure",
+    "version": "1",
+    "desc": "Haurror ragga 1",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurore raggamuffin punchy",
+    "file": "haurrore (ragga muffin punchy )_v2.mp3",
+    "tags": [
+      "raggamuffin",
+      "electro"
+    ],
+    "style": "raggamuffin punchy",
+    "version": "2",
+    "desc": "Haurror ragga 2",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "Tita on Faya",
     "file": "Titita Titi Tati Tita_v.DEF.mp3",
     "tags": [
       "ragga",
@@ -40,88 +242,100 @@
     ],
     "style": "ragga samba dancehall",
     "version": "DEF",
-    "desc": "La chanson de Tati",
+    "desc": "la chanson de tati vers def",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
     "recordDate": "2026-10-02",
     "rating": 3
   },
   {
-    "title": "Titita Titi Tati Tita_v.Beta",
-    "file": "Titita Titi Tati Tita_v.Beta.mp3",
-    "tags": [
-      "ragga",
-      "samba",
-      "dancehall"
-    ],
-    "style": "ragga samba dancehall",
-    "version": "Beta",
-    "desc": "la chanson de tati vers beta",
-    "lyricsCreator": "N30 @ANTIKOMM",
-    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
-    "recordDate": "2026-10-02",
-    "rating": 3
-  },
-  {
-    "title": "haurrore core (ragga hardtek mix)_occibots",
-    "file": "audio/haurrore core (ragga hardtek mix)_occibots.mp3",
+    "title": "Tita on Faya",
+    "file": "audio/Titita Titi Tati Tita_v.Beta.mp3",
     "tags": [
       "raggamuffin",
-      "hardtek"
+      "dancehall",
+      "samba"
     ],
-    "style": "ragga hardtek",
-    "version": "occibots",
-    "desc": "version haurrore ragga hardtek",
+    "style": "ragga dancehall samba",
+    "version": "beta",
+    "desc": "version tita on faya ragga hardtek",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
     "recordDate": "2026-10-02",
     "rating": 3
   },
   {
-    "title": "the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam)",
-    "file": "the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam).mp3",
+    "title": "LesTontonsBuveurs disco v2",
+    "file": "audio/LesTontonsBuveurs disco v2 chantée.mp3",
     "tags": [
-      "chanson française",
-      "reggae",
-      "slam"
+            "disco"
     ],
-    "style": "chanson slam reggae",
-    "version": "v5 officielle",
-    "desc": "haurrore song - the migrant view",
+    "style": "disco chanté",
+    "version": "v2",
+    "desc": "les tontons disco 2",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
     "recordDate": "2026-10-02",
     "rating": 3
   },
   {
-    "title": "pure instrumental rap piano lyric old school",
-    "file": "audio/pure instrumental rap piano lyric old school.mp3",
+    "title": "LesTontonsBuveurs disco v1",
+    "file": "audio/LesTontonsBuveurs disco v1.mp3",
     "tags": [
-      "instrumental",
-      "rap",
-      "old school",
-      "piano"
+            "disco"
     ],
-    "style": "rap piano old school",
+    "style": "disco",
     "version": "v1",
-    "desc": "instru melancolic classic epic",
+    "desc": "les tontons disco 1",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
     "recordDate": "2026-10-02",
     "rating": 3
   },
   {
-    "title": "pure instrumental rap piano lyric old school v2",
-    "file": "audio/pure instrumental rap piano lyric old school v2.mp3",
+    "title": "LesTontonsBuveurs Gipsy v2",
+    "file": "audio/LesTontonsBuveurs Gipsy v2.mp3",
     "tags": [
-      "instrumental",
-      "rap",
-      "old school",
-      "piano"
+      "accoustic",
+      "chanson",
+      "gipsy",
+      "swing"
+    ],
+    "style": "swing gipsy",
+    "version": "v1",
+    "desc": "haurror txt gipsy 2",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "LesTontonsBuveurs Gipsy v1",
+    "file": "audio/LesTontonsBuveurs Gipsy v1.mp3",
+    "tags": [
+      "accoustic",
+      "chanson",
+      "gipsy",
+      "swing"
+    ],
+    "style": "swing gipsy",
+    "version": "v1",
+    "desc": "haurror txt gipsy 1",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "Haurrore core (dancehall) v1",
+    "file": "audio/Haurrore core (dancehall) v1.mp3",
+    "tags": [
+      "dancehall",
+      "rap"
     ],
     "style": "rap piano old school",
     "version": "v2",
-    "desc": "instru melancolic classic epic",
+    "desc": "haurror text punchy",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
     "recordDate": "2026-10-02",
