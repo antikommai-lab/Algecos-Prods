@@ -88,6 +88,9 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .stars span{color:#3a3833}
 .stars span.on{color:var(--y)}
 #empty{display:none;text-align:center;color:var(--dim);padding:40px;text-transform:uppercase}
+#contact{text-align:center;padding:36px 16px 110px;color:var(--dim);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+#contact a{color:var(--y);text-decoration:none;font-family:'Space Mono',monospace}
+#contact a:hover{text-decoration:underline}
 /* ===== player ===== */
 #player{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:3px solid var(--y);padding:10px 16px;display:none;align-items:center;gap:12px;z-index:14}
 #player.show{display:flex}
@@ -105,6 +108,7 @@ audio{width:min(520px,58%);height:34px}
 /* ===== AI ===== */
 #aiFab{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:#000;color:var(--y);border:2px solid var(--y);font-size:1.2rem;cursor:pointer;z-index:15;box-shadow:4px 4px 0 #000}
 #aiFab:hover{background:var(--y);color:#000}
+body:has(#player.show) #allBtn,body:has(#player.show) #aiFab{bottom:96px}
 #aiPanel{position:fixed;bottom:80px;right:20px;width:min(390px,92vw);max-height:66vh;background:var(--panel);border:2px solid var(--y);padding:14px;display:none;flex-direction:column;z-index:16;box-shadow:8px 8px 0 #000}
 #aiPanel.open{display:flex}
 #aiLog{flex:1;overflow-y:auto;font-size:.74rem;margin:8px 0;min-height:50px;max-height:34vh;line-height:1.6;background:#000;padding:8px;border:1px solid var(--line)}
@@ -130,6 +134,7 @@ audio{width:min(520px,58%);height:34px}
 <h2>Navigation</h2>
 <button class="mitem" onclick="showList()">▶ Playlist accueil</button>
 <button class="mitem" onclick="showList(true)">■ Liste complète</button>
+<a class="mitem" href="mailto:algecosprods@gmail.com" style="display:block;text-decoration:none">✉ Nous contacter</a>
 <h2>Compte GitHub</h2>
 <div id="authZone"></div>
 <div class="status" id="authStatus"></div>
@@ -173,6 +178,7 @@ audio{width:min(520px,58%);height:34px}
 <div id="count"></div>
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUVÉ.</div>
 </section>
+<footer id="contact">✉ contact &amp; bookings — <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a></footer>
 </main>
 
 <button id="allBtn" onclick="showList(true)">■ Liste de tous les morceaux</button>
