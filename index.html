@@ -18,7 +18,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 main,header{position:relative;z-index:1}
 header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative;background:rgba(16,16,16,.82)}
 .brand{display:flex;align-items:center;gap:14px}
-.tri{width:54px;height:48px;flex:none;filter:drop-shadow(3px 3px 0 #000)}
+.tri{height:56px;width:auto;max-width:130px;object-fit:contain;flex:none;filter:drop-shadow(3px 3px 0 #000)}
 .brand h1{font-family:'Archivo Black',sans-serif;font-size:clamp(1.2rem,4vw,2rem);letter-spacing:.06em;color:var(--ink);text-transform:uppercase;line-height:1.05}
 .brand h1 b{color:var(--y)}
 .brand .tag{font-size:.62rem;color:var(--dim);letter-spacing:.28em;text-transform:uppercase}
@@ -39,7 +39,11 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .status{font-size:.72rem;margin-top:8px;min-height:1em}
 .ok{color:var(--y)}.err{color:var(--warn)}
 /* ===== HOME : playlist ===== */
-#home{max-width:760px;margin:26px auto;padding:0 20px}
+#home{max-width:900px;margin:26px auto;padding:0 20px}
+#homeFlex{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+#bigLogo{display:none}
+@media(min-width:900px){#bigLogo{display:block;width:250px;max-width:30%;border:3px solid #000;box-shadow:7px 7px 0 #000;transform:rotate(-1.4deg)}}
+#homeCol{flex:1;min-width:270px}
 .tape{background:var(--y);color:#000;display:inline-block;padding:3px 10px;font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;transform:rotate(-1.2deg);box-shadow:2px 2px 0 #000}
 #plTitle{font-family:'Archivo Black',sans-serif;font-size:clamp(1.4rem,5vw,2.4rem);text-transform:uppercase;margin:14px 0 4px;color:var(--ink)}
 #plDesc{color:var(--dim);font-size:.78rem;margin-bottom:18px}
@@ -48,11 +52,11 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .prow:hover{background:#000;outline:1px solid var(--y)}
 .prow.on{background:var(--y);color:#000}
 .prow.on .pidx,.prow.on .pver{color:#000}
+.prow.on .pt small{color:#222}
 .pidx{color:var(--y);font-weight:700;min-width:28px}
 .pt{flex:1;min-width:0}
 .pt b{display:block;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pt small{color:var(--dim);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em}
-.prow.on .pt small{color:#222}
 .pver{font-size:.6rem;border:1px solid currentColor;padding:1px 6px;text-transform:uppercase}
 #allBtn{position:fixed;bottom:20px;left:20px;z-index:15;background:#000;color:var(--y);border:2px solid var(--y);padding:12px 16px;font-family:'Space Mono',monospace;font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;box-shadow:4px 4px 0 #000}
 #allBtn:hover{background:var(--y);color:#000}
@@ -114,7 +118,7 @@ audio{width:min(520px,58%);height:34px}
 <body>
 <header>
 <div class="brand">
-<svg class="tri" viewBox="0 0 100 88" aria-hidden="true"><polygon points="50,4 96,84 4,84" fill="#FFD700" stroke="#000" stroke-width="6"/><rect x="46" y="28" width="8" height="30" fill="#000"/><rect x="46" y="62" width="8" height="8" fill="#000"/></svg>
+<img class="tri" src="logo.jpg" alt="ALGECOS-PRODS">
 <div><h1>ALGECOS<b>-</b>PRODS</h1><div class="tag">une division d&#39;ANTIKOMM™ — 2026</div></div>
 </div>
 <button id="burger" onclick="toggleMenu()">☰</button>
@@ -150,10 +154,14 @@ audio{width:min(520px,58%);height:34px}
 
 <main>
 <section id="home">
+<div id="homeFlex">
+<img id="bigLogo" src="logo.jpg" alt="logo ALGECOS-PRODS">
+<div id="homeCol">
 <span class="tape">▶ mixtape du jour</span>
 <h2 id="plTitle">PLAYLIST</h2>
 <div id="plDesc"></div>
 <div id="plist"></div>
+</div></div>
 </section>
 <section id="listWrap">
 <div class="search-bar">
