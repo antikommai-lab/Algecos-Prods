@@ -25,7 +25,7 @@
   },
   {
     "title": "Migrant Story (HaurrorCore Positive) [chanson,slam,reggae,rap].mp3",
-    "file": ,"audio/the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam).mp3",
+    "file": "audio/the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam).mp3",
     "tags": ["rap","valse","chanson française","accoustique"],
     "style": "rap,valse,chanson française,accoustique",
     "version": "vDEF.1",
@@ -194,7 +194,7 @@
   {
     "title": "HaurrorCore remix (ragga metal hardtek remix)",
     "file": "audio/haurrore core (ragga hardtek mix)_occibots.mp3",
-    "tags": ["raggamuffin", "hardtek" "metal"],
+    "tags": ["raggamuffin", "hardtek", "metal"],
     "style": "ragga hardtek metal",
     "version": "occibots",
     "desc": "BONUS version haurrore ragga hardtek",
