@@ -1,5 +1,41 @@
 [
   {
+    "title": "La Cour Des Mirages (HaurrorCore)",
+    "file": "audio/La Cour Des Mirages (HaurrorCore)_vPreDEF.mp3",
+    "tags": ["trap", "rap", "electro", "breakbeat","tekno","hardtek"],
+    "style": "swing gipsy",
+    "version": "vDEF.1",
+    "desc": "Haurror Center Stories: the hardcore brokens one",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTS AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 5
+  },
+  {
+    "title": "Les Tontons Buveurs (Aldi's Stories)",
+    "file": "audio/Les Tontons Buveurs (Aldi's Stories)_vDEF1.mp3",
+    "tags": ["accoustic", "chanson", "gipsy", "swing","rap", "trap"],
+    "style": "gipsy swing,bossa nova,samba,trap,rap",
+    "version": "vDEF.1",
+    "desc": "haurror txt gipsy 1",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 5
+  },
+  {
+    "title": "LesTontonsBuveurs Gipsy v1",
+    "file": "audio/LesTontonsBuveurs Gipsy v1.mp3",
+    "tags": ["accoustic", "chanson", "gipsy", "swing"],
+    "style": "swing gipsy",
+    "version": "v1",
+    "desc": "haurror txt gipsy 1",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
     "title": "Haurrore core (dancehall) v1",
     "file": "audio/Haurrore core (dancehall) v1.mp3",
     "tags": ["dancehall", "rap"],
@@ -76,7 +112,7 @@
     "file": "audio/Titita Titi Tati Tita_v.DEF.mp3",
     "tags": ["ragga", "samba", "dancehall"],
     "style": "ragga samba dancehall",
-    "version": "DEF",
+    "version": "vDEF",
     "desc": "La chanson de Tati",
     "lyricsCreator": "N30 @ANTIKOMM",
     "soundCreator": "MADE IN SUNO, PROMPTED AND ITERATIONS BY N30",
