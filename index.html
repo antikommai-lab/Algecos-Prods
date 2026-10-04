@@ -306,9 +306,11 @@ function renderPlaylist(){
  document.querySelectorAll('.prow').forEach(function(r){r.onclick=function(){play(TRACKS[+r.getAttribute('data-i')]);renderPlaylist();};});
  var pc=document.createElement('img');pc.id='plCover';pc.alt='cover';
  if(PLAYLIST.cover){var exts=['jpg','jpeg','png','webp','gif'];var ei=0;
-  pc.onerror=function(){ei++;if(ei<exts.length)pc.src=encodeURI('img/'+PLAYLIST.cover+'.'+exts[ei]);else pc.remove();};
+  var cands=[];for(var xi=0;xi<exts.length;xi++)cands.push('img/'+PLAYLIST.cover+'.'+exts[xi]);
+  for(var xi=0;xi<exts.length;xi++)cands.push(PLAYLIST.cover+'.'+exts[xi]);
+  pc.onerror=function(){ei++;if(ei<cands.length)pc.src=encodeURI(cands[ei]);else pc.remove();};
   pc.onload=function(){pc.style.display='block';};
-  pc.src=encodeURI('img/'+PLAYLIST.cover+'.'+exts[0]);
+  pc.src=encodeURI(cands[0]);
   $('plist').insertBefore(pc,$('plist').firstChild);}}
 function showList(full){
  if(full===true){$('home').classList.add('hidden');$('listWrap').classList.add('open');window.scrollTo({top:0});}
