@@ -1,13 +1,17 @@
+
 [
   {
-    "title": "SUNO LAB — LE BESTIAIRE v1",
-    "desc": "Sélection d ouverture : le raggamuffin sous toutes ses coutures + curiosités. Remplace les titres par tes choix dans playlists.json.",
+    "title": "NAONED HAURROR STORIES (premiere edition)",
+    "desc": "4titres+3Bonus | Premiere selection de tracks en attendant l'Album 1ere edition (autres editions a venir: même textes mais songs styles differents)",
     "tracks": [
-      "haurrore (raggamuffin pure )_v1",
-      "haurrore (ragga muffin punchy )_v2",
+      "Migrant Story (HaurrorCore Positive) [chanson,slam,reggae,rap].mp3",
       "Titita Titi Tati Tita_v.DEF",
-      "the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam)",
-      "Titita Titi Tati Tita_v.Beta"
+      "Les Tontons Buveurs (Aldi's Stories)",
+      "La Cour Des Mirages (HaurrorCore)",
+      "pure instrumental rap piano lyric old school",
+      "pure instrumental rap piano lyric old school v2",
+      "HaurrorCore remix (ragga metal hardtek remix)"
+      
     ]
   }
 ]
