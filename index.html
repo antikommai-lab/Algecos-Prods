@@ -310,7 +310,7 @@ var PLABELS={};
 function plResolve(){PLABELS={};
  return (PLAYLIST.tracks||[]).map(function(ref){
   var lb='';
-  if(ref&&typeof ref==='object'){if(ref.section!==undefined)return null;lb=ref.label||'';ref=ref.ref||ref.title||ref.file||'';}
+  if(ref&&typeof ref==='object'){if(ref.section!==undefined||ref.SECTION!==undefined||ref.Section!==undefined)return null;lb=ref.label||ref.LABEL||'';ref=ref.ref||ref.title||ref.file||'';}
   if(typeof ref!=='string'||!ref)return null;
   var t=TRACKS.find(function(x){return x.title===ref||x.file===ref||x.title.indexOf(ref)>-1;});
   if(t&&lb)PLABELS[t.title]=lb;
@@ -321,7 +321,7 @@ function renderPlaylist(){
 plResolve();
  var html='';
  (PLAYLIST.tracks||[]).forEach(function(ref){
-  if(ref&&typeof ref==='object'&&ref.section!==undefined){html+='<div class="psec">'+esc(ref.section)+'</div>';return;}
+  if(ref&&typeof ref==='object'&&ref.section!==undefined||ref.SECTION!==undefined||ref.Section!==undefined){html+='<div class="psec">'+esc((ref.section||ref.SECTION||ref.Section))+'</div>';return;}
   var r=ref;if(r&&typeof r==='object')r=r.ref||r.title||r.file;
   if(typeof r!=='string'||!r)return;
   var t=TRACKS.find(function(x){return x.title===r||x.file===r||x.title.indexOf(r)>-1;});
