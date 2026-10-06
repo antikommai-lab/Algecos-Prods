@@ -307,14 +307,19 @@ async function load(){
  render();}
 /* ===== playlist home ===== */
 var PLABELS={};
+function plMatch(r){if(typeof r!=='string'||!r)return null;
+ var rb=r.replace(/\.mp3$/,'');
+ return TRACKS.find(function(x){return x.title===r||x.title===rb;})||
+ TRACKS.find(function(x){return x.file===r||x.file===rb+'.mp3';})||
+ TRACKS.find(function(x){return (x.file||'').indexOf('/')>-1&&x.file.split('/').pop()===r;})||
+ TRACKS.find(function(x){return x.title.indexOf(rb)>-1&&rb.length>=8;})||null;}
 function plResolve(){PLABELS={};
  return (PLAYLIST.tracks||[]).map(function(ref){
   var lb='';
   if(ref&&typeof ref==='object'){if(ref.section!==undefined||ref.SECTION!==undefined||ref.Section!==undefined)return null;lb=ref.label||ref.LABEL||'';ref=ref.ref||ref.title||ref.file||'';}
-  if(typeof ref!=='string'||!ref)return null;
-  var t=TRACKS.find(function(x){return x.title===ref||x.file===ref||x.title.indexOf(ref)>-1;});
+  var t=plMatch(ref);
   if(t&&lb)PLABELS[t.title]=lb;
-  return t||null;}).filter(Boolean);}
+  return t;}).filter(Boolean);}
 function renderPlaylist(){
  $('plTitle').textContent=PLAYLIST.title||'PLAYLIST';
  $('plDesc').textContent=PLAYLIST.desc||'';
@@ -323,8 +328,7 @@ plResolve();
  (PLAYLIST.tracks||[]).forEach(function(ref){
   if(ref&&typeof ref==='object'&&ref.section!==undefined||ref.SECTION!==undefined||ref.Section!==undefined){html+='<div class="psec">'+esc((ref.section||ref.SECTION||ref.Section))+'</div>';return;}
   var r=ref;if(r&&typeof r==='object')r=r.ref||r.title||r.file;
-  if(typeof r!=='string'||!r)return;
-  var t=TRACKS.find(function(x){return x.title===r||x.file===r||x.title.indexOf(r)>-1;});
+  var t=plMatch(r);
   if(!t)return;
   var gi=TRACKS.indexOf(t);
   html+='<div class="prow" data-i="'+gi+'"><span class="pidx">'+String(TRACKS.indexOf(t)+1).padStart(2,'0')+'</span><span class="pt"><b>'+esc(t.title)+'</b><small>'+esc(t.style||'')+' · '+esc((t.tags||[]).join(' / '))+'</small></span>'+(PLABELS[t.title]?'<span class="plabel">'+esc(PLABELS[t.title])+'</span>':'')+(t.version?'<span class="pver">'+esc(t.version)+'</span>':'')+'</div>';});
