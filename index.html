@@ -317,7 +317,8 @@ audio{width:100%;height:40px}
 /* ===== CONFIG — à remplir ===== */
 var SUPABASE_URL='https://TON-PROJET.supabase.co';
 var SUPABASE_ANON_KEY='TA-CLE-ANON';
-var ADMIN_EMAILS=['algecosprods@gmail.com'];
+var ADMIN_EMAILS=['antikomm.ai@gmail.com'];
+var ADMIN_GH=['antikommai-lab'];
 var SITE_URL='https://antikommai-lab.github.io/Algecos-Prods/';
 var GH_OWNER='antikommai-lab',GH_REPO='Algecos-Prods';
 
@@ -364,7 +365,7 @@ function trackCoverPaths(t){var out=[],i,b=String(t.title||'')+'_cover';
  return out;}
 /* ===== auth Supabase ===== */
 function sbReady(){return !!SB;}
-function isAdmin(){return !!USER&&ADMIN_EMAILS.indexOf(String(USER.email||'').toLowerCase())>-1;}
+function isAdmin(){if(!USER)return false;var e=String(USER.email||'').toLowerCase(),m=USER.user_metadata||{},u=String(m.user_name||m.preferred_username||m.full_name||'').toLowerCase();return ADMIN_EMAILS.indexOf(e)>-1||ADMIN_GH.indexOf(u)>-1;}
 async function initAuth(){
  try{SB=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);}catch(e){SB=null;renderAuth();return;}
  SB.auth.onAuthStateChange(function(ev,ses){USER=(ses&&ses.user)||null;renderAuth();});
@@ -607,7 +608,7 @@ function scrollLyr(){var a=$('audio');
 /* ===== commentaires ===== */
 async function openCmt(){
  $('cmtModal').classList.add('open');
- $('cmtStatus').textContent='';$('cmtTxt'&&0);
+ $('cmtStatus').textContent='';
  if(!sbReady()){$('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">Bientôt disponible.</div>';$('cmtForm').innerHTML='';return;}
  if(!USER){$('cmtForm').innerHTML='<div style="color:var(--dim);font-size:.75rem;line-height:1.6">Connecte-toi (☰ → Google ou GitHub) pour noter et commenter.</div>';$('cmtList').innerHTML='';return;}
  $('cmtForm').innerHTML='<label>Ton commentaire</label><textarea id="cmtTxt" rows="3"></textarea><div class="row"><button class="btn" onclick="sendCmt()">Envoyer</button></div>';
