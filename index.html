@@ -72,7 +72,7 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #plistsWrap.open{display:block}
 .secH{font-family:'Archivo Black',sans-serif;color:var(--y);text-transform:uppercase;letter-spacing:.08em;font-size:1.2rem;margin:10px 0 16px}
 #plGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.plcard{background:rgba(16,16,16,.88);border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.plcard{position:relative;background:rgba(16,16,16,.88);border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
 .plcard:hover{outline:1px solid var(--y)}
 .plcard .plc{width:64px;height:64px;object-fit:cover;border:2px solid var(--y);flex:none}
 .plcard .plbox{flex:1;min-width:0}
@@ -80,6 +80,13 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .plcard .pld{color:var(--dim);font-size:.7rem;margin-bottom:6px;line-height:1.5}
 .plcard .pln{color:var(--y);font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
 .plcard .btn{padding:7px 12px;font-size:.68rem}
+/* ===== roue crantée admin ===== */
+.edit{display:none;width:30px;height:30px;background:#000;color:var(--y);border:1px solid var(--y);cursor:pointer;font-size:1rem;line-height:1;text-align:center}
+.edit:hover{background:var(--y);color:#000}
+body.adm .edit{display:block}
+.card .edit{position:absolute;top:42px;right:12px}
+.plcard .edit{position:absolute;top:10px;right:10px}
+#plist .edit{position:absolute;top:10px;right:44px;width:26px;height:26px;font-size:.85rem;z-index:2}
 /* ===== recherche / cartes ===== */
 .btn{padding:10px 16px;background:var(--y);color:#000;border:2px solid #000;font-family:'Space Mono',monospace;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:3px 3px 0 #000}
 .btn2{padding:10px 16px;background:transparent;color:var(--dim);border:1px solid var(--line);font-family:'Space Mono',monospace;cursor:pointer;text-transform:uppercase}
@@ -376,6 +383,7 @@ function loginGithub(){if(!SB)return;SB.auth.signInWithOAuth({provider:'github',
 function doLogout(){if(SB)SB.auth.signOut();USER=null;renderAuth();}
 function renderAuth(){
  var z=$('authZone');
+ document.body.classList.toggle('adm',isAdmin());
  if(!SB){z.innerHTML='<div class="status" style="color:var(--dim)">CONNEXION BIENTÔT DISPONIBLE</div>';$('admTitle').style.display='none';$('admZone').style.display='none';return;}
  if(USER){
   var av=(USER.user_metadata&&USER.user_metadata.avatar_url)||'';
@@ -385,7 +393,8 @@ function renderAuth(){
   else{$('admTitle').style.display='none';$('admZone').style.display='none';}
  }else{
   z.innerHTML='<button class="lbtn" onclick="loginGoogle()">G Se connecter avec Google</button><button class="lbtn" onclick="loginGithub()">⌥ Se connecter avec GitHub</button>';
-  $('admTitle').style.display='none';$('admZone').style.display='none';}}
+  $('admTitle').style.display='none';$('admZone').style.display='none';}
+ if(TRACKS.length||PLAYLISTS.length){render();renderPlaylist();renderPlists();}}
 function saveTok(){GHTOK=$('ghTok').value.trim();
  if(GHTOK){localStorage.setItem('gh_pat',GHTOK);$('tokStatus').className='status ok';$('tokStatus').textContent='MÉMORISÉ ✓';}
  else{$('tokStatus').className='status err';$('tokStatus').textContent='VIDE';}}
@@ -414,6 +423,12 @@ async function publishAll(msg){
  await ghPut('feed.xml',toB64(buildFeed()),'flux RSS : '+msg);}
 /* ===== formulaires admin ===== */
 var tmIdx=-1;
+function fillTrackVals(t){
+ $('f_title').value=t.title;$('f_file').value=t.file||'';
+ $('f_tags').value=(t.tags||[]).join(', ');
+ $('f_style').value=t.style||'';$('f_version').value=t.version||'';$('f_desc').value=t.desc||'';
+ $('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';
+ $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||3;}
 function openTrackForm(mode){
  if(mode===-1){tmIdx=-1;$('tmTitle').textContent='+ Ajouter un morceau';$('tmSelWrap').style.display='none';
   ['f_title','f_file','f_tags','f_style','f_version','f_desc','f_lyr','f_snd','f_date'].forEach(function(id){$(id).value='';});
@@ -422,12 +437,11 @@ function openTrackForm(mode){
   $('tmSel').innerHTML=TRACKS.map(function(t,i){return '<option value="'+i+'">'+esc(t.title)+'</option>';}).join('');
   tmIdx=0;fillTrack();}
  $('mStatus').textContent='';openModal('trackModal');}
-function fillTrack(){tmIdx=+$('tmSel').value;var t=TRACKS[tmIdx];if(!t)return;
- $('f_title').value=t.title;$('f_file').value=t.file||'';
- $('f_tags').value=(t.tags||[]).join(', ');
- $('f_style').value=t.style||'';$('f_version').value=t.version||'';$('f_desc').value=t.desc||'';
- $('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';
- $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||3;}
+function editTrack(i){
+ var t=TRACKS[i];if(!t)return;
+ tmIdx=i;$('tmTitle').textContent='✎ Modifier : '+t.title;$('tmSelWrap').style.display='none';
+ fillTrackVals(t);$('mStatus').textContent='';openModal('trackModal');}
+function fillTrack(){tmIdx=+$('tmSel').value;var t=TRACKS[tmIdx];if(t)fillTrackVals(t);}
 async function saveTrack(){
  var ti=$('f_title').value.trim();
  if(!ti||!$('f_file').value.trim()){$('mStatus').className='status err';$('mStatus').textContent='TITRE + FICHIER REQUIS';return;}
@@ -443,6 +457,13 @@ async function saveTrack(){
   closeModal('trackModal');await load();}
  catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
 var pmIdx=-1;
+function fillPlVals(p){
+ $('p_title').value=p.title||'';$('p_desc').value=p.desc||'';$('p_cover').value=p.cover||'';
+ $('p_tracks').value=(p.tracks||[]).map(function(r){
+  if(typeof r==='string')return r;
+  if(entSec(r))return 'SECTION: '+entSec(r);
+  if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
+  return entRef(r)||'';}).join(String.fromCharCode(10));}
 function openPlForm(mode){
  if(mode===-1){pmIdx=-1;$('pmTitle').textContent='+ Nouvelle playlist';$('pmSelWrap').style.display='none';
   $('p_title').value='';$('p_desc').value='';$('p_cover').value='';$('p_tracks').value='';}
@@ -450,13 +471,11 @@ function openPlForm(mode){
   $('pmSel').innerHTML=PLAYLISTS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
   pmIdx=0;fillPl();}
  $('pStatus').textContent='';openModal('plModal');}
-function fillPl(){pmIdx=+$('pmSel').value;var p=PLAYLISTS[pmIdx];if(!p)return;
- $('p_title').value=p.title||'';$('p_desc').value=p.desc||'';$('p_cover').value=p.cover||'';
- $('p_tracks').value=(p.tracks||[]).map(function(r){
-  if(typeof r==='string')return r;
-  if(entSec(r))return 'SECTION: '+entSec(r);
-  if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
-  return entRef(r)||'';}).join(String.fromCharCode(10));}
+function editPl(i){
+ var p=PLAYLISTS[i];if(!p)return;
+ pmIdx=i;$('pmTitle').textContent='✎ Modifier : '+p.title;$('pmSelWrap').style.display='none';
+ fillPlVals(p);$('pStatus').textContent='';openModal('plModal');}
+function fillPl(){pmIdx=+$('pmSel').value;var p=PLAYLISTS[pmIdx];if(p)fillPlVals(p);}
 async function savePl(){
  var ti=$('p_title').value.trim();
  if(!ti){$('pStatus').className='status err';$('pStatus').textContent='TITRE REQUIS';return;}
@@ -512,10 +531,12 @@ function playPlaylist(){var pl=plFlat();if(!pl.length)return;play(pl[0],pl);}
 function renderPlists(){
  $('plGrid').innerHTML=PLAYLISTS.map(function(p,i){
   var nb=((p.tracks)||[]).map(function(r){return plMatch(entRef(r))?1:0;}).reduce(function(a,b){return a+b;},0);
-  return '<div class="plcard" data-i="'+i+'"><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'—')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="pln">'+nb+' morceaux</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
+  return '<div class="plcard" data-i="'+i+'"><button class="edit" data-pe="'+i+'" title="Éditer cette playlist">⚙</button><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'—')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="pln">'+nb+' morceaux</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
  document.querySelectorAll('.plcard').forEach(function(cd){
   var p=PLAYLISTS[+cd.getAttribute('data-i')];
   if(p&&p.cover)tryCovers(plCoverPaths(p.cover),function(u){var im=cd.querySelector('.plc');if(u){im.src=u;im.style.display='block';}});
+  var eb=cd.querySelector('.edit');
+  if(eb)eb.onclick=function(ev){ev.stopPropagation();editPl(+cd.getAttribute('data-i'));};
   cd.onclick=function(){PLAYLIST=PLAYLISTS[+cd.getAttribute('data-i')]||PLAYLIST;renderPlaylist();showView('home');};});}
 /* ===== navigation ===== */
 function showView(v){
@@ -538,7 +559,8 @@ function cardHTML(t,i){
  h+='<div class="meta">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div>';
  h+='<div class="info">VO:'+esc(t.lyricsCreator||'—')+' / SND:'+esc(t.soundCreator||'—')+' / '+esc(t.recordDate||'—')+'</div>';
  h+='<div class="desc">'+esc(t.desc||'')+'</div>';
- h+='<button class="play" data-i="'+i+'">▶ Écouter</button></div>';return h;}
+ h+='<button class="play" data-i="'+i+'">▶ Écouter</button>';
+ h+='<button class="edit" data-e="'+i+'" title="Éditer ce morceau">⚙</button></div>';return h;}
 function render(){
  var q=$('q').value.toLowerCase().trim();
  var list=TRACKS.map(function(t,i){return {t:t,i:i};}).filter(function(o){
@@ -548,7 +570,8 @@ function render(){
  $('empty').style.display=list.length?'none':'block';
  document.querySelectorAll('.card').forEach(function(card){
   var t=TRACKS[+card.getAttribute('data-i')];if(!t)return;
-  tryCovers(trackCoverPaths(t),function(u){if(u)card.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';});});}
+  tryCovers(trackCoverPaths(t),function(u){if(u)card.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';});});
+ document.querySelectorAll('.edit[data-e]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();editTrack(+b.getAttribute('data-e'));};});}
 /* ===== player ===== */
 function play(t,list){
  if(!t)return;
