@@ -32,6 +32,8 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #panel button.mitem:hover{background:var(--y);color:#000}
 #panel a.mitem{display:block;width:100%;text-align:left;margin-bottom:8px;padding:12px 14px;background:#000;color:var(--orange);border:1px solid var(--line);border-left:4px solid var(--orange);font-family:'Space Mono',monospace;font-size:.85rem;cursor:pointer;text-transform:uppercase;letter-spacing:.05em;text-decoration:none}
 #panel a.mitem:hover{background:var(--orange);color:#000}
+#panel input,#panel textarea,#panel select{width:100%;padding:10px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.85rem;margin-bottom:8px}
+#panel label{display:block;font-size:.68rem;color:var(--dim);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.1em}
 /* ===== HOME : playlist ===== */
 #home{max-width:900px;margin:26px auto;padding:0 20px}
 #home.hidden{display:none}
@@ -117,6 +119,7 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .pstars{font-size:.8rem;letter-spacing:2px;margin:4px 0}
 .pstars span{color:#3a3833}
 .pstars span.on{color:var(--y)}
+#pAvg{color:var(--dim);font-size:.66rem;margin-left:6px}
 #tTime{color:var(--ink);font-size:.78rem;font-weight:700}
 .pctl{display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:none}
 .pbtn{background:#000;color:var(--y);border:1px solid var(--y);padding:9px 12px;font-family:'Space Mono',monospace;font-weight:700;font-size:.8rem;cursor:pointer}
@@ -128,7 +131,23 @@ audio{width:100%;height:40px}
 .modal.open{display:flex}
 .mbox{background:var(--panel);border:2px solid var(--y);padding:20px;width:min(430px,100%);max-height:90vh;overflow-y:auto;box-shadow:8px 8px 0 #000}
 .mbox h3{margin-bottom:12px;color:var(--y);font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1rem}
+.mbox label{display:block;font-size:.66rem;color:var(--dim);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.1em}
+.mbox input,.mbox textarea,.mbox select{width:100%;padding:9px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.82rem}
+.mbox .row{display:flex;gap:8px;margin-top:14px}
 .close{float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer}
+.status{font-size:.72rem;margin-top:8px;min-height:1em}
+.ok{color:var(--y)}.err{color:var(--warn)}
+/* login */
+.lbtn{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;margin-bottom:8px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
+.lbtn:hover{border-color:var(--y);color:var(--y)}
+#uMe{display:flex;align-items:center;gap:10px;padding:8px 0}
+#uMe img{width:34px;height:34px;border-radius:50%;border:2px solid var(--y)}
+#uMe b{font-size:.78rem}
+/* commentaires */
+#cmtList{margin-bottom:12px;max-height:32vh;overflow-y:auto}
+.cmt{border:1px solid var(--line);padding:8px 10px;margin-bottom:8px;background:#000}
+.cmt .cH{font-size:.64rem;color:var(--y);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.cmt .cB{font-size:.76rem;line-height:1.5}
 /* viewer image */
 #imgModal{flex-direction:column}
 #imgBig{max-width:92vw;max-height:74vh;border:4px solid var(--y);border-radius:12px;box-shadow:10px 10px 0 #000;transition:transform .15s;cursor:zoom-in;background:#000}
@@ -159,6 +178,19 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="showPlaylists()">☰ Toutes les playlists</button>
 <button class="mitem" onclick="showList(true)">■ Liste de tous les morceaux</button>
 <a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">✉ Nous contacter</a>
+<h2>Compte</h2>
+<div id="authZone"></div>
+<h2 id="admTitle" style="display:none">Admin</h2>
+<div id="admZone" style="display:none">
+<button class="mitem" onclick="openTrackForm(-1)">+ Ajouter un morceau</button>
+<button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
+<button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
+<button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
+<label>Token GitHub (fine-grained, Contents: R/W)</label>
+<input id="ghTok" type="password" placeholder="github_pat_…">
+<button class="btn" style="width:100%" onclick="saveTok()">Mémoriser le token</button>
+<div class="status" id="tokStatus"></div>
+</div>
 </div>
 </div>
 
@@ -206,7 +238,7 @@ audio{width:100%;height:40px}
 <div id="ptags" class="psub"></div>
 <div id="pdesc" class="psub"></div>
 <div id="pinfo" class="psub"></div>
-<div class="pstars" id="pstars"></div>
+<div class="pstars" id="pstars"></div><span id="pAvg"></span>
 <span id="tTime">--:-- / --:--</span>
 </div>
 <div class="pctl">
@@ -238,15 +270,63 @@ audio{width:100%;height:40px}
 <div class="modal" id="cmtModal"><div class="mbox">
 <button class="close" onclick="closeModal('cmtModal')">✕</button>
 <h3>💬 Commentaires</h3>
-<p style="font-size:.8rem;color:var(--dim);line-height:1.7">La section commentaires arrive bientôt — elle sera ouverte aux visiteurs connectés. En attendant, écris-nous : <a href="mailto:algecosprods@gmail.com" style="color:var(--y)">algecosprods@gmail.com</a></p>
+<div id="cmtList"></div>
+<div id="cmtForm"></div>
+<div class="status" id="cmtStatus"></div>
 </div></div>
 
+<div class="modal" id="trackModal"><div class="mbox">
+<button class="close" onclick="closeModal('trackModal')">✕</button>
+<h3 id="tmTitle">Morceau</h3>
+<div id="tmSelWrap" style="display:none">
+<label>Quel morceau ?</label>
+<select id="tmSel" onchange="fillTrack()"></select>
+</div>
+<label>Titre</label><input id="f_title">
+<label>Fichier audio (ex : audio/MonMorceau.mp3)</label><input id="f_file">
+<label>Mots-clés (séparés par des virgules)</label><input id="f_tags">
+<label>Style / mood</label><input id="f_style">
+<label>Version</label><input id="f_version">
+<label>Description</label><textarea id="f_desc" rows="2"></textarea>
+<label>ID créateur paroles</label><input id="f_lyr">
+<label>ID créateur son</label><input id="f_snd">
+<label>Date d&#39;enregistrement</label><input id="f_date" type="date">
+<label>Note par défaut (1-5)</label><input id="f_rating" type="number" min="1" max="5">
+<div class="row"><button class="btn" onclick="saveTrack()">Enregistrer</button><button class="btn2" onclick="closeModal('trackModal')">Annuler</button></div>
+<div class="status" id="mStatus"></div>
+</div></div>
+
+<div class="modal" id="plModal"><div class="mbox">
+<button class="close" onclick="closeModal('plModal')">✕</button>
+<h3 id="pmTitle">Playlist</h3>
+<div id="pmSelWrap" style="display:none">
+<label>Quelle playlist ?</label>
+<select id="pmSel" onchange="fillPl()"></select>
+</div>
+<label>Titre</label><input id="p_title">
+<label>Description</label><textarea id="p_desc" rows="2"></textarea>
+<label>Cover (nom fichier, ex : MACONPLCOVER1)</label><input id="p_cover">
+<label>Morceaux — 1 par ligne : SECTION: FACE A · LABEL: BONUS :: référence · ou la référence (titre ou chemin)</label>
+<textarea id="p_tracks" rows="7" style="font-size:.74rem"></textarea>
+<div class="row"><button class="btn" onclick="savePl()">Enregistrer</button><button class="btn2" onclick="closeModal('plModal')">Annuler</button></div>
+<div class="status" id="pStatus"></div>
+</div></div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
+/* ===== CONFIG — à remplir ===== */
+var SUPABASE_URL='https://TON-PROJET.supabase.co';
+var SUPABASE_ANON_KEY='TA-CLE-ANON';
+var ADMIN_EMAILS=['algecosprods@gmail.com'];
+var SITE_URL='https://antikommai-lab.github.io/Algecos-Prods/';
+var GH_OWNER='antikommai-lab',GH_REPO='Algecos-Prods';
+
 var TRACKS=[],PLAYLISTS=[],PLAYLIST=null,activeTag='';
 var CURRENT=null,CURRENTLIST=[],PCV=0;
 var LYR={open:false,el:null};
 var VIEW={imgs:[],i:0};
 var EXTS=['jpg','jpeg','png','webp','gif'];
+var SB=null,USER=null,GHTOK=localStorage.getItem('gh_pat')||'';
 function $(id){return document.getElementById(id);}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function fmt(s){s=Math.max(0,Math.floor(s||0));var m=Math.floor(s/60),r=s%60;return (m<10?'0':'')+m+':'+(r<10?'0':'')+r;}
@@ -282,12 +362,122 @@ function trackCoverPaths(t){var out=[],i,b=String(t.title||'')+'_cover';
  for(i=0;i<EXTS.length;i++)out.push('img/'+b+'.'+EXTS[i]);
  for(i=0;i<EXTS.length;i++)out.push(b+'.'+EXTS[i]);
  return out;}
+/* ===== auth Supabase ===== */
+function sbReady(){return !!SB;}
+function isAdmin(){return !!USER&&ADMIN_EMAILS.indexOf(String(USER.email||'').toLowerCase())>-1;}
+async function initAuth(){
+ try{SB=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);}catch(e){SB=null;renderAuth();return;}
+ SB.auth.onAuthStateChange(function(ev,ses){USER=(ses&&ses.user)||null;renderAuth();});
+ var s=await SB.auth.getSession();USER=(s&&s.data&&s.data.session&&s.data.session.user)||null;
+ renderAuth();}
+function loginGoogle(){if(!SB)return;SB.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href}});}
+function loginGithub(){if(!SB)return;SB.auth.signInWithOAuth({provider:'github',options:{redirectTo:location.href}});}
+function doLogout(){if(SB)SB.auth.signOut();USER=null;renderAuth();}
+function renderAuth(){
+ var z=$('authZone');
+ if(!SB){z.innerHTML='<div class="status" style="color:var(--dim)">CONNEXION BIENTÔT DISPONIBLE</div>';$('admTitle').style.display='none';$('admZone').style.display='none';return;}
+ if(USER){
+  var av=(USER.user_metadata&&USER.user_metadata.avatar_url)||'';
+  var nm=(USER.user_metadata&&USER.user_metadata.full_name)||USER.email;
+  z.innerHTML='<div id="uMe">'+(av?'<img src="'+esc(av)+'" alt="">':'')+'<div><b>'+esc(nm)+'</b><br><small style="color:var(--dim);font-size:.62rem">'+esc(USER.email)+'</small>'+(isAdmin()?' <span style="color:var(--y);font-size:.62rem">★ ADMIN</span>':'')+'</div></div><button class="lbtn" onclick="doLogout()">⏻ Déconnexion</button>';
+  if(isAdmin()){$('admTitle').style.display='block';$('admZone').style.display='block';}
+  else{$('admTitle').style.display='none';$('admZone').style.display='none';}
+ }else{
+  z.innerHTML='<button class="lbtn" onclick="loginGoogle()">G Se connecter avec Google</button><button class="lbtn" onclick="loginGithub()">⌥ Se connecter avec GitHub</button>';
+  $('admTitle').style.display='none';$('admZone').style.display='none';}}
+function saveTok(){GHTOK=$('ghTok').value.trim();
+ if(GHTOK){localStorage.setItem('gh_pat',GHTOK);$('tokStatus').className='status ok';$('tokStatus').textContent='MÉMORISÉ ✓';}
+ else{$('tokStatus').className='status err';$('tokStatus').textContent='VIDE';}}
+/* ===== commits GitHub (admin) ===== */
+async function ghPut(path,contentB64,msg){
+ var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
+ var meta=await r.json();
+ if(!meta.sha)throw new Error('SHA INTROUVABLE ('+(meta.message||r.status)+') — token ?');
+ var pu=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path,{method:'PUT',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
+  body:JSON.stringify({message:msg,content:contentB64,sha:meta.sha,branch:'main'})});
+ if(!pu.ok)throw new Error('COMMIT KO ('+pu.status+')');
+ return pu.json();}
+function toB64(str){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';var b64='';var bytes=[].slice.call(new TextEncoder().encode(str));
+ for(var i=0;i<bytes.length;i+=3){var b1=bytes[i],b2=bytes[i+1],b3=bytes[i+2];
+  b64+=B.charAt(b1>>2)+B.charAt(((b1&3)<<4)|(b2==null?0:b2>>4))+(b2==null?'=':B.charAt(((b2&15)<<2)|(b3==null?0:b3>>6)))+(b3==null?'=':B.charAt(b3&63));}
+ return b64;}
+function buildFeed(){
+ var items=TRACKS.slice().sort(function(a,b){return String(b.recordDate||'').localeCompare(String(a.recordDate||''));}).slice(0,20).map(function(t){
+  var d=t.recordDate?new Date(t.recordDate+'T12:00:00Z'):new Date();
+  return '<item><title>'+esc(t.title)+(t.version?' ['+esc(t.version)+']':'')+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-'+esc(t.title)+'-'+esc(t.version||'')+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc((t.style||'')+' — '+(t.desc||''))+'</description></item>';}).join('');
+ return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>ALGECOS-PRODS</title><link>'+SITE_URL+'</link><description>Nouveaux morceaux ANTIKOMM — division ALGECOS</description>'+items+'</channel></rss>';}
+async function publishAll(msg){
+ if(!GHTOK)throw new Error('TOKEN GITHUB REQUIS (☰ Admin)');
+ await ghPut('tracks.json',toB64(JSON.stringify(TRACKS,null,2)),msg);
+ await ghPut('playlists.json',toB64(JSON.stringify(PLAYLISTS,null,2)),msg);
+ await ghPut('feed.xml',toB64(buildFeed()),'flux RSS : '+msg);}
+/* ===== formulaires admin ===== */
+var tmIdx=-1;
+function openTrackForm(mode){
+ if(mode===-1){tmIdx=-1;$('tmTitle').textContent='+ Ajouter un morceau';$('tmSelWrap').style.display='none';
+  ['f_title','f_file','f_tags','f_style','f_version','f_desc','f_lyr','f_snd','f_date'].forEach(function(id){$(id).value='';});
+  $('f_rating').value=3;}
+ else{$('tmTitle').textContent='✎ Modifier un morceau';$('tmSelWrap').style.display='block';
+  $('tmSel').innerHTML=TRACKS.map(function(t,i){return '<option value="'+i+'">'+esc(t.title)+'</option>';}).join('');
+  tmIdx=0;fillTrack();}
+ $('mStatus').textContent='';openModal('trackModal');}
+function fillTrack(){tmIdx=+$('tmSel').value;var t=TRACKS[tmIdx];if(!t)return;
+ $('f_title').value=t.title;$('f_file').value=t.file||'';
+ $('f_tags').value=(t.tags||[]).join(', ');
+ $('f_style').value=t.style||'';$('f_version').value=t.version||'';$('f_desc').value=t.desc||'';
+ $('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';
+ $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||3;}
+async function saveTrack(){
+ var ti=$('f_title').value.trim();
+ if(!ti||!$('f_file').value.trim()){$('mStatus').className='status err';$('mStatus').textContent='TITRE + FICHIER REQUIS';return;}
+ var o=tmIdx>-1?Object.assign({},TRACKS[tmIdx]):{};
+ o.title=ti;o.file=$('f_file').value.trim();
+ o.tags=$('f_tags').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+ o.style=$('f_style').value.trim();o.version=$('f_version').value.trim();o.desc=$('f_desc').value.trim();
+ o.lyricsCreator=$('f_lyr').value.trim();o.soundCreator=$('f_snd').value.trim();
+ o.recordDate=$('f_date').value;o.rating=+$('f_rating').value||0;
+ if(tmIdx>-1)TRACKS[tmIdx]=o;else TRACKS.push(o);
+ $('mStatus').className='status ok';$('mStatus').textContent='⏳ PUBLICATION…';
+ try{await publishAll((tmIdx>-1?'edit':'add')+' : '+ti);
+  closeModal('trackModal');await load();}
+ catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
+var pmIdx=-1;
+function openPlForm(mode){
+ if(mode===-1){pmIdx=-1;$('pmTitle').textContent='+ Nouvelle playlist';$('pmSelWrap').style.display='none';
+  $('p_title').value='';$('p_desc').value='';$('p_cover').value='';$('p_tracks').value='';}
+ else{$('pmTitle').textContent='✎ Modifier une playlist';$('pmSelWrap').style.display='block';
+  $('pmSel').innerHTML=PLAYLISTS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
+  pmIdx=0;fillPl();}
+ $('pStatus').textContent='';openModal('plModal');}
+function fillPl(){pmIdx=+$('pmSel').value;var p=PLAYLISTS[pmIdx];if(!p)return;
+ $('p_title').value=p.title||'';$('p_desc').value=p.desc||'';$('p_cover').value=p.cover||'';
+ $('p_tracks').value=(p.tracks||[]).map(function(r){
+  if(typeof r==='string')return r;
+  if(entSec(r))return 'SECTION: '+entSec(r);
+  if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
+  return entRef(r)||'';}).join(String.fromCharCode(10));}
+async function savePl(){
+ var ti=$('p_title').value.trim();
+ if(!ti){$('pStatus').className='status err';$('pStatus').textContent='TITRE REQUIS';return;}
+ var lines=$('p_tracks').value.split(String.fromCharCode(10)).map(function(s){return s.trim();}).filter(Boolean);
+ var tracks=lines.map(function(l){
+  var m=l.match(/^SECTION\s*:\s*(.+)$/i);
+  if(m){var o={};o.SECTION=m[1].trim();return o;}
+  m=l.match(/^LABEL\s*:\s*(.+?)\s*::\s*(.+)$/i);
+  if(m)return {label:m[1].trim(),ref:m[2].trim()};
+  return l;});
+ var p={title:ti,desc:$('p_desc').value.trim(),cover:$('p_cover').value.trim()||undefined,tracks:tracks};
+ if(pmIdx>-1)PLAYLISTS[pmIdx]=p;else PLAYLISTS.push(p);
+ $('pStatus').className='status ok';$('pStatus').textContent='⏳ PUBLICATION…';
+ try{await publishAll('playlist : '+ti);
+  closeModal('plModal');PLAYLIST=PLAYLISTS[0];await load();}
+ catch(e){$('pStatus').className='status err';$('pStatus').textContent=e.message;}}
 /* ===== chargement ===== */
 async function load(){
  try{var r=await fetch('tracks.json',{cache:'no-store'});TRACKS=await r.json();}catch(e){TRACKS=[];}
  try{var p=await fetch('playlists.json',{cache:'no-store'});PLAYLISTS=await p.json();}catch(e){PLAYLISTS=[];}
  if(!Array.isArray(PLAYLISTS))PLAYLISTS=[];
- PLAYLIST=PLAYLISTS[0]||{title:'—',desc:'',tracks:[]};
+ if(!PLAYLIST||PLAYLISTS.indexOf(PLAYLIST)<0)PLAYLIST=PLAYLISTS[0]||{title:'—',desc:'',tracks:[]};
  renderPlaylist();renderPlists();
  var allTags=[];TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){if(allTags.indexOf(k)<0)allTags.push(k);});});
  allTags.sort();
@@ -315,7 +505,7 @@ function renderPlaylist(){
    +'<span class="pidx">'+String(n).padStart(2,'0')+'</span>'
    +'<span class="pt"><b>'+esc(t.title)+'</b><small>'+esc(t.style||'')+' · '+esc((t.tags||[]).slice(0,3).join(' / '))+'</small></span>'
    +(t.version?'<span class="pver">'+esc(t.version)+'</span>':'')+'</div>';});
- $('plist').innerHTML=h||'<div style="padding:16px;color:var(--dim);font-size:.75rem">PLAYLIST VIDE — édite playlists.json</div>';}
+ $('plist').innerHTML=h||'<div style="padding:16px;color:var(--dim);font-size:.75rem">PLAYLIST VIDE</div>';}
 function playPlaylist(){var pl=plFlat();if(!pl.length)return;play(pl[0],pl);}
 /* ===== toutes les playlists ===== */
 function renderPlists(){
@@ -370,9 +560,13 @@ function play(t,list){
  $('ptags').textContent=(t.tags||[]).join(' / ');
  $('pdesc').textContent=t.desc||'';
  $('pinfo').textContent='VO:'+(t.lyricsCreator||'—')+' / SND:'+(t.soundCreator||'—')+' / '+(t.recordDate||'—');
- $('pstars').innerHTML=stars(t.rating);
+ $('pstars').innerHTML=stars(t.rating);$('pAvg').textContent='';
  var seq=++PCV;
  tryCovers(trackCoverPaths(t),function(u){if(seq!==PCV)return;var c=$('tCover');if(u){c.src=u;c.style.display='block';}else c.style.display='none';});
+ if(sbReady())SB.from('ratings').select('stars').eq('track',t.title).then(function(res){
+  if(seq!==PCV||!res.data||!res.data.length)return;
+  var avg=res.data.reduce(function(a,b){return a+b.stars;},0)/res.data.length;
+  $('pAvg').textContent='MOY '+Math.round(avg*10)/10+'/5 ('+res.data.length+')';});
  updateCtl();
  document.querySelectorAll('.prow').forEach(function(r){r.classList.toggle('on',r.getAttribute('data-t')===t.title&&r.getAttribute('data-f')===(t.file||''));});}
 function updateCtl(){var i=CURRENTLIST.indexOf(CURRENT);
@@ -381,6 +575,17 @@ function updateCtl(){var i=CURRENTLIST.indexOf(CURRENT);
 function plPrev(){var i=CURRENTLIST.indexOf(CURRENT);if(i>0)play(CURRENTLIST[i-1],CURRENTLIST);}
 function plNext(){var i=CURRENTLIST.indexOf(CURRENT);if(i>-1&&i<CURRENTLIST.length-1)play(CURRENTLIST[i+1],CURRENTLIST);}
 function sk(d){var a=$('audio');if(isFinite(a.duration))a.currentTime=Math.max(0,Math.min(a.duration,a.currentTime+d));}
+async function rate(k){
+ if(!CURRENT)return;
+ if(!USER){openCmt();return;}
+ if(!sbReady())return;
+ var r=await SB.from('ratings').upsert({track:CURRENT.title,email:USER.email,stars:k});
+ if(r.error){$('pAvg').textContent='ERREUR NOTE';return;}
+ $('pstars').innerHTML=stars(k);
+ SB.from('ratings').select('stars').eq('track',CURRENT.title).then(function(res){
+  if(!res.data||!res.data.length)return;
+  var avg=res.data.reduce(function(a,b){return a+b.stars;},0)/res.data.length;
+  $('pAvg').textContent='MOY '+Math.round(avg*10)/10+'/5 ('+res.data.length+')';});}
 /* ===== lyrics ===== */
 function toggleLyr(){var m=$('lyrModal');
  if(m.classList.contains('open')){m.classList.remove('open');LYR.open=false;return;}
@@ -400,8 +605,28 @@ function scrollLyr(){var a=$('audio');
  if(!LYR.open||!LYR.el||!isFinite(a.duration)||!a.duration)return;
  LYR.el.scrollTop=(a.currentTime/a.duration)*(LYR.el.scrollHeight-LYR.el.clientHeight);}
 /* ===== commentaires ===== */
-function openCmt(){$('cmtModal').classList.add('open');}
+async function openCmt(){
+ $('cmtModal').classList.add('open');
+ $('cmtStatus').textContent='';$('cmtTxt'&&0);
+ if(!sbReady()){$('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">Bientôt disponible.</div>';$('cmtForm').innerHTML='';return;}
+ if(!USER){$('cmtForm').innerHTML='<div style="color:var(--dim);font-size:.75rem;line-height:1.6">Connecte-toi (☰ → Google ou GitHub) pour noter et commenter.</div>';$('cmtList').innerHTML='';return;}
+ $('cmtForm').innerHTML='<label>Ton commentaire</label><textarea id="cmtTxt" rows="3"></textarea><div class="row"><button class="btn" onclick="sendCmt()">Envoyer</button></div>';
+ $('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">…</div>';
+ if(!CURRENT)return;
+ var res=await SB.from('comments').select('*').eq('track',CURRENT.title).order('created_at',{ascending:false}).limit(50);
+ if(res.error){$('cmtList').innerHTML='<div style="color:var(--warn);font-size:.75rem">'+esc(res.error.message)+'</div>';return;}
+ if(!res.data.length){$('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">Aucun commentaire — sois le premier !</div>';return;}
+ $('cmtList').innerHTML=res.data.map(function(c){
+  return '<div class="cmt"><div class="cH">'+esc(c.name||c.email||'?')+' · '+String(c.created_at||'').slice(0,10)+'</div><div class="cB">'+esc(c.body)+'</div></div>';}).join('');}
+async function sendCmt(){
+ if(!USER||!CURRENT||!sbReady())return;
+ var el=$('cmtTxt');var b=el?el.value.trim():'';
+ if(!b){$('cmtStatus').className='status err';$('cmtStatus').textContent='VIDE';return;}
+ var r=await SB.from('comments').insert({track:CURRENT.title,body:b,name:(USER.user_metadata&&USER.user_metadata.full_name)||USER.email.split('@')[0],email:USER.email});
+ if(r.error){$('cmtStatus').className='status err';$('cmtStatus').textContent=r.error.message;return;}
+ openCmt();}
 function closeModal(id){$(id).classList.remove('open');if(id==='lyrModal')LYR.open=false;}
+function openModal(id){$(id).classList.add('open');}
 /* ===== viewer images ===== */
 function openViewer(im){var all=[].slice.call(document.images).filter(function(x){return x.src;});
  VIEW.imgs=all;VIEW.i=Math.max(0,all.indexOf(im));showViewer();}
@@ -421,6 +646,10 @@ $('grid').addEventListener('click',function(e){var b=e.target.closest('.play');i
 $('plist').addEventListener('click',function(e){var r=e.target.closest('.prow');if(!r)return;
  var t=TRACKS.find(function(x){return x.title===r.getAttribute('data-t')&&String(x.file||'')===r.getAttribute('data-f');});
  if(t)play(t,plFlat());});
+$('pstars').addEventListener('click',function(e){
+ var sp=e.target;if(sp.tagName!=='SPAN')return;
+ var k=1,el=sp;while(el.previousSibling){el=el.previousSibling;if(el.tagName==='SPAN')k++;}
+ rate(k);});
 $('btnSearch').onclick=render;
 $('q').addEventListener('input',render);
 $('btnReset').onclick=function(){$('q').value='';activeTag='';
@@ -434,6 +663,8 @@ $('imgModal').addEventListener('mousemove',function(e){
 document.addEventListener('click',function(e){
  var t=e.target;
  if(t&&t.tagName==='IMG'&&!t.closest('.modal'))openViewer(t);});
+if(GHTOK)$('ghTok').value=GHTOK;
+initAuth();
 load();
 </script>
 </body>
