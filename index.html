@@ -299,6 +299,9 @@ audio{width:100%;height:40px}
 <label>ID créateur son</label><input id="f_snd">
 <label>Date d&#39;enregistrement</label><input id="f_date" type="date">
 <label>Note par défaut (1-5)</label><input id="f_rating" type="number" min="1" max="5">
+<label>Update Lyrics — fichier texte (.md Obsidian, .txt, .json, .html)</label>
+<input id="f_lyrFile" type="file" accept=".md,.txt,.json,.html,.htm,text/*" style="padding:6px">
+<div class="row"><button class="btn2" onclick="saveLyrics()">⬆ Uploader les paroles</button></div>
 <div class="row"><button class="btn" onclick="saveTrack()">Enregistrer</button><button class="btn2" onclick="closeModal('trackModal')">Annuler</button></div>
 <div class="status" id="mStatus"></div>
 </div></div>
@@ -334,6 +337,7 @@ var CURRENT=null,CURRENTLIST=[],PCV=0;
 var LYR={open:false,el:null};
 var VIEW={imgs:[],i:0};
 var EXTS=['jpg','jpeg','png','webp','gif'];
+var LYREXTS=['txt','md','json','html'];
 var SB=null,USER=null,GHTOK=localStorage.getItem('gh_pat')||'';
 function $(id){return document.getElementById(id);}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
@@ -428,11 +432,12 @@ function fillTrackVals(t){
  $('f_tags').value=(t.tags||[]).join(', ');
  $('f_style').value=t.style||'';$('f_version').value=t.version||'';$('f_desc').value=t.desc||'';
  $('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';
- $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||3;}
+ $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||3;
+ $('f_lyrFile').value='';}
 function openTrackForm(mode){
  if(mode===-1){tmIdx=-1;$('tmTitle').textContent='+ Ajouter un morceau';$('tmSelWrap').style.display='none';
   ['f_title','f_file','f_tags','f_style','f_version','f_desc','f_lyr','f_snd','f_date'].forEach(function(id){$(id).value='';});
-  $('f_rating').value=3;}
+  $('f_rating').value=3;$('f_lyrFile').value='';}
  else{$('tmTitle').textContent='✎ Modifier un morceau';$('tmSelWrap').style.display='block';
   $('tmSel').innerHTML=TRACKS.map(function(t,i){return '<option value="'+i+'">'+esc(t.title)+'</option>';}).join('');
   tmIdx=0;fillTrack();}
@@ -455,6 +460,30 @@ async function saveTrack(){
  $('mStatus').className='status ok';$('mStatus').textContent='⏳ PUBLICATION…';
  try{await publishAll((tmIdx>-1?'edit':'add')+' : '+ti);
   closeModal('trackModal');await load();}
+ catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
+/* ===== upload lyrics ===== */
+function lyrExtOf(name){var m=String(name||'').match(/\.([a-z0-9]+)$/i);return m?m[1].toLowerCase():'';}
+async function lyrExists(title){
+ for(var i=0;i<LYREXTS.length;i++){var ext=LYREXTS[i];
+  try{var r=await fetch(encodeURI('lyrics/'+title+'.'+ext)+'?t='+Date.now(),{cache:'no-store'});
+   if(r.ok)return ext;}catch(e){}}
+ return null;}
+async function saveLyrics(){
+ var ti=$('f_title').value.trim();
+ if(!ti){$('mStatus').className='status err';$('mStatus').textContent='RENSIGNE D&#39;ABORD LE TITRE DU MORCEAU';return;}
+ if(!GHTOK){$('mStatus').className='status err';$('mStatus').textContent='TOKEN GITHUB REQUIS (☰ Admin)';return;}
+ var f=$('f_lyrFile').files[0];
+ if(!f){$('mStatus').className='status err';$('mStatus').textContent='CHOISIS UN FICHIER (.md, .txt, .json, .html)';return;}
+ var ext=lyrExtOf(f.name)||'md';
+ if(LYREXTS.indexOf(ext)<0)ext='md';
+ var old=await lyrExists(ti);
+ if(old&&!confirm('Des paroles existent déjà pour « '+ti+' » ('+old+').\n\nRemplacer par ce nouveau fichier ?'))return;
+ $('mStatus').className='status ok';$('mStatus').textContent='⏳ UPLOAD LYRICS…';
+ try{
+  var txt=await f.text();
+  await ghPut('lyrics/'+ti+'.'+ext,toB64(txt),'lyrics : '+ti);
+  $('mStatus').className='status ok';$('mStatus').textContent='✓ LYRICS PUBLIÉS ('+ext+')';
+  $('f_lyrFile').value='';}
  catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
 var pmIdx=-1;
 function fillPlVals(p){
@@ -611,6 +640,7 @@ async function rate(k){
   var avg=res.data.reduce(function(a,b){return a+b.stars;},0)/res.data.length;
   $('pAvg').textContent='MOY '+Math.round(avg*10)/10+'/5 ('+res.data.length+')';});}
 /* ===== lyrics ===== */
+function stripHtml(s){return String(s).replace(/<style[\s\S]*?<\/style>/gi,'').replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<br\s*\/?>/gi,String.fromCharCode(10)).replace(/<\/p>/gi,String.fromCharCode(10)).replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ');}
 function toggleLyr(){var m=$('lyrModal');
  if(m.classList.contains('open')){m.classList.remove('open');LYR.open=false;return;}
  m.classList.add('open');LYR.open=true;
@@ -618,10 +648,11 @@ function toggleLyr(){var m=$('lyrModal');
  if(!CURRENT){b.textContent='—';return;}
  $('lyrTitle').textContent='Lyrics — '+CURRENT.title;
  var tb=encodeURI('lyrics/'+CURRENT.title);
- var get=function(ext){return fetch(tb+ext,{cache:'no-store'}).then(function(r){return r.ok?r.text():null;});};
- get('.txt').then(function(x){return x!=null?x:get('.md');}).then(function(x){return x!=null?x:get('.json');}).then(function(tx){
+ var get=function(ext){return fetch(tb+'.'+ext+'?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;});};
+ get('txt').then(function(x){return x!=null?x:get('md');}).then(function(x){return x!=null?x:get('json');}).then(function(x){return x!=null?x:get('html');}).then(function(tx){
   if(tx==null){b.textContent='Pas de paroles disponibles pour ce morceau.';return;}
-  if(tb.slice(-5).toLowerCase()==='.json'){try{var j=JSON.parse(tx);var v=j.lyrics||j.text||j.content||null;
+  if(tb.toLowerCase().endsWith('.html')||/<html|<body|<div|<p[ >]/i.test(tx.slice(0,500)))tx=stripHtml(tx);
+  if(tb.toLowerCase().endsWith('.json')){try{var j=JSON.parse(tx);var v=j.lyrics||j.text||j.content||null;
    if(v==null&&Array.isArray(j.lines))v=j.lines.join(String.fromCharCode(10));
    tx=v!=null?String(v):JSON.stringify(j,null,1);}catch(e){}}
   b.textContent=tx;LYR.el=b;scrollLyr();});}
@@ -665,7 +696,7 @@ var a=$('audio');
 a.ontimeupdate=function(){
  $('tTime').textContent=fmt(a.currentTime)+' / '+(isFinite(a.duration)&&a.duration?fmt(a.duration):'--:--');
  scrollLyr();};
-a.onended=function(){var i=CURRENTLIST.indexOf(CURRENT);if(i>-1&&i<CURRENTLIST.length-1)play(CURRENTLIST[i+1],CURRENTLIST);};
+a.onended=function(){var i=CURRENTLIST.indexOf(CURRENT);if(i>-1&&i<CURRENTLIST.length-1)play(CURRENTLIST[i+1],CURRENTLIST);}
 $('grid').addEventListener('click',function(e){var b=e.target.closest('.play');if(b)play(TRACKS[+b.getAttribute('data-i')],TRACKS);});
 $('plist').addEventListener('click',function(e){var r=e.target.closest('.prow');if(!r)return;
  var t=TRACKS.find(function(x){return x.title===r.getAttribute('data-t')&&String(x.file||'')===r.getAttribute('data-f');});
