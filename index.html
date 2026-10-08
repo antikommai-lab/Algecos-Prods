@@ -104,6 +104,18 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .plcard .pld{color:var(--dim);font-size:.7rem;margin-bottom:6px;line-height:1.5}
 .plcard .pln{color:var(--y);font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
 .plcard .btn{padding:7px 12px;font-size:.68rem}
+.fold{max-height:2.7em;overflow:hidden;cursor:pointer;position:relative}
+.fold.open{max-height:none}
+.fold:not(.open):after{content:'\25BE';position:absolute;right:2px;bottom:0;color:var(--y);background:rgba(16,16,16,.9);padding:0 4px;font-size:.7rem}
+#mgList,#mgPlList,#mgPEList{max-height:42vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px}
+.mgrow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);background:#000;font-size:.76rem}
+.mgrow:hover{outline:1px solid var(--y)}
+.mgrow input[type=checkbox]{flex:none}
+.mgrow .mt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mgrow .ms{color:var(--dim);font-size:.64rem}
+.mgact{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.mgact select,.mgact input[type=text]{padding:8px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.78rem}
+.mgact input[type=text]{flex:1;min-width:120px}
 /* ===== roue crantée admin ===== */
 .edit{display:none;width:30px;height:30px;background:#000;color:var(--y);border:1px solid var(--y);cursor:pointer;font-size:1rem;line-height:1;text-align:center}
 .edit:hover{background:var(--y);color:#000}
@@ -217,6 +229,8 @@ audio{width:100%;height:40px}
 <div id="authZone"></div>
 <h2 id="admTitle" style="display:none">Admin</h2>
 <div id="admZone" style="display:none">
+<button class="mitem" onclick="openManage('tr')">U0001F5C2 Gestion des tracks (1 ou par lots)</button>
+<button class="mitem" onclick="openManage('pl')">U0001F5C2 Gestion des playlists</button>
 <button class="mitem" onclick="openTrackForm(-1)">+ Ajouter un morceau</button>
 <button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
 <button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
@@ -265,6 +279,14 @@ audio{width:100%;height:40px}
 <button class="btn2" id="btnReset">✕</button>
 </div>
 <div class="tags" id="tags"></div>
+<div class="search-bar" style="margin-bottom:10px"><select id="moreOpts" onchange="render()">
+<option value="">— plus d&#39;options —</option>
+<option value="grp">même morceau · toutes versions</option>
+<option value="note4">note ≥ 4</option>
+<option value="notelow">note &lt; 3</option>
+<option value="noversion">sans version</option>
+<option value="recent">10 derniers ajoutés</option>
+</select></div>
 <div id="count"></div>
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUVÉ.</div>
 </section>
@@ -316,6 +338,46 @@ audio{width:100%;height:40px}
 <div id="cmtList"></div>
 <div id="cmtForm"></div>
 <div class="status" id="cmtStatus"></div>
+</div></div>
+
+<div class="modal" id="manageModal"><div class="mbox" style="width:min(680px,100%)">
+<button class="close" onclick="closeModal('manageModal')">✕</button>
+<h3 id="mgTitle">Gestion</h3>
+<div class="row">
+<button class="btn" id="mgTabTr" onclick="mgTab('tr')">Tracks</button>
+<button class="btn2" id="mgTabPl" onclick="mgTab('pl')">Playlists</button>
+</div>
+<div id="mgTr" style="display:none">
+<div class="mgact">
+<input type="text" id="mgQ" placeholder="FILTRE…" oninput="renderMgList()">
+<select id="mgSort" onchange="renderMgList()"><option value="title">TRI : TITRE</option><option value="date">TRI : DATE</option><option value="rating">TRI : NOTE</option></select>
+<label style="display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--dim)"><input type="checkbox" id="mgAll" onchange="mgAll(this.checked)"> tout</label>
+</div>
+<div id="mgList"></div>
+<div class="mgact">
+<select id="mgPlSel"></select>
+<button class="btn" onclick="mgAddToPl()">+ Ajouter à la playlist</button>
+<button class="btn" onclick="openTrackForm(-1)">+ Nouveau</button>
+<button class="btn2" onclick="mgEditSel()">✎ Modifier</button>
+<button class="btn2" onclick="mgDelSel()">U0001F5D1 Supprimer</button>
+</div>
+<div class="status" id="mgStatus"></div>
+</div>
+<div id="mgPl" style="display:none">
+<div id="mgPlList"></div>
+<div class="mgact">
+<button class="btn" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
+</div>
+<div id="mgPlEdit" style="display:none">
+<div class="mgact">
+<input type="text" id="mgPEQ" placeholder="FILTRE TRACKS…" oninput="renderMgPE()">
+<label style="display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--dim)"><input type="checkbox" id="mgPEAll" onchange="mgPEAll(this.checked)"> tout</label>
+</div>
+<div id="mgPEList"></div>
+<div class="row"><button class="btn" onclick="mgPESave()">Enregistrer la tracklist</button></div>
+</div>
+<div class="status" id="mgPlStatus"></div>
+</div>
 </div></div>
 
 <div class="modal" id="subModal"><div class="mbox">
@@ -401,15 +463,16 @@ audio{width:100%;height:40px}
 </div></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261009"></script>
-<script src="js/data.js?v=20261009"></script>
-<script src="js/auth.js?v=20261009"></script>
-<script src="js/admin.js?v=20261009"></script>
-<script src="js/player.js?v=20261009"></script>
-<script src="js/views.js?v=20261009"></script>
-<script src="js/versions.js?v=20261009"></script>
-<script src="js/genres.js?v=20261009"></script>
-<script src="js/main.js?v=20261009"></script>
+<script src="js/config.js?v=20261010"></script>
+<script src="js/data.js?v=20261010"></script>
+<script src="js/auth.js?v=20261010"></script>
+<script src="js/admin.js?v=20261010"></script>
+<script src="js/player.js?v=20261010"></script>
+<script src="js/views.js?v=20261010"></script>
+<script src="js/versions.js?v=20261010"></script>
+<script src="js/genres.js?v=20261010"></script>
+<script src="js/manage.js?v=20261010"></script>
+<script src="js/main.js?v=20261010"></script>
 
 </body>
 </html>
