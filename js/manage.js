@@ -70,3 +70,25 @@ async function mgPESave(){var p=PLAYLISTS[MGPL];if(!p)return;
 async function mgPublish(msg,st){$(st).className='status ok';$(st).textContent='\u23F3 PUBLICATION\u2026';
  try{await publishAll(msg);$(st).textContent='\u2713 PUBLI\u00C9';renderMgPlList();await load();}
  catch(e){$(st).className='status err';$(st).textContent=e.message;}}
+async function mgApplyTags(){
+ if(!MGSEL.length){$('mgStatus').className='status err';$('mgStatus').textContent='RIEN S\u00C9LECTIONN\u00C9';return;}
+ var raw=$('mgTagIn').value.trim();
+ if(!raw){$('mgStatus').className='status err';$('mgStatus').textContent='RENSIGNE AU MOINS 1 TAG';return;}
+ var adds=raw.split(',').map(function(s){return s.trim();}).filter(Boolean);
+ var n=0;
+ MGSEL.forEach(function(i){var t=TRACKS[i];t.tags=t.tags||[];
+  adds.forEach(function(a){if(t.tags.map(function(x){return x.toLowerCase();}).indexOf(a.toLowerCase())<0){t.tags.push(a);n++;}});});
+ if(!n){$('mgStatus').className='status err';$('mgStatus').textContent='RIEN \u00C0 AJOUTER (d\u00E9j\u00E0 taggu\u00E9s)';return;}
+ if(!confirm('Ajouter '+adds.join(', ')+' \u00E0 '+MGSEL.length+' morceau(x) ?'))return;
+ $('mgStatus').className='status ok';$('mgStatus').textContent='\u23F3 PUBLICATION\u2026';
+ try{await publishAll('tags en lot : '+adds.join(', '));$('mgStatus').textContent='\u2713 '+n+' TAG(S) AJOUT\u00C9S';renderMgList();await load();}
+ catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;}}
+async function mgApplyStyle(){
+ if(!MGSEL.length){$('mgStatus').className='status err';$('mgStatus').textContent='RIEN S\u00C9LECTIONN\u00C9';return;}
+ var st=$('mgStyleIn').value.trim();
+ if(!st){$('mgStatus').className='status err';$('mgStatus').textContent='RENSIGNE UN STYLE';return;}
+ if(!confirm('Remplacer le style par \u00AB '+st+' \u00BB sur '+MGSEL.length+' morceau(x) ?'))return;
+ MGSEL.forEach(function(i){TRACKS[i].style=st;});
+ $('mgStatus').className='status ok';$('mgStatus').textContent='\u23F3 PUBLICATION\u2026';
+ try{await publishAll('style en lot : '+st);$('mgStatus').textContent='\u2713 STYLE APPLIQU\u00C9 ('+MGSEL.length+')';renderMgList();await load();}
+ catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;}}
