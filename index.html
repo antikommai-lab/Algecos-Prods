@@ -222,6 +222,7 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
 <button class="mitem" onclick="openSelForm(-1)">+ Nouvelle sélection</button>
 <button class="mitem" onclick="openSelForm(0)">✎ Modifier une sélection</button>
+<button class="mitem" onclick="openMsgForm()">✉ Message RSS / newsletter</button>
 <label>Token GitHub (fine-grained, Contents: R/W)</label>
 <input id="ghTok" type="password" placeholder="github_pat_…">
 <button class="btn" style="width:100%" onclick="saveTok()">Mémoriser le token</button>
@@ -316,6 +317,15 @@ audio{width:100%;height:40px}
 <div class="status" id="cmtStatus"></div>
 </div></div>
 
+<div class="modal" id="msgModal"><div class="mbox">
+<button class="close" onclick="closeModal('msgModal')">✕</button>
+<h3>✉ Message RSS</h3>
+<label>Titre</label><input id="msgTitle">
+<label>Message</label><textarea id="msgBody" rows="5"></textarea>
+<div class="row"><button class="btn" onclick="saveMsg()">Publier dans le flux</button><button class="btn2" onclick="closeModal('msgModal')">Annuler</button></div>
+<div class="status" id="msgStatus"></div>
+</div></div>
+
 <div class="modal" id="selModal"><div class="mbox">
 <button class="close" onclick="closeModal('selModal')">✕</button>
 <h3 id="smSelTitle">Sélection</h3>
@@ -345,6 +355,9 @@ audio{width:100%;height:40px}
 <label>ID créateur son</label><input id="f_snd">
 <label>Date d&#39;enregistrement</label><input id="f_date" type="date">
 <label>Note par défaut (1-5)</label><input id="f_rating" type="number" min="1" max="5">
+<label>Ajouter à une playlist (optionnel)</label>
+<select id="f_pladd"></select>
+<input id="f_plnew" placeholder="ou nom d&#39;une nouvelle playlist">
 <label>Update Lyrics — fichier texte (.md Obsidian, .txt, .json, .html)</label>
 <input id="f_lyrFile" type="file" accept=".md,.txt,.json,.html,.htm,text/*" style="padding:6px">
 <div class="row"><button class="btn2" onclick="saveLyrics()">⬆ Uploader les paroles</button></div>
@@ -372,15 +385,15 @@ audio{width:100%;height:40px}
 </div></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261008"></script>
-<script src="js/data.js?v=20261008"></script>
-<script src="js/auth.js?v=20261008"></script>
-<script src="js/admin.js?v=20261008"></script>
-<script src="js/player.js?v=20261008"></script>
-<script src="js/views.js?v=20261008"></script>
-<script src="js/versions.js?v=20261008"></script>
-<script src="js/genres.js?v=20261008"></script>
-<script src="js/main.js?v=20261008"></script>
+<script src="js/config.js?v=20261009"></script>
+<script src="js/data.js?v=20261009"></script>
+<script src="js/auth.js?v=20261009"></script>
+<script src="js/admin.js?v=20261009"></script>
+<script src="js/player.js?v=20261009"></script>
+<script src="js/views.js?v=20261009"></script>
+<script src="js/versions.js?v=20261009"></script>
+<script src="js/genres.js?v=20261009"></script>
+<script src="js/main.js?v=20261009"></script>
 
 </body>
 </html>

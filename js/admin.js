@@ -15,13 +15,15 @@ function buildFeed(){
  var items=TRACKS.slice().sort(function(a,b){return String(b.recordDate||'').localeCompare(String(a.recordDate||''));}).slice(0,20).map(function(t){
   var d=t.recordDate?new Date(t.recordDate+'T12:00:00Z'):new Date();
   return '<item><title>'+esc(t.title)+(t.version?' ['+esc(t.version)+']':'')+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-'+esc(t.title)+'-'+esc(t.version||'')+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc((t.style||'')+' — '+(t.desc||''))+'</description></item>';}).join('');
- var plItems=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));}).slice(0,10).map(function(p){var d=p.upd?new Date(p.upd+'T12:00:00Z'):new Date();return '<item><title>PLAYLIST — '+esc(p.title)+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-pl-'+esc(p.title)+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc(p.desc||'')+'</description></item>';}).join('');
- return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>ALGECOS-PRODS</title><link>'+SITE_URL+'</link><description>Nouveaux morceaux ANTIKOMM — division ALGECOS</description>'+items+plItems+'</channel></rss>';}
+ var msgItems=MSGS.map(function(m){var d=m.date?new Date(m.date+'T12:00:00Z'):new Date();return '<item><title>NEWS — '+esc(m.title)+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-msg-'+esc(m.date)+'-'+esc(m.title)+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc(m.body||'')+'</description></item>';}).join('');
+var plItems=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));}).slice(0,10).map(function(p){var d=p.upd?new Date(p.upd+'T12:00:00Z'):new Date();return '<item><title>PLAYLIST — '+esc(p.title)+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-pl-'+esc(p.title)+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc(p.desc||'')+'</description></item>';}).join('');
+ return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>ALGECOS-PRODS</title><link>'+SITE_URL+'</link><description>Nouveaux morceaux ANTIKOMM — division ALGECOS</description>'+items+msgItems+plItems+'</channel></rss>';}
 async function publishAll(msg){
  if(!GHTOK)throw new Error('TOKEN GITHUB REQUIS (☰ Admin)');
  await ghPut('tracks.json',toB64(JSON.stringify(TRACKS,null,2)),msg);
  await ghPut('playlists.json',toB64(JSON.stringify(PLAYLISTS,null,2)),msg);
  await ghPut('selections.json',toB64(JSON.stringify(SELS,null,2)),msg);
+ await ghPut('messages.json',toB64(JSON.stringify(MSGS,null,2)),msg);
  await ghPut('feed.xml',toB64(buildFeed()),'flux RSS : '+msg);}
 
 /* ===== formulaires admin ===== */
@@ -33,19 +35,19 @@ function fillTrackVals(t){
  $('f_vid').value=t.vid||'';
  $('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';
  $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||3;
- $('f_lyrFile').value='';}
+ $('f_lyrFile').value='';$('f_pladd').value='';$('f_plnew').value='';}
 function openTrackForm(mode){
  if(mode===-1){tmIdx=-1;$('tmTitle').textContent='+ Ajouter un morceau';$('tmSelWrap').style.display='none';
   ['f_title','f_file','f_tags','f_style','f_version','f_vid','f_desc','f_lyr','f_snd','f_date'].forEach(function(id){$(id).value='';});
-  $('f_rating').value=3;$('f_lyrFile').value='';}
+  $('f_rating').value=3;$('f_lyrFile').value='';$('f_pladd').value='';$('f_plnew').value='';}
  else{$('tmTitle').textContent='✎ Modifier un morceau';$('tmSelWrap').style.display='block';
   $('tmSel').innerHTML=TRACKS.map(function(t,i){return '<option value="'+i+'">'+esc(t.title)+'</option>';}).join('');
   tmIdx=0;fillTrack();}
- $('mStatus').textContent='';fillLyricsSel();openModal('trackModal');}
+ $('mStatus').textContent='';fillLyricsSel();fillPlAdd();openModal('trackModal');}
 function editTrack(i){
  var t=TRACKS[i];if(!t)return;
  tmIdx=i;$('tmTitle').textContent='✎ Modifier : '+t.title;$('tmSelWrap').style.display='none';
- fillTrackVals(t);$('mStatus').textContent='';fillLyricsSel();openModal('trackModal');}
+ fillTrackVals(t);$('mStatus').textContent='';fillLyricsSel();fillPlAdd();openModal('trackModal');}
 function fillTrack(){tmIdx=+$('tmSel').value;var t=TRACKS[tmIdx];if(t)fillTrackVals(t);}
 async function saveTrack(){
  var ti=$('f_title').value.trim();
@@ -57,6 +59,11 @@ async function saveTrack(){
  o.lyricsCreator=$('f_lyr').value.trim();o.soundCreator=$('f_snd').value.trim();
  o.recordDate=$('f_date').value;o.rating=+$('f_rating').value||0;
  if(tmIdx>-1)TRACKS[tmIdx]=o;else TRACKS.push(o);
+ var plSel=$('f_pladd')?$('f_pladd').value:'';
+ var plNew=$('f_plnew')?$('f_plnew').value.trim():'';
+ if(plSel==='__new'&&plNew){PLAYLISTS.push({title:plNew,desc:'',tracks:[o.title],upd:new Date().toISOString().slice(0,10)});}
+ else if(plSel){var PP=PLAYLISTS.find(function(x){return x.title===plSel;});
+  if(PP){(PP.tracks=PP.tracks||[]).push(o.title);PP.upd=new Date().toISOString().slice(0,10);}}
  $('mStatus').className='status ok';$('mStatus').textContent='⏳ PUBLICATION…';
  try{await publishAll((tmIdx>-1?'edit':'add')+' : '+ti);
   closeModal('trackModal');await load();}
@@ -179,3 +186,15 @@ async function saveSel(){
  try{await publishAll('sélection : '+ti);
   closeModal('selModal');await load();}
  catch(e){$('sStatus').className='status err';$('sStatus').textContent=e.message;}}
+/* ===== ajout playlist au morceau + messages RSS ===== */
+function fillPlAdd(){var s=$('f_pladd');if(!s)return;
+ s.innerHTML='<option value="">— aucune —</option>'+PLAYLISTS.map(function(p){return '<option value="'+esc(p.title)+'">'+esc(p.title)+'</option>';}).join('')+'<option value="__new">+ Nouvelle playlist…</option>';
+ s.value='';}
+function openMsgForm(){$('msgTitle').value='';$('msgBody').value='';$('msgStatus').textContent='';openModal('msgModal');}
+async function saveMsg(){var t=$('msgTitle').value.trim(),b=$('msgBody').value.trim();
+ if(!t){$('msgStatus').className='status err';$('msgStatus').textContent='TITRE REQUIS';return;}
+ MSGS.unshift({title:t,body:b,date:new Date().toISOString().slice(0,10)});
+ $('msgStatus').className='status ok';$('msgStatus').textContent='⏳ PUBLICATION…';
+ try{await publishAll('message : '+t);
+  closeModal('msgModal');await load();}
+ catch(e){$('msgStatus').className='status err';$('msgStatus').textContent=e.message;}}
