@@ -38,10 +38,7 @@ async function tmpLogin(){
  try{
   var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p));
   var hex=[].slice.call(new Uint8Array(buf)).map(function(b){return ('0'+b.toString(16)).slice(-2);}).join('');
-  var r=await fetch('admin_pass.hash?t='+Date.now(),{cache:'no-store'});
-  if(!r.ok)throw new Error('FICHIER HASH INTROUVABLE');
-  var ref=(await r.text()).trim();
-  if(hex!==ref){$('tmpStatus').className='status err';$('tmpStatus').textContent='MAUVAIS MOT DE PASSE';alert('\u26A0 MAUVAIS MOT DE PASSE \u2014 v\u00E9rifie la saisie (attention aux caract\u00E8res proches : 0/O, l/1).');return;}
-  localStorage.setItem('adm_tmp','1');renderAuth();alert('\u2713 MODE ADMIN ACTIF \u2014 les roues crant\u00E9es \u2699 et le menu Admin sont disponibles.');}
- catch(e){$('tmpStatus').className='status err';$('tmpStatus').textContent=e.message;}}
+  if(hex!==ADMIN_PASS_HASH){$('tmpStatus').className='status err';$('tmpStatus').textContent='MAUVAIS MOT DE PASSE';alert('MAUVAIS MOT DE PASSE');return;}
+  localStorage.setItem('adm_tmp','1');renderAuth();alert('MODE ADMIN ACTIF \u2014 roues crant\u00E9es et menu Admin disponibles');}
+ catch(e){$('tmpStatus').className='status err';$('tmpStatus').textContent=e.message;alert('ERREUR : '+e.message);}}
 function tmpLogout(){localStorage.removeItem('adm_tmp');renderAuth();}
