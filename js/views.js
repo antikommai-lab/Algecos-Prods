@@ -89,3 +89,19 @@ function updTicker(){
  if(!parts.length){tk.classList.remove('show');return;}
  inner.textContent=parts.join('   ✦   ');
  tk.classList.add('show');}
+
+/* ===== rester informe : RSS + mail ===== */
+function openSub(){$('subChoice').style.display='block';$('subForm').style.display='none';$('subEmail').value='';$('subOk').checked=false;$('subStatus').textContent='';openModal('subModal');}
+function subRss(){window.open('feed.xml','_blank');}
+function subMail(){$('subChoice').style.display='none';$('subForm').style.display='block';$('subStatus').textContent='';}
+function backSub(){$('subChoice').style.display='block';$('subForm').style.display='none';}
+async function sendSub(){
+ var em=$('subEmail').value.trim();
+ if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){$('subStatus').className='status err';$('subStatus').textContent='ADRESSE MAIL INVALIDE';return;}
+ if(!$('subOk').checked){$('subStatus').className='status err';$('subStatus').textContent='IL FAUT COCHER L\'ACCORD POUR RECEVOIR LES MAILS';return;}
+ if(!NEWS_ENDPOINT){$('subStatus').className='status err';$('subStatus').textContent='SERVICE MAIL EN COURS DE CONFIGURATION — RÉESSAIE BIENTÔT';return;}
+ $('subStatus').className='status ok';$('subStatus').textContent='⏳ INSCRIPTION…';
+ try{var r=await fetch(NEWS_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em})});
+  if(!r.ok)throw new Error('ERREUR ('+r.status+')');
+  $('subStatus').className='status ok';$('subStatus').textContent='✓ INSCRIT — bienvenue !';}
+ catch(e){$('subStatus').className='status err';$('subStatus').textContent=e.message;}}
