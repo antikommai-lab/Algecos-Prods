@@ -15,11 +15,13 @@ function buildFeed(){
  var items=TRACKS.slice().sort(function(a,b){return String(b.recordDate||'').localeCompare(String(a.recordDate||''));}).slice(0,20).map(function(t){
   var d=t.recordDate?new Date(t.recordDate+'T12:00:00Z'):new Date();
   return '<item><title>'+esc(t.title)+(t.version?' ['+esc(t.version)+']':'')+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-'+esc(t.title)+'-'+esc(t.version||'')+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc((t.style||'')+' — '+(t.desc||''))+'</description></item>';}).join('');
- return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>ALGECOS-PRODS</title><link>'+SITE_URL+'</link><description>Nouveaux morceaux ANTIKOMM — division ALGECOS</description>'+items+'</channel></rss>';}
+ var plItems=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));}).slice(0,10).map(function(p){var d=p.upd?new Date(p.upd+'T12:00:00Z'):new Date();return '<item><title>PLAYLIST — '+esc(p.title)+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-pl-'+esc(p.title)+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc(p.desc||'')+'</description></item>';}).join('');
+ return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>ALGECOS-PRODS</title><link>'+SITE_URL+'</link><description>Nouveaux morceaux ANTIKOMM — division ALGECOS</description>'+items+plItems+'</channel></rss>';}
 async function publishAll(msg){
  if(!GHTOK)throw new Error('TOKEN GITHUB REQUIS (☰ Admin)');
  await ghPut('tracks.json',toB64(JSON.stringify(TRACKS,null,2)),msg);
  await ghPut('playlists.json',toB64(JSON.stringify(PLAYLISTS,null,2)),msg);
+ await ghPut('selections.json',toB64(JSON.stringify(SELS,null,2)),msg);
  await ghPut('feed.xml',toB64(buildFeed()),'flux RSS : '+msg);}
 
 /* ===== formulaires admin ===== */
@@ -152,3 +154,28 @@ async function savePl(){
  try{await publishAll('playlist : '+ti);
   closeModal('plModal');PLAYLIST=PLAYLISTS[0];await load();}
  catch(e){$('pStatus').className='status err';$('pStatus').textContent=e.message;}}
+
+/* ===== formulaires sélections ===== */
+var smSelIdx=-1;
+function fillSelVals(p){
+ $('s_title').value=p.title||'';$('s_desc').value=p.desc||'';
+ $('s_tracks').value=(p.tracks||[]).map(function(r){return typeof r==='string'?r:entRef(r);}).filter(Boolean).join(String.fromCharCode(10));}
+function openSelForm(mode){
+ if(mode===-1){smSelIdx=-1;$('smSelTitle').textContent='+ Nouvelle sélection';$('smSelSelWrap').style.display='none';
+  $('s_title').value='';$('s_desc').value='';$('s_tracks').value='';}
+ else{$('smSelTitle').textContent='✎ Modifier une sélection';$('smSelSelWrap').style.display='block';
+  $('smSelSel').innerHTML=SELS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
+  smSelIdx=0;fillSel();}
+ $('sStatus').textContent='';openModal('selModal');}
+function fillSel(){smSelIdx=+$('smSelSel').value;var p=SELS[smSelIdx];if(p)fillSelVals(p);}
+async function saveSel(){
+ var ti=$('s_title').value.trim();
+ if(!ti){$('sStatus').className='status err';$('sStatus').textContent='TITRE REQUIS';return;}
+ var lines=$('s_tracks').value.split(String.fromCharCode(10)).map(function(s){return s.trim();}).filter(Boolean);
+ var p={title:ti,desc:$('s_desc').value.trim(),tracks:lines};
+ p.upd=new Date().toISOString().slice(0,10);
+ if(smSelIdx>-1)SELS[smSelIdx]=p;else SELS.push(p);
+ $('sStatus').className='status ok';$('sStatus').textContent='⏳ PUBLICATION…';
+ try{await publishAll('sélection : '+ti);
+  closeModal('selModal');await load();}
+ catch(e){$('sStatus').className='status err';$('sStatus').textContent=e.message;}}

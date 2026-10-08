@@ -220,6 +220,8 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
 <button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
 <button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
+<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle sélection</button>
+<button class="mitem" onclick="openSelForm(0)">✎ Modifier une sélection</button>
 <label>Token GitHub (fine-grained, Contents: R/W)</label>
 <input id="ghTok" type="password" placeholder="github_pat_…">
 <button class="btn" style="width:100%" onclick="saveTok()">Mémoriser le token</button>
@@ -312,6 +314,17 @@ audio{width:100%;height:40px}
 <div id="cmtList"></div>
 <div id="cmtForm"></div>
 <div class="status" id="cmtStatus"></div>
+</div></div>
+
+<div class="modal" id="selModal"><div class="mbox">
+<button class="close" onclick="closeModal('selModal')">✕</button>
+<h3 id="smSelTitle">Sélection</h3>
+<div id="smSelSelWrap" style="display:none"><label>Quelle sélection ?</label><select id="smSelSel" onchange="fillSel()"></select></div>
+<label>Titre</label><input id="s_title">
+<label>Description</label><textarea id="s_desc" rows="2"></textarea>
+<label>Morceaux — 1 par ligne (titre ou référence)</label><textarea id="s_tracks" rows="7" style="font-size:.74rem"></textarea>
+<div class="row"><button class="btn" onclick="saveSel()">Enregistrer</button><button class="btn2" onclick="closeModal('selModal')">Annuler</button></div>
+<div class="status" id="sStatus"></div>
 </div></div>
 
 <div class="modal" id="trackModal"><div class="mbox">

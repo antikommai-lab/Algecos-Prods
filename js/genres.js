@@ -4,7 +4,7 @@ function genrePlaylists(){
  TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){if(!cnt[k]){cnt[k]=[];order.push(k);}cnt[k].push(t.title);});});
  return order.sort().map(function(k){return {title:'GENRE · '+k,desc:'Générée automatiquement — tous les morceaux taggués '+k,auto:true,tracks:cnt[k]};});}
 var SELALL=[];
-function renderSels(){SELALL=PLAYLISTS.concat(genrePlaylists());
+function renderSels(){SELALL=SELS.concat(PLAYLISTS).concat(genrePlaylists());
  $('selGrid').innerHTML=SELALL.map(selCardHTML).join('')||'<div style="color:var(--dim);font-size:.75rem">AUCUNE PLAYLIST.</div>';
  bindSelCards($('selGrid'));}
 function bindSelCards(root){

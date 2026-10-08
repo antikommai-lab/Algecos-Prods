@@ -1,4 +1,4 @@
-var TRACKS=[],PLAYLISTS=[],PLAYLIST=null,activeTags=[];
+var TRACKS=[],PLAYLISTS=[],PLAYLIST=null,activeTags=[],SELS=[];
 var CURRENT=null,CURRENTLIST=[],PCV=0;
 var LYR={open:false,el:null};
 var VIEW={imgs:[],i:0};
@@ -46,6 +46,8 @@ async function load(){
  try{var r=await fetch('tracks.json',{cache:'no-store'});TRACKS=await r.json();}catch(e){TRACKS=[];}
  try{var p=await fetch('playlists.json',{cache:'no-store'});PLAYLISTS=await p.json();}catch(e){PLAYLISTS=[];}
  if(!Array.isArray(PLAYLISTS))PLAYLISTS=[];
+ try{var sl=await fetch('selections.json',{cache:'no-store'});SELS=await sl.json();}catch(e){SELS=[];}
+ if(!Array.isArray(SELS))SELS=[];
  if(!PLAYLIST||PLAYLISTS.indexOf(PLAYLIST)<0)PLAYLIST=PLAYLISTS[0]||{title:'—',desc:'',tracks:[]};
  renderPlaylist();renderPlists();renderHomeGrid();renderVersions();renderSels();
  var allTags=[];TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){if(allTags.indexOf(k)<0)allTags.push(k);});});
