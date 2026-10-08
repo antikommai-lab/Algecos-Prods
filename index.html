@@ -254,7 +254,7 @@ audio{width:100%;height:40px}
 <button class="pbtn" onclick="sk(10)" title="Avancer 10s">+10s</button>
 <button class="pbtn" id="nextBtn" onclick="plNext()" title="Morceau suivant">⏭</button>
 <button class="pbtn" onclick="toggleLyr()" title="Paroles">LYRICS</button>
-<button class="pbtn" onclick="openCmt()" title="Commentaires">💬</button>
+<button class="pbtn" onclick="openCmt()" title="Commentaires"></button>
 </div>
 </div>
 <audio id="audio" controls></audio>
@@ -276,7 +276,7 @@ audio{width:100%;height:40px}
 
 <div class="modal" id="cmtModal"><div class="mbox">
 <button class="close" onclick="closeModal('cmtModal')">✕</button>
-<h3>💬 Commentaires</h3>
+<h3> Commentaires</h3>
 <div id="cmtList"></div>
 <div id="cmtForm"></div>
 <div class="status" id="cmtStatus"></div>
@@ -302,6 +302,9 @@ audio{width:100%;height:40px}
 <label>Update Lyrics — fichier texte (.md Obsidian, .txt, .json, .html)</label>
 <input id="f_lyrFile" type="file" accept=".md,.txt,.json,.html,.htm,text/*" style="padding:6px">
 <div class="row"><button class="btn2" onclick="saveLyrics()">⬆ Uploader les paroles</button></div>
+<label>Ou réutiliser un lyrics existant — même fichier pour plusieurs morceaux</label>
+<select id="f_lyrSel"><option value="">— choisir un fichier lyrics —</option></select>
+<div class="row"><button class="btn2" onclick="applyLyricsSel()">⤵ Utiliser le lyrics sélectionné</button></div>
 <div class="row"><button class="btn" onclick="saveTrack()">Enregistrer</button><button class="btn2" onclick="closeModal('trackModal')">Annuler</button></div>
 <div class="status" id="mStatus"></div>
 </div></div>
@@ -441,11 +444,11 @@ function openTrackForm(mode){
  else{$('tmTitle').textContent='✎ Modifier un morceau';$('tmSelWrap').style.display='block';
   $('tmSel').innerHTML=TRACKS.map(function(t,i){return '<option value="'+i+'">'+esc(t.title)+'</option>';}).join('');
   tmIdx=0;fillTrack();}
- $('mStatus').textContent='';openModal('trackModal');}
+ $('mStatus').textContent='';fillLyricsSel();openModal('trackModal');}
 function editTrack(i){
  var t=TRACKS[i];if(!t)return;
  tmIdx=i;$('tmTitle').textContent='✎ Modifier : '+t.title;$('tmSelWrap').style.display='none';
- fillTrackVals(t);$('mStatus').textContent='';openModal('trackModal');}
+ fillTrackVals(t);$('mStatus').textContent='';fillLyricsSel();openModal('trackModal');}
 function fillTrack(){tmIdx=+$('tmSel').value;var t=TRACKS[tmIdx];if(t)fillTrackVals(t);}
 async function saveTrack(){
  var ti=$('f_title').value.trim();
@@ -484,6 +487,34 @@ async function saveLyrics(){
   await ghPut('lyrics/'+ti+'.'+ext,toB64(txt),'lyrics : '+ti);
   $('mStatus').className='status ok';$('mStatus').textContent='✓ LYRICS PUBLIÉS ('+ext+')';
   $('f_lyrFile').value='';}
+ catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
+async function fillLyricsSel(){
+ var sl=$('f_lyrSel');
+ try{
+  var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/lyrics?t='+Date.now(),{cache:'no-store'});
+  if(!r.ok)throw new Error('KO');
+  var L=await r.json();
+  if(!Array.isArray(L)||!L.length)throw new Error('KO');
+  sl.innerHTML='<option value="">— choisir un fichier lyrics —</option>'+L.map(function(f){return '<option value="'+esc(f.name)+'">'+esc(f.name)+'</option>';}).join('');
+ }catch(e){sl.innerHTML='<option value="">(liste indisponible — upload direct)</option>';}}
+async function applyLyricsSel(){
+ var ti=$('f_title').value.trim();
+ if(!ti){$('mStatus').className='status err';$('mStatus').textContent='TITRE DU MORCEAU REQUIS';return;}
+ if(!GHTOK){$('mStatus').className='status err';$('mStatus').textContent='TOKEN GITHUB REQUIS';return;}
+ var nm=$('f_lyrSel').value;
+ if(!nm){$('mStatus').className='status err';$('mStatus').textContent='CHOISIS UN LYRICS DANS LA LISTE';return;}
+ var ext=lyrExtOf(nm)||'md';
+ if(LYREXTS.indexOf(ext)<0)ext='md';
+ var old=await lyrExists(ti);
+ if(old&&!confirm('Des paroles existent d\u00E9j\u00E0 pour « '+ti+' » ('+old+').\n\nRemplacer par « '+nm+' » ?'))return;
+ $('mStatus').className='status ok';$('mStatus').textContent='⏳ COPIE LYRICS…';
+ try{
+  var src=await fetch(encodeURI('lyrics/'+nm)+'?t='+Date.now(),{cache:'no-store'});
+  if(!src.ok)throw new Error('FICHIER SOURCE INTROUVABLE');
+  var txt=await src.text();
+  await ghPut('lyrics/'+ti+'.'+ext,toB64(txt),'lyrics : '+ti+' (reutilise '+nm+')');
+  $('mStatus').className='status ok';$('mStatus').textContent='✓ LYRICS PUBLIÉS ('+ext+') — source : '+nm;
+  $('f_lyrSel').value='';}
  catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
 var pmIdx=-1;
 function fillPlVals(p){
