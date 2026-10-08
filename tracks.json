@@ -1,26 +1,927 @@
 [
-{"title":"La Cour Des Mirages (HaurrorCore)","file":"audio/La Cour Des Mirages (HaurrorCore)_vPreDEF.mp3","tags":["trap","rap","electro","breakbeat","tekno","hardtek"],"style":"swing gipsy","version":"vDEF.1","desc":"Haurror Center Stories: the hardcore brokens one","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":5},
-{"title":"Les Tontons Buveurs (Aldi's Stories)","file":"audio/Les Tontons Buveurs (Aldi's Stories)_vDEF1.mp3","tags":["accoustic","chanson","gipsy","swing","rap","trap"],"style":"gipsy swing,bossa nova,samba,trap,rap","version":"vDEF.1","desc":"haurror stories, les Tontons Buveurs (Aldi's Stories) latest version","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":5},
-{"title":"Migrant Story (HaurrorCore Positive) [chanson,slam,reggae,rap].mp3","file":"audio/the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam).mp3","tags":["rap","valse","chanson française","accoustique"],"style":"rap,valse,chanson française,accoustique","version":"vDEF.1","desc":"Haurror Stories: The migrant point of view - latest version","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":5},
-{"title":"LesTontonsBuveurs Gipsy v1","file":"audio/LesTontonsBuveurs Gipsy v1.mp3","tags":["accoustic","chanson","gipsy","swing"],"style":"swing gipsy","version":"v1","desc":"haurror txt gipsy 1","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"Haurrore core (dancehall) v1","file":"audio/Haurrore core (dancehall) v1.mp3","tags":["dancehall","rap"],"style":"rap piano old school","version":"v2","desc":"haurror text punchy","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"LesTontonsBuveurs Gipsy v2","file":"audio/LesTontonsBuveurs Gipsy v2.mp3","tags":["accoustic","chanson","gipsy","swing"],"style":"swing gipsy","version":"v1","desc":"haurror txt gipsy 2","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"LesTontonsBuveurs disco v1","file":"audio/LesTontonsBuveurs disco v1.mp3","tags":["disco"],"style":"disco","version":"v1","desc":"les tontons disco 1","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"LesTontonsBuveurs disco v2 chantée","file":"audio/LesTontonsBuveurs disco v2 chantée.mp3","tags":["disco"],"style":"disco chanté","version":"v2","desc":"les tontons disco 2","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"TITA ON FAYA - Titita Titi Tati Tita_v.Beta","file":"audio/Titita Titi Tati Tita_v.Beta.mp3","tags":["ragga","samba","dancehall"],"style":"ragga samba dancehall","version":"Beta","desc":"la chanson de tati vers beta","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"TITA ON FAYA - Titita Titi Tati Tita_v.DEF","file":"audio/Titita Titi Tati Tita_v.DEF.mp3","tags":["ragga","samba","dancehall"],"style":"ragga samba dancehall","version":"vDEF","desc":"TITA ON FAYA : Tati's song","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"haurrore (ragga muffin punchy )_v2","file":"audio/haurrore (ragga muffin punchy )_v2.mp3","tags":["raggamuffin","punchy","electro"],"style":"raggamuffin punchy electro","version":"v2","desc":"BONUS: HorrorCore version raggamuffin","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"haurrore (raggamuffin pure )_v1","file":"audio/haurrore (raggamuffin pure )_v1.mp3","tags":["raggamuffin","accoustic"],"style":"raggamuffin pur","version":"v1","desc":"Description courte du morceau.","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"haurrore accapella guitare sèche+beat","file":"audio/haurrore accapella guitare sèche+beat.mp3","tags":["accapella","accoustic","guitare"],"style":"accapella guitare seche","version":"vtest","desc":"chanson accoustic","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"haurrore core (dancehall electro, mauvais )v2","file":"audio/haurrore core (dancehall electro, mauvais )v2.mp3","tags":["dancehall","electro","mauvais","piano"],"style":"dancehall electro","version":"bad","desc":"bad","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"haurrore core (métal) v1_2cut_txt1audio2","file":"audio/haurrore core (métal) v1_2cut_txt1audio2.mp3","tags":["metal"],"style":"metal","version":"metal","desc":"version haurrore metal","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"HaurrorCore remix (ragga metal hardtek remix)","file":"audio/haurrore core (ragga hardtek mix)_occibots.mp3","tags":["raggamuffin","hardtek","metal"],"style":"ragga hardtek metal","version":"occibots","desc":"BONUS version haurrore ragga hardtek","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"haurrore core txtV0.2(métal hip-hop)v2_txt1.5audio2","file":"audio/haurrore core txtV0.2(métal hip-hop)v2_txt1.5audio2.mp3","tags":["metal","hiphop"],"style":"metal hiphop","version":"metal hiphop","desc":"version haurrore metal hiphop","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"haurrore rap old school classic epic v1_txt2son1.5","file":"audio/haurrore rap old school classic epic v1_txt2son1.5.mp3","tags":["rap"],"style":"rap old school","version":"1","desc":"version rap old school","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"haurrore rap old school piano","file":"audio/haurrore rap old school piano.mp3","tags":["rap"],"style":"rap old school","version":"rap","desc":"version rap old school","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"pure instrumental rap piano lyric old school","file":"audio/pure instrumental rap piano lyric old school.mp3","tags":["rap","instru"],"style":"rap old school","version":"instrumental 1","desc":"BONUS: instru rap old school","lyricsCreator":"N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"pure instrumental rap piano lyric old school v2","file":"audio/pure instrumental rap piano lyric old school v2.mp3","tags":["rap","instru"],"style":"rap old school","version":"instrumental 2","desc":"instru rap old school","lyricsCreator":"N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"the migrant song (Haurrore Positive)","file":"audio/the migrant song (Haurrore Positive).mp3","tags":["rap"],"style":"rock","version":"positive","desc":"version rock","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"the migrant song v slam rock chanson","file":"audio/the migrant song v slam rock chanson.mp3","tags":["rap"],"style":"rock","version":"slam","desc":"version rock","lyricsCreator":"N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":3},
-{"title":"the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam)","file":"audio/the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam).mp3","tags":["chanson française","reggae","slam"],"style":"chanson slam reggae","version":"v5 officielle","desc":"haurrore song - the migrant view","lyricsCreator":"ALL LYRICS by N30 @ANTIKOMM","soundCreator":"MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)","recordDate":"2026-10-02","rating":5},
-{
+  {
+    "title": "La Cour Des Mirages (HaurrorCore)",
+    "file": "audio/La Cour Des Mirages (HaurrorCore)_vPreDEF.mp3",
+    "tags": [
+      "trap",
+      "rap",
+      "electro",
+      "breakbeat",
+      "tekno",
+      "hardtek"
+    ],
+    "style": "swing gipsy",
+    "version": "vDEF.1",
+    "desc": "Haurror Center Stories: the hardcore brokens one",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 5
+  },
+  {
+    "title": "Les Tontons Buveurs (Aldi's Stories)",
+    "file": "audio/Les Tontons Buveurs (Aldi's Stories)_vDEF1.mp3",
+    "tags": [
+      "accoustic",
+      "chanson",
+      "gipsy",
+      "swing",
+      "rap",
+      "trap"
+    ],
+    "style": "gipsy swing,bossa nova,samba,trap,rap",
+    "version": "vDEF.1",
+    "desc": "haurror stories, les Tontons Buveurs (Aldi's Stories) latest version",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 5
+  },
+  {
+    "title": "Migrant Story (HaurrorCore Positive) [chanson,slam,reggae,rap].mp3",
+    "file": "audio/the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam).mp3",
+    "tags": [
+      "rap",
+      "valse",
+      "chanson française",
+      "accoustique"
+    ],
+    "style": "rap,valse,chanson française,accoustique",
+    "version": "vDEF.1",
+    "desc": "Haurror Stories: The migrant point of view - latest version",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 5
+  },
+  {
+    "title": "LesTontonsBuveurs Gipsy v1",
+    "file": "audio/LesTontonsBuveurs Gipsy v1.mp3",
+    "tags": [
+      "accoustic",
+      "chanson",
+      "gipsy",
+      "swing"
+    ],
+    "style": "swing gipsy",
+    "version": "v1",
+    "desc": "haurror txt gipsy 1",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "Haurrore core (dancehall) v1",
+    "file": "audio/Haurrore core (dancehall) v1.mp3",
+    "tags": [
+      "dancehall",
+      "rap"
+    ],
+    "style": "rap piano old school",
+    "version": "v2",
+    "desc": "haurror text punchy",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "LesTontonsBuveurs Gipsy v2",
+    "file": "audio/LesTontonsBuveurs Gipsy v2.mp3",
+    "tags": [
+      "accoustic",
+      "chanson",
+      "gipsy",
+      "swing"
+    ],
+    "style": "swing gipsy",
+    "version": "v1",
+    "desc": "haurror txt gipsy 2",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "LesTontonsBuveurs disco v1",
+    "file": "audio/LesTontonsBuveurs disco v1.mp3",
+    "tags": [
+      "disco"
+    ],
+    "style": "disco",
+    "version": "v1",
+    "desc": "les tontons disco 1",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "LesTontonsBuveurs disco v2 chantée",
+    "file": "audio/LesTontonsBuveurs disco v2 chantée.mp3",
+    "tags": [
+      "disco"
+    ],
+    "style": "disco chanté",
+    "version": "v2",
+    "desc": "les tontons disco 2",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "TITA ON FAYA - Titita Titi Tati Tita_v.Beta",
+    "file": "audio/Titita Titi Tati Tita_v.Beta.mp3",
+    "tags": [
+      "ragga",
+      "samba",
+      "dancehall"
+    ],
+    "style": "ragga samba dancehall",
+    "version": "Beta",
+    "desc": "la chanson de tati vers beta",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "TITA ON FAYA - Titita Titi Tati Tita_v.DEF",
+    "file": "audio/Titita Titi Tati Tita_v.DEF.mp3",
+    "tags": [
+      "ragga",
+      "samba",
+      "dancehall"
+    ],
+    "style": "ragga samba dancehall",
+    "version": "vDEF",
+    "desc": "TITA ON FAYA : Tati's song",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore (ragga muffin punchy )_v2",
+    "file": "audio/haurrore (ragga muffin punchy )_v2.mp3",
+    "tags": [
+      "raggamuffin",
+      "punchy",
+      "electro"
+    ],
+    "style": "raggamuffin punchy electro",
+    "version": "v2",
+    "desc": "BONUS: HorrorCore version raggamuffin",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore (raggamuffin pure )_v1",
+    "file": "audio/haurrore (raggamuffin pure )_v1.mp3",
+    "tags": [
+      "raggamuffin",
+      "accoustic"
+    ],
+    "style": "raggamuffin pur",
+    "version": "v1",
+    "desc": "Description courte du morceau.",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore accapella guitare sèche+beat",
+    "file": "audio/haurrore accapella guitare sèche+beat.mp3",
+    "tags": [
+      "accapella",
+      "accoustic",
+      "guitare"
+    ],
+    "style": "accapella guitare seche",
+    "version": "vtest",
+    "desc": "chanson accoustic",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore core (dancehall electro, mauvais )v2",
+    "file": "audio/haurrore core (dancehall electro, mauvais )v2.mp3",
+    "tags": [
+      "dancehall",
+      "electro",
+      "mauvais",
+      "piano"
+    ],
+    "style": "dancehall electro",
+    "version": "bad",
+    "desc": "bad",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore core (métal) v1_2cut_txt1audio2",
+    "file": "audio/haurrore core (métal) v1_2cut_txt1audio2.mp3",
+    "tags": [
+      "metal"
+    ],
+    "style": "metal",
+    "version": "metal",
+    "desc": "version haurrore metal",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "HaurrorCore remix (ragga metal hardtek remix)",
+    "file": "audio/haurrore core (ragga hardtek mix)_occibots.mp3",
+    "tags": [
+      "raggamuffin",
+      "hardtek",
+      "metal"
+    ],
+    "style": "ragga hardtek metal",
+    "version": "occibots",
+    "desc": "BONUS version haurrore ragga hardtek",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore core txtV0.2(métal hip-hop)v2_txt1.5audio2",
+    "file": "audio/haurrore core txtV0.2(métal hip-hop)v2_txt1.5audio2.mp3",
+    "tags": [
+      "metal",
+      "hiphop"
+    ],
+    "style": "metal hiphop",
+    "version": "metal hiphop",
+    "desc": "version haurrore metal hiphop",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore rap old school classic epic v1_txt2son1.5",
+    "file": "audio/haurrore rap old school classic epic v1_txt2son1.5.mp3",
+    "tags": [
+      "rap"
+    ],
+    "style": "rap old school",
+    "version": "1",
+    "desc": "version rap old school",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "haurrore rap old school piano",
+    "file": "audio/haurrore rap old school piano.mp3",
+    "tags": [
+      "rap"
+    ],
+    "style": "rap old school",
+    "version": "rap",
+    "desc": "version rap old school",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "pure instrumental rap piano lyric old school",
+    "file": "audio/pure instrumental rap piano lyric old school.mp3",
+    "tags": [
+      "rap",
+      "instru"
+    ],
+    "style": "rap old school",
+    "version": "instrumental 1",
+    "desc": "BONUS: instru rap old school",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "pure instrumental rap piano lyric old school v2",
+    "file": "audio/pure instrumental rap piano lyric old school v2.mp3",
+    "tags": [
+      "rap",
+      "instru"
+    ],
+    "style": "rap old school",
+    "version": "instrumental 2",
+    "desc": "instru rap old school",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "the migrant song (Haurrore Positive)",
+    "file": "audio/the migrant song (Haurrore Positive).mp3",
+    "tags": [
+      "rap"
+    ],
+    "style": "rock",
+    "version": "positive",
+    "desc": "version rock",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "the migrant song v slam rock chanson",
+    "file": "audio/the migrant song v slam rock chanson.mp3",
+    "tags": [
+      "rap"
+    ],
+    "style": "rock",
+    "version": "slam",
+    "desc": "version rock",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam)",
+    "file": "audio/the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam).mp3",
+    "tags": [
+      "chanson française",
+      "reggae",
+      "slam"
+    ],
+    "style": "chanson slam reggae",
+    "version": "v5 officielle",
+    "desc": "haurrore song - the migrant view",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 5
+  },
+  {
+    "title": "Childhood Madness Memories (instru)",
+    "file": "audio/Childhood Madness Memories (instru).mp3",
+    "tags": [
+      "rap",
+      "trap",
+      "horrorcore",
+      "clowncore",
+      "instrumental"
+    ],
+    "style": "rap ,trap, horrorcore, clowncore",
+    "version": "v1",
+    "desc": "rap ,trap, horrorcore, clowncor",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-05",
+    "rating": 5
+  },
+  {
+    "title": "Circus Madness (instru)",
+    "file": "audio/Circus Madness (instru).mp3",
+    "tags": [
+      "rap",
+      "trap",
+      "horrorcore",
+      "clowncore",
+      "instrumental"
+    ],
+    "style": "rap ,trap, horrorcore, clowncore",
+    "version": "v1",
+    "desc": "rap ,trap, horrorcore, clowncor",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-05",
+    "rating": 5
+  },
+  {
+    "title": "Cirque de Cendres (instru)",
+    "file": "audio/Cirque de Cendres (instru).mp3",
+    "tags": [
+      "rap",
+      "trap",
+      "horrorcore",
+      "clowncore",
+      "instrumental"
+    ],
+    "style": "rap ,trap, horrorcore, clowncore",
+    "version": "v1",
+    "desc": "rap ,trap, horrorcore, clowncor",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-05",
+    "rating": 5
+  },
+  {
+    "title": "Horreur Positive vDEF (instru)",
+    "file": "audio/Horreur Positive vDEF (instru).mp3",
+    "tags": [
+      "rap",
+      "trap",
+      "classical",
+      "piano",
+      "instrumental"
+    ],
+    "style": "rap ,trap, classical, piano",
+    "version": "v1",
+    "desc": "rap ,trap, horrorcore, clowncor",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-05",
+    "rating": 4
+  },
+  {
+    "title": "Le Clown Sadique (instru)",
+    "file": "audio/Le Clown Sadique (instru).mp3",
+    "tags": [
+      "rap",
+      "trap",
+      "horrorcore",
+      "clowncore",
+      "instrumental"
+    ],
+    "style": "rap ,trap, horrorcore, clowncore",
+    "version": "v1",
+    "desc": "rap ,trap, horrorcore, clowncor",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-05",
+    "rating": 5
+  },
+  {
+    "title": "Poisoned Lollipop (instru)",
+    "file": "audio/Poisoned Lollipop (instru).mp3",
+    "tags": [
+      "rap",
+      "trap",
+      "horrorcore",
+      "clowncore",
+      "instrumental"
+    ],
+    "style": "rap ,trap, horrorcore, clowncore",
+    "version": "v1",
+    "desc": "rap ,trap, horrorcore, clowncor",
+    "lyricsCreator": "N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-05",
+    "rating": 5
+  },
+  {
+    "title": "Les Tontons Buveurs (Aldi's Stories) version Disco",
+    "file": "audio/Les Tontons Buveurs (Aldi's Stories) vDiscoDEF.3.mp3",
+    "tags": [
+      "disco",
+      "techno"
+    ],
+    "style": "disco, techno",
+    "version": "vDEF.LATEST",
+    "desc": "les tontons buveurs Bonus disco (latest version)",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-05",
+    "rating": 5
+  },
+  {
+    "title": "Mel à Roulettes",
+    "file": "audio/Mel à Roulettes.mp3",
+    "tags": [
+      "raggamuffin",
+      "reggae",
+      "ragga",
+      "chanson française"
+    ],
+    "style": "raggamuffin, reggae, ragga, chanson française",
+    "version": "vDEF.LATEST",
+    "desc": "BONUS version haurrore ragga hardtek",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-02",
+    "rating": 3
+  },
+  {
+    "title": "Atari Swing Vinyl - Jazzcore experiment 6",
+    "file": "audio/Atari Swing Vinyl - Jazzcore experiment 6.mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment v6",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 4
+  },
+  {
+    "title": "Commodore ragtime - Jazzcore experiment 1(jazz, acidcore melodic hardcore tribecore)",
+    "file": "audio/Commodore ragtime - Jazzcore experiment 1(jazz, acidcore melodic hardcore tribecore).mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment v1",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 4
+  },
+  {
+    "title": "Dead synth Acid Loops hard Jazzcore experiment 10",
+    "file": "audio/Dead synth Acid Loops hard Jazzcore experiment 10.mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment v10",
+    "desc": "",
+    "lyricsCreator": "M",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 4
+  },
+  {
+    "title": "Fantasy Binary Acid is not Jazzcore face A failed Jazzcore experiment 14",
+    "file": "audio/Fantasy Binary Acid is not Jazzcore face A failed Jazzcore experiment 14 (1).mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental"
+    ],
+    "style": "fantasy acidcore,tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment v14",
+    "desc": "Lucky FAIL! == Fantasy acidcore",
+    "lyricsCreator": "M",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 4
+  },
+  {
+    "title": "Fantasy Binary Acid is not Jazzcore face B failed Jazzcore experiment 15",
+    "file": "audio/Fantasy Binary Acid is not Jazzcore face B failed Jazzcore experiment 14.mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental"
+    ],
+    "style": "fantasy acidcore,tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment v14",
+    "desc": "Lucky FAIL! == Fantasy acidcore",
+    "lyricsCreator": "M",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 4
+  },
+  {
+    "title": "Jazzy Ghost Acid Loops Hard Jazzcore experiment 11",
+    "file": "audio/Jazzy Ghost Acid Loops Hard Jazzcore experiment 11.mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment v11",
+    "desc": "",
+    "lyricsCreator": "M",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 4
+  },
+  {
+    "title": "LFO Acid Arpeggios with jazz intro failed Jazzcore experiment 12",
+    "file": "audio/LFO Acid Arpeggios with jazz intro failed Jazzcore experiment 12.mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment v12",
+    "desc": "",
+    "lyricsCreator": "M",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 4
+  },
+  {
+    "title": "LFO Acid Jazz Arpeggios Jazzcore experiment 13",
+    "file": "audio/LFO Acid Jazz Arpeggios Jazzcore experiment 13.mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment v13",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 3
+  },
+  {
+    "title": "Sliced jumpy Jazzcore madness morning latest experiment (jazz, acidcore melodic hardcore tribecore)",
+    "file": "audio/Sliced jumpy Jazzcore madness morning latest experiment (jazz, acidcore melodic hardcore tribecore).mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment morning latest",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 5
+  },
+  {
+    "title": "Surface Noise Crazy Piano hard Jazzcore experiment 5(jazz, acidcore melodic hardcore tribecore)",
+    "file": "audio/Surface Noise Crazy Piano hard Jazzcore experiment 5(jazz, acidcore melodic hardcore tribecore).mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment 5",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 5
+  },
+  {
+    "title": "Surface Noise vocals jumpy Jazzcore experiment 3(jazz, acidcore melodic hardcore tribecore)",
+    "file": "audio/Surface Noise vocals jumpy Jazzcore experiment 3(jazz, acidcore melodic hardcore tribecore).mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment 3",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 4
+  },
+  {
+    "title": "ragtime singing hard Jazzcore- Jazzcore experiment 2(jazz, acidcore melodic hardcore tribecore)",
+    "file": "audio/ragtime singing hard Jazzcore- Jazzcore experiment 2(jazz, acidcore melodic hardcore tribecore).mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment 2",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 5
+  },
+  {
+    "title": "russian Jazzcore experiment (jazz hardcore acidcore tribecore experience)",
+    "file": "audio/russian Jazzcore experiment (jazz hardcore acidcore tribecore experience).mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment 16",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 5
+  },
+  {
+    "title": "russian Jazzcore experiment (jazz hardcore acidcore tribecore experience)",
+    "file": "audio/russian Jazzcore experiment (jazz hardcore acidcore tribecore experience).mp3",
+    "tags": [
+      "jazzcore",
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "jazz",
+      "swing",
+      "fusion",
+      "experiment",
+      "hard jazzcore",
+      "hardtek",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "version": "experiment 16",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 5
+  },
+  {
+    "title": "Cicada3310 to Bunker 42_tekHardcore faceA",
+    "file": "audio/Cicada3310 to Bunker 42_tekHardcore_occi.ai-toRemix trimEnd.mp3",
+    "tags": [
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": ",tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore",
+    "version": "face B",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 3
+  },
+  {
+    "title": "Cicada3310 to Bunker 42_tekHardcore faceA",
+    "file": "audio/Cicada3310 to Bunker 42_tekHardcore_occi.ai-toRemixWithLollipop.mp3",
+    "tags": [
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore",
+    "version": "face B",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 3
+  }
+]
