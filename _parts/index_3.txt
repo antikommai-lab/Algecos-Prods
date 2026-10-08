@@ -1,0 +1,15 @@
+uerySelectorAll('.modal').forEach(function(m){m.onclick=function(e){if(e.target===m)closeModal(m.id);};});
+$('imgBig').onclick=function(){$('imgBig').classList.toggle('zoom');};
+$('imgModal').addEventListener('mousemove',function(e){
+ var w=this.clientWidth,x=e.clientX-this.getBoundingClientRect().left;
+ $('vL').style.display=(x<w*0.15&&VIEW.imgs.length>1)?'block':'none';
+ $('vR').style.display=(x>w*0.85&&VIEW.imgs.length>1)?'block':'none';});
+document.addEventListener('click',function(e){
+ var t=e.target;
+ if(t&&t.tagName==='IMG'&&!t.closest('.modal'))openViewer(t);});
+if(GHTOK)$('ghTok').value=GHTOK;
+initAuth();
+load();
+</script>
+</body>
+</html>

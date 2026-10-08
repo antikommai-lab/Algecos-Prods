@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALGECOS-PRODS</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap');
+:root{--bg:#161616;--panel:#1d1d1b;--ink:#e8e6e0;--dim:#8a877e;--y:#FFD700;--line:#2e2d29;--warn:#ff4d5e;--orange:#F74C00}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Mono',monospace;background:var(--bg);color:var(--ink);min-height:100vh;
+ background-image:url('logo.jpg');
+ background-size:cover;background-position:center;background-attachment:fixed;background-blend-mode:multiply;
+ background-color:#2a2a2a}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+ background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.06) 3px 5px);
+ mix-blend-mode:overlay}
+main,header{position:relative;z-index:1}
+header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative;background:rgba(16,16,16,.82)}
+.brand{display:flex;align-items:center;gap:14px}
+.tri{height:88px;width:auto;max-width:220px;object-fit:contain;flex:none;filter:drop-shadow(3px 3px 0 #000)}
+.brand h1{font-family:'Archivo Black',sans-serif;font-size:clamp(1.2rem,4vw,2rem);letter-spacing:.06em;color:var(--ink);text-transform:uppercase;line-height:1.05}
+.brand h1 b{color:var(--y)}
+.brand .tag{font-size:.62rem;color:var(--dim);letter-spacing:.28em;text-transform:uppercase}
+#ticker{display:none;overflow:hidden;margin-top:14px;border-top:2px dashed #4a3305}
+#ticker.show{display:block}
+#tickInner{display:inline-block;white-space:nowrap;color:#F74C00;font-family:'Archivo Black',sans-serif;font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;padding:8px 0;animation:tkmove 22s linear infinite}
+@keyframes tkmove{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+#burger{position:absolute;top:16px;right:16px;width:44px;height:44px;background:var(--y);color:#000;border:none;font-size:1.3rem;font-weight:700;cursor:pointer;border:2px solid #000;box-shadow:3px 3px 0 #000}
+#burger:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+#menu{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;z-index:20}
+#menu.open{display:block}
+#panel{position:absolute;top:0;right:0;width:min(330px,88vw);height:100%;background:var(--panel);border-left:4px solid var(--y);padding:20px;overflow-y:auto}
+#panel h2{font-size:.72rem;color:var(--y);text-transform:uppercase;letter-spacing:.22em;margin:18px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+#panel button.mitem{display:block;width:100%;text-align:left;margin-bottom:8px;padding:12px 14px;background:#000;color:var(--ink);border:1px solid var(--line);border-left:4px solid var(--y);font-family:'Space Mono',monospace;font-size:.85rem;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
+#panel button.mitem:hover{background:var(--y);color:#000}
+#panel a.mitem{display:block;width:100%;text-align:left;margin-bottom:8px;padding:12px 14px;background:#000;color:var(--orange);border:1px solid var(--line);border-left:4px solid var(--orange);font-family:'Space Mono',monospace;font-size:.85rem;cursor:pointer;text-transform:uppercase;letter-spacing:.05em;text-decoration:none}
+#panel a.mitem:hover{background:var(--orange);color:#000}
+#panel input,#panel textarea,#panel select{width:100%;padding:10px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.85rem;margin-bottom:8px}
+#panel label{display:block;font-size:.68rem;color:var(--dim);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.1em}
+/* ===== HOME : playlist ===== */
+#home{max-width:900px;margin:26px auto;padding:0 20px}
+#home.hidden{display:none}
+#homeFlex{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+#bigLogo{display:none}
+@media(min-width:900px){#bigLogo{display:block;width:100%;max-width:340px;margin:0 auto;border:3px solid #000;box-shadow:7px 7px 0 #000;transform:rotate(-1.4deg)}}
+#homeCol{flex:1;min-width:270px}
+.tape{background:var(--y);color:#000;display:inline-block;padding:3px 10px;font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;transform:rotate(-1.2deg);box-shadow:2px 2px 0 #000}
+#plTitle{font-family:'Archivo Black',sans-serif;font-size:clamp(1.4rem,5vw,2.4rem);text-transform:uppercase;margin:14px 0 4px;color:var(--ink)}
+#plDesc{color:var(--dim);font-size:.78rem;margin-bottom:18px}
+#plRow{display:flex;gap:14px;align-items:flex-start}
+#plPlay{display:flex;align-items:center;gap:10px;width:auto;flex:1;max-width:340px;background:#000;color:var(--y);border:4px solid var(--y);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-family:'Space Mono',monospace;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;box-shadow:4px 4px 0 #000}
+#plPlay:hover{background:var(--y);color:#000}
+#plPlay svg{flex:none}
+#plPlay:hover svg *{stroke:#000}
+#plCover{width:96px;height:96px;object-fit:cover;border:3px solid var(--y);border-radius:10px;transform:rotate(-4deg);box-shadow:5px 5px 0 #000;cursor:zoom-in;flex:none;margin-bottom:14px}
+#plist{border:4px solid var(--y);border-radius:12px;background:rgba(16,16,16,.85);overflow:visible}
+.psec{background:var(--y);color:#000;padding:8px 14px;font-family:'Archivo Black',sans-serif;font-size:.74rem;text-transform:uppercase;letter-spacing:.12em;border-bottom:2px solid #000}
+.prow{position:relative;display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);cursor:pointer}
+.prow:last-child{border-bottom:none}
+.prow:hover{background:#000;outline:1px solid var(--y)}
+.prow.on{background:var(--y);color:#000}
+.prow.on .pidx,.prow.on .pver{color:#000}
+.prow.on .pt small{color:#222}
+.plabel{position:absolute;top:-11px;right:10px;z-index:2;background:var(--y);color:#000;font-weight:700;font-size:.6rem;padding:2px 8px;transform:rotate(2deg);box-shadow:2px 2px 0 #000;pointer-events:none;letter-spacing:.1em;text-transform:uppercase}
+.pidx{color:var(--y);font-weight:700;min-width:28px}
+.pt{flex:1;min-width:0}
+.pt b{display:block;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt small{color:var(--dim);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em}
+.pver{font-size:.6rem;border:1px solid currentColor;padding:1px 6px;text-transform:uppercase}
+/* ===== LISTE DES MORCEAUX ===== */
+#listWrap{display:none;max-width:1000px;margin:20px auto;padding:0 20px 90px}
+#listWrap.open{display:block}
+/* ===== TOUTES LES PLAYLISTS ===== */
+#plistsWrap{display:none;max-width:1000px;margin:20px auto;padding:0 20px 90px}
+#plistsWrap.open{display:block}
+.secH{font-family:'Archivo Black',sans-serif;color:var(--y);text-transform:uppercase;letter-spacing:.08em;font-size:1.2rem;margin:10px 0 16px}
+#plGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.plcard{position:relative;background:rgba(16,16,16,.88);border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.plcard:hover{outline:1px solid var(--y)}
+.plcard .plc{width:64px;height:64px;object-fit:cover;border:2px solid var(--y);flex:none}
+.plcard .plbox{flex:1;min-width:0}
+.plcard h3{font-family:'Archivo Black',sans-serif;font-size:.95rem;text-transform:uppercase;margin-bottom:4px}
+.plcard .pld{color:var(--dim);font-size:.7rem;margin-bottom:6px;line-height:1.5}
+.plcard .pln{color:var(--y);font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.plcard .btn{padding:7px 12px;font-size:.68rem}
+/* ===== roue crantée admin ===== */
+.edit{display:none;width:30px;height:30px;background:#000;color:var(--y);border:1px solid var(--y);cursor:pointer;font-size:1rem;line-height:1;text-align:center}
+.edit:hover{background:var(--y);color:#000}
+body.adm .edit{display:block}
+.card .edit{position:absolute;top:42px;right:12px}
+.plcard .edit{position:absolute;top:10px;right:10px}
+#plist .edit{position:absolute;top:10px;right:44px;width:26px;height:26px;font-size:.85rem;z-index:2}
+/* ===== recherche / cartes ===== */
+.btn{padding:10px 16px;background:var(--y);color:#000;border:2px solid #000;font-family:'Space Mono',monospace;font-weight:700;text-transform:uppercase;cursor:pointer;box-shadow:3px 3px 0 #000}
+.btn2{padding:10px 16px;background:transparent;color:var(--dim);border:1px solid var(--line);font-family:'Space Mono',monospace;cursor:pointer;text-transform:uppercase}
+.search-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.search-bar input{flex:1;min-width:180px;padding:12px 14px;background:rgba(16,16,16,.85);border:1px solid var(--line);color:var(--ink);font-family:'Space Mono',monospace}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tag{font-size:.68rem;padding:4px 10px;border:1px solid var(--line);color:var(--dim);cursor:pointer;background:rgba(16,16,16,.85);text-transform:uppercase}
+.tag:hover,.tag.on{color:#000;background:var(--y);border-color:var(--y)}
+#count{color:var(--dim);font-size:.72rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:rgba(16,16,16,.88);background-size:cover;background-position:center;border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;position:relative}
+.card h3{font-size:.92rem;margin:4px 0 6px;padding-right:100px;font-family:'Archivo Black',sans-serif;text-transform:uppercase}
+.ver{display:inline-block;margin-bottom:6px;font-size:.6rem;background:var(--y);color:#000;padding:2px 7px;font-weight:700;text-transform:uppercase}
+.card .meta{font-size:.68rem;color:var(--dim);margin-bottom:8px;display:flex;flex-wrap:wrap;gap:5px}
+.card .meta em{font-style:normal;border:1px solid var(--line);padding:1px 7px;text-transform:uppercase}
+.card .style{font-size:.72rem;color:var(--y);margin-bottom:6px;text-transform:uppercase}
+.card .info{font-size:.66rem;color:var(--dim);margin-bottom:8px;line-height:1.6}
+.card .desc{font-size:.74rem;color:#a5a29a;margin-bottom:10px}
+.play{width:100%;padding:9px;background:var(--y);color:#000;border:2px solid #000;font-family:'Space Mono',monospace;font-weight:700;cursor:pointer;text-transform:uppercase}
+.play:hover{background:var(--ink)}
+.stars{position:absolute;top:12px;right:12px;font-size:.9rem;letter-spacing:2px;user-select:none}
+.stars span{color:#3a3833}
+.stars span.on{color:var(--y)}
+#empty{display:none;text-align:center;color:var(--dim);padding:40px;text-transform:uppercase}
+#contact{text-align:center;padding:36px 16px 110px;color:var(--dim);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+#contact a{color:var(--y);text-decoration:none;font-family:'Space Mono',monospace}
+#contact a:hover{text-decoration:underline}
+/* ===== player ===== */
+#player{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:4px solid var(--y);padding:12px 16px;display:none;z-index:14;max-height:48vh;overflow-y:auto}
+#player.show{display:block}
+#pTop{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}
+#tCover{width:72px;height:72px;object-fit:cover;border:2px solid var(--y);display:none;cursor:zoom-in;flex:none}
+#pInfo{flex:1;min-width:220px}
+#pInfo b{color:var(--y);font-size:.95rem;text-transform:uppercase;display:block;margin-bottom:3px}
+.psub{font-size:.68rem;color:var(--dim);margin-bottom:3px;line-height:1.5}
+#ptags{color:#a5a29a;text-transform:uppercase;letter-spacing:.05em}
+.pstars{font-size:.8rem;letter-spacing:2px;margin:4px 0}
+.pstars span{color:#3a3833}
+.pstars span.on{color:var(--y)}
+#pAvg{color:var(--dim);font-size:.66rem;margin-left:6px}
+#tTime{color:var(--ink);font-size:.78rem;font-weight:700}
+.pctl{display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex:none}
+.pbtn{background:#000;color:var(--y);border:1px solid var(--y);padding:9px 12px;font-family:'Space Mono',monospace;font-weight:700;font-size:.8rem;cursor:pointer}
+.pbtn:hover:not(:disabled){background:var(--y);color:#000}
+.pbtn:disabled{opacity:.25;cursor:default}
+audio{width:100%;height:40px}
+/* ===== modals ===== */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;z-index:40;padding:16px}
+.modal.open{display:flex}
+.mbox{background:var(--panel);border:2px solid var(--y);padding:20px;width:min(430px,100%);max-height:90vh;overflow-y:auto;box-shadow:8px 8px 0 #000}
+.mbox h3{margin-bottom:12px;color:var(--y);font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1rem}
+.mbox label{display:block;font-size:.66rem;color:var(--dim);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.1em}
+.mbox input,.mbox textarea,.mbox select{width:100%;padding:9px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.82rem}
+.mbox .row{display:flex;gap:8px;margin-top:14px}
+.close{float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer}
+.status{font-size:.72rem;margin-top:8px;min-height:1em}
+.ok{color:var(--y)}.err{color:var(--warn)}
+/* login */
+.lbtn{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;margin-bottom:8px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
+.lbtn:hover{border-color:var(--y);color:var(--y)}
+#uMe{display:flex;align-items:center;gap:10px;padding:8px 0}
+#uMe img{width:34px;height:34px;border-radius:50%;border:2px solid var(--y)}
+#uMe b{font-size:.78rem}
+/* commentaires */
+#cmtList{margin-bottom:12px;max-height:32vh;overflow-y:auto}
+.cmt{border:1px solid var(--line);padding:8px 10px;margin-bottom:8px;background:#000}
+.cmt .cH{font-size:.64rem;color:var(--y);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.cmt .cB{font-size:.76rem;line-height:1.5}
+/* viewer image */
+#imgModal{flex-direction:column}
+#imgBig{max-width:92vw;max-height:74vh;border:4px solid var(--y);border-radius:12px;box-shadow:10px 10px 0 #000;transition:transform .15s;cursor:zoom-in;background:#000}
+#imgBig.zoom{transform:scale(2);cursor:zoom-out}
+#imgCap{color:var(--dim);font-size:.68rem;margin-top:10px;text-transform:uppercase;letter-spacing:.1em}
+.vcross{position:fixed;top:18px;right:18px;width:38px;height:38px;border-radius:50%;background:var(--y);color:#000;border:2px solid #000;font-weight:700;font-size:1rem;cursor:pointer;z-index:45;box-shadow:2px 2px 0 #000}
+.vnav{position:fixed;top:50%;width:54px;height:54px;background:#000;color:var(--y);border:2px solid var(--y);font-size:2rem;line-height:1;cursor:pointer;display:none;z-index:45;box-shadow:4px 4px 0 #000}
+#vL{left:16px}
+#vR{right:16px}
+/* lyrics */
+#lyrBox{background:#000;border:1px solid var(--line);padding:12px;font-size:.78rem;line-height:1.7;white-space:pre-wrap;max-height:56vh;overflow-y:auto;color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+<div class="brand">
+<img class="tri" src="logo.jpg" alt="ALGECOS-PRODS">
+<div><h1>ALGECOS<b>-</b>PRODS</h1><div class="tag">une division d&#39;ANTIKOMM™ — 2026</div></div>
+</div>
+<div id="ticker"><div id="tickInner"></div></div>
+<button id="burger" onclick="toggleMenu()">☰</button>
+</header>
+
+<div id="menu" onclick="if(event.target.id==='menu')toggleMenu()">
+<div id="panel">
+<button style="float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer" onclick="toggleMenu()">✕</button>
+<h2>Navigation</h2>
+<button class="mitem" onclick="showList()">▶ Playlist accueil</button>
+<button class="mitem" onclick="showPlaylists()">☰ Toutes les playlists</button>
+<button class="mitem" onclick="showList(true)">■ Liste de tous les morceaux</button>
+<a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">✉ Nous contacter</a>
+<h2>Compte</h2>
+<div id="authZone"></div>
+<h2 id="admTitle" style="display:none">Admin</h2>
+<div id="admZone" style="display:none">
+<button class="mitem" onclick="openTrackForm(-1)">+ Ajouter un morceau</button>
+<button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
+<button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
+<button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
+<label>Token GitHub (fine-grained, Contents: R/W)</label>
+<input id="ghTok" type="password" placeholder="github_pat_…">
+<button class="btn" style="width:100%" onclick="saveTok()">Mémoriser le token</button>
+<div class="status" id="tokStatus"></div>
+</div>
+</div>
+</div>
+
+<main>
+<section id="home">
+<div id="homeFlex">
+<img id="bigLogo" src="logo.jpg" alt="logo ALGECOS-PRODS">
+<div id="homeCol">
+<span class="tape">▶ mixtape du jour</span>
+<h2 id="plTitle">PLAYLIST</h2>
+<div id="plDesc"></div>
+<div id="plRow">
+<button id="plPlay" onclick="playPlaylist()" title="Lire la playlist en continu"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg><span>Lire la Playlist</span></button>
+<img id="plCover" alt="cover playlist" style="display:none">
+</div>
+<div id="plist"></div>
+</div></div>
+</section>
+
+<section id="plistsWrap">
+<h2 class="secH">☰ Toutes les playlists</h2>
+<div id="plGrid"></div>
+</section>
+
+<section id="listWrap">
+<div class="search-bar">
+<input id="q" type="text" placeholder="TITRE / STYLE / MOT-CLÉ / VERSION…" autocomplete="off">
+<button class="btn" id="btnSearch">GO</button>
+<button class="btn2" id="btnReset">✕</button>
+</div>
+<div class="tags" id="tags"></div>
+<div id="count"></div>
+<div id="grid"></div><div id="empty">AUCUN MORCEAU TROUVÉ.</div>
+</section>
+
+<footer id="contact">✉ contact &amp; bookings — <a href="mailto:algecosprods@gmail.com"
