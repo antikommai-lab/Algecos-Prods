@@ -1,0 +1,284 @@
+revBtn" onclick="plPrev()" title="Morceau précédent">⏮</button>
+<button class="pbtn" onclick="sk(-10)" title="Reculer 10s">−10s</button>
+<button class="pbtn" onclick="sk(10)" title="Avancer 10s">+10s</button>
+<button class="pbtn" id="nextBtn" onclick="plNext()" title="Morceau suivant">⏭</button>
+<button class="pbtn" onclick="toggleLyr()" title="Paroles">LYRICS</button>
+<button class="pbtn" onclick="openCmt()" title="Commentaires"></button>
+</div>
+</div>
+<audio id="audio" controls></audio>
+</div>
+
+<div class="modal" id="imgModal">
+<button class="vcross" onclick="closeViewer()">✕</button>
+<button class="vnav" id="vL" onclick="vnav(-1)">‹</button>
+<img id="imgBig" alt="">
+<button class="vnav" id="vR" onclick="vnav(1)">›</button>
+<div id="imgCap"></div>
+</div>
+
+<div class="modal" id="lyrModal"><div class="mbox">
+<button class="close" onclick="toggleLyr()">✕</button>
+<h3 id="lyrTitle">LYRICS</h3>
+<div id="lyrBox"></div>
+</div></div>
+
+<div class="modal" id="cmtModal"><div class="mbox">
+<button class="close" onclick="closeModal('cmtModal')">✕</button>
+<h3> Commentaires</h3>
+<div id="cmtList"></div>
+<div id="cmtForm"></div>
+<div class="status" id="cmtStatus"></div>
+</div></div>
+
+<div class="modal" id="trackModal"><div class="mbox">
+<button class="close" onclick="closeModal('trackModal')">✕</button>
+<h3 id="tmTitle">Morceau</h3>
+<div id="tmSelWrap" style="display:none">
+<label>Quel morceau ?</label>
+<select id="tmSel" onchange="fillTrack()"></select>
+</div>
+<label>Titre</label><input id="f_title">
+<label>Fichier audio (ex : audio/MonMorceau.mp3)</label><input id="f_file">
+<label>Mots-clés (séparés par des virgules)</label><input id="f_tags">
+<label>Style / mood</label><input id="f_style">
+<label>Version</label><input id="f_version">
+<label>Description</label><textarea id="f_desc" rows="2"></textarea>
+<label>ID créateur paroles</label><input id="f_lyr">
+<label>ID créateur son</label><input id="f_snd">
+<label>Date d&#39;enregistrement</label><input id="f_date" type="date">
+<label>Note par défaut (1-5)</label><input id="f_rating" type="number" min="1" max="5">
+<label>Update Lyrics — fichier texte (.md Obsidian, .txt, .json, .html)</label>
+<input id="f_lyrFile" type="file" accept=".md,.txt,.json,.html,.htm,text/*" style="padding:6px">
+<div class="row"><button class="btn2" onclick="saveLyrics()">⬆ Uploader les paroles</button></div>
+<label>Ou réutiliser un lyrics existant — même fichier pour plusieurs morceaux</label>
+<select id="f_lyrSel"><option value="">— choisir un fichier lyrics —</option></select>
+<div class="row"><button class="btn2" onclick="applyLyricsSel()">⤵ Utiliser le lyrics sélectionné</button></div>
+<div class="row"><button class="btn" onclick="saveTrack()">Enregistrer</button><button class="btn2" onclick="closeModal('trackModal')">Annuler</button></div>
+<div class="status" id="mStatus"></div>
+</div></div>
+
+<div class="modal" id="plModal"><div class="mbox">
+<button class="close" onclick="closeModal('plModal')">✕</button>
+<h3 id="pmTitle">Playlist</h3>
+<div id="pmSelWrap" style="display:none">
+<label>Quelle playlist ?</label>
+<select id="pmSel" onchange="fillPl()"></select>
+</div>
+<label>Titre</label><input id="p_title">
+<label>Description</label><textarea id="p_desc" rows="2"></textarea>
+<label>Cover (nom fichier, ex : MACONPLCOVER1)</label><input id="p_cover">
+<label>Morceaux — 1 par ligne : SECTION: FACE A · LABEL: BONUS :: référence · ou la référence (titre ou chemin)</label>
+<textarea id="p_tracks" rows="7" style="font-size:.74rem"></textarea>
+<div class="row"><button class="btn" onclick="savePl()">Enregistrer</button><button class="btn2" onclick="closeModal('plModal')">Annuler</button></div>
+<div class="status" id="pStatus"></div>
+</div></div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+/* ===== CONFIG — à remplir ===== */
+var SUPABASE_URL='https://TON-PROJET.supabase.co';
+var SUPABASE_ANON_KEY='TA-CLE-ANON';
+var ADMIN_EMAILS=['antikomm.ai@gmail.com'];
+var ADMIN_GH=['antikommai-lab'];
+var SITE_URL='https://antikommai-lab.github.io/Algecos-Prods/';
+var GH_OWNER='antikommai-lab',GH_REPO='Algecos-Prods';
+
+var TRACKS=[],PLAYLISTS=[],PLAYLIST=null,activeTag='';
+var CURRENT=null,CURRENTLIST=[],PCV=0;
+var LYR={open:false,el:null};
+var VIEW={imgs:[],i:0};
+var EXTS=['jpg','jpeg','png','webp','gif'];
+var LYREXTS=['txt','md','json','html'];
+var SB=null,USER=null,GHTOK=localStorage.getItem('gh_pat')||'';
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function fmt(s){s=Math.max(0,Math.floor(s||0));var m=Math.floor(s/60),r=s%60;return (m<10?'0':'')+m+':'+(r<10?'0':'')+r;}
+function stripExt(s){s=String(s);var l=s.toLowerCase();var E=['.mp3','.wav','.ogg','.m4a','.flac'];
+ for(var i=0;i<E.length;i++){if(l.slice(-E[i].length)===E[i])return s.slice(0,s.length-E[i].length);}return s;}
+function base(s){s=String(s);var p=s.lastIndexOf('/');return p<0?s:s.slice(p+1);}
+function norm(s){return stripExt(String(s==null?'':s)).toLowerCase().trim();}
+/* ===== matching robuste titre OU chemin fichier ===== */
+function plMatch(ref){
+ if(ref==null||typeof ref==='object')return null;
+ var s=String(ref),t;
+ t=TRACKS.find(function(x){return x.title===s||x.file===s;});if(t)return t;
+ var b=norm(base(s));
+ t=TRACKS.find(function(x){return norm(base(x.file))===b;});if(t)return t;
+ t=TRACKS.find(function(x){return norm(x.title)===norm(s);});if(t)return t;
+ if(s.trim().length>=8){var ns=norm(s);
+  t=TRACKS.find(function(x){return norm(x.title).indexOf(ns)>-1;});if(t)return t;
+  t=TRACKS.find(function(x){return norm(base(x.file)).indexOf(ns)>-1;});}
+ return t||null;}
+function entSec(r){return (r&&typeof r==='object')?(r.section||r.SECTION||r.Section||''):'';}
+function entLabel(r){return (r&&typeof r==='object')?(r.label||r.LABEL||''):'';}
+function entRef(r){if(typeof r==='string')return r;if(r&&typeof r==='object')return r.ref||r.title||r.file||null;return null;}
+function plFlat(){var out=[];((PLAYLIST&&PLAYLIST.tracks)||[]).forEach(function(r){var t=plMatch(entRef(r));if(t)out.push(t);});return out;}
+/* ===== covers ===== */
+function tryCovers(paths,cb){var i=0;
+ (function next(){if(i>=paths.length){cb(null);return;}
+  var im=new Image();im.onload=function(){cb(paths[i]);};im.onerror=function(){i++;next();};im.src=encodeURI(paths[i]);})();}
+function plCoverPaths(c){c=String(c||'');var out=[],i;
+ if(c.indexOf('.')>0){out.push('img/'+c,c);}
+ else{for(i=0;i<EXTS.length;i++){out.push('img/'+c+'.'+EXTS[i]);}for(i=0;i<EXTS.length;i++){out.push(c+'.'+EXTS[i]);}}
+ return out;}
+function trackCoverPaths(t){var out=[],i,b=String(t.title||'')+'_cover';
+ for(i=0;i<EXTS.length;i++)out.push('img/'+b+'.'+EXTS[i]);
+ for(i=0;i<EXTS.length;i++)out.push(b+'.'+EXTS[i]);
+ return out;}
+/* ===== auth Supabase ===== */
+function sbReady(){return !!SB;}
+function isAdmin(){if(!USER)return false;var e=String(USER.email||'').toLowerCase(),m=USER.user_metadata||{},u=String(m.user_name||m.preferred_username||m.full_name||'').toLowerCase();return ADMIN_EMAILS.indexOf(e)>-1||ADMIN_GH.indexOf(u)>-1;}
+async function initAuth(){
+ try{SB=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);}catch(e){SB=null;renderAuth();return;}
+ SB.auth.onAuthStateChange(function(ev,ses){USER=(ses&&ses.user)||null;renderAuth();});
+ var s=await SB.auth.getSession();USER=(s&&s.data&&s.data.session&&s.data.session.user)||null;
+ renderAuth();}
+function loginGoogle(){if(!SB)return;SB.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href}});}
+function loginGithub(){if(!SB)return;SB.auth.signInWithOAuth({provider:'github',options:{redirectTo:location.href}});}
+function doLogout(){if(SB)SB.auth.signOut();USER=null;renderAuth();}
+function renderAuth(){
+ var z=$('authZone');
+ document.body.classList.toggle('adm',isAdmin());
+ if(!SB){z.innerHTML='<div class="status" style="color:var(--dim)">CONNEXION BIENTÔT DISPONIBLE</div>';$('admTitle').style.display='none';$('admZone').style.display='none';return;}
+ if(USER){
+  var av=(USER.user_metadata&&USER.user_metadata.avatar_url)||'';
+  var nm=(USER.user_metadata&&USER.user_metadata.full_name)||USER.email;
+  z.innerHTML='<div id="uMe">'+(av?'<img src="'+esc(av)+'" alt="">':'')+'<div><b>'+esc(nm)+'</b><br><small style="color:var(--dim);font-size:.62rem">'+esc(USER.email)+'</small>'+(isAdmin()?' <span style="color:var(--y);font-size:.62rem">★ ADMIN</span>':'')+'</div></div><button class="lbtn" onclick="doLogout()">⏻ Déconnexion</button>';
+  if(isAdmin()){$('admTitle').style.display='block';$('admZone').style.display='block';}
+  else{$('admTitle').style.display='none';$('admZone').style.display='none';}
+ }else{
+  z.innerHTML='<button class="lbtn" onclick="loginGoogle()">G Se connecter avec Google</button><button class="lbtn" onclick="loginGithub()">⌥ Se connecter avec GitHub</button>';
+  $('admTitle').style.display='none';$('admZone').style.display='none';}
+ if(TRACKS.length||PLAYLISTS.length){render();renderPlaylist();renderPlists();}}
+function saveTok(){GHTOK=$('ghTok').value.trim();
+ if(GHTOK){localStorage.setItem('gh_pat',GHTOK);$('tokStatus').className='status ok';$('tokStatus').textContent='MÉMORISÉ ✓';}
+ else{$('tokStatus').className='status err';$('tokStatus').textContent='VIDE';}}
+/* ===== commits GitHub (admin) ===== */
+async function ghPut(path,contentB64,msg){
+ var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
+ var meta=await r.json();
+ if(!meta.sha)throw new Error('SHA INTROUVABLE ('+(meta.message||r.status)+') — token ?');
+ var pu=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path,{method:'PUT',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
+  body:JSON.stringify({message:msg,content:contentB64,sha:meta.sha,branch:'main'})});
+ if(!pu.ok)throw new Error('COMMIT KO ('+pu.status+')');
+ return pu.json();}
+function toB64(str){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';var b64='';var bytes=[].slice.call(new TextEncoder().encode(str));
+ for(var i=0;i<bytes.length;i+=3){var b1=bytes[i],b2=bytes[i+1],b3=bytes[i+2];
+  b64+=B.charAt(b1>>2)+B.charAt(((b1&3)<<4)|(b2==null?0:b2>>4))+(b2==null?'=':B.charAt(((b2&15)<<2)|(b3==null?0:b3>>6)))+(b3==null?'=':B.charAt(b3&63));}
+ return b64;}
+function buildFeed(){
+ var items=TRACKS.slice().sort(function(a,b){return String(b.recordDate||'').localeCompare(String(a.recordDate||''));}).slice(0,20).map(function(t){
+  var d=t.recordDate?new Date(t.recordDate+'T12:00:00Z'):new Date();
+  return '<item><title>'+esc(t.title)+(t.version?' ['+esc(t.version)+']':'')+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-'+esc(t.title)+'-'+esc(t.version||'')+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc((t.style||'')+' — '+(t.desc||''))+'</description></item>';}).join('');
+ return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>ALGECOS-PRODS</title><link>'+SITE_URL+'</link><description>Nouveaux morceaux ANTIKOMM — division ALGECOS</description>'+items+'</channel></rss>';}
+async function publishAll(msg){
+ if(!GHTOK)throw new Error('TOKEN GITHUB REQUIS (☰ Admin)');
+ await ghPut('tracks.json',toB64(JSON.stringify(TRACKS,null,2)),msg);
+ await ghPut('playlists.json',toB64(JSON.stringify(PLAYLISTS,null,2)),msg);
+ await ghPut('feed.xml',toB64(buildFeed()),'flux RSS : '+msg);}
+/* ===== formulaires admin ===== */
+var tmIdx=-1;
+function fillTrackVals(t){
+ $('f_title').value=t.title;$('f_file').value=t.file||'';
+ $('f_tags').value=(t.tags||[]).join(', ');
+ $('f_style').value=t.style||'';$('f_version').value=t.version||'';$('f_desc').value=t.desc||'';
+ $('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';
+ $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||3;
+ $('f_lyrFile').value='';}
+function openTrackForm(mode){
+ if(mode===-1){tmIdx=-1;$('tmTitle').textContent='+ Ajouter un morceau';$('tmSelWrap').style.display='none';
+  ['f_title','f_file','f_tags','f_style','f_version','f_desc','f_lyr','f_snd','f_date'].forEach(function(id){$(id).value='';});
+  $('f_rating').value=3;$('f_lyrFile').value='';}
+ else{$('tmTitle').textContent='✎ Modifier un morceau';$('tmSelWrap').style.display='block';
+  $('tmSel').innerHTML=TRACKS.map(function(t,i){return '<option value="'+i+'">'+esc(t.title)+'</option>';}).join('');
+  tmIdx=0;fillTrack();}
+ $('mStatus').textContent='';fillLyricsSel();openModal('trackModal');}
+function editTrack(i){
+ var t=TRACKS[i];if(!t)return;
+ tmIdx=i;$('tmTitle').textContent='✎ Modifier : '+t.title;$('tmSelWrap').style.display='none';
+ fillTrackVals(t);$('mStatus').textContent='';fillLyricsSel();openModal('trackModal');}
+function fillTrack(){tmIdx=+$('tmSel').value;var t=TRACKS[tmIdx];if(t)fillTrackVals(t);}
+async function saveTrack(){
+ var ti=$('f_title').value.trim();
+ if(!ti||!$('f_file').value.trim()){$('mStatus').className='status err';$('mStatus').textContent='TITRE + FICHIER REQUIS';return;}
+ var o=tmIdx>-1?Object.assign({},TRACKS[tmIdx]):{};
+ o.title=ti;o.file=$('f_file').value.trim();
+ o.tags=$('f_tags').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+ o.style=$('f_style').value.trim();o.version=$('f_version').value.trim();o.desc=$('f_desc').value.trim();
+ o.lyricsCreator=$('f_lyr').value.trim();o.soundCreator=$('f_snd').value.trim();
+ o.recordDate=$('f_date').value;o.rating=+$('f_rating').value||0;
+ if(tmIdx>-1)TRACKS[tmIdx]=o;else TRACKS.push(o);
+ $('mStatus').className='status ok';$('mStatus').textContent='⏳ PUBLICATION…';
+ try{await publishAll((tmIdx>-1?'edit':'add')+' : '+ti);
+  closeModal('trackModal');await load();}
+ catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
+/* ===== upload lyrics ===== */
+function lyrExtOf(name){var m=String(name||'').match(/\.([a-z0-9]+)$/i);return m?m[1].toLowerCase():'';}
+async function lyrExists(title){
+ for(var i=0;i<LYREXTS.length;i++){var ext=LYREXTS[i];
+  try{var r=await fetch(encodeURI('lyrics/'+title+'.'+ext)+'?t='+Date.now(),{cache:'no-store'});
+   if(r.ok)return ext;}catch(e){}}
+ return null;}
+async function saveLyrics(){
+ var ti=$('f_title').value.trim();
+ if(!ti){$('mStatus').className='status err';$('mStatus').textContent='RENSIGNE D&#39;ABORD LE TITRE DU MORCEAU';return;}
+ if(!GHTOK){$('mStatus').className='status err';$('mStatus').textContent='TOKEN GITHUB REQUIS (☰ Admin)';return;}
+ var f=$('f_lyrFile').files[0];
+ if(!f){$('mStatus').className='status err';$('mStatus').textContent='CHOISIS UN FICHIER (.md, .txt, .json, .html)';return;}
+ var ext=lyrExtOf(f.name)||'md';
+ if(LYREXTS.indexOf(ext)<0)ext='md';
+ var old=await lyrExists(ti);
+ if(old&&!confirm('Des paroles existent déjà pour « '+ti+' » ('+old+').\n\nRemplacer par ce nouveau fichier ?'))return;
+ $('mStatus').className='status ok';$('mStatus').textContent='⏳ UPLOAD LYRICS…';
+ try{
+  var txt=await f.text();
+  await ghPut('lyrics/'+ti+'.'+ext,toB64(txt),'lyrics : '+ti);
+  $('mStatus').className='status ok';$('mStatus').textContent='✓ LYRICS PUBLIÉS ('+ext+')';
+  $('f_lyrFile').value='';}
+ catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
+async function fillLyricsSel(){
+ var sl=$('f_lyrSel');
+ try{
+  var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/lyrics?t='+Date.now(),{cache:'no-store'});
+  if(!r.ok)throw new Error('KO');
+  var L=await r.json();
+  if(!Array.isArray(L)||!L.length)throw new Error('KO');
+  sl.innerHTML='<option value="">— choisir un fichier lyrics —</option>'+L.map(function(f){return '<option value="'+esc(f.name)+'">'+esc(f.name)+'</option>';}).join('');
+ }catch(e){sl.innerHTML='<option value="">(liste indisponible — upload direct)</option>';}}
+async function applyLyricsSel(){
+ var ti=$('f_title').value.trim();
+ if(!ti){$('mStatus').className='status err';$('mStatus').textContent='TITRE DU MORCEAU REQUIS';return;}
+ if(!GHTOK){$('mStatus').className='status err';$('mStatus').textContent='TOKEN GITHUB REQUIS';return;}
+ var nm=$('f_lyrSel').value;
+ if(!nm){$('mStatus').className='status err';$('mStatus').textContent='CHOISIS UN LYRICS DANS LA LISTE';return;}
+ var ext=lyrExtOf(nm)||'md';
+ if(LYREXTS.indexOf(ext)<0)ext='md';
+ var old=await lyrExists(ti);
+ if(old&&!confirm('Des paroles existent d\u00E9j\u00E0 pour « '+ti+' » ('+old+').\n\nRemplacer par « '+nm+' » ?'))return;
+ $('mStatus').className='status ok';$('mStatus').textContent='⏳ COPIE LYRICS…';
+ try{
+  var src=await fetch(encodeURI('lyrics/'+nm)+'?t='+Date.now(),{cache:'no-store'});
+  if(!src.ok)throw new Error('FICHIER SOURCE INTROUVABLE');
+  var txt=await src.text();
+  await ghPut('lyrics/'+ti+'.'+ext,toB64(txt),'lyrics : '+ti+' (reutilise '+nm+')');
+  $('mStatus').className='status ok';$('mStatus').textContent='✓ LYRICS PUBLIÉS ('+ext+') — source : '+nm;
+  $('f_lyrSel').value='';}
+ catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
+var pmIdx=-1;
+function fillPlVals(p){
+ $('p_title').value=p.title||'';$('p_desc').value=p.desc||'';$('p_cover').value=p.cover||'';
+ $('p_tracks').value=(p.tracks||[]).map(function(r){
+  if(typeof r==='string')return r;
+  if(entSec(r))return 'SECTION: '+entSec(r);
+  if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
+  return entRef(r)||'';}).join(String.fromCharCode(10));}
+function openPlForm(mode){
+ if(mode===-1){pmIdx=-1;$('pmTitle').textContent='+ Nouvelle playlist';$('pmSelWrap').style.display='none';
+  $('p_title').value='';$('p_desc').value='';$('p_cover').value='';$('p_tracks').value='';}
+ else{$('pmTitle').textContent='✎ Modifier une playlist';$('pmSelWrap').style.display='block';
+  $('pmSel').innerHTML=PLAYLISTS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
+  pmIdx=0;fillPl();}
+ $('pStatus').textContent='';openModal('plModal');}
+function editPl(i){
+ var 
