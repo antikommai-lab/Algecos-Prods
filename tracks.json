@@ -532,11 +532,10 @@
       "hardtek",
       "instrumental"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v6",
     "desc": "",
-    "lyricsCreator": "M",
+    "lyricsCreator": "",
     "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
     "recordDate": "2026-10-08",
     "rating": 4
@@ -559,11 +558,10 @@
       "hardtek",
       "instrumental"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v1",
     "desc": "",
-    "lyricsCreator": "M",
+    "lyricsCreator": "",
     "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
     "recordDate": "2026-10-08",
     "rating": 4
@@ -586,8 +584,7 @@
       "hardtek",
       "instrumental"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v10",
     "desc": "",
     "lyricsCreator": "M",
@@ -665,8 +662,7 @@
       "hardtek",
       "instrumental"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v11",
     "desc": "",
     "lyricsCreator": "M",
@@ -692,8 +688,7 @@
       "hardtek",
       "instrumental"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v12",
     "desc": "",
     "lyricsCreator": "M",
@@ -719,8 +714,7 @@
       "hardtek",
       "instrumental"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v13",
     "desc": "",
     "lyricsCreator": "",
@@ -747,8 +741,7 @@
       "instrumental",
       "jumpy"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment morning latest",
     "desc": "",
     "lyricsCreator": "",
@@ -775,8 +768,7 @@
       "instrumental",
       "jumpy"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment 5",
     "desc": "",
     "lyricsCreator": "",
@@ -803,8 +795,7 @@
       "instrumental",
       "jumpy"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment 3",
     "desc": "",
     "lyricsCreator": "",
@@ -831,8 +822,7 @@
       "instrumental",
       "jumpy"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment 2",
     "desc": "",
     "lyricsCreator": "",
@@ -859,8 +849,7 @@
       "instrumental",
       "jumpy"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment 16",
     "desc": "",
     "lyricsCreator": "",
@@ -887,8 +876,7 @@
       "instrumental",
       "jumpy"
     ],
-    "style": "jazzcore",
-      "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment 16",
     "desc": "",
     "lyricsCreator": "",
@@ -896,5 +884,44 @@
     "recordDate": "2026-10-08",
     "rating": 5
   },
-]
-]
+  {
+    "title": "Cicada3310 to Bunker 42_tekHardcore faceA",
+    "file": "audio/Cicada3310 to Bunker 42_tekHardcore_occi.ai-toRemix trimEnd.mp3",
+    "tags": [
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": ",tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore",
+    "version": "face B",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 3
+  },
+  {
+    "title": "Cicada3310 to Bunker 42_tekHardcore faceA",
+    "file": "audio/Cicada3310 to Bunker 42_tekHardcore_occi.ai-toRemixWithLollipop.mp3",
+    "tags": [
+      "tek",
+      "techno",
+      "hardcore",
+      "acidcore",
+      "tribecore",
+      "instrumental",
+      "jumpy"
+    ],
+    "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore",
+    "version": "face B",
+    "desc": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-08",
+    "rating": 3
+  },
+}
