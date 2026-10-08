@@ -22,6 +22,10 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .brand h1{font-family:'Archivo Black',sans-serif;font-size:clamp(1.2rem,4vw,2rem);letter-spacing:.06em;color:var(--ink);text-transform:uppercase;line-height:1.05}
 .brand h1 b{color:var(--y)}
 .brand .tag{font-size:.62rem;color:var(--dim);letter-spacing:.28em;text-transform:uppercase}
+#ticker{display:none;overflow:hidden;margin-top:14px;border-top:2px dashed #4a3305}
+#ticker.show{display:block}
+#tickInner{display:inline-block;white-space:nowrap;color:#F74C00;font-family:'Archivo Black',sans-serif;font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;padding:8px 0;animation:tkmove 22s linear infinite}
+@keyframes tkmove{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 #burger{position:absolute;top:16px;right:16px;width:44px;height:44px;background:var(--y);color:#000;border:none;font-size:1.3rem;font-weight:700;cursor:pointer;border:2px solid #000;box-shadow:3px 3px 0 #000}
 #burger:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
 #menu{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;z-index:20}
@@ -174,6 +178,7 @@ audio{width:100%;height:40px}
 <img class="tri" src="logo.jpg" alt="ALGECOS-PRODS">
 <div><h1>ALGECOS<b>-</b>PRODS</h1><div class="tag">une division d&#39;ANTIKOMM™ — 2026</div></div>
 </div>
+<div id="ticker"><div id="tickInner"></div></div>
 <button id="burger" onclick="toggleMenu()">☰</button>
 </header>
 
@@ -387,11 +392,11 @@ async function initAuth(){
  renderAuth();}
 function loginGoogle(){if(!SB)return;SB.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href}});}
 function loginGithub(){if(!SB)return;SB.auth.signInWithOAuth({provider:'github',options:{redirectTo:location.href}});}
-function doLogout(){if(SB)SB.auth.signOut();USER=null;renderAuth();}
+function doLogout(){if(SB)SB.auth.signOut();USER=null;localStorage.removeItem('adm_tmp');renderAuth();}
 function renderAuth(){
  var z=$('authZone');
- document.body.classList.toggle('adm',isAdmin());
- if(!SB){z.innerHTML='<div class="status" style="color:var(--dim)">CONNEXION BIENTÔT DISPONIBLE</div>';$('admTitle').style.display='none';$('admZone').style.display='none';return;}
+ document.body.classList.toggle('adm',isAdmin()||tmpAdm());
+ if(!SB){z.innerHTML=tmpAdm()?'<div class="status ok">⚡ MODE ADMIN TEMPORAIRE ACTIF</div><button class="lbtn" onclick="tmpLogout()">⚿ Verrouiller</button>':tmpForm(true);$('admTitle').style.display=tmpAdm()?'block':'none';$('admZone').style.display=tmpAdm()?'block':'none';return;}
  if(USER){
   var av=(USER.user_metadata&&USER.user_metadata.avatar_url)||'';
   var nm=(USER.user_metadata&&USER.user_metadata.full_name)||USER.email;
@@ -399,7 +404,7 @@ function renderAuth(){
   if(isAdmin()){$('admTitle').style.display='block';$('admZone').style.display='block';}
   else{$('admTitle').style.display='none';$('admZone').style.display='none';}
  }else{
-  z.innerHTML='<button class="lbtn" onclick="loginGoogle()">G Se connecter avec Google</button><button class="lbtn" onclick="loginGithub()">⌥ Se connecter avec GitHub</button>';
+  z.innerHTML='<button class="lbtn" onclick="loginGoogle()">G Se connecter avec Google</button><button class="lbtn" onclick="loginGithub()">⌥ Se connecter avec GitHub</button>'+tmpForm(false);
   $('admTitle').style.display='none';$('admZone').style.display='none';}
  if(TRACKS.length||PLAYLISTS.length){render();renderPlaylist();renderPlists();}}
 function saveTok(){GHTOK=$('ghTok').value.trim();
@@ -485,6 +490,7 @@ async function saveLyrics(){
  try{
   var txt=await f.text();
   await ghPut('lyrics/'+ti+'.'+ext,toB64(txt),'lyrics : '+ti);
+  await ghPut('lyrics/'+ti+'.lyrics',toB64(normLyrics(txt,ext)),'lyrics normalises : '+ti);
   $('mStatus').className='status ok';$('mStatus').textContent='✓ LYRICS PUBLIÉS ('+ext+')';
   $('f_lyrFile').value='';}
  catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
@@ -513,6 +519,7 @@ async function applyLyricsSel(){
   if(!src.ok)throw new Error('FICHIER SOURCE INTROUVABLE');
   var txt=await src.text();
   await ghPut('lyrics/'+ti+'.'+ext,toB64(txt),'lyrics : '+ti+' (reutilise '+nm+')');
+  await ghPut('lyrics/'+ti+'.lyrics',toB64(normLyrics(txt,ext)),'lyrics normalises : '+ti);
   $('mStatus').className='status ok';$('mStatus').textContent='✓ LYRICS PUBLIÉS ('+ext+') — source : '+nm;
   $('f_lyrSel').value='';}
  catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
@@ -547,6 +554,7 @@ async function savePl(){
   if(m)return {label:m[1].trim(),ref:m[2].trim()};
   return l;});
  var p={title:ti,desc:$('p_desc').value.trim(),cover:$('p_cover').value.trim()||undefined,tracks:tracks};
+ p.upd=new Date().toISOString().slice(0,10);
  if(pmIdx>-1)PLAYLISTS[pmIdx]=p;else PLAYLISTS.push(p);
  $('pStatus').className='status ok';$('pStatus').textContent='⏳ PUBLICATION…';
  try{await publishAll('playlist : '+ti);
@@ -566,7 +574,7 @@ async function load(){
   var v=el.getAttribute('data-t');activeTag=(activeTag===v)?'':v;
   document.querySelectorAll('#tags .tag').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-t')===activeTag);});
   render();};});
- render();}
+ render();updTicker();}
 /* ===== playlist accueil ===== */
 function renderPlaylist(){
  if(!PLAYLIST)return;
@@ -680,7 +688,7 @@ function toggleLyr(){var m=$('lyrModal');
  $('lyrTitle').textContent='Lyrics — '+CURRENT.title;
  var tb=encodeURI('lyrics/'+CURRENT.title);
  var get=function(ext){return fetch(tb+'.'+ext+'?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;});};
- get('txt').then(function(x){return x!=null?x:get('md');}).then(function(x){return x!=null?x:get('json');}).then(function(x){return x!=null?x:get('html');}).then(function(tx){
+ get('lyrics').then(function(x){return x!=null?x:get('txt');}).then(function(x){return x!=null?x:get('md');}).then(function(x){return x!=null?x:get('json');}).then(function(x){return x!=null?x:get('html');}).then(function(tx){
   if(tx==null){b.textContent='Pas de paroles disponibles pour ce morceau.';return;}
   if(tb.toLowerCase().endsWith('.html')||/<html|<body|<div|<p[ >]/i.test(tx.slice(0,500)))tx=stripHtml(tx);
   if(tb.toLowerCase().endsWith('.json')){try{var j=JSON.parse(tx);var v=j.lyrics||j.text||j.content||null;
@@ -722,6 +730,38 @@ function showViewer(){var im=VIEW.imgs[VIEW.i];if(!im)return closeViewer();
  $('imgModal').classList.add('open');}
 function closeViewer(){$('imgModal').classList.remove('open');$('vL').style.display='none';$('vR').style.display='none';}
 function vnav(d){if(!VIEW.imgs.length)return;VIEW.i=(VIEW.i+d+VIEW.imgs.length)%VIEW.imgs.length;showViewer();}
+/* ===== admin temporaire + ticker + normalisation lyrics ===== */
+function tmpAdm(){return localStorage.getItem('adm_tmp')==='1';}
+function tmpForm(withMsg){var h=withMsg?'<div class="status" style="color:var(--dim)">CONNEXION BIENTÔT DISPONIBLE</div>':'';
+ h+='<label>Accès admin temporaire</label><input id="tmpPass" type="password" placeholder="mot de passe" onkeydown="if(event.key===\'Enter\')tmpLogin()">';
+ h+='<div class="row"><button class="btn" style="width:100%" onclick="tmpLogin()">⚿ Déverrouiller</button></div><div class="status" id="tmpStatus"></div>';return h;}
+async function tmpLogin(){
+ var p=$('tmpPass')?$('tmpPass').value:'';
+ if(!p){$('tmpStatus').className='status err';$('tmpStatus').textContent='VIDE';return;}
+ try{
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p));
+  var hex=[].slice.call(new Uint8Array(buf)).map(function(b){return ('0'+b.toString(16)).slice(-2);}).join('');
+  var r=await fetch('admin_pass.hash?t='+Date.now(),{cache:'no-store'});
+  if(!r.ok)throw new Error('FICHIER HASH INTROUVABLE');
+  var ref=(await r.text()).trim();
+  if(hex!==ref){$('tmpStatus').className='status err';$('tmpStatus').textContent='MAUVAIS MOT DE PASSE';return;}
+  localStorage.setItem('adm_tmp','1');renderAuth();}
+ catch(e){$('tmpStatus').className='status err';$('tmpStatus').textContent=e.message;}}
+function tmpLogout(){localStorage.removeItem('adm_tmp');renderAuth();}
+function normLyrics(txt,ext){try{
+ if(ext==='json'){var j=JSON.parse(txt);var v=j.lyrics||j.text||j.content||(Array.isArray(j.lines)?j.lines.join(String.fromCharCode(10)):null);return v!=null?String(v):txt;}
+ if(ext==='html')return stripHtml(txt);
+ return txt;}catch(e){return txt;}}
+function updTicker(){
+ var tk=$('ticker'),inner=$('tickInner');if(!tk||!inner)return;
+ var lt=null;TRACKS.forEach(function(t){if(t.recordDate&&(!lt||String(t.recordDate)>String(lt.recordDate)))lt=t;});
+ var lp=PLAYLISTS.length?PLAYLISTS[PLAYLISTS.length-1]:null;
+ var parts=[];
+ if(lt)parts.push('⬇ LAST UPLOAD : '+lt.title+(lt.version?' ['+lt.version+']':'')+' — '+lt.recordDate);
+ if(lp)parts.push('⚡ LAST PLAYLIST : '+lp.title+(lp.upd?' — '+lp.upd:''));
+ if(!parts.length){tk.classList.remove('show');return;}
+ inner.textContent=parts.join('   ✦   ');
+ tk.classList.add('show');}
 /* ===== init ===== */
 var a=$('audio');
 a.ontimeupdate=function(){
