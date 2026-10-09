@@ -46,7 +46,7 @@ async function mgAddToPl(){
 function fillMgPlSel(){$('mgPlSel').innerHTML='<option value='+Q+''+Q+'>\u2014 playlist \u2014</option>'+PLAYLISTS.map(function(p){return '<option value='+Q+''+esc(p.title)+''+Q+'>'+esc(p.title)+'</option>';}).join('');}
 function renderMgPlList(){
  $('mgPlList').innerHTML=PLAYLISTS.map(function(p,i){
-  return '<div class='+Q+'mgrow'+Q+'><div class='+Q+'mt'+Q+'><b>'+esc(p.title)+'</b> <span class='+Q+'ms'+Q+'>'+((p.tracks||[]).length)+' tracks \u00B7 '+esc(p.upd||'')+'</span></div><button class='+Q+'btn2'+Q+' onclick='+Q+'mgEditPlMeta('+i+')'+Q+'>\u270E</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgOpenPE('+i+')'+Q+'>\u2611 TRACKLIST</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgDelPlAsk('+i+')'+Q+'>\\u{1F5D1}</button></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUNE PLAYLIST</div>';
+  return '<div class='+Q+'mgrow'+Q+'><div class='+Q+'mt'+Q+'><b>'+esc(p.title)+'</b> <span class='+Q+'ms'+Q+'>'+((p.tracks||[]).length)+' tracks \u00B7 '+esc(p.upd||'')+'</span></div><button class='+Q+'btn2'+Q+' onclick='+Q+'mgEditPlMeta('+i+')'+Q+'>\u270E</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgOpenPE('+i+')'+Q+'>\u2611 TRACKLIST</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgDelPlAsk('+i+')'+Q+'>\u{1F5D1}</button></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUNE PLAYLIST</div>';
  fillMgPlSel();}
 function mgEditPlMeta(i){closeModal('manageModal');editPl(i);}
 function mgDelPlAsk(i){var p=PLAYLISTS[i];
@@ -92,3 +92,30 @@ async function mgApplyStyle(){
  $('mgStatus').className='status ok';$('mgStatus').textContent='\u23F3 PUBLICATION\u2026';
  try{await publishAll('style en lot : '+st);$('mgStatus').textContent='\u2713 STYLE APPLIQU\u00C9 ('+MGSEL.length+')';renderMgList();await load();}
  catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;}}
+
+/* ===== dossiers audio : deplacement par lots ===== */
+async function mgMoveFolder(){
+ if(!MGSEL.length){$('mgStatus').className='status err';$('mgStatus').textContent='RIEN S\u00C9LECTIONN\u00C9';return;}
+ if(!GHTOK){$('mgStatus').className='status err';$('mgStatus').textContent='TOKEN GITHUB REQUIS';return;}
+ var F=$('mgFolder').value;
+ if(!F){$('mgStatus').className='status err';$('mgStatus').textContent='CHOISIS UN DOSSIER';return;}
+ if(!confirm('D\u00E9placer '+MGSEL.length+' morceau(x) vers audio/'+F+'/ ?\n\nChaque fichier est recopi\u00E9 dans le sous-dossier puis l\u0027original est supprim\u00E9.'))return;
+ $('mgStatus').className='status ok';$('mgStatus').textContent='\u23F3 D\u00C9PLACEMENT 0/'+MGSEL.length+'\u2026';
+ var done=0,fail=0;
+ for(var k=0;k<MGSEL.length;k++){var t=TRACKS[MGSEL[k]];
+  try{
+   var name=String(t.file||'').split('/').pop();
+   var dst='audio/'+F+'/'+name;
+   if(t.file!==dst){
+    var r=await fetch(encodeURI(t.file)+'?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok)throw new Error('DL KO');
+    await ghCreate(dst,toB64Buf(await r.arrayBuffer()),'dossier '+F+' : '+name);
+    await ghDelete(t.file,'dossier '+F+' : suppression original');
+    t.file=dst;}
+   done++;
+  }catch(e){fail++;}
+  $('mgStatus').textContent='\u23F3 D\u00C9PLACEMENT '+(k+1)+'/'+MGSEL.length+'\u2026';}
+ try{await publishAll('dossiers audio : '+done+' morceau(x) vers audio/'+F);}
+ catch(e){$('mgStatus').className='status err';$('mgStatus').textContent='PUBLISH KO : '+e.message;return;}
+ $('mgStatus').textContent='\u2713 '+done+' D\u00C9PLAC\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':'');
+ await load();renderMgList();}

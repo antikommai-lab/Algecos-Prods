@@ -236,3 +236,24 @@ function buildAdmDash(){
 function saveTok2(){GHTOK=document.getElementById('ghTok2').value.trim();
  if(GHTOK){localStorage.setItem('gh_pat',GHTOK);document.getElementById('tokStatus2').className='status ok';document.getElementById('tokStatus2').textContent='M\u00C9MORIS\u00C9 \u2713';}
  else{document.getElementById('tokStatus2').className='status err';document.getElementById('tokStatus2').textContent='VIDE';}}
+
+
+/* ===== dossiers audio : creation + suppression via API GitHub ===== */
+function toB64Buf(buf){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';var u=new Uint8Array(buf);var b64='';var rem=u.length%3,ln=u.length-rem;
+ for(var i=0;i<ln;i+=3){var b1=u[i],b2=u[i+1],b3=u[i+2];b64+=B.charAt(b1>>2)+B.charAt(((b1&3)<<4)|(b2>>4))+B.charAt(((b2&15)<<2)|(b3>>6))+B.charAt(b3&63);}
+ if(rem===1){var x=u[ln];b64+=B.charAt(x>>2)+B.charAt((x&3)<<4)+'==';}
+ else if(rem===2){var y1=u[ln],y2=u[ln+1];b64+=B.charAt(y1>>2)+B.charAt(((y1&3)<<4)|(y2>>4))+B.charAt((y2&15)<<2)+'=';}
+ return b64;}
+async function ghCreate(path,b64,msg){
+ var g=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path)+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
+ var meta=await g.json();var sha=(meta&&meta.sha)||null;
+ var pu=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path),{method:'PUT',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
+  body:JSON.stringify({message:msg,content:b64,sha:sha,branch:'main'})});
+ if(!pu.ok)throw new Error('UPLOAD KO ('+pu.status+')');}
+async function ghDelete(path,msg){
+ var g=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path)+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
+ var meta=await g.json();
+ if(!meta.sha)throw new Error('SHA INTROUVABLE ('+(meta.message||g.status)+')');
+ var de=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path),{method:'DELETE',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
+  body:JSON.stringify({message:msg,sha:meta.sha,branch:'main'})});
+ if(!de.ok)throw new Error('SUPPRESSION KO ('+de.status+')');}
