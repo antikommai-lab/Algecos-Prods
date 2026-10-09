@@ -60,6 +60,10 @@ body.adm #admBtn{display:block}
 .adstats b{display:block;font-size:1.3rem;color:var(--y)}
 #adashBox input[type=password]{width:100%;padding:9px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.82rem}
 .upH{margin:12px 0 6px;font-size:.64rem;color:var(--y);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px dashed var(--line);padding-bottom:4px}
+.shB{width:30px;height:30px;background:#000;color:var(--y);border:1px solid var(--y);cursor:pointer;font-size:.85rem;line-height:1;text-align:center;position:absolute}
+.shB:hover{background:var(--y);color:#000}
+.card .shB{top:76px;right:12px}
+.plcard .shB2{top:10px;right:48px;width:26px;height:26px;position:absolute;padding:0;z-index:2}
 #menu{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;z-index:20}
 #menu.open{display:block}
 #panel{position:absolute;top:0;right:0;width:min(330px,88vw);height:100%;background:var(--panel);border-left:4px solid var(--y);padding:20px;overflow-y:auto}
@@ -248,10 +252,22 @@ audio{width:100%;height:40px}
 <div id="authZone"></div>
 <h2 id="admTitle" style="display:none">Admin</h2>
 <div id="admZone" style="display:none">
-<button class="mitem" onclick="toggleMenuOff();openAdmDash()">&#9881; Dashboard admin (tout est ici)</button>
+<button class="mitem" onclick="openManage('tr')">&#x1F5C2; Gestion des tracks (1 ou par lots)</button>
+<button class="mitem" onclick="openManage('pl')">&#x1F5C2; Gestion des playlists</button>
+<button class="mitem" onclick="openTrackForm(-1)">+ Ajouter un morceau</button>
+<button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
+<button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
+<button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
+<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle sélection</button>
+<button class="mitem" onclick="openSelForm(0)">✎ Modifier une sélection</button>
+<button class="mitem" onclick="openMsgForm()">✉ Message RSS / newsletter</button>
+<label>Token GitHub (fine-grained, Contents: R/W)</label>
+<input id="ghTok" type="password" placeholder="github_pat_…">
+<button class="btn" style="width:100%" onclick="saveTok()">Mémoriser le token</button>
+<div class="status" id="tokStatus"></div>
 </div>
 </div>
-</div>
+<div class="status" id="vCount" style="color:var(--dim);text-align:center;font-size:.7rem"></div>
 </div>
 
 <main>
@@ -320,7 +336,8 @@ audio{width:100%;height:40px}
 <button class="pbtn" onclick="sk(10)" title="Avancer 10s">+10s</button>
 <button class="pbtn" id="nextBtn" onclick="plNext()" title="Morceau suivant">⏭</button>
 <button class="pbtn" onclick="toggleLyr()" title="Paroles">LYRICS</button>
-<button class="pbtn" onclick="openCmt()" title="Commentaires"></button>
+<button class="pbtn" onclick="openCmt()" title="Commentaires">
+<button class="pbtn" onclick="shareTrack(CURRENT)" title="Partager ce morceau">&#10548;</button></button>
 </div>
 </div>
 <audio id="audio" controls></audio>
@@ -493,19 +510,32 @@ audio{width:100%;height:40px}
 <div class="status" id="pStatus"></div>
 </div></div>
 
+<div class="modal" id="shareModal" onclick="if(event.target===this)closeModal('shareModal')"><div class="mbox">
+<button class="close" onclick="closeModal('shareModal')">&#10005;</button>
+<h3>&#10548; PARTAGER</h3>
+<div id="shareWhat" style="color:var(--dim);font-size:.72rem;word-break:break-all;margin-bottom:10px"></div>
+<a class="lbtn" id="shX" target="_blank" rel="noopener">X / Twitter</a>
+<a class="lbtn" id="shFb" target="_blank" rel="noopener">Facebook</a>
+<a class="lbtn" id="shWa" target="_blank" rel="noopener">WhatsApp</a>
+<a class="lbtn" id="shTg" target="_blank" rel="noopener">Telegram</a>
+<a class="lbtn" id="shMail">&#9993; Mail</a>
+<button class="lbtn" onclick="shareNative()">&#10548; Partage natif (mobile)</button>
+<button class="lbtn" onclick="copyShare()">&#128203; Copier le lien</button>
+</div></div>
+
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261016"></script>
-<script src="js/data.js?v=20261016"></script>
-<script src="js/auth.js?v=20261016"></script>
-<script src="js/admin.js?v=20261016"></script>
-<script src="js/player.js?v=20261016"></script>
-<script src="js/views.js?v=20261016"></script>
-<script src="js/versions.js?v=20261016"></script>
-<script src="js/genres.js?v=20261016"></script>
-<script src="js/manage.js?v=20261016"></script>
-<script src="js/main.js?v=20261016"></script>
+<script src="js/config.js?v=20261017"></script>
+<script src="js/data.js?v=20261017"></script>
+<script src="js/auth.js?v=20261017"></script>
+<script src="js/admin.js?v=20261017"></script>
+<script src="js/player.js?v=20261017"></script>
+<script src="js/views.js?v=20261017"></script>
+<script src="js/versions.js?v=20261017"></script>
+<script src="js/genres.js?v=20261017"></script>
+<script src="js/manage.js?v=20261017"></script>
+<script src="js/main.js?v=20261017"></script>
 
 </body>
 </html>

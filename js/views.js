@@ -24,12 +24,14 @@ function renderPlists(){
  var all=PLAYLISTS.concat(autoPlaylists());
  $('plGrid').innerHTML=all.map(function(p,i){
   var nb=((p.tracks)||[]).map(function(r){return plMatch(entRef(r))?1:0;}).reduce(function(a,b){return a+b;},0);
-  return '<div class="plcard" data-i="' + i + '">' + (p.auto ? '' : '<button class="edit" data-pe="' + i + '" title="\u00C9diter cette playlist">&#9881;</button>') + '<img class="plc" alt="" style="display:none"><div class="plbox"><h3>' + esc(p.title || '—') + (p.auto ? ' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>' : '') + '</h3><div class="pld">' + esc(p.desc || '') + '</div><div class="pln">' + nb + ' morceaux</div><button class="btn">Ouvrir</button></div></div>';}).join('') || '<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
+ return '<div class="plcard" data-i="'+i+'">'+(p.auto?'':'<button class="edit" data-pe="'+i+'" title="Editer cette playlist">&#9881;</button>')+'<button class="pbtn shB2" data-shp="'+i+'" title="Partager cette playlist">&#10548;</button><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'—')+(p.auto?' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>':'')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="pln">'+nb+' morceaux</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
  document.querySelectorAll('.plcard').forEach(function(cd){
   var p=all[+cd.getAttribute('data-i')];
-  if(p && p.cover && !p.auto)tryCovers(plCoverPaths(p.cover),function(u){var im=cd.querySelector('.plc');if(u){im.src=u;im.style.display='block';}});
+  if(p&&p.cover&&!p.auto)tryCovers(plCoverPaths(p.cover),function(u){var im=cd.querySelector('.plc');if(u){im.src=u;im.style.display='block';}});
   var eb=cd.querySelector('.edit');
   if(eb)eb.onclick=function(ev){ev.stopPropagation();editPl(PLAYLISTS.indexOf(p));};
+  var sb=cd.querySelector('[data-shp]');
+  if(sb)sb.onclick=function(ev){ev.stopPropagation();sharePl(p);};
   cd.onclick=function(){PLAYLIST=p||PLAYLIST;renderPlaylist();showView('home');};});}
 
 /* ===== navigation ===== */
@@ -57,7 +59,7 @@ function cardHTML(t,i){
  h+='<div class="info">VO:'+esc(t.lyricsCreator||'—')+' / SND:'+esc(t.soundCreator||'—')+' / '+esc(t.recordDate||'—')+'</div>';
  h+='<div class="desc fold" title="cliquer pour déplier">'+esc(t.desc||'')+'</div>';
  h+='<button class="play" data-i="'+i+'">▶ Écouter</button>';
- h+='<button class="edit" data-e="'+i+'" title="Éditer ce morceau">⚙</button></div>';return h;}
+ h+='<button class="edit" data-e="'+i+'" title="Éditer ce morceau">⚙</button><button class="shB" data-shtr=""+i+"" title="Partager ce morceau">&#10548;</button></div>';return h;}
 function render(){
  var q=$('q').value.toLowerCase().trim();
  var mo=$('moreOpts')?$('moreOpts').value:'';
@@ -123,3 +125,35 @@ function shareSite(){var u=location.href,d="ALGECOS-PRODS \u2014 la division mus
  if(navigator.share){navigator.share({title:"ALGECOS-PRODS",text:d,url:u}).catch(function(){});}
  else if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){alert("LIEN COPI\u00C9 \u2713\n\nColle-le o\u00F9 tu veux pour partager ALGECOS-PRODS !");},function(){prompt("Copie le lien :",u);});}
  else{prompt("Copie le lien :",u);}}
+
+/* ===== partage morceaux / playlists / site ===== */
+var SHARE={title:'',url:''};
+function openShare(title,url){SHARE={title:title,url:url};
+ var sw=document.getElementById('shareWhat');if(sw)sw.textContent=title+' \u2014 '+url;
+ var t=encodeURIComponent(title),u=encodeURIComponent(url);
+ document.getElementById('shX').href='https://twitter.com/intent/tweet?text='+t+'&url='+u;
+ document.getElementById('shFb').href='https://www.facebook.com/sharer/sharer.php?u='+u;
+ document.getElementById('shWa').href='https://wa.me/?text='+t+'%20'+u;
+ document.getElementById('shTg').href='https://t.me/share/url?url='+u+'&text='+t;
+ document.getElementById('shMail').href='mailto:?subject='+t+'&body='+u;
+ document.getElementById('shareModal').classList.add('open');}
+function shareNative(){if(navigator.share){navigator.share({title:SHARE.title,text:SHARE.title,url:SHARE.url}).catch(function(){});}
+ else copyShare();}
+function copyShare(){
+ if(navigator.clipboard){navigator.clipboard.writeText(SHARE.url).then(function(){alert('LIEN COPI\u00C9 \u2713');},function(){prompt('Copie le lien :',SHARE.url);});}
+ else prompt('Copie le lien :',SHARE.url);}
+function shareTrack(t){if(!t)return;openShare(t.title,location.origin+location.pathname+'?t='+encodeURIComponent(t.title));}
+function sharePl(p){if(!p)return;openShare(p.title,location.origin+location.pathname+'?p='+encodeURIComponent(p.title));}
+document.addEventListener('click',function(e){
+ var b=e.target.closest('[data-shtr]');
+ if(b){e.stopPropagation();shareTrack(TRACKS[+b.getAttribute('data-shtr')]);}});
+function applyDeepLink(){
+ try{var q=new URLSearchParams(location.search);var t=q.get('t'),p=q.get('p');
+  if(t){var tr=TRACKS.find(function(x){return x.title===t;});if(tr)play(tr,[tr]);}
+  else if(p){var pl=PLAYLISTS.find(function(x){return x.title===p;})||(typeof autoPlaylists==='function'?autoPlaylists():[]).find(function(x){return x.title===p;});
+   if(pl){PLAYLIST=pl;renderPlaylist();showView('home');var fl=plFlat();if(fl.length)play(fl[0],fl);}}}
+ catch(e){}}
+function hitCounter(){
+ try{fetch('https://abacus.jasoncameron.dev/hit/AlgecosProds/visites').then(function(r){return r.json();}).then(function(d){
+  var e=document.getElementById('vCount');if(e&&d.value)e.textContent='\u{1F441} '+d.value+' visites';}).catch(function(){});}
+ catch(e){}}

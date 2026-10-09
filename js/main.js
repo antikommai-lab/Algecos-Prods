@@ -27,4 +27,5 @@ document.addEventListener('click',function(e){
  if(t&&t.tagName==='IMG'&&!t.closest('.modal'))openViewer(t);});
 if(GHTOK)$('ghTok').value=GHTOK;
 initAuth();
-load();
+load().then(applyDeepLink);
+hitCounter();
