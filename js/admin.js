@@ -342,7 +342,15 @@ async function uploadTracks(){
   if(!alb){upSet('status err','NOM D\u0027ALBUM REQUIS');return;}
   dir='audio/album/'+alb.replace(/[\\/:*?''<>|]/g,'-');}
  else{dir='audio'+(F?'/'+F:'');}
- if(!confirm('Uploader '+fs.length+' fichier(s) vers '+dir+'/ ?\n\nLes entr\u00E9es tracks.json seront cr\u00E9\u00E9es avec le titre = nom de fichier.'+(alb?'\nUne playlist \u00AB '+alb+' \u00BB sera cr\u00E9\u00E9e/r\u00E9utilis\u00E9e.':'')+' ?'))return;
+ /* --- metadonnees par lot (appliquees a tous les fichiers) --- */
+ var g=function(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';};
+ var lotTags=g('upTags').split(',').map(function(s){return s.trim();}).filter(Boolean);
+ var lotStyle=g('upStyle');
+ var lotDesc=g('upDesc');
+ var lotDate=g('upDate');
+ var lotR=parseInt(g('upRating'),10);if(isNaN(lotR)||lotR<0)lotR=0;
+ var extra=(lotTags.length?' tags='+lotTags.join('/'):'')+(lotStyle?' style='+lotStyle:'')+(lotDesc?' +description':'')+(lotDate?' date='+lotDate:'')+(lotR?' note='+lotR:'');
+ if(!confirm('Uploader '+fs.length+' fichier(s) vers '+dir+'/ ?\n\nTitre = nom de fichier.'+(extra?'\nM\u00C9TADONN\u00C9ES PAR LOT :'+extra:'')+(alb?'\nUne playlist \u00AB '+alb+' \u00BB sera cr\u00E9\u00E9e/r\u00E9utilis\u00E9e.':'')+' ?'))return;
  upProg(0,fs.length);
  var ad=new Date().toISOString().slice(0,10);
  var done=0,fail=0,titles=[],newTracks=[];
@@ -350,7 +358,11 @@ async function uploadTracks(){
   try{var dst=dir+'/'+f.name;
    await ghCreate(dst,toB64Buf(await f.arrayBuffer()),'upload : '+f.name);
    var ti=f.name.replace(/\.[a-z0-9]+$/i,'');
-   newTracks.push({title:ti,file:dst,tags:[],rating:0,added:ad});
+   var nt={title:ti,file:dst,tags:lotTags.slice(),rating:lotR,added:ad};
+   if(lotStyle)nt.style=lotStyle;
+   if(lotDesc)nt.desc=lotDesc;
+   if(lotDate)nt.recordDate=lotDate;
+   newTracks.push(nt);
    titles.push(ti);done++;}
   catch(e){fail++;}
   upProg(i+1,fs.length);}
@@ -360,8 +372,9 @@ async function uploadTracks(){
  if(alb&&titles.length){var PP=PLAYLISTS.find(function(x){return x.title===alb;});
   if(!PP){PP={title:alb,desc:'Album',tracks:[],upd:ad};PLAYLISTS.push(PP);}
   titles.forEach(function(t){if((PP.tracks||[]).indexOf(t)<0)PP.tracks.push(t);});PP.upd=ad;}
- try{upSet('status ok','\u23F3 PUBLICATION (fusion anti-\u00E9crasement)\u2026');await publishAll('upload : '+done+' fichier(s)');}
+ try{upSet('status ok','\u23F3 PUBLICATION (fusion anti-\u00E9crasement)\u2026');await publishAll('upload : '+done+' fichier(s)'+(extra?' ('+extra+' )':''));}
  catch(e){upSet('status err','PUBLISH KO : '+e.message);return;}
  upSet('status ok','\u2713 '+done+' UPLOAD\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':'')+' \u2014 donn\u00E9es existantes conserv\u00E9es');
  document.getElementById('upFiles').value='';
  await load();render();renderPlaylist();}
+
