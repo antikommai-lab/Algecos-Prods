@@ -218,11 +218,14 @@ async function savePl(){
 /* ===== formulaires sélections ===== */
 var smSelIdx=-1;
 function fillSelVals(p){
- $('s_title').value=p.title||'';$('s_desc').value=p.desc||'';
- $('s_tracks').value=(p.tracks||[]).map(function(r){return typeof r==='string'?r:entRef(r);}).filter(Boolean).join(String.fromCharCode(10));}
+ $('s_title').value=p.title||'';$('s_desc').value=p.desc||'';$('s_ref').value=p.ref||'';
+ $('s_tracks').value=(p.playlists||[]).map(function(r){
+  if(typeof r==='string')return r;
+  if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
+  return entRef(r)||'';}).join(String.fromCharCode(10));}
 function openSelForm(mode){
  if(mode===-1){smSelIdx=-1;$('smSelTitle').textContent='+ Nouvelle sélection';$('smSelSelWrap').style.display='none';
-  $('s_title').value='';$('s_desc').value='';$('s_tracks').value='';}
+  $('s_title').value='';$('s_desc').value='';$('s_ref').value='';$('s_tracks').value='';}
  else{$('smSelTitle').textContent='✎ Modifier une sélection';$('smSelSelWrap').style.display='block';
   $('smSelSel').innerHTML=SELS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
   smSelIdx=0;fillSel();}
@@ -232,7 +235,11 @@ async function saveSel(){
  var ti=$('s_title').value.trim();
  if(!ti){$('sStatus').className='status err';$('sStatus').textContent='TITRE REQUIS';return;}
  var lines=$('s_tracks').value.split(String.fromCharCode(10)).map(function(s){return s.trim();}).filter(Boolean);
- var p={title:ti,desc:$('s_desc').value.trim(),tracks:lines};
+ var pls=lines.map(function(l){
+  var m=l.match(/^LABEL\s*:\s*(.+?)\s*::\s*(.+)$/i);
+  if(m)return {label:m[1].trim(),ref:m[2].trim()};
+  return l;});
+ var p={title:ti,desc:$('s_desc').value.trim(),ref:($('s_ref')?$('s_ref').value.trim():''),playlists:pls};
  p.upd=new Date().toISOString().slice(0,10);
  if(smSelIdx>-1)SELS[smSelIdx]=p;else SELS.push(p);
  $('sStatus').className='status ok';$('sStatus').textContent='⏳ PUBLICATION…';

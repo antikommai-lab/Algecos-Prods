@@ -472,7 +472,8 @@ audio{width:100%;height:40px}
 <div id="smSelSelWrap" style="display:none"><label>Quelle sélection ?</label><select id="smSelSel" onchange="fillSel()"></select></div>
 <label>Titre</label><input id="s_title">
 <label>Description</label><textarea id="s_desc" rows="2"></textarea>
-<label>Morceaux — 1 par ligne (titre ou référence)</label><textarea id="s_tracks" rows="7" style="font-size:.74rem"></textarea>
+<label>Référence courte (optionnel)</label><input id="s_ref" placeholder="ex : sel-nuit">
+<label>Playlists — 1 par ligne (nom exact de la playlist) · ou LABEL: note :: nom de la playlist</label><textarea id="s_tracks" rows="7" style="font-size:.74rem"></textarea>
 <div class="row"><button class="btn" onclick="saveSel()">Enregistrer</button><button class="btn2" onclick="closeModal('selModal')">Annuler</button></div>
 <div class="status" id="sStatus"></div>
 </div></div>
@@ -557,16 +558,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261022"></script>
-<script src="js/data.js?v=20261022"></script>
-<script src="js/auth.js?v=20261022"></script>
-<script src="js/admin.js?v=20261022"></script>
-<script src="js/player.js?v=20261022"></script>
-<script src="js/views.js?v=20261022"></script>
-<script src="js/versions.js?v=20261022"></script>
-<script src="js/genres.js?v=20261022"></script>
-<script src="js/manage.js?v=20261022"></script>
-<script src="js/main.js?v=20261022"></script>
+<script src="js/config.js?v=20261023"></script>
+<script src="js/data.js?v=20261023"></script>
+<script src="js/auth.js?v=20261023"></script>
+<script src="js/admin.js?v=20261023"></script>
+<script src="js/player.js?v=20261023"></script>
+<script src="js/views.js?v=20261023"></script>
+<script src="js/versions.js?v=20261023"></script>
+<script src="js/genres.js?v=20261023"></script>
+<script src="js/manage.js?v=20261023"></script>
+<script src="js/main.js?v=20261023"></script>
 
 </body>
 </html>
