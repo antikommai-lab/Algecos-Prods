@@ -1,19 +1,28 @@
-
 [
   {
     "title": "NAONED HAURROR STORIES (premiere edition)",
     "cover": "NAONEDHAURRORSTORIESCOVER1",
     "desc": "4titres+3Bonus | Premiere selection de tracks en attendant l'Album 1ere edition (autres editions a venir: même textes mais songs styles differents)",
     "tracks": [
-      {"SECTION":"FACE A - Album"},
+      {
+        "SECTION": "FACE A - Album"
+      },
       "Migrant Story (HaurrorCore Positive) [chanson,slam,reggae,rap].mp3",
       "Mel à Roulettes",
       "TITA ON FAYA - Titita Titi Tati Tita_v.DEF",
       "Les Tontons Buveurs (Aldi's Stories)",
       "La Cour Des Mirages (HaurrorCore)",
-      {"ref":"Les Tontons Buveurs (Aldi's Stories) version Disco","label":"BONUS"},
-      {"ref":"HaurrorCore remix (ragga metal hardtek remix)","label":"BONUS"},
-      {"SECTION":"FACE B - BONUS: Instrus"},
+      {
+        "ref": "Les Tontons Buveurs (Aldi's Stories) version Disco",
+        "label": "BONUS"
+      },
+      {
+        "ref": "HaurrorCore remix (ragga metal hardtek remix)",
+        "label": "BONUS"
+      },
+      {
+        "SECTION": "FACE B - BONUS: Instrus"
+      },
       "pure instrumental rap piano lyric old school",
       "Childhood Madness Memories (instru)",
       "Cirque de Cendres (instru)",
@@ -22,7 +31,6 @@
       "Poisoned Lollipop (instru)",
       "pure instrumental rap piano lyric old school v2",
       "Horreur Positive vDEF (instru)"
-      
     ]
   }
 ]
