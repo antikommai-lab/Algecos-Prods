@@ -1,7 +1,31 @@
+/* ===== mode lots : cocher des morceaux dans la liste ===== */
+var LOTSMODE=false,LOTCARD=[],LASTLIST=[];
+function toggleLots(){LOTSMODE=!LOTSMODE;LOTCARD=[];render();updLotsBtns();}
+function updLotsBtns(){
+ var b=$('btnLots');if(!b)return;
+ b.innerHTML=LOTSMODE?'\u2611 LOTS':'\u2610 LOTS';
+ $('btnLotsAll').style.display=LOTSMODE?'inline-block':'none';
+ $('btnLotsGo').style.display=LOTSMODE?'inline-block':'none';
+ $('btnLotsAll').textContent=(LOTCARD.length&&LOTCARD.length===LASTLIST.length)?'\u2610 TOUT D\u00C9COCHER':'\u2713 TOUT COCHER';}
+function lotsAll(){
+ if(LOTCARD.length&&LOTCARD.length===LASTLIST.length)LOTCARD=[];
+ else LOTCARD=LASTLIST.map(function(o){return o.i;});
+ render();updLotsBtns();}
+function lotsGo(){
+ if(!LOTCARD.length){alert('RIEN COCH\u00C9 \u2014 active le mode LOTS et coche des morceaux');return;}
+ MGSEL=LOTCARD.slice().sort(function(a,b){return a-b;});
+ LOTSMODE=false;LOTCARD=[];updLotsBtns();
+ openManage('tr');}
+
 /* ===== playlist accueil ===== */
 function renderPlaylist(){
  if(!PLAYLIST)return;
- $('plTitle').textContent=PLAYLIST.title||'PLAYLIST';
+ var adm=document.body.classList.contains('adm');
+ var pi=PLAYLISTS.indexOf(PLAYLIST);
+ if(adm&&pi>-1){
+  $('plTitle').innerHTML=esc(PLAYLIST.title||'PLAYLIST')+' <button class="edit" onclick="editPl('+pi+')" title="Editer cette playlist">\u2699</button>';
+ }
+ else $('plTitle').textContent=PLAYLIST.title||'PLAYLIST';
  $('plDesc').textContent=PLAYLIST.desc||'';
  if(PLAYLIST.cover){tryCovers(plCoverPaths(PLAYLIST.cover),function(u){var c=$('plCover');if(u){c.src=u;c.style.display='block';}else c.style.display='none';});}
  else $('plCover').style.display='none';
@@ -15,8 +39,10 @@ function renderPlaylist(){
    +(lab?'<span class="plabel">'+esc(lab)+'</span>':'')
    +'<span class="pidx">'+String(n).padStart(2,'0')+'</span>'
    +'<span class="pt"><b>'+esc(t.title)+'</b><small>'+esc(t.style||'')+' · '+esc((t.tags||[]).slice(0,3).join(' / '))+'</small></span>'
-   +(t.version?'<span class="pver">'+esc(t.version)+'</span>':'')+'</div>';});
- $('plist').innerHTML=h||'<div style="padding:16px;color:var(--dim);font-size:.75rem">PLAYLIST VIDE</div>';}
+   +(t.version?'<span class="pver">'+esc(t.version)+'</span>':'')
+   +(adm?'<button class="edit" data-et="'+TRACKS.indexOf(t)+'" title="Editer ce morceau">\u2699</button>':'')+'</div>';});
+ $('plist').innerHTML=h||'<div style="padding:16px;color:var(--dim);font-size:.75rem">PLAYLIST VIDE</div>';
+ if(adm)document.querySelectorAll('#plist .edit[data-et]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();editTrack(+b.getAttribute('data-et'));};});}
 function playPlaylist(){var pl=plFlat();if(!pl.length)return;play(pl[0],pl);}
 
 /* ===== toutes les playlists ===== */
@@ -52,6 +78,7 @@ function stars(n){var s='';for(var i=1;i<=5;i++)s+='<span class="'+(i<=(n||0)?'o
 function match(t,q){var hay=[t.title,(t.tags||[]).join(' '),t.desc||'',t.style||'',t.version||'',t.lyricsCreator||'',t.soundCreator||''].join(' ').toLowerCase();return hay.indexOf(q)>-1;}
 function cardHTML(t,i){
  var h='<div class="card" data-i="'+i+'">';
+ if(LOTSMODE)h+='<input type="checkbox" class="lotck" data-li="'+i+'"'+(LOTCARD.indexOf(i)>-1?' checked':'')+' style="position:absolute;top:10px;left:10px;z-index:5;width:20px;height:20px;cursor:pointer">';
  if(t.version)h+='<span class="ver">'+esc(t.version)+'</span>';
  h+='<div class="stars">'+stars(t.rating)+'</div><h3>'+esc(t.title)+'</h3>';
  if(t.style)h+='<div class="style fold" title="cliquer pour déplier">[ '+esc(t.style)+' ]</div>';
@@ -59,7 +86,7 @@ function cardHTML(t,i){
  h+='<div class="info">VO:'+esc(t.lyricsCreator||'—')+' / SND:'+esc(t.soundCreator||'—')+' / '+esc(t.recordDate||'—')+(t.added?' / +'+esc(t.added):'')+'</div>';
  h+='<div class="desc fold" title="cliquer pour déplier">'+esc(t.desc||'')+'</div>';
  h+='<button class="play" data-i="'+i+'">▶ Écouter</button>';
- h+='<button class="edit" data-e="'+i+'" title="Éditer ce morceau">⚙</button><button class="shB" data-shtr=""+i+"" title="Partager ce morceau">&#10548;</button></div>';return h;}
+ h+='<button class="edit" data-e="'+i+'" title="Éditer ce morceau">⚙</button><button class="shB" data-shtr="'+i+'" title="Partager ce morceau">&#10548;</button></div>';return h;}
 function render(){
  var q=$('q').value.toLowerCase().trim();
  var mo=$('moreOpts')?$('moreOpts').value:'';
@@ -84,6 +111,7 @@ function render(){
  else if(st==='note')list.sort(function(a,b){return (b.t.rating||0)-(a.t.rating||0);});
  else if(st==='style')list.sort(function(a,b){return String(a.t.style||'').localeCompare(String(b.t.style||''),'fr')||String(a.t.title).localeCompare(String(b.t.title),'fr');});
  if(mo==='recent')list=list.slice().sort(function(a,b){return String(b.t.recordDate||'').localeCompare(String(a.t.recordDate||''));}).slice(0,10);
+ LASTLIST=list;
  $('count').textContent=list.length+'/'+TRACKS.length+' morceaux';
  $('grid').innerHTML=list.map(function(o){return cardHTML(o.t,o.i);}).join('');
  $('empty').style.display=list.length?'none':'block';
@@ -91,7 +119,13 @@ function render(){
   var t=TRACKS[+card.getAttribute('data-i')];if(!t)return;
   tryCovers(trackCoverPaths(t),function(u){if(u)card.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';});});
  document.querySelectorAll('.edit[data-e]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();editTrack(+b.getAttribute('data-e'));};});
- document.querySelectorAll('.card .fold').forEach(function(el){el.onclick=function(ev){ev.stopPropagation();el.classList.toggle('open');};});}
+ document.querySelectorAll('.card .fold').forEach(function(el){el.onclick=function(ev){ev.stopPropagation();el.classList.toggle('open');};});
+ document.querySelectorAll('.lotck').forEach(function(ck){
+  ck.onclick=function(ev){ev.stopPropagation();};
+  ck.onchange=function(){var i=+ck.getAttribute('data-li');var ix=LOTCARD.indexOf(i);
+   if(ck.checked&&ix<0)LOTCARD.push(i);
+   if(!ck.checked&&ix>-1)LOTCARD.splice(ix,1);
+   updLotsBtns();};});}
 
 /* ===== viewer images ===== */
 function openViewer(im){var all=[].slice.call(document.images).filter(function(x){return x.src;});
@@ -170,4 +204,3 @@ function hitCounter(){
  try{fetch('https://abacus.jasoncameron.dev/hit/AlgecosProds/visites').then(function(r){return r.json();}).then(function(d){
   var e=document.getElementById('vCount');if(e&&d.value)e.textContent='\u{1F441} '+d.value+' visites';}).catch(function(){});}
  catch(e){}}
-

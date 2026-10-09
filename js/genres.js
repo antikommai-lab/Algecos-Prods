@@ -25,7 +25,9 @@ function selFlat(s){var out=[];
  return out;}
 function selSelCardHTML(s){
  var en=selEntries(s),flat=selFlat(s);
- var h='<div class="plh" data-sel="'+esc(s.title)+'"><h3>'+esc(s.title)+(s.ref?' <small style="color:var(--dim);font-size:.6rem">['+esc(s.ref)+']</small>':'')+'</h3><div class="m">'+esc(s.desc||'')+' \u00B7 '+en.length+' playlist(s) \u00B7 '+flat.length+' morceaux'+(s.upd?' \u00B7 '+esc(s.upd):'')+'</div><div class="seltracks">'
+ var h='<div class="plh" data-sel="'+esc(s.title)+'">'
+ +((typeof document!=='undefined'&&document.body.classList.contains('adm'))?'<button class="edit" style="position:absolute;top:10px;right:10px" onclick="event.stopPropagation();editSelIdx('+SELS.indexOf(s)+')" title="Editer cette s\u00E9lection">\u2699</button>':'')
+ +'<h3>'+esc(s.title)+(s.ref?' <small style="color:var(--dim);font-size:.6rem">['+esc(s.ref)+']</small>':'')+'</h3><div class="m">'+esc(s.desc||'')+' \u00B7 '+en.length+' playlist(s) \u00B7 '+flat.length+' morceaux'+(s.upd?' \u00B7 '+esc(s.upd):'')+'</div><div class="seltracks">'
  +en.map(function(e){var tr=plFlatOf(e.pl);
    return '<div class="srow" data-spl="'+esc(e.pl.title)+'">'+(e.label?'<span class="plabel">'+esc(e.label)+'</span>':'')+'<b>'+esc(e.pl.title)+'</b>&nbsp;<small style="color:var(--dim)">'+tr.length+' morceaux</small></div>';}).join('')
  +'</div><div class="row" style="margin-top:8px"><button class="btn" data-selplay="'+esc(s.title)+'">\u25B6 LIRE</button></div></div>';
@@ -37,6 +39,8 @@ function bindSelCards(root){
  root.querySelectorAll('.plh').forEach(function(cd){
   var s=SELS.find(function(x){return x.title===cd.getAttribute('data-sel');})||PLAYLISTS.find(function(x){return x.title===cd.getAttribute('data-sel');})||null;
   cd.onclick=function(ev){if(ev.target.closest('button')||ev.target.closest('.srow'))return;cd.classList.toggle('open');};
+  var eb=cd.querySelector('.edit');
+  if(eb)eb.onclick=function(ev){ev.stopPropagation();};
   var pb=cd.querySelector('[data-spp]');
   if(pb)pb.onclick=function(ev){ev.stopPropagation();var pl=plFlatOf(s||{tracks:[]});if(pl.length){PLAYLIST=s;renderPlaylist();play(pl[0],pl);}};
   var sb2=cd.querySelector('[data-selplay]');
@@ -48,6 +52,11 @@ function bindSelCards(root){
    var spl=r.getAttribute('data-spl');
    if(spl){r.onclick=function(ev){ev.stopPropagation();var pl=plByName(spl);if(pl){PLAYLIST=pl;renderPlaylist();showView('home');}};return;}
    r.onclick=function(ev){ev.stopPropagation();var t=TRACKS.find(function(x){return x.title===r.getAttribute('data-spt');});if(t){PLAYLIST=s;renderPlaylist();play(t,plFlatOf(s));}};});});}
+/* edition d'une selection depuis sa carte (admin) */
+function editSelIdx(i){
+ var s=SELS[i];if(!s)return;
+ smSelIdx=i;$('smSelTitle').textContent='\u270E Modifier : '+s.title;
+ fillSelVals(s);$('sStatus').textContent='';openModal('selModal');}
 function playFiltered(){
  var q=$('q').value.toLowerCase().trim();
  var list=TRACKS.filter(function(t){return (!q||match(t,q))&&(activeTags.length===0||activeTags.some(function(a){return (t.tags||[]).indexOf(a)>-1;}));});

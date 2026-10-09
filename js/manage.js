@@ -1,8 +1,8 @@
 /* ===== gestion par lots : tracks + playlists ===== */
-var MGTAB='tr',MGSEL=[],MGPL=null;
+var MGTAB='tr',MGSEL=[],MGPL=null,MGPLSEL=[];
 var Q=String.fromCharCode(34);
 function openManage(tab){openModal('manageModal');mgTab(tab||'tr');}
-function mgTab(t){MGTAB=t;MGSEL=[];
+function mgTab(t){MGTAB=t;MGSEL=[];MGPLSEL=[];
  $('mgTabTr').className=t==='tr'?'btn':'btn2';$('mgTabPl').className=t==='pl'?'btn':'btn2';
  $('mgTr').style.display=t==='tr'?'block':'none';$('mgPl').style.display=t==='pl'?'block':'none';
  $('mgTitle').textContent=t==='tr'?'Gestion des tracks':'Gestion des playlists';
@@ -51,8 +51,15 @@ async function mgAddToPl(){
 function fillMgPlSel(){$('mgPlSel').innerHTML='<option value='+Q+''+Q+'>\u2014 playlist \u2014</option>'+PLAYLISTS.map(function(p){return '<option value='+Q+''+esc(p.title)+''+Q+'>'+esc(p.title)+'</option>';}).join('');}
 function renderMgPlList(){
  $('mgPlList').innerHTML=PLAYLISTS.map(function(p,i){
-  return '<div class='+Q+'mgrow'+Q+'><div class='+Q+'mt'+Q+'><b>'+esc(p.title)+'</b> <span class='+Q+'ms'+Q+'>'+((p.tracks||[]).length)+' tracks \u00B7 '+esc(p.upd||'')+'</span></div><button class='+Q+'btn2'+Q+' onclick='+Q+'mgEditPlMeta('+i+')'+Q+'>\u270E</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgOpenPE('+i+')'+Q+'>\u2611 TRACKLIST</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgDelPlAsk('+i+')'+Q+'>\u{1F5D1}</button></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUNE PLAYLIST</div>';
+  return '<div class='+Q+'mgrow'+Q+'><input type='+Q+'checkbox'+Q+' data-pi='+Q+''+i+''+Q+(MGPLSEL.indexOf(i)>-1?' checked':'')+' onchange='+Q+'mgPlPick('+i+',this.checked)'+Q+'><div class='+Q+'mt'+Q+'><b>'+esc(p.title)+'</b> <span class='+Q+'ms'+Q+'>'+((p.tracks||[]).length)+' tracks \u00B7 '+esc(p.upd||'')+'</span></div><button class='+Q+'btn2'+Q+' onclick='+Q+'mgEditPlMeta('+i+')'+Q+'>\u270E</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgOpenPE('+i+')'+Q+'>\u2611 TRACKLIST</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgDelPlAsk('+i+')'+Q+'>\u{1F5D1}</button></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUNE PLAYLIST</div>';
  fillMgPlSel();}
+function mgPlPick(i,on){var ix=MGPLSEL.indexOf(i);if(on&&ix<0)MGPLSEL.push(i);if(!on&&ix>-1)MGPLSEL.splice(ix,1);}
+async function mgDelPlsSel(){
+ if(!MGPLSEL.length){$('mgPlStatus').className='status err';$('mgPlStatus').textContent='RIEN S\u00C9LECTIONN\u00C9';return;}
+ var names=MGPLSEL.map(function(i){return PLAYLISTS[i].title;}).join(', ');
+ if(!confirm('Supprimer '+MGPLSEL.length+' playlist(s) ?\n'+names))return;
+ MGPLSEL.slice().sort(function(a,b){return b-a;}).forEach(function(i){PLAYLISTS.splice(i,1);});MGPLSEL=[];
+ mgPublish('suppression playlists : '+names,'mgPlStatus');}
 function mgEditPlMeta(i){closeModal('manageModal');editPl(i);}
 function mgDelPlAsk(i){var p=PLAYLISTS[i];
  if(!confirm('Supprimer la playlist \u00AB '+p.title+' \u00BB ?'))return;

@@ -33,7 +33,7 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #tickInner{display:inline-block;white-space:nowrap;color:#F74C00;font-family:'Archivo Black',sans-serif;font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;padding:8px 0;animation:tkmove 22s linear infinite}
 @keyframes tkmove{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 #plGridH{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:18px}
-.plh{background:rgba(16,16,16,.88);border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;cursor:pointer}
+.plh{position:relative;background:rgba(16,16,16,.88);border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;cursor:pointer}
 .plh h3{font-family:'Archivo Black',sans-serif;font-size:.95rem;text-transform:uppercase;margin-bottom:4px;color:var(--y)}
 .plh .m{color:var(--dim);font-size:.68rem;margin-bottom:8px;line-height:1.5}
 .plh .seltracks{border-top:1px solid var(--line);margin-top:8px}
@@ -153,6 +153,7 @@ body.adm #admBtn{display:block}
 .edit{display:none;width:30px;height:30px;background:#000;color:var(--y);border:1px solid var(--y);cursor:pointer;font-size:1rem;line-height:1;text-align:center}
 .edit:hover{background:var(--y);color:#000}
 body.adm .edit{display:block}
+body:not(.adm) .admOnly{display:none!important}
 .card .edit{position:absolute;top:42px;right:12px}
 .plcard .edit{position:absolute;top:10px;right:10px}
 #plist .edit{position:absolute;top:10px;right:44px;width:26px;height:26px;font-size:.85rem;z-index:2}
@@ -308,6 +309,7 @@ audio{width:100%;height:40px}
 
 <section id="plistsWrap">
 <h2 class="secH">☰ Toutes les playlists</h2>
+<button class="btn2 admOnly" onclick="openManage('pl')">&#9998; Gestion / traitement par lots des playlists</button>
 <div id="plGrid"></div>
 </section>
 
@@ -320,6 +322,9 @@ audio{width:100%;height:40px}
 <input id="q" type="text" placeholder="TITRE / STYLE / MOT-CLÉ / VERSION…" autocomplete="off">
 <button class="btn" id="btnSearch">GO</button>
 <button class="btn2" id="btnReset">✕</button>
+<button class="btn2 admOnly" id="btnLots" onclick="toggleLots()">&#9744; Lots</button>
+<button class="btn2 admOnly" id="btnLotsAll" onclick="lotsAll()" style="display:none">&#10003; Tout cocher</button>
+<button class="btn2 admOnly" id="btnLotsGo" onclick="lotsGo()" style="display:none">&#128193; Traiter la sélection</button>
 </div>
 <div class="tags" id="tags"></div>
 <div class="search-bar" style="margin-bottom:10px">
@@ -432,6 +437,7 @@ audio{width:100%;height:40px}
 <div id="mgPlList"></div>
 <div class="mgact">
 <button class="btn" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
+<button class="btn2" onclick="mgDelPlsSel()">&#x1F5D1; Supprimer cochées</button>
 </div>
 <div id="mgPlEdit" style="display:none">
 <div class="mgact">
@@ -569,16 +575,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261024"></script>
-<script src="js/data.js?v=20261024"></script>
-<script src="js/auth.js?v=20261024"></script>
-<script src="js/admin.js?v=20261024"></script>
-<script src="js/player.js?v=20261024"></script>
-<script src="js/views.js?v=20261024"></script>
-<script src="js/versions.js?v=20261024"></script>
-<script src="js/genres.js?v=20261024"></script>
-<script src="js/manage.js?v=20261024"></script>
-<script src="js/main.js?v=20261024"></script>
+<script src="js/config.js?v=20261025"></script>
+<script src="js/data.js?v=20261025"></script>
+<script src="js/auth.js?v=20261025"></script>
+<script src="js/admin.js?v=20261025"></script>
+<script src="js/player.js?v=20261025"></script>
+<script src="js/views.js?v=20261025"></script>
+<script src="js/versions.js?v=20261025"></script>
+<script src="js/genres.js?v=20261025"></script>
+<script src="js/manage.js?v=20261025"></script>
+<script src="js/main.js?v=20261025"></script>
 
 </body>
 </html>
