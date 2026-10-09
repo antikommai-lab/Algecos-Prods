@@ -21,15 +21,16 @@ function playPlaylist(){var pl=plFlat();if(!pl.length)return;play(pl[0],pl);}
 
 /* ===== toutes les playlists ===== */
 function renderPlists(){
- $('plGrid').innerHTML=PLAYLISTS.map(function(p,i){
+ var all=PLAYLISTS.concat(autoPlaylists());
+ $('plGrid').innerHTML=all.map(function(p,i){
   var nb=((p.tracks)||[]).map(function(r){return plMatch(entRef(r))?1:0;}).reduce(function(a,b){return a+b;},0);
-  return '<div class="plcard" data-i="'+i+'"><button class="edit" data-pe="'+i+'" title="Éditer cette playlist">⚙</button><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'—')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="pln">'+nb+' morceaux</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
+  return '<div class="plcard" data-i="' + i + '">' + (p.auto ? '' : '<button class="edit" data-pe="' + i + '" title="\u00C9diter cette playlist">&#9881;</button>') + '<img class="plc" alt="" style="display:none"><div class="plbox"><h3>' + esc(p.title || '—') + (p.auto ? ' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>' : '') + '</h3><div class="pld">' + esc(p.desc || '') + '</div><div class="pln">' + nb + ' morceaux</div><button class="btn">Ouvrir</button></div></div>';}).join('') || '<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
  document.querySelectorAll('.plcard').forEach(function(cd){
-  var p=PLAYLISTS[+cd.getAttribute('data-i')];
-  if(p&&p.cover)tryCovers(plCoverPaths(p.cover),function(u){var im=cd.querySelector('.plc');if(u){im.src=u;im.style.display='block';}});
+  var p=all[+cd.getAttribute('data-i')];
+  if(p && p.cover && !p.auto)tryCovers(plCoverPaths(p.cover),function(u){var im=cd.querySelector('.plc');if(u){im.src=u;im.style.display='block';}});
   var eb=cd.querySelector('.edit');
-  if(eb)eb.onclick=function(ev){ev.stopPropagation();editPl(+cd.getAttribute('data-i'));};
-  cd.onclick=function(){PLAYLIST=PLAYLISTS[+cd.getAttribute('data-i')]||PLAYLIST;renderPlaylist();showView('home');};});}
+  if(eb)eb.onclick=function(ev){ev.stopPropagation();editPl(PLAYLISTS.indexOf(p));};
+  cd.onclick=function(){PLAYLIST=p||PLAYLIST;renderPlaylist();showView('home');};});}
 
 /* ===== navigation ===== */
 function showView(v){
