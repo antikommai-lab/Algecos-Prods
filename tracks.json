@@ -530,9 +530,7 @@
       "experiment",
       "hard jazzcore",
       "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe"
+      "instrumental"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v6",
@@ -558,9 +556,7 @@
       "experiment",
       "hard jazzcore",
       "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe"
+      "instrumental"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v1",
@@ -586,9 +582,7 @@
       "experiment",
       "hard jazzcore",
       "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe"
+      "instrumental"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v10",
@@ -614,9 +608,7 @@
       "experiment",
       "hard jazzcore",
       "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe"
+      "instrumental"
     ],
     "style": "fantasy acidcore,tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v14",
@@ -642,9 +634,7 @@
       "experiment",
       "hard jazzcore",
       "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe"
+      "instrumental"
     ],
     "style": "fantasy acidcore,tek,haerdtek,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v14",
@@ -670,9 +660,7 @@
       "experiment",
       "hard jazzcore",
       "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe"
+      "instrumental"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v11",
@@ -698,9 +686,7 @@
       "experiment",
       "hard jazzcore",
       "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe"
+      "instrumental"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v12",
@@ -726,9 +712,7 @@
       "experiment",
       "hard jazzcore",
       "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe"
+      "instrumental"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
     "version": "experiment v13",
@@ -755,8 +739,6 @@
       "hard jazzcore",
       "hardtek",
       "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
       "jumpy"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
@@ -784,8 +766,6 @@
       "hard jazzcore",
       "hardtek",
       "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
       "jumpy"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
@@ -813,8 +793,6 @@
       "hard jazzcore",
       "hardtek",
       "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
       "jumpy"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
@@ -842,8 +820,6 @@
       "hard jazzcore",
       "hardtek",
       "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
       "jumpy"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
@@ -871,8 +847,6 @@
       "hard jazzcore",
       "hardtek",
       "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
       "jumpy"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
@@ -900,8 +874,6 @@
       "hard jazzcore",
       "hardtek",
       "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
       "jumpy"
     ],
     "style": "tek,haerdtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
@@ -953,183 +925,117 @@
     "rating": 3
   },
   {
-    "title": "A Tribute to Russian Antifas",
+    "title": "A Tribute to Russian Antifas Slavicore Jazzidcore jazzidtribe",
     "file": "audio/techno/A Tribute to Russian Antifas Slavicore Jazzidcore jazzidtribe.mp3",
-    "tags": [
-      "jazzcore",
-      "tek",
-      "techno",
-      "hardcore",
-      "acidcore",
-      "tribecore",
-      "jazz",
-      "swing",
-      "fusion",
-      "experiment",
-      "hard jazzcore",
-      "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
-      "jumpy",
-      "slavicore",
-      "manouchcore",
-      "gypsycore"
-    ],
-    "rating": 3,
-    "desc": "RASH ANTIFA FOREVER,Fighting for human values in Russia is a very important, brave and so dangerous. You need to be sustained and respected for such Mind strength.Citizens of the world we're brothers in this war for human values",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-09"
+    "tags": [],
+    "rating": 0
   },
   {
     "title": "Accordion Baltic mood slavcore Jazzidcore jazzidtribe",
     "file": "audio/techno/Accordion Baltic mood slavcore Jazzidcore jazzidtribe.mp3",
-    "tags": [
-      "jazzcore",
-      "tek",
-      "techno",
-      "hardcore",
-      "acidcore",
-      "tribecore",
-      "jazz",
-      "swing",
-      "fusion",
-      "experiment",
-      "hard jazzcore",
-      "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
-      "jumpy",
-      "slavicore",
-      "manouchcore",
-      "gypsycore"
-    ],
-    "rating": 5,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-09"
+    "tags": [],
+    "rating": 0
   },
   {
     "title": "Acid gypsy violin Manouchcore Slavicore Jazzidcore jazzidtribe",
     "file": "audio/techno/Acid gypsy violin Manouchcore Slavicore Jazzidcore jazzidtribe.mp3",
-    "tags": [
-      "jazzcore",
-      "tek",
-      "techno",
-      "hardcore",
-      "acidcore",
-      "tribecore",
-      "jazz",
-      "swing",
-      "fusion",
-      "experiment",
-      "hard jazzcore",
-      "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
-      "jumpy",
-      "slavicore",
-      "manouchcore",
-      "gypsycore"
-    ],
-    "rating": 4,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-09"
+    "tags": [],
+    "rating": 0
   },
   {
     "title": "Protect Slavic Culture against the mad dictator slavicore Jazzidcore jazzidtribe",
     "file": "audio/techno/Protect Slavic Culture against the mad dictator slavicore Jazzidcore jazzidtribe.mp3",
-    "tags": [
-      "jazzcore",
-      "tek",
-      "techno",
-      "hardcore",
-      "acidcore",
-      "tribecore",
-      "jazz",
-      "swing",
-      "fusion",
-      "experiment",
-      "hard jazzcore",
-      "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
-      "jumpy",
-      "slavicore",
-      "manouchcore",
-      "gypsycore"
-    ],
-    "rating": 4,
-    "desc": "Russian and Slavic is so rich...Artists, Creators and humanists have to face censorship,destruction of their work, finish in jail or die for think and create.Also this madness that is this absurd,nonsense WAR,leading humanity to anihilation, combinated with his fight againsnt the truth,using desinformation as a massive weapon divide the world,forcing many people not enough well informed to choose an side and boycott everything from Russia,sometimes triggering HATE against Russian people. The poeple is just another victim offered in sacrifice to the crazy insane path draw by Poutine. POUTINE IS A DICTATOR AND A MENTAL SICK DESPICABLE HUMAN who is destroying the world and humanity! This guy should be stopped, put in jail and condamned for his so numerous crimes against humanity. Support Russian culture, athletes and intellectuels, and support population of Russia",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-08"
+    "tags": [],
+    "rating": 0
   },
   {
     "title": "Taiga free party Slavicore Jazzidcore jazzidtribe",
     "file": "audio/techno/Taiga free party Slavicore Jazzidcore jazzidtribe.mp3",
-    "tags": [
-      "jazzcore",
-      "tek",
-      "techno",
-      "hardcore",
-      "acidcore",
-      "tribecore",
-      "jazz",
-      "swing",
-      "fusion",
-      "experiment",
-      "hard jazzcore",
-      "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
-      "jumpy",
-      "slavicore",
-      "manouchcore",
-      "gypsycore"
-    ],
-    "rating": 5,
-    "desc": "Big Up ,Support and best wishes to Russians Sound System and travellers.FREE PARTIES ARE ACTS OF RESISTANCE,the CHOICE of autonomy, autogestion, solidarity and most of all: FREEDOM, it imply a constant battle",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-09"
+    "tags": [],
+    "rating": 0
   },
   {
     "title": "the Siberian chemist Slavicore Jazzidcore jazzidtribe",
     "file": "audio/techno/the Siberian chemist Slavicore Jazzidcore jazzidtribe.mp3",
-    "tags": [
-      "jazzcore",
-      "tek",
-      "techno",
-      "hardcore",
-      "acidcore",
-      "tribecore",
-      "jazz",
-      "swing",
-      "fusion",
-      "experiment",
-      "hard jazzcore",
-      "hardtek",
-      "instrumental",
-      "jazzidcore",
-      "jazzidtribe",
-      "jumpy",
-      "slavicore",
-      "manouchcore",
-      "gypsycore"
-    ],
-    "rating": 4,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-09"
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "A Tribute to Russian Antifas Slavicore Jazzidcore jazzidtribe",
+    "file": "audio/techno/A Tribute to Russian Antifas Slavicore Jazzidcore jazzidtribe.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Accordion Baltic mood slavcore Jazzidcore jazzidtribe",
+    "file": "audio/techno/Accordion Baltic mood slavcore Jazzidcore jazzidtribe.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Acid gypsy violin Manouchcore Slavicore Jazzidcore jazzidtribe",
+    "file": "audio/techno/Acid gypsy violin Manouchcore Slavicore Jazzidcore jazzidtribe.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Protect Slavic Culture against the mad dictator slavicore Jazzidcore jazzidtribe",
+    "file": "audio/techno/Protect Slavic Culture against the mad dictator slavicore Jazzidcore jazzidtribe.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Taiga free party Slavicore Jazzidcore jazzidtribe",
+    "file": "audio/techno/Taiga free party Slavicore Jazzidcore jazzidtribe.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "the Siberian chemist Slavicore Jazzidcore jazzidtribe",
+    "file": "audio/techno/the Siberian chemist Slavicore Jazzidcore jazzidtribe.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Circus Madness (instru)",
+    "file": "audio/instru rap/Circus Madness (instru).mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Cirque de Cendres (instru)",
+    "file": "audio/instru rap/Cirque de Cendres (instru).mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Epic Voices rap drill instrumental",
+    "file": "audio/instru rap/Epic Voices rap drill instrumental.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Horreur Positive vDEF (instru)",
+    "file": "audio/instru rap/Horreur Positive vDEF (instru).mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Le Clown Sadique (instru)",
+    "file": "audio/instru rap/Le Clown Sadique (instru).mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "life is Epic rap drill instrumental",
+    "file": "audio/instru rap/life is Epic rap drill instrumental.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "On the war path Epic Orchestral rap drill instrumental",
+    "file": "audio/instru rap/On the war path Epic Orchestral rap drill instrumental.mp3",
+    "tags": [],
+    "rating": 0
   }
 ]
