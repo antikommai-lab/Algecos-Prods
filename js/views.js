@@ -56,13 +56,14 @@ function cardHTML(t,i){
  h+='<div class="stars">'+stars(t.rating)+'</div><h3>'+esc(t.title)+'</h3>';
  if(t.style)h+='<div class="style fold" title="cliquer pour déplier">[ '+esc(t.style)+' ]</div>';
  h+='<div class="meta">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div>';
- h+='<div class="info">VO:'+esc(t.lyricsCreator||'—')+' / SND:'+esc(t.soundCreator||'—')+' / '+esc(t.recordDate||'—')+'</div>';
+ h+='<div class="info">VO:'+esc(t.lyricsCreator||'—')+' / SND:'+esc(t.soundCreator||'—')+' / '+esc(t.recordDate||'—')+(t.added?' / +'+esc(t.added):'')+'</div>';
  h+='<div class="desc fold" title="cliquer pour déplier">'+esc(t.desc||'')+'</div>';
  h+='<button class="play" data-i="'+i+'">▶ Écouter</button>';
  h+='<button class="edit" data-e="'+i+'" title="Éditer ce morceau">⚙</button><button class="shB" data-shtr=""+i+"" title="Partager ce morceau">&#10548;</button></div>';return h;}
 function render(){
  var q=$('q').value.toLowerCase().trim();
  var mo=$('moreOpts')?$('moreOpts').value:'';
+ var st=$('sortSel')?$('sortSel').value:'';
  var list=TRACKS.map(function(t,i){return {t:t,i:i};}).filter(function(o){
   var ok=activeTags.length===0||activeTags.some(function(a){return (o.t.tags||[]).indexOf(a)>-1;});
   if(mo==='note4')ok=ok&&(o.t.rating||0)>=4;
@@ -70,6 +71,18 @@ function render(){
   if(mo==='noversion')ok=ok&&!(o.t.version||'').trim();
   if(mo==='grp'){var k=vidOf(o.t);ok=ok&&TRACKS.filter(function(x){return vidOf(x)===k;}).length>1;}
   return (!q||match(o.t,q))&&ok;});
+ /* --- tri --- */
+ if(st==='az')list.sort(function(a,b){return String(a.t.title).localeCompare(String(b.t.title),'fr');});
+ else if(st==='za')list.sort(function(a,b){return String(b.t.title).localeCompare(String(a.t.title),'fr');});
+ else if(st==='rec')list.sort(function(a,b){return String(b.t.recordDate||'').localeCompare(String(a.t.recordDate||''));});
+ else if(st==='old')list.sort(function(a,b){return String(a.t.recordDate||'').localeCompare(String(b.t.recordDate||''));});
+ else if(st==='add')list.sort(function(a,b){var ka=a.t.added,kb=b.t.added;
+  if(ka&&kb)return String(kb).localeCompare(String(ka));
+  if(ka&&!kb)return -1;
+  if(!ka&&kb)return 1;
+  return b.i-a.i;});
+ else if(st==='note')list.sort(function(a,b){return (b.t.rating||0)-(a.t.rating||0);});
+ else if(st==='style')list.sort(function(a,b){return String(a.t.style||'').localeCompare(String(b.t.style||''),'fr')||String(a.t.title).localeCompare(String(b.t.title),'fr');});
  if(mo==='recent')list=list.slice().sort(function(a,b){return String(b.t.recordDate||'').localeCompare(String(a.t.recordDate||''));}).slice(0,10);
  $('count').textContent=list.length+'/'+TRACKS.length+' morceaux';
  $('grid').innerHTML=list.map(function(o){return cardHTML(o.t,o.i);}).join('');
@@ -157,3 +170,4 @@ function hitCounter(){
  try{fetch('https://abacus.jasoncameron.dev/hit/AlgecosProds/visites').then(function(r){return r.json();}).then(function(d){
   var e=document.getElementById('vCount');if(e&&d.value)e.textContent='\u{1F441} '+d.value+' visites';}).catch(function(){});}
  catch(e){}}
+

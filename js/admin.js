@@ -111,6 +111,7 @@ async function saveTrack(){
  o.style=$('f_style').value.trim();o.version=$('f_version').value.trim();o.desc=$('f_desc').value.trim();o.vid=$('f_vid').value.trim();
  o.lyricsCreator=$('f_lyr').value.trim();o.soundCreator=$('f_snd').value.trim();
  o.recordDate=$('f_date').value;o.rating=+$('f_rating').value||0;
+ if(tmIdx<0)o.added=new Date().toISOString().slice(0,10);
  if(tmIdx>-1)TRACKS[tmIdx]=o;else TRACKS.push(o);
  var plSel=$('f_pladd')?$('f_pladd').value:'';
  var plNew=$('f_plnew')?$('f_plnew').value.trim():'';
@@ -343,12 +344,13 @@ async function uploadTracks(){
  else{dir='audio'+(F?'/'+F:'');}
  if(!confirm('Uploader '+fs.length+' fichier(s) vers '+dir+'/ ?\n\nLes entr\u00E9es tracks.json seront cr\u00E9\u00E9es avec le titre = nom de fichier.'+(alb?'\nUne playlist \u00AB '+alb+' \u00BB sera cr\u00E9\u00E9e/r\u00E9utilis\u00E9e.':'')+' ?'))return;
  upProg(0,fs.length);
+ var ad=new Date().toISOString().slice(0,10);
  var done=0,fail=0,titles=[],newTracks=[];
  for(var i=0;i<fs.length;i++){var f=fs[i];
   try{var dst=dir+'/'+f.name;
    await ghCreate(dst,toB64Buf(await f.arrayBuffer()),'upload : '+f.name);
    var ti=f.name.replace(/\.[a-z0-9]+$/i,'');
-   newTracks.push({title:ti,file:dst,tags:[],rating:0});
+   newTracks.push({title:ti,file:dst,tags:[],rating:0,added:ad});
    titles.push(ti);done++;}
   catch(e){fail++;}
   upProg(i+1,fs.length);}
@@ -356,8 +358,8 @@ async function uploadTracks(){
  /* le publishAll fusionnera avec le distant (anti-ecrasement) */
  newTracks.forEach(function(nt){TRACKS.push(nt);});
  if(alb&&titles.length){var PP=PLAYLISTS.find(function(x){return x.title===alb;});
-  if(!PP){PP={title:alb,desc:'Album',tracks:[],upd:new Date().toISOString().slice(0,10)};PLAYLISTS.push(PP);}
-  titles.forEach(function(t){if((PP.tracks||[]).indexOf(t)<0)PP.tracks.push(t);});PP.upd=new Date().toISOString().slice(0,10);}
+  if(!PP){PP={title:alb,desc:'Album',tracks:[],upd:ad};PLAYLISTS.push(PP);}
+  titles.forEach(function(t){if((PP.tracks||[]).indexOf(t)<0)PP.tracks.push(t);});PP.upd=ad;}
  try{upSet('status ok','\u23F3 PUBLICATION (fusion anti-\u00E9crasement)\u2026');await publishAll('upload : '+done+' fichier(s)');}
  catch(e){upSet('status err','PUBLISH KO : '+e.message);return;}
  upSet('status ok','\u2713 '+done+' UPLOAD\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':'')+' \u2014 donn\u00E9es existantes conserv\u00E9es');

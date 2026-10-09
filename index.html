@@ -322,7 +322,18 @@ audio{width:100%;height:40px}
 <button class="btn2" id="btnReset">✕</button>
 </div>
 <div class="tags" id="tags"></div>
-<div class="search-bar" style="margin-bottom:10px"><select id="moreOpts" onchange="render()">
+<div class="search-bar" style="margin-bottom:10px">
+<select id="sortSel" onchange="render()">
+<option value="">— TRI —</option>
+<option value="az">TRI : TITRE A→Z</option>
+<option value="za">TRI : TITRE Z→A</option>
+<option value="rec">TRI : DATE RÉCENTE</option>
+<option value="old">TRI : DATE ANCIENNE</option>
+<option value="add">TRI : AJOUT RÉCENT</option>
+<option value="note">TRI : NOTE ↓</option>
+<option value="style">TRI : STYLE A→Z</option>
+</select>
+<select id="moreOpts" onchange="render()">
 <option value="">— plus d&#39;options —</option>
 <option value="grp">même morceau · toutes versions</option>
 <option value="note4">note ≥ 4</option>
@@ -394,7 +405,7 @@ audio{width:100%;height:40px}
 <div id="mgTr" style="display:none">
 <div class="mgact">
 <input type="text" id="mgQ" placeholder="FILTRE…" oninput="renderMgList()">
-<select id="mgSort" onchange="renderMgList()"><option value="title">TRI : TITRE</option><option value="date">TRI : DATE</option><option value="rating">TRI : NOTE</option></select>
+<select id="mgSort" onchange="renderMgList()"><option value="title">TRI : TITRE</option><option value="date">TRI : DATE</option><option value="rating">TRI : NOTE</option><option value="added">TRI : AJOUT</option></select>
 <label style="display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--dim)"><input type="checkbox" id="mgAll" onchange="mgAll(this.checked)"> tout</label>
 </div>
 <div id="mgList"></div>
@@ -558,16 +569,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261023"></script>
-<script src="js/data.js?v=20261023"></script>
-<script src="js/auth.js?v=20261023"></script>
-<script src="js/admin.js?v=20261023"></script>
-<script src="js/player.js?v=20261023"></script>
-<script src="js/views.js?v=20261023"></script>
-<script src="js/versions.js?v=20261023"></script>
-<script src="js/genres.js?v=20261023"></script>
-<script src="js/manage.js?v=20261023"></script>
-<script src="js/main.js?v=20261023"></script>
+<script src="js/config.js?v=20261024"></script>
+<script src="js/data.js?v=20261024"></script>
+<script src="js/auth.js?v=20261024"></script>
+<script src="js/admin.js?v=20261024"></script>
+<script src="js/player.js?v=20261024"></script>
+<script src="js/views.js?v=20261024"></script>
+<script src="js/versions.js?v=20261024"></script>
+<script src="js/genres.js?v=20261024"></script>
+<script src="js/manage.js?v=20261024"></script>
+<script src="js/main.js?v=20261024"></script>
 
 </body>
 </html>

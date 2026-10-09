@@ -14,12 +14,17 @@ function mgFiltered(){var q=($('mgQ').value||'').toLowerCase().trim();
  var s=$('mgSort').value;
  if(s==='date')L.sort(function(a,b){return String(b.t.recordDate||'').localeCompare(String(a.t.recordDate||''));});
  else if(s==='rating')L.sort(function(a,b){return (b.t.rating||0)-(a.t.rating||0);});
+ else if(s==='added')L.sort(function(a,b){var ka=a.t.added,kb=b.t.added;
+  if(ka&&kb)return String(kb).localeCompare(String(ka));
+  if(ka&&!kb)return -1;
+  if(!ka&&kb)return 1;
+  return b.i-a.i;});
  else L.sort(function(a,b){return String(a.t.title||'').localeCompare(String(b.t.title||''));});
  return L;}
 function renderMgList(){
  var L=mgFiltered();
  $('mgList').innerHTML=L.map(function(o){
-  return '<div class='+Q+'mgrow'+Q+'><input type='+Q+'checkbox'+Q+' data-mi='+Q+''+o.i+''+Q+(MGSEL.indexOf(o.i)>-1?' checked':'')+' onchange='+Q+'mgPick('+o.i+',this.checked)'+Q+'><div class='+Q+'mt'+Q+'><b>'+esc(o.t.title)+'</b>'+(o.t.version?' <span class='+Q+'ver'+Q+'>'+esc(o.t.version)+'</span>':'')+'</div><div class='+Q+'ms'+Q+'>'+esc(o.t.recordDate||'')+' \u00B7 '+stars(o.t.rating)+'</div></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUN R\u00C9SULTAT</div>';
+  return '<div class='+Q+'mgrow'+Q+'><input type='+Q+'checkbox'+Q+' data-mi='+Q+''+o.i+''+Q+(MGSEL.indexOf(o.i)>-1?' checked':'')+' onchange='+Q+'mgPick('+o.i+',this.checked)'+Q+'><div class='+Q+'mt'+Q+'><b>'+esc(o.t.title)+'</b>'+(o.t.version?' <span class='+Q+'ver'+Q+'>'+esc(o.t.version)+'</span>':'')+'</div><div class='+Q+'ms'+Q+'>'+esc(o.t.recordDate||'')+(o.t.added?' \u00B7 +'+esc(o.t.added):'')+' \u00B7 '+stars(o.t.rating)+'</div></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUN R\u00C9SULTAT</div>';
  $('mgAll').checked=L.length>0&&L.every(function(o){return MGSEL.indexOf(o.i)>-1;});}
 function mgPick(i,on){var ix=MGSEL.indexOf(i);if(on&&ix<0)MGSEL.push(i);if(!on&&ix>-1)MGSEL.splice(ix,1);$('mgAll').checked=mgFiltered().every(function(o){return MGSEL.indexOf(o.i)>-1;});}
 function mgAll(on){if(on)MGSEL=mgFiltered().map(function(o){return o.i;});else MGSEL=[];renderMgList();}
