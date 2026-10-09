@@ -67,6 +67,7 @@ body.adm #admBtn{display:block}
 .adstats div{flex:1;min-width:72px;border:1px solid var(--line);padding:8px;text-align:center;font-size:.58rem;color:var(--dim);text-transform:uppercase}
 .adstats b{display:block;font-size:1.3rem;color:var(--y)}
 #adashBox input[type=password]{width:100%;padding:9px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.82rem}
+.upH{margin:12px 0 6px;font-size:.64rem;color:var(--y);letter-spacing:.12em;text-transform:uppercase;border-bottom:1px dashed var(--line);padding-bottom:4px}
 #menu{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;z-index:20}
 #menu.open{display:block}
 #panel{position:absolute;top:0;right:0;width:min(330px,88vw);height:100%;background:var(--panel);border-left:4px solid var(--y);padding:20px;overflow-y:auto}
@@ -440,6 +441,22 @@ audio{width:100%;height:40px}
 <div class="modal" id="trackModal"><div class="mbox">
 <button class="close" onclick="closeModal('trackModal')">✕</button>
 <h3 id="tmTitle">Morceau</h3>
+<h4 class="upH">&#11014; UPLOAD DE FICHIERS AUDIO (max 10 par lot)</h4>
+<label>Destination</label>
+<select id="upDir">
+<option value="album">audio/album/&#8230; (album)</option>
+<option value="instru">audio/instru</option>
+<option value="instru rap">audio/instru rap</option>
+<option value="techno">audio/techno</option>
+<option value="">audio/ (racine)</option>
+</select>
+<input id="upAlbum" placeholder="Nom de l&#39;album (si destination album)">
+<label>Fichiers audio (.mp3, .wav&#8230;)</label>
+<input id="upFiles" type="file" multiple accept="audio/*" style="padding:6px">
+<div class="row"><button class="btn" onclick="uploadTracks()">&#11014; Uploader + cr&#233;er les entr&#233;es</button></div>
+<div class="status" id="upStatus"></div>
+<h4 class="upH">&#8212; ou &#233;dition manuelle d&#39;un morceau &#8212;</h4>
+
 <div id="tmSelWrap" style="display:none">
 <label>Quel morceau ?</label>
 <select id="tmSel" onchange="fillTrack()"></select>
@@ -480,23 +497,23 @@ audio{width:100%;height:40px}
 <label>Cover (nom fichier, ex : MACONPLCOVER1)</label><input id="p_cover">
 <label>Morceaux — 1 par ligne : SECTION: FACE A · LABEL: BONUS :: référence · ou la référence (titre ou chemin)</label>
 <textarea id="p_tracks" rows="7" style="font-size:.74rem"></textarea>
-<div class="row"><button class="btn" onclick="savePl()">Enregistrer</button><button class="btn2" onclick="closeModal('plModal')">Annuler</button></div>
+<div class="row"><button class="btn" onclick="savePl()">Enregistrer</button><button class="btn2" onclick="closeModal('plModal')">Annuler</button</button></div>
 <div class="status" id="pStatus"></div>
 </div></div>
 
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261014"></script>
-<script src="js/data.js?v=20261014"></script>
-<script src="js/auth.js?v=20261014"></script>
-<script src="js/admin.js?v=20261014"></script>
-<script src="js/player.js?v=20261014"></script>
-<script src="js/views.js?v=20261014"></script>
-<script src="js/versions.js?v=20261014"></script>
-<script src="js/genres.js?v=20261014"></script>
-<script src="js/manage.js?v=20261014"></script>
-<script src="js/main.js?v=20261014"></script>
+<script src="js/config.js?v=20261015"></script>
+<script src="js/data.js?v=20261015"></script>
+<script src="js/auth.js?v=20261015"></script>
+<script src="js/admin.js?v=20261015"></script>
+<script src="js/player.js?v=20261015"></script>
+<script src="js/views.js?v=20261015"></script>
+<script src="js/versions.js?v=20261015"></script>
+<script src="js/genres.js?v=20261015"></script>
+<script src="js/manage.js?v=20261015"></script>
+<script src="js/main.js?v=20261015"></script>
 
 </body>
 </html>
