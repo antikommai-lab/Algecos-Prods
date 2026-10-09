@@ -198,3 +198,41 @@ async function saveMsg(){var t=$('msgTitle').value.trim(),b=$('msgBody').value.t
  try{await publishAll('message : '+t);
   closeModal('msgModal');await load();}
  catch(e){$('msgStatus').className='status err';$('msgStatus').textContent=e.message;}}
+
+/* ===== dashboard admin (roue crantee header, construit a la demande) ===== */
+function closeAdmDash(){var d=document.getElementById('admDash');if(d)d.classList.remove('open');}
+function openAdmDash(){buildAdmDash();document.getElementById('admDash').classList.add('open');}
+function admManage(pl){closeAdmDash();openManage(pl?'pl':'tr');}
+function admForm(t,m){closeAdmDash();if(t===0)openTrackForm(m);else if(t===1)openPlForm(m);else if(t===2)openSelForm(m);else openMsgForm();}
+function buildAdmDash(){
+ var d=document.getElementById('admDash');
+ var h='<div class="mbox" id="adashBox" style="width:min(680px,100%)">'
+ +'<button class="close" onclick="closeAdmDash()">&#10005;</button>'
+ +'<h3>&#9881; DASHBOARD ADMIN</h3>'
+ +'<div class="adstats">'
+ +'<div><b>'+TRACKS.length+'</b>morceaux</div>'
+ +'<div><b>'+PLAYLISTS.length+'</b>playlists</div>'
+ +'<div><b>'+SELS.length+'</b>s\u00E9lections</div>'
+ +'<div><b>'+MSGS.length+'</b>messages</div>'
+ +'</div>'
+ +'<h4>Gestion</h4>'
+ +'<button class="mitem" onclick="admManage(0)">&#128194; Gestion des tracks (unitaire ou par lots)</button>'
+ +'<button class="mitem" onclick="admManage(1)">&#128194; Gestion des playlists</button>'
+ +'<h4>Cr\u00E9er / modifier</h4>'
+ +'<button class="mitem" onclick="admForm(0,-1)">+ Ajouter un morceau</button>'
+ +'<button class="mitem" onclick="admForm(0,0)">&#9998; Modifier un morceau</button>'
+ +'<button class="mitem" onclick="admForm(1,-1)">+ Nouvelle playlist</button>'
+ +'<button class="mitem" onclick="admForm(1,0)">&#9998; Modifier une playlist</button>'
+ +'<button class="mitem" onclick="admForm(2,-1)">+ Nouvelle s\u00E9lection</button>'
+ +'<button class="mitem" onclick="admForm(2,0)">&#9998; Modifier une s\u00E9lection</button>'
+ +'<button class="mitem" onclick="admForm(3)">&#9993; Message RSS / newsletter</button>'
+ +'<h4>Token GitHub (fine-grained, Contents R/W)</h4>'
+ +'<input id="ghTok2" type="password" placeholder="github_pat\u2026">'
+ +'<div class="row"><button class="btn" style="width:100%" onclick="saveTok2()">M\u00E9moriser le token</button></div>'
+ +'<div class="status" id="tokStatus2"></div>'
+ +'</div>';
+ d.innerHTML=h;
+}
+function saveTok2(){GHTOK=document.getElementById('ghTok2').value.trim();
+ if(GHTOK){localStorage.setItem('gh_pat',GHTOK);document.getElementById('tokStatus2').className='status ok';document.getElementById('tokStatus2').textContent='M\u00C9MORIS\u00C9 \u2713';}
+ else{document.getElementById('tokStatus2').className='status err';document.getElementById('tokStatus2').textContent='VIDE';}}

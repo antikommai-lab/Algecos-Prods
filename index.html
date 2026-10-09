@@ -48,6 +48,17 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .vrow .vc{color:var(--y);font-size:.66rem;letter-spacing:.1em}
 #burger{position:absolute;top:16px;right:16px;width:44px;height:44px;background:var(--y);color:#000;border:none;font-size:1.3rem;font-weight:700;cursor:pointer;border:2px solid #000;box-shadow:3px 3px 0 #000}
 #burger:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+#admBtn{position:absolute;top:16px;right:70px;width:44px;height:44px;background:#000;color:var(--y);border:2px solid var(--y);font-size:1.25rem;cursor:pointer;display:none;box-shadow:3px 3px 0 #000;z-index:2}
+body.adm #admBtn{display:block}
+#admBtn:hover{background:var(--y);color:#000}
+#admBtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+#adashBox .mitem{display:block;width:100%;text-align:left;margin-bottom:8px;padding:12px 14px;background:#000;color:var(--ink);border:1px solid var(--line);border-left:4px solid var(--y);font-family:'Space Mono',monospace;font-size:.85rem;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
+#adashBox .mitem:hover{background:var(--y);color:#000}
+#adashBox h4{margin:14px 0 8px;font-size:.66rem;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:4px}
+.adstats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+.adstats div{flex:1;min-width:72px;border:1px solid var(--line);padding:8px;text-align:center;font-size:.58rem;color:var(--dim);text-transform:uppercase}
+.adstats b{display:block;font-size:1.3rem;color:var(--y)}
+#adashBox input[type=password]{width:100%;padding:9px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.82rem}
 #menu{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;z-index:20}
 #menu.open{display:block}
 #panel{position:absolute;top:0;right:0;width:min(330px,88vw);height:100%;background:var(--panel);border-left:4px solid var(--y);padding:20px;overflow-y:auto}
@@ -211,6 +222,7 @@ audio{width:100%;height:40px}
 <div><h1>ALGECOS<b>-</b>PRODS</h1><div class="tag">une division d&#39;ANTIKOMM™ — 2026</div></div>
 </div>
 <div id="ticker"><div id="tickInner"></div></div>
+<button id="admBtn" onclick="openAdmDash()" title="Dashboard admin">&#9881;</button>
 <button id="burger" onclick="toggleMenu()">☰</button>
 </header>
 
@@ -223,25 +235,14 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="showList(true)">■ Liste de tous les morceaux</button>
 <button class="mitem" onclick="showVersions()">★ Choisis ta version préférée</button>
 <button class="mitem" onclick="showSels()">⧉ Sélections</button>
-<button class="mitem" onclick="openSub()">U0001F4EC Rester informé / RSS mail</button>
+<button class="mitem" onclick="openSub()">&#x1F4EC; Rester informé / RSS mail</button>
 <a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">✉ Nous contacter</a>
 <h2>Compte</h2>
 <div id="authZone"></div>
 <h2 id="admTitle" style="display:none">Admin</h2>
 <div id="admZone" style="display:none">
-<button class="mitem" onclick="openManage('tr')">U0001F5C2 Gestion des tracks (1 ou par lots)</button>
-<button class="mitem" onclick="openManage('pl')">U0001F5C2 Gestion des playlists</button>
-<button class="mitem" onclick="openTrackForm(-1)">+ Ajouter un morceau</button>
-<button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
-<button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
-<button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
-<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle sélection</button>
-<button class="mitem" onclick="openSelForm(0)">✎ Modifier une sélection</button>
-<button class="mitem" onclick="openMsgForm()">✉ Message RSS / newsletter</button>
-<label>Token GitHub (fine-grained, Contents: R/W)</label>
-<input id="ghTok" type="password" placeholder="github_pat_…">
-<button class="btn" style="width:100%" onclick="saveTok()">Mémoriser le token</button>
-<div class="status" id="tokStatus"></div>
+<button class="mitem" onclick="toggleMenuOff();openAdmDash()">&#9881; Dashboard admin (tout est ici)</button>
+</div>
 </div>
 </div>
 </div>
@@ -359,7 +360,7 @@ audio{width:100%;height:40px}
 <button class="btn" onclick="mgAddToPl()">+ Ajouter à la playlist</button>
 <button class="btn" onclick="openTrackForm(-1)">+ Nouveau</button>
 <button class="btn2" onclick="mgEditSel()">✎ Modifier</button>
-<button class="btn2" onclick="mgDelSel()">U0001F5D1 Supprimer</button>
+<button class="btn2" onclick="mgDelSel()">&#x1F5D1; Supprimer</button>
 </div>
 <div class="mgact">
 <input type="text" id="mgTagIn" placeholder="+ TAGS en lot (séparés par virgules)">
@@ -388,7 +389,7 @@ audio{width:100%;height:40px}
 
 <div class="modal" id="subModal"><div class="mbox">
 <button class="close" onclick="closeModal('subModal')">✕</button>
-<h3>U0001F4EC Rester informé</h3>
+<h3>&#x1F4EC; Rester informé</h3>
 <div id="subChoice">
 <button class="lbtn" onclick="subRss()">⦿ S&#39;abonner au flux RSS</button>
 <button class="lbtn" onclick="subMail()">✉ Recevoir les actualités par mail</button>
@@ -468,17 +469,19 @@ audio{width:100%;height:40px}
 <div class="status" id="pStatus"></div>
 </div></div>
 
+<div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
+
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261011"></script>
-<script src="js/data.js?v=20261011"></script>
-<script src="js/auth.js?v=20261011"></script>
-<script src="js/admin.js?v=20261011"></script>
-<script src="js/player.js?v=20261011"></script>
-<script src="js/views.js?v=20261011"></script>
-<script src="js/versions.js?v=20261011"></script>
-<script src="js/genres.js?v=20261011"></script>
-<script src="js/manage.js?v=20261011"></script>
-<script src="js/main.js?v=20261011"></script>
+<script src="js/config.js?v=20261012"></script>
+<script src="js/data.js?v=20261012"></script>
+<script src="js/auth.js?v=20261012"></script>
+<script src="js/admin.js?v=20261012"></script>
+<script src="js/player.js?v=20261012"></script>
+<script src="js/views.js?v=20261012"></script>
+<script src="js/versions.js?v=20261012"></script>
+<script src="js/genres.js?v=20261012"></script>
+<script src="js/manage.js?v=20261012"></script>
+<script src="js/main.js?v=20261012"></script>
 
 </body>
 </html>

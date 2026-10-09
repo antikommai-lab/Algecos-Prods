@@ -46,7 +46,7 @@ async function mgAddToPl(){
 function fillMgPlSel(){$('mgPlSel').innerHTML='<option value='+Q+''+Q+'>\u2014 playlist \u2014</option>'+PLAYLISTS.map(function(p){return '<option value='+Q+''+esc(p.title)+''+Q+'>'+esc(p.title)+'</option>';}).join('');}
 function renderMgPlList(){
  $('mgPlList').innerHTML=PLAYLISTS.map(function(p,i){
-  return '<div class='+Q+'mgrow'+Q+'><div class='+Q+'mt'+Q+'><b>'+esc(p.title)+'</b> <span class='+Q+'ms'+Q+'>'+((p.tracks||[]).length)+' tracks \u00B7 '+esc(p.upd||'')+'</span></div><button class='+Q+'btn2'+Q+' onclick='+Q+'mgEditPlMeta('+i+')'+Q+'>\u270E</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgOpenPE('+i+')'+Q+'>\u2611 TRACKLIST</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgDelPlAsk('+i+')'+Q+'>\U0001F5D1</button></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUNE PLAYLIST</div>';
+  return '<div class='+Q+'mgrow'+Q+'><div class='+Q+'mt'+Q+'><b>'+esc(p.title)+'</b> <span class='+Q+'ms'+Q+'>'+((p.tracks||[]).length)+' tracks \u00B7 '+esc(p.upd||'')+'</span></div><button class='+Q+'btn2'+Q+' onclick='+Q+'mgEditPlMeta('+i+')'+Q+'>\u270E</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgOpenPE('+i+')'+Q+'>\u2611 TRACKLIST</button><button class='+Q+'btn2'+Q+' onclick='+Q+'mgDelPlAsk('+i+')'+Q+'>\\u{1F5D1}</button></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUNE PLAYLIST</div>';
  fillMgPlSel();}
 function mgEditPlMeta(i){closeModal('manageModal');editPl(i);}
 function mgDelPlAsk(i){var p=PLAYLISTS[i];
