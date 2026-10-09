@@ -3,7 +3,7 @@ async function ghPut(path,contentB64,msg){
  var rk='https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO;
  var rr=await fetch(rk+'?t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
  if(!rr.ok){var rm='';try{rm=((await rr.json())||{}).message||'';}catch(e){}
-  throw new Error('ACC\u00C8S D\u00C9P\u00D4T KO ('+rr.status+(rm?' \u2014 '+rm:'')+') \u2014 le token ne voit pas '+GH_OWNER+'/'+GH_REPO+' \u2014 v\u00E9rifie : Repository access (d\u00E9p\u00F4ts s\u00E9lectionn\u00E9s, ce repo) + Contents: Read and write + token non expir\u00E9');}
+  throw new Error('ACC\u00C8S D\u00C9P\u00D4T KO ('+rr.status+(rm?' \u2014 '+rm:'')+') \u2014 le token ne voit pas '+GH_OWNER+'/'+GH_REPO+' \u2014 v\u00E9rifie : Repository access (d\u00E9p\u00F4ts s\u00E9lectionn\u00E9s, ce repo) + Contents: Read and write + token non expir\u00E9 + approbation orga');}
  var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
  var meta=await r.json();
  var sha=(meta&&meta.sha)||null;
@@ -14,6 +14,16 @@ async function ghPut(path,contentB64,msg){
  if(!pu.ok){var em='';try{em=((await pu.json())||{}).message||'';}catch(e){}
   throw new Error((sha?'COMMIT KO':'CR\u00C9ATION KO')+' ('+pu.status+')'+(em?' \u2014 '+em:''));}
  return pu.json();}
+/* relit le JSON distand (version fraiche) via l'API, en UTF-8 */
+async function ghGetJson(path){
+ var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
+ if(!r.ok)return null;
+ var meta=await r.json();
+ if(!meta||!meta.content)return null;
+ var b64=meta.content.replace(/\s/g,'');
+ var bin=atob(b64);var u=new Uint8Array(bin.length);
+ for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+ return JSON.parse(new TextDecoder().decode(u));}
 function toB64(str){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';var b64='';var bytes=[].slice.call(new TextEncoder().encode(str));
  for(var i=0;i<bytes.length;i+=3){var b1=bytes[i],b2=bytes[i+1],b3=bytes[i+2];
   b64+=B.charAt(b1>>2)+B.charAt(((b1&3)<<4)|(b2==null?0:b2>>4))+(b2==null?'=':B.charAt(((b2&15)<<2)|(b3==null?0:b3>>6)))+(b3==null?'=':B.charAt(b3&63));}
@@ -212,6 +222,7 @@ function openAdmDash(){buildAdmDash();document.getElementById('admDash').classLi
 function admManage(pl){closeAdmDash();openManage(pl?'pl':'tr');}
 function admUpload(){closeAdmDash();openTrackForm(-1);var b=document.querySelector('#trackModal .mbox');if(b)b.scrollTop=0;}
 function admForm(t,m){closeAdmDash();if(t===0)openTrackForm(m);else if(t===1)openPlForm(m);else if(t===2)openSelForm(m);else openMsgForm();}
+function admReload(){closeAdmDash();load().then(function(){render();renderPlaylist();});}
 function buildAdmDash(){
  var d=document.getElementById('admDash');
  var h='<div class="mbox" id="adashBox" style="width:min(680px,100%)">'
@@ -235,6 +246,8 @@ function buildAdmDash(){
  +'<button class="mitem" onclick="admForm(2,-1)">+ Nouvelle s\u00E9lection</button>'
  +'<button class="mitem" onclick="admForm(2,0)">&#9998; Modifier une s\u00E9lection</button>'
  +'<button class="mitem" onclick="admForm(3)">&#9993; Message RSS / newsletter</button>'
+ +'<h4>Donn\u00E9es</h4>'
+ +'<button class="mitem" onclick="admReload()">&#10227; Recharger les donn\u00E9es du site (avant une session d\u0027\u00E9dition)</button>'
  +'<h4>Token GitHub (fine-grained, Contents R/W)</h4>'
  +'<input id="ghTok2" type="password" placeholder="github_pat\u2026">'
  +'<div class="row"><button class="btn" style="width:100%" onclick="saveTok2()">M\u00E9moriser le token</button></div>'
@@ -270,7 +283,7 @@ async function ghDelete(path,msg){
  if(!de.ok){var em='';try{em=((await de.json())||{}).message||'';}catch(e){}throw new Error('SUPPRESSION KO ('+de.status+')'+(em?' \u2014 '+em:''));}}
 
 
-/* ===== upload audio par lots + barre de progression ===== */
+/* ===== upload audio par lots + barre de progression + fusion anti-ecrasement ===== */
 function upSet(cls,txt){var e=document.getElementById('upStatus');if(e){e.className=cls;e.textContent=txt;}}
 function upProg(k,n,label){var w=document.getElementById('upBarW'),b=document.getElementById('upBar');
  if(w&&b){w.style.display='block';b.style.width=Math.min(100,Math.round(k*100/n))+'%';}
@@ -287,20 +300,36 @@ async function uploadTracks(){
  else{dir='audio'+(F?'/'+F:'');}
  if(!confirm('Uploader '+fs.length+' fichier(s) vers '+dir+'/ ?\n\nLes entr\u00E9es tracks.json seront cr\u00E9\u00E9es avec le titre = nom de fichier.'+(alb?'\nUne playlist \u00AB '+alb+' \u00BB sera cr\u00E9\u00E9e/r\u00E9utilis\u00E9e.':'')+' ?'))return;
  upProg(0,fs.length);
- var done=0,fail=0,titles=[];
+ var done=0,fail=0,titles=[],newTracks=[];
  for(var i=0;i<fs.length;i++){var f=fs[i];
   try{var dst=dir+'/'+f.name;
    await ghCreate(dst,toB64Buf(await f.arrayBuffer()),'upload : '+f.name);
    var ti=f.name.replace(/\.[a-z0-9]+$/i,'');
-   TRACKS.push({title:ti,file:dst,tags:[],rating:0});
+   newTracks.push({title:ti,file:dst,tags:[],rating:0});
    titles.push(ti);done++;}
   catch(e){fail++;}
   upProg(i+1,fs.length);}
- if(alb&&titles.length){var PP=PLAYLISTS.find(function(x){return x.title===alb;});
-  if(!PP){PP={title:alb,desc:'Album',tracks:[],upd:new Date().toISOString().slice(0,10)};PLAYLISTS.push(PP);}
-  titles.forEach(function(t){if(PP.tracks.indexOf(t)<0)PP.tracks.push(t);});PP.upd=new Date().toISOString().slice(0,10);}
- try{upSet('status ok','\u23F3 PUBLICATION (tracks.json, playlists\u2026)\u2026');await publishAll('upload : '+done+' fichier(s)');}
- catch(e){upSet('status err','PUBLISH KO : '+e.message);return;}
- upSet('status ok','\u2713 '+done+' UPLOAD\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':''));
+ if(!newTracks.length){upSet('status err','AUCUN FICHIER UPLOAD\u00C9 — abandon');
+  return;}
+ /* --- fusion anti-ecrasement : on repart du JSON distand frais --- */
+ upSet('status ok','\u23F3 FUSION AVEC LES DONN\u00C9ES DISTANTES\u2026');
+ var freshT=await ghGetJson('tracks.json');
+ if(!Array.isArray(freshT))freshT=TRACKS.slice();
+ var freshP=await ghGetJson('playlists.json');
+ if(!Array.isArray(freshP))freshP=PLAYLISTS.slice();
+ var existing=freshT.map(function(t){return String(t.file||'').toLowerCase();});
+ var added=0;
+ newTracks.forEach(function(nt){
+  if(existing.indexOf(String(nt.file||'').toLowerCase())<0){freshT.push(nt);added++;}});
+ var PLOCK=PLAYLISTS.slice().length; /* playlists distantes prioritaires */
+ if(alb&&titles.length){var PP=freshP.find(function(x){return x.title===alb;});
+  if(!PP){PP={title:alb,desc:'Album',tracks:[],upd:new Date().toISOString().slice(0,10)};freshP.push(PP);}
+  titles.forEach(function(t){if((PP.tracks||[]).indexOf(t)<0)PP.tracks.push(t);});PP.upd=new Date().toISOString().slice(0,10);}
+ /* publication de la version fusionn\u00E9e */
+ var oldTracks=TRACKS,oldPlists=PLAYLISTS;
+ TRACKS=freshT;PLAYLISTS=freshP;
+ try{upSet('status ok','\u23F3 PUBLICATION (fusion conserv\u00E9e)\u2026');await publishAll('upload : '+done+' fichier(s) (+'+added+' entr\u00E9es)');}
+ catch(e){TRACKS=oldTracks;PLAYLISTS=oldPlists;upSet('status err','PUBLISH KO : '+e.message);return;}
+ upSet('status ok','\u2713 '+done+' UPLOAD\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':'')+' \u2014 donn\u00E9es existantes conserv\u00E9es');
  document.getElementById('upFiles').value='';
  await load();render();renderPlaylist();}
