@@ -112,7 +112,7 @@ async function applyLyricsSel(){
  var ext=lyrExtOf(nm)||'md';
  if(LYREXTS.indexOf(ext)<0)ext='md';
  var old=await lyrExists(ti);
- if(old&&!confirm('Des paroles existent d\u00E9j\u00E0 pour « '+ti+' » ('+old+').\n\nRemplacer par « '+nm+' » ?'))return;
+ if(old&&!confirm('Des paroles existent déjà pour « '+ti+' » ('+old+').\n\nRemplacer par « '+nm+' » ?'))return;
  $('mStatus').className='status ok';$('mStatus').textContent='⏳ COPIE LYRICS…';
  try{
   var src=await fetch(encodeURI('lyrics/'+nm)+'?t='+Date.now(),{cache:'no-store'});
@@ -203,6 +203,7 @@ async function saveMsg(){var t=$('msgTitle').value.trim(),b=$('msgBody').value.t
 function closeAdmDash(){var d=document.getElementById('admDash');if(d)d.classList.remove('open');}
 function openAdmDash(){buildAdmDash();document.getElementById('admDash').classList.add('open');}
 function admManage(pl){closeAdmDash();openManage(pl?'pl':'tr');}
+function admUpload(){closeAdmDash();openTrackForm(-1);var b=document.querySelector('#trackModal .mbox');if(b)b.scrollTop=0;}
 function admForm(t,m){closeAdmDash();if(t===0)openTrackForm(m);else if(t===1)openPlForm(m);else if(t===2)openSelForm(m);else openMsgForm();}
 function buildAdmDash(){
  var d=document.getElementById('admDash');
@@ -219,7 +220,8 @@ function buildAdmDash(){
  +'<button class="mitem" onclick="admManage(0)">&#128194; Gestion des tracks (unitaire ou par lots)</button>'
  +'<button class="mitem" onclick="admManage(1)">&#128194; Gestion des playlists</button>'
  +'<h4>Cr\u00E9er / modifier</h4>'
- +'<button class="mitem" onclick="admForm(0,-1)">+ Ajouter un morceau</button>'
+ +'<button class="mitem" onclick="admUpload()">&#11014; Upload de morceaux (lots de 10 max)</button>'
+ +'<button class="mitem" onclick="admForm(0,-1)">+ Ajouter un morceau (saisie manuelle)</button>'
  +'<button class="mitem" onclick="admForm(0,0)">&#9998; Modifier un morceau</button>'
  +'<button class="mitem" onclick="admForm(1,-1)">+ Nouvelle playlist</button>'
  +'<button class="mitem" onclick="admForm(1,0)">&#9998; Modifier une playlist</button>'
@@ -242,7 +244,7 @@ function saveTok2(){GHTOK=document.getElementById('ghTok2').value.trim();
 function toB64Buf(buf){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';var u=new Uint8Array(buf);var b64='';var rem=u.length%3,ln=u.length-rem;
  for(var i=0;i<ln;i+=3){var b1=u[i],b2=u[i+1],b3=u[i+2];b64+=B.charAt(b1>>2)+B.charAt(((b1&3)<<4)|(b2>>4))+B.charAt(((b2&15)<<2)|(b3>>6))+B.charAt(b3&63);}
  if(rem===1){var x=u[ln];b64+=B.charAt(x>>2)+B.charAt((x&3)<<4)+'==';}
- else if(rem===2){var y1=u[ln],y2=u[ln+1];b64+=B.charAt(y1>>2)+B.charAt(((y1&3)<<4)|(y2>>4))+B.charAt((y2&15)<<2)+'=';}
+ else if(rem===2){var y1=u[ln],y2=u[ln+1];b64+=B.charAt(y1>>2)+B.charAt(((y1&3)<<4)|(y2>>4))+B.charAt(((y2&15)<<2))+'=';}
  return b64;}
 async function ghCreate(path,b64,msg){
  var g=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path)+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
@@ -264,7 +266,7 @@ function upSet(cls,txt){var e=document.getElementById('upStatus');if(e){e.classN
 async function uploadTracks(){
  var fs=document.getElementById('upFiles').files;
  if(!fs.length){upSet('status err','CHOISIS AU MOINS 1 FICHIER');return;}
- if(fs.length>10){upSet('status err','MAX 10 FICHIERS PAR LOT (s\u00E9lection : '+fs.length+')');return;}
+ if(fs.length>10){upSet('status err','MAX 10 FICHIERS PAR LOT (sélection : '+fs.length+')');return;}
  if(!GHTOK){upSet('status err','TOKEN GITHUB REQUIS');return;}
  var F=document.getElementById('upDir').value,alb='',dir;
  if(F==='album'){alb=document.getElementById('upAlbum').value.trim();

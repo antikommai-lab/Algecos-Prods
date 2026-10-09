@@ -119,3 +119,44 @@ async function mgMoveFolder(){
  catch(e){$('mgStatus').className='status err';$('mgStatus').textContent='PUBLISH KO : '+e.message;return;}
  $('mgStatus').textContent='\u2713 '+done+' D\u00C9PLAC\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':'');
  await load();renderMgList();}
+
+/* ===== metadonnees en lot : editeur des morceaux coches ===== */
+function mgOpenMeta(){
+ if(!MGSEL.length){$('mgStatus').className='status err';$('mgStatus').textContent='RIEN S\u00C9LECTIONN\u00C9';return;}
+ var h='';
+ MGSEL.slice().sort(function(a,b){return a-b;}).forEach(function(i){
+  var t=TRACKS[i];if(!t)return;
+  var e=function(v){return esc(String(v==null?'':v)).replace(/"/g,'&quot;');};
+  h+='<div class="metaRow" data-i="'+i+'">'
+  +'<div class="mtt"><b>#'+(i+1)+'</b> '+esc(t.title)+' <small>'+e(t.file)+'</small></div>'
+  +'<div class="mgrid">'
+  +'<label>Titre<input data-f="title" value="'+e(t.title)+'"></label>'
+  +'<label>Style<input data-f="style" value="'+e(t.style)+'"></label>'
+  +'<label>Version<input data-f="version" value="'+e(t.version)+'"></label>'
+  +'<label>Tags (virgules)<input data-f="tags" value="'+e((t.tags||[]).join(', '))+'"></label>'
+  +'<label>Date<input data-f="recordDate" type="date" value="'+e(t.recordDate)+'"></label>'
+  +'<label>Note 1-5<input data-f="rating" type="number" min="0" max="5" value="'+e(t.rating)+'"></label>'
+  +'</div>'
+  +'<label style="margin-top:8px">Description<textarea data-f="desc" rows="2">'+esc(String(t.desc||''))+'</textarea></label>'
+  +'</div>';});
+ $('mgMetaList').innerHTML=h;
+ $('mgMetaStatus').className='status';$('mgMetaStatus').textContent=MGSEL.length+' morceau(x) \u2014 v\u00E9rifie puis enregistre';
+ openModal('mgMetaModal');}
+async function mgMetaSave(){
+ var rows=document.querySelectorAll('#mgMetaList .metaRow');
+ var n=0;
+ rows.forEach(function(r){var i=+r.getAttribute('data-i');var t=TRACKS[i];if(!t)return;
+  var g=function(f){var el=r.querySelector('[data-f='+Q+f+Q+']');return el?el.value:'';};
+  var ti=g('title').trim();if(ti)t.title=ti;
+  t.style=g('style').trim();t.version=g('version').trim();
+  t.tags=g('tags').split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var d=g('recordDate');if(d)t.recordDate=d;
+  var rt=parseInt(g('rating'),10);if(!isNaN(rt))t.rating=rt;
+  t.desc=g('desc').trim();
+  n++;});
+ if(!n)return;
+ $('mgMetaStatus').className='status ok';$('mgMetaStatus').textContent='\u23F3 PUBLICATION\u2026';
+ try{await publishAll('m\u00E9tadonn\u00E9es : '+n+' morceau(x)');
+  closeModal('mgMetaModal');await load();renderMgList();
+  $('mgStatus').className='status ok';$('mgStatus').textContent='\u2713 M\u00C9TADONN\u00C9ES ENREGISTR\u00C9ES ('+n+')';}
+ catch(e){$('mgMetaStatus').className='status err';$('mgMetaStatus').textContent=e.message;}}

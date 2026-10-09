@@ -22,6 +22,12 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .brand h1{font-family:'Archivo Black',sans-serif;font-size:clamp(1.2rem,4vw,2rem);letter-spacing:.06em;color:var(--ink);text-transform:uppercase;line-height:1.05}
 .brand h1 b{color:var(--y)}
 .brand .tag{font-size:.62rem;color:var(--dim);letter-spacing:.28em;text-transform:uppercase}
+#hicons{position:absolute;top:16px;right:126px;display:flex;gap:8px}
+#hicons button{width:40px;height:40px;background:#000;color:var(--y);border:2px solid var(--y);font-size:1.15rem;cursor:pointer;position:relative;box-shadow:3px 3px 0 #000}
+#hicons button:hover{background:var(--y);color:#000}
+#hicons button::after{content:attr(data-tip);position:absolute;top:46px;right:0;background:#000;color:var(--y);border:1px solid var(--y);padding:4px 8px;font-size:.6rem;white-space:nowrap;display:none;z-index:5;text-transform:uppercase;letter-spacing:.08em}
+#hicons button:hover::after{display:block}
+@media(max-width:760px){#hicons{display:none}}
 #ticker{display:none;overflow:hidden;margin-top:14px;border-top:2px dashed #4a3305}
 #ticker.show{display:block}
 #tickInner{display:inline-block;white-space:nowrap;color:#F74C00;font-family:'Archivo Black',sans-serif;font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;padding:8px 0;animation:tkmove 22s linear infinite}
@@ -132,6 +138,14 @@ body.adm #admBtn{display:block}
 .mgact{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .mgact select,.mgact input[type=text]{padding:8px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.78rem}
 .mgact input[type=text]{flex:1;min-width:120px}
+/* ===== editeur metadonnees en lot ===== */
+.metaRow{border:1px solid var(--line);border-left:4px solid var(--y);padding:10px;margin-bottom:10px;background:#000}
+.metaRow .mtt{font-size:.7rem;margin-bottom:8px;color:var(--y);word-break:break-all}
+.metaRow .mtt small{color:var(--dim)}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:600px){.mgrid{grid-template-columns:1fr}}
+.metaRow label{display:block;font-size:.6rem;color:var(--dim);margin:0;text-transform:uppercase;letter-spacing:.08em}
+.metaRow input,.metaRow textarea{width:100%;padding:6px;background:#141414;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.78rem;margin-top:2px}
 /* ===== roue crantée admin ===== */
 .edit{display:none;width:30px;height:30px;background:#000;color:var(--y);border:1px solid var(--y);cursor:pointer;font-size:1rem;line-height:1;text-align:center}
 .edit:hover{background:var(--y);color:#000}
@@ -254,7 +268,8 @@ audio{width:100%;height:40px}
 <div id="admZone" style="display:none">
 <button class="mitem" onclick="openManage('tr')">&#x1F5C2; Gestion des tracks (1 ou par lots)</button>
 <button class="mitem" onclick="openManage('pl')">&#x1F5C2; Gestion des playlists</button>
-<button class="mitem" onclick="openTrackForm(-1)">+ Ajouter un morceau</button>
+<button class="mitem" onclick="admUpload()">&#11014; Upload de morceaux (lots de 10 max)</button>
+<button class="mitem" onclick="openTrackForm(-1)">+ Ajouter un morceau (saisie manuelle)</button>
 <button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
 <button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
 <button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
@@ -336,8 +351,8 @@ audio{width:100%;height:40px}
 <button class="pbtn" onclick="sk(10)" title="Avancer 10s">+10s</button>
 <button class="pbtn" id="nextBtn" onclick="plNext()" title="Morceau suivant">⏭</button>
 <button class="pbtn" onclick="toggleLyr()" title="Paroles">LYRICS</button>
-<button class="pbtn" onclick="openCmt()" title="Commentaires">
-<button class="pbtn" onclick="shareTrack(CURRENT)" title="Partager ce morceau">&#10548;</button></button>
+<button class="pbtn" onclick="openCmt()" title="Commentaires">&#128172;</button>
+<button class="pbtn" onclick="shareTrack(CURRENT)" title="Partager ce morceau">&#10548;</button>
 </div>
 </div>
 <audio id="audio" controls></audio>
@@ -359,7 +374,7 @@ audio{width:100%;height:40px}
 
 <div class="modal" id="cmtModal"><div class="mbox">
 <button class="close" onclick="closeModal('cmtModal')">✕</button>
-<h3> Commentaires</h3>
+<h3>&#128172; Commentaires</h3>
 <div id="cmtList"></div>
 <div id="cmtForm"></div>
 <div class="status" id="cmtStatus"></div>
@@ -391,7 +406,10 @@ audio{width:100%;height:40px}
 <button class="btn" onclick="mgApplyTags()">✓ Appliquer tags</button>
 <input type="text" id="mgStyleIn" placeholder="STYLE en lot (remplace)">
 <button class="btn" onclick="mgApplyStyle()">✓ Appliquer style</button>
- <select id="mgFolder"><option value="">— dossier —</option><option value="instru">audio/instru</option><option value="instru rap">audio/instru rap</option><option value="techno">audio/techno</option><option value="album">audio/album</option></select><button class="btn" onclick="mgMoveFolder()">&#128193; D&#233;placer</button>
+</div>
+<div class="mgact">
+<select id="mgFolder"><option value="">— dossier —</option><option value="instru">audio/instru</option><option value="instru rap">audio/instru rap</option><option value="techno">audio/techno</option><option value="album">audio/album</option></select><button class="btn" onclick="mgMoveFolder()">&#128193; Déplacer</button>
+<button class="btn2" onclick="mgOpenMeta()">✎ Métadonnées cochés</button>
 </div>
 <div class="status" id="mgStatus"></div>
 </div>
@@ -410,6 +428,14 @@ audio{width:100%;height:40px}
 </div>
 <div class="status" id="mgPlStatus"></div>
 </div>
+</div></div>
+
+<div class="modal" id="mgMetaModal" onclick="if(event.target===this)closeModal('mgMetaModal')"><div class="mbox" style="width:min(720px,100%)">
+<button class="close" onclick="closeModal('mgMetaModal')">✕</button>
+<h3>✎ Métadonnées des morceaux cochés</h3>
+<div id="mgMetaList" style="max-height:52vh;overflow-y:auto"></div>
+<div class="row"><button class="btn" onclick="mgMetaSave()">Enregistrer tout</button><button class="btn2" onclick="closeModal('mgMetaModal')">Annuler</button></div>
+<div class="status" id="mgMetaStatus"></div>
 </div></div>
 
 <div class="modal" id="subModal"><div class="mbox">
@@ -526,16 +552,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261017"></script>
-<script src="js/data.js?v=20261017"></script>
-<script src="js/auth.js?v=20261017"></script>
-<script src="js/admin.js?v=20261017"></script>
-<script src="js/player.js?v=20261017"></script>
-<script src="js/views.js?v=20261017"></script>
-<script src="js/versions.js?v=20261017"></script>
-<script src="js/genres.js?v=20261017"></script>
-<script src="js/manage.js?v=20261017"></script>
-<script src="js/main.js?v=20261017"></script>
+<script src="js/config.js?v=20261018"></script>
+<script src="js/data.js?v=20261018"></script>
+<script src="js/auth.js?v=20261018"></script>
+<script src="js/admin.js?v=20261018"></script>
+<script src="js/player.js?v=20261018"></script>
+<script src="js/views.js?v=20261018"></script>
+<script src="js/versions.js?v=20261018"></script>
+<script src="js/genres.js?v=20261018"></script>
+<script src="js/manage.js?v=20261018"></script>
+<script src="js/main.js?v=20261018"></script>
 
 </body>
 </html>
