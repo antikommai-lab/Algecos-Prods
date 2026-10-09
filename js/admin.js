@@ -5,7 +5,7 @@ async function ghPut(path,contentB64,msg){
  if(!meta.sha)throw new Error('SHA INTROUVABLE ('+(meta.message||r.status)+') — token ?');
  var pu=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path,{method:'PUT',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
   body:JSON.stringify({message:msg,content:contentB64,sha:meta.sha,branch:'main'})});
- if(!pu.ok)throw new Error('COMMIT KO ('+pu.status+')');
+ if(!pu.ok){var em='';try{var ej=await pu.json();em=(ej&&ej.message)?ej.message:'';}catch(e){}throw new Error('COMMIT KO ('+pu.status+')'+(em?' \u2014 '+em:''));}
  return pu.json();}
 function toB64(str){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';var b64='';var bytes=[].slice.call(new TextEncoder().encode(str));
  for(var i=0;i<bytes.length;i+=3){var b1=bytes[i],b2=bytes[i+1],b3=bytes[i+2];
@@ -251,18 +251,21 @@ async function ghCreate(path,b64,msg){
  var meta=await g.json();var sha=(meta&&meta.sha)||null;
  var pu=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path),{method:'PUT',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
   body:JSON.stringify({message:msg,content:b64,sha:sha,branch:'main'})});
- if(!pu.ok)throw new Error('UPLOAD KO ('+pu.status+')');}
+ if(!pu.ok){var em='';try{var ej=await pu.json();em=(ej&&ej.message)?ej.message:'';}catch(e){}throw new Error('UPLOAD KO ('+pu.status+')'+(em?' \u2014 '+em:''));}}
 async function ghDelete(path,msg){
  var g=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path)+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
  var meta=await g.json();
  if(!meta.sha)throw new Error('SHA INTROUVABLE ('+(meta.message||g.status)+')');
  var de=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path),{method:'DELETE',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
   body:JSON.stringify({message:msg,sha:meta.sha,branch:'main'})});
- if(!de.ok)throw new Error('SUPPRESSION KO ('+de.status+')');}
+ if(!de.ok){var em='';try{var ej=await de.json();em=(ej&&ej.message)?ej.message:'';}catch(e){}throw new Error('SUPPRESSION KO ('+de.status+')'+(em?' \u2014 '+em:''));}}
 
 
-/* ===== upload audio par lots (base du workflow) ===== */
+/* ===== upload audio par lots + barre de progression ===== */
 function upSet(cls,txt){var e=document.getElementById('upStatus');if(e){e.className=cls;e.textContent=txt;}}
+function upProg(k,n,label){var w=document.getElementById('upBarW'),b=document.getElementById('upBar');
+ if(w&&b){w.style.display='block';b.style.width=Math.min(100,Math.round(k*100/n))+'%';}
+ if(label!==false)upSet('status ok',label||('\u23F3 UPLOAD '+k+'/'+n+'\u2026'));}
 async function uploadTracks(){
  var fs=document.getElementById('upFiles').files;
  if(!fs.length){upSet('status err','CHOISIS AU MOINS 1 FICHIER');return;}
@@ -274,7 +277,7 @@ async function uploadTracks(){
   dir='audio/album/'+alb.replace(/[\\/:*?''<>|]/g,'-');}
  else{dir='audio'+(F?'/'+F:'');}
  if(!confirm('Uploader '+fs.length+' fichier(s) vers '+dir+'/ ?\n\nLes entr\u00E9es tracks.json seront cr\u00E9\u00E9es avec le titre = nom de fichier.'+(alb?'\nUne playlist \u00AB '+alb+' \u00BB sera cr\u00E9\u00E9e/r\u00E9utilis\u00E9e.':'')+' ?'))return;
- upSet('status ok','\u23F3 UPLOAD 0/'+fs.length+'\u2026');
+ upProg(0,fs.length);
  var done=0,fail=0,titles=[];
  for(var i=0;i<fs.length;i++){var f=fs[i];
   try{var dst=dir+'/'+f.name;
@@ -283,11 +286,11 @@ async function uploadTracks(){
    TRACKS.push({title:ti,file:dst,tags:[],rating:0});
    titles.push(ti);done++;}
   catch(e){fail++;}
-  upSet('status ok','\u23F3 UPLOAD '+(i+1)+'/'+fs.length+'\u2026');}
+  upProg(i+1,fs.length);}
  if(alb&&titles.length){var PP=PLAYLISTS.find(function(x){return x.title===alb;});
   if(!PP){PP={title:alb,desc:'Album',tracks:[],upd:new Date().toISOString().slice(0,10)};PLAYLISTS.push(PP);}
   titles.forEach(function(t){if(PP.tracks.indexOf(t)<0)PP.tracks.push(t);});PP.upd=new Date().toISOString().slice(0,10);}
- try{await publishAll('upload : '+done+' fichier(s)');}
+ try{upSet('status ok','\u23F3 PUBLICATION (tracks.json, playlists\u2026)\u2026');await publishAll('upload : '+done+' fichier(s)');}
  catch(e){upSet('status err','PUBLISH KO : '+e.message);return;}
  upSet('status ok','\u2713 '+done+' UPLOAD\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':''));
  document.getElementById('upFiles').value='';

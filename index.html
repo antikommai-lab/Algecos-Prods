@@ -146,6 +146,10 @@ body.adm #admBtn{display:block}
 @media(max-width:600px){.mgrid{grid-template-columns:1fr}}
 .metaRow label{display:block;font-size:.6rem;color:var(--dim);margin:0;text-transform:uppercase;letter-spacing:.08em}
 .metaRow input,.metaRow textarea{width:100%;padding:6px;background:#141414;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.78rem;margin-top:2px}
+/* ===== barre de progression upload ===== */
+.pbarW{height:16px;border:2px solid var(--y);background:#000;margin-top:8px;position:relative;overflow:hidden}
+.pbarW div{height:100%;background:var(--y);width:0;transition:width .25s}
+.pbarW span{position:absolute;inset:0;text-align:center;font-size:.6rem;line-height:12px;color:#000;font-weight:700;mix-blend-mode:normal}
 /* ===== roue crantée admin ===== */
 .edit{display:none;width:30px;height:30px;background:#000;color:var(--y);border:1px solid var(--y);cursor:pointer;font-size:1rem;line-height:1;text-align:center}
 .edit:hover{background:var(--y);color:#000}
@@ -490,6 +494,7 @@ audio{width:100%;height:40px}
 <input id="upFiles" type="file" multiple accept="audio/*" style="padding:6px">
 <div class="row"><button class="btn" onclick="uploadTracks()">&#11014; Uploader + cr&#233;er les entr&#233;es</button></div>
 <div class="status" id="upStatus"></div>
+<div class="pbarW" id="upBarW" style="display:none"><div id="upBar"></div></div>
 <h4 class="upH">&#8212; ou &#233;dition manuelle d&#39;un morceau &#8212;</h4>
 
 <div id="tmSelWrap" style="display:none">
@@ -552,16 +557,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261018"></script>
-<script src="js/data.js?v=20261018"></script>
-<script src="js/auth.js?v=20261018"></script>
-<script src="js/admin.js?v=20261018"></script>
-<script src="js/player.js?v=20261018"></script>
-<script src="js/views.js?v=20261018"></script>
-<script src="js/versions.js?v=20261018"></script>
-<script src="js/genres.js?v=20261018"></script>
-<script src="js/manage.js?v=20261018"></script>
-<script src="js/main.js?v=20261018"></script>
+<script src="js/config.js?v=20261019"></script>
+<script src="js/data.js?v=20261019"></script>
+<script src="js/auth.js?v=20261019"></script>
+<script src="js/admin.js?v=20261019"></script>
+<script src="js/player.js?v=20261019"></script>
+<script src="js/views.js?v=20261019"></script>
+<script src="js/versions.js?v=20261019"></script>
+<script src="js/genres.js?v=20261019"></script>
+<script src="js/manage.js?v=20261019"></script>
+<script src="js/main.js?v=20261019"></script>
 
 </body>
 </html>
