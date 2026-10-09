@@ -14,7 +14,7 @@ async function ghPut(path,contentB64,msg){
  if(!pu.ok){var em='';try{em=((await pu.json())||{}).message||'';}catch(e){}
   throw new Error((sha?'COMMIT KO':'CR\u00C9ATION KO')+' ('+pu.status+')'+(em?' \u2014 '+em:''));}
  return pu.json();}
-/* relit le JSON distand (version fraiche) via l'API, en UTF-8 */
+/* relit le JSON distant (version fraiche) via l'API, en UTF-8 */
 async function ghGetJson(path){
  var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
  if(!r.ok)return null;
@@ -24,6 +24,33 @@ async function ghGetJson(path){
  var bin=atob(b64);var u=new Uint8Array(bin.length);
  for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
  return JSON.parse(new TextDecoder().decode(u));}
+
+/* ===== snapshot anti-ecrasement =====
+   On photographie tracks/playlists au chargement (load).
+   Au publish : on relit le distant, et on n\u0027applique QUE les entr\u00E9es
+   ajout\u00E9es/modifi\u00E9es/supprim\u00E9es localement. Les \u00E9ditions faites
+   directement sur GitHub (ou dans un autre onglet) sont toujours conserv\u00E9es. */
+var BASE_TR={},BASE_PL={};
+function trKey(t){return String((t&&t.file)||((t&&t.title)||'')).toLowerCase();}
+function plKey(p){return String((p&&p.title)||'').toLowerCase();}
+function snapshotBase(){BASE_TR={};BASE_PL={};
+ TRACKS.forEach(function(t){BASE_TR[trKey(t)]=JSON.stringify(t);});
+ PLAYLISTS.forEach(function(p){BASE_PL[plKey(p)]=JSON.stringify(p);});}
+(function(){var _load=window.load;
+ window.load=function(){var p=_load.apply(this,arguments);
+  return Promise.resolve(p).then(function(v){snapshotBase();return v;});};})();
+/* fusion : distant = base ; on applique les diffs locaux par cl\u00E9 */
+function mergeArr(local,fresh,snap,keyFn){
+ var remote={};(fresh||[]).forEach(function(x){remote[keyFn(x)]=x;});
+ var localSeen={},out=[];
+ local.forEach(function(x){var k=keyFn(x);localSeen[k]=1;
+  var r=remote[k];
+  if(r===undefined){out.push(x);return;}
+  if(snap[k]!==undefined&&JSON.stringify(x)===snap[k]){out.push(r);return;}
+  out.push(x);});
+ (fresh||[]).forEach(function(x){var k=keyFn(x);if(!localSeen[k]&&snap[k]===undefined)out.push(x);});
+ return out;}
+
 function toB64(str){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';var b64='';var bytes=[].slice.call(new TextEncoder().encode(str));
  for(var i=0;i<bytes.length;i+=3){var b1=bytes[i],b2=bytes[i+1],b3=bytes[i+2];
   b64+=B.charAt(b1>>2)+B.charAt(((b1&3)<<4)|(b2==null?0:b2>>4))+(b2==null?'=':B.charAt(((b2&15)<<2)|(b3==null?0:b3>>6)))+(b3==null?'=':B.charAt(b3&63));}
@@ -37,11 +64,20 @@ var plItems=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').locale
  return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>ALGECOS-PRODS</title><link>'+SITE_URL+'</link><description>Nouveaux morceaux ANTIKOMM — division ALGECOS</description>'+items+msgItems+plItems+'</channel></rss>';}
 async function publishAll(msg){
  if(!GHTOK)throw new Error('TOKEN GITHUB REQUIS (☰ Admin)');
- await ghPut('tracks.json',toB64(JSON.stringify(TRACKS,null,2)),msg);
- await ghPut('playlists.json',toB64(JSON.stringify(PLAYLISTS,null,2)),msg);
- await ghPut('selections.json',toB64(JSON.stringify(SELS,null,2)),msg);
- await ghPut('messages.json',toB64(JSON.stringify(MSGS,null,2)),msg);
- await ghPut('feed.xml',toB64(buildFeed()),'flux RSS : '+msg);}
+ /* --- anti-ecrasement : relire le distant et fusionner --- */
+ var fT=await ghGetJson('tracks.json');
+ var fP=await ghGetJson('playlists.json');
+ var oldT=TRACKS,oldP=PLAYLISTS;
+ if(Array.isArray(fT))TRACKS=mergeArr(TRACKS,fT,BASE_TR,trKey);
+ if(Array.isArray(fP))PLAYLISTS=mergeArr(PLAYLISTS,fP,BASE_PL,plKey);
+ try{
+  await ghPut('tracks.json',toB64(JSON.stringify(TRACKS,null,2)),msg);
+  await ghPut('playlists.json',toB64(JSON.stringify(PLAYLISTS,null,2)),msg);
+  await ghPut('selections.json',toB64(JSON.stringify(SELS,null,2)),msg);
+  await ghPut('messages.json',toB64(JSON.stringify(MSGS,null,2)),msg);
+  await ghPut('feed.xml',toB64(buildFeed()),'flux RSS : '+msg);
+  snapshotBase();}
+ catch(e){TRACKS=oldT;PLAYLISTS=oldP;throw e;}}
 
 /* ===== formulaires admin ===== */
 var tmIdx=-1;
@@ -283,7 +319,7 @@ async function ghDelete(path,msg){
  if(!de.ok){var em='';try{em=((await de.json())||{}).message||'';}catch(e){}throw new Error('SUPPRESSION KO ('+de.status+')'+(em?' \u2014 '+em:''));}}
 
 
-/* ===== upload audio par lots + barre de progression + fusion anti-ecrasement ===== */
+/* ===== upload audio par lots + barre de progression ===== */
 function upSet(cls,txt){var e=document.getElementById('upStatus');if(e){e.className=cls;e.textContent=txt;}}
 function upProg(k,n,label){var w=document.getElementById('upBarW'),b=document.getElementById('upBar');
  if(w&&b){w.style.display='block';b.style.width=Math.min(100,Math.round(k*100/n))+'%';}
@@ -309,27 +345,14 @@ async function uploadTracks(){
    titles.push(ti);done++;}
   catch(e){fail++;}
   upProg(i+1,fs.length);}
- if(!newTracks.length){upSet('status err','AUCUN FICHIER UPLOAD\u00C9 — abandon');
-  return;}
- /* --- fusion anti-ecrasement : on repart du JSON distand frais --- */
- upSet('status ok','\u23F3 FUSION AVEC LES DONN\u00C9ES DISTANTES\u2026');
- var freshT=await ghGetJson('tracks.json');
- if(!Array.isArray(freshT))freshT=TRACKS.slice();
- var freshP=await ghGetJson('playlists.json');
- if(!Array.isArray(freshP))freshP=PLAYLISTS.slice();
- var existing=freshT.map(function(t){return String(t.file||'').toLowerCase();});
- var added=0;
- newTracks.forEach(function(nt){
-  if(existing.indexOf(String(nt.file||'').toLowerCase())<0){freshT.push(nt);added++;}});
- var PLOCK=PLAYLISTS.slice().length; /* playlists distantes prioritaires */
- if(alb&&titles.length){var PP=freshP.find(function(x){return x.title===alb;});
-  if(!PP){PP={title:alb,desc:'Album',tracks:[],upd:new Date().toISOString().slice(0,10)};freshP.push(PP);}
+ if(!newTracks.length){upSet('status err','AUCUN FICHIER UPLOAD\u00C9 — abandon');return;}
+ /* le publishAll fusionnera avec le distant (anti-ecrasement) */
+ newTracks.forEach(function(nt){TRACKS.push(nt);});
+ if(alb&&titles.length){var PP=PLAYLISTS.find(function(x){return x.title===alb;});
+  if(!PP){PP={title:alb,desc:'Album',tracks:[],upd:new Date().toISOString().slice(0,10)};PLAYLISTS.push(PP);}
   titles.forEach(function(t){if((PP.tracks||[]).indexOf(t)<0)PP.tracks.push(t);});PP.upd=new Date().toISOString().slice(0,10);}
- /* publication de la version fusionn\u00E9e */
- var oldTracks=TRACKS,oldPlists=PLAYLISTS;
- TRACKS=freshT;PLAYLISTS=freshP;
- try{upSet('status ok','\u23F3 PUBLICATION (fusion conserv\u00E9e)\u2026');await publishAll('upload : '+done+' fichier(s) (+'+added+' entr\u00E9es)');}
- catch(e){TRACKS=oldTracks;PLAYLISTS=oldPlists;upSet('status err','PUBLISH KO : '+e.message);return;}
+ try{upSet('status ok','\u23F3 PUBLICATION (fusion anti-\u00E9crasement)\u2026');await publishAll('upload : '+done+' fichier(s)');}
+ catch(e){upSet('status err','PUBLISH KO : '+e.message);return;}
  upSet('status ok','\u2713 '+done+' UPLOAD\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':'')+' \u2014 donn\u00E9es existantes conserv\u00E9es');
  document.getElementById('upFiles').value='';
  await load();render();renderPlaylist();}
