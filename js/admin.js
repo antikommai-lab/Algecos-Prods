@@ -1,11 +1,18 @@
 /* ===== commits GitHub (admin) ===== */
 async function ghPut(path,contentB64,msg){
+ var rk='https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO;
+ var rr=await fetch(rk+'?t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
+ if(!rr.ok){var rm='';try{rm=((await rr.json())||{}).message||'';}catch(e){}
+  throw new Error('ACC\u00C8S D\u00C9P\u00D4T KO ('+rr.status+(rm?' \u2014 '+rm:'')+') \u2014 le token ne voit pas '+GH_OWNER+'/'+GH_REPO+' \u2014 v\u00E9rifie : Repository access (d\u00E9p\u00F4ts s\u00E9lectionn\u00E9s, ce repo) + Contents: Read and write + token non expir\u00E9');}
  var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
  var meta=await r.json();
- if(!meta.sha)throw new Error('SHA INTROUVABLE ('+(meta.message||r.status)+') — token ?');
+ var sha=(meta&&meta.sha)||null;
+ var body={message:msg,content:contentB64,branch:'main'};
+ if(sha)body.sha=sha;
  var pu=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path,{method:'PUT',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
-  body:JSON.stringify({message:msg,content:contentB64,sha:meta.sha,branch:'main'})});
- if(!pu.ok){var em='';try{var ej=await pu.json();em=(ej&&ej.message)?ej.message:'';}catch(e){}throw new Error('COMMIT KO ('+pu.status+')'+(em?' \u2014 '+em:''));}
+  body:JSON.stringify(body)});
+ if(!pu.ok){var em='';try{em=((await pu.json())||{}).message||'';}catch(e){}
+  throw new Error((sha?'COMMIT KO':'CR\u00C9ATION KO')+' ('+pu.status+')'+(em?' \u2014 '+em:''));}
  return pu.json();}
 function toB64(str){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';var b64='';var bytes=[].slice.call(new TextEncoder().encode(str));
  for(var i=0;i<bytes.length;i+=3){var b1=bytes[i],b2=bytes[i+1],b3=bytes[i+2];
@@ -249,16 +256,18 @@ function toB64Buf(buf){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx
 async function ghCreate(path,b64,msg){
  var g=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path)+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
  var meta=await g.json();var sha=(meta&&meta.sha)||null;
+ var body={message:msg,content:b64,branch:'main'};
+ if(sha)body.sha=sha;
  var pu=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path),{method:'PUT',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
-  body:JSON.stringify({message:msg,content:b64,sha:sha,branch:'main'})});
- if(!pu.ok){var em='';try{var ej=await pu.json();em=(ej&&ej.message)?ej.message:'';}catch(e){}throw new Error('UPLOAD KO ('+pu.status+')'+(em?' \u2014 '+em:''));}}
+  body:JSON.stringify(body)});
+ if(!pu.ok){var em='';try{em=((await pu.json())||{}).message||'';}catch(e){}throw new Error('UPLOAD KO ('+pu.status+')'+(em?' \u2014 '+em:''));}}
 async function ghDelete(path,msg){
  var g=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path)+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
  var meta=await g.json();
  if(!meta.sha)throw new Error('SHA INTROUVABLE ('+(meta.message||g.status)+')');
  var de=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+encodeURI(path),{method:'DELETE',headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json','Content-Type':'application/json'},
   body:JSON.stringify({message:msg,sha:meta.sha,branch:'main'})});
- if(!de.ok){var em='';try{var ej=await de.json();em=(ej&&ej.message)?ej.message:'';}catch(e){}throw new Error('SUPPRESSION KO ('+de.status+')'+(em?' \u2014 '+em:''));}}
+ if(!de.ok){var em='';try{em=((await de.json())||{}).message||'';}catch(e){}throw new Error('SUPPRESSION KO ('+de.status+')'+(em?' \u2014 '+em:''));}}
 
 
 /* ===== upload audio par lots + barre de progression ===== */
