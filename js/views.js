@@ -113,3 +113,12 @@ async function sendSub(){
   if(!r.ok)throw new Error('ERREUR ('+r.status+')');
   $('subStatus').className='status ok';$('subStatus').textContent='✓ INSCRIT — bienvenue !';}
  catch(e){$('subStatus').className='status err';$('subStatus').textContent=e.message;}}
+
+/* ===== header : styles + partage ===== */
+function goStyles(){showList(true);var t=document.getElementById('tags');
+ if(t){t.scrollIntoView({behavior:'smooth',block:'center'});t.style.outline='2px solid var(--y)';t.style.outlineOffset='4px';
+ setTimeout(function(){t.style.outline='';t.style.outlineOffset='';},1800);}}
+function shareSite(){var u=location.href,d="ALGECOS-PRODS \u2014 la division musicale d'ANTIKOMM";
+ if(navigator.share){navigator.share({title:"ALGECOS-PRODS",text:d,url:u}).catch(function(){});}
+ else if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){alert("LIEN COPI\u00C9 \u2713\n\nColle-le o\u00F9 tu veux pour partager ALGECOS-PRODS !");},function(){prompt("Copie le lien :",u);});}
+ else{prompt("Copie le lien :",u);}}

@@ -52,6 +52,14 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 body.adm #admBtn{display:block}
 #admBtn:hover{background:var(--y);color:#000}
 #admBtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+#hicons{position:absolute;top:22px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:2}
+#hicons button{width:42px;height:42px;background:#000;color:var(--y);border:2px solid var(--y);font-size:1.1rem;cursor:pointer;position:relative;box-shadow:3px 3px 0 #000}
+#hicons button:hover{background:var(--y);color:#000}
+#hicons button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+#hicons button::after{content:attr(data-tip);position:absolute;top:110%;left:50%;transform:translateX(-50%);background:#000;color:var(--y);border:1px solid var(--y);padding:4px 8px;font-size:.58rem;font-weight:700;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:5}
+#hicons button:hover::after{opacity:1}
+@media(max-width:900px){#hicons{display:none}}
+
 #adashBox .mitem{display:block;width:100%;text-align:left;margin-bottom:8px;padding:12px 14px;background:#000;color:var(--ink);border:1px solid var(--line);border-left:4px solid var(--y);font-family:'Space Mono',monospace;font-size:.85rem;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
 #adashBox .mitem:hover{background:var(--y);color:#000}
 #adashBox h4{margin:14px 0 8px;font-size:.66rem;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:4px}
@@ -220,6 +228,12 @@ audio{width:100%;height:40px}
 <div class="brand">
 <img class="tri" src="logo.jpg" alt="ALGECOS-PRODS">
 <div><h1>ALGECOS<b>-</b>PRODS</h1><div class="tag">une division d&#39;ANTIKOMM™ — 2026</div></div>
+</div>
+<div id="hicons">
+<button onclick="showList(true)" data-tip="Tous les morceaux">&#9835;</button>
+<button onclick="goStyles()" data-tip="Choisir un style">&#8803;</button>
+<button onclick="showPlaylists()" data-tip="Playlists">&#9776;</button>
+<button onclick="shareSite()" data-tip="Partager le site">&#10548;</button>
 </div>
 <div id="ticker"><div id="tickInner"></div></div>
 <button id="admBtn" onclick="openAdmDash()" title="Dashboard admin">&#9881;</button>
@@ -472,16 +486,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261012"></script>
-<script src="js/data.js?v=20261012"></script>
-<script src="js/auth.js?v=20261012"></script>
-<script src="js/admin.js?v=20261012"></script>
-<script src="js/player.js?v=20261012"></script>
-<script src="js/views.js?v=20261012"></script>
-<script src="js/versions.js?v=20261012"></script>
-<script src="js/genres.js?v=20261012"></script>
-<script src="js/manage.js?v=20261012"></script>
-<script src="js/main.js?v=20261012"></script>
+<script src="js/config.js?v=20261013"></script>
+<script src="js/data.js?v=20261013"></script>
+<script src="js/auth.js?v=20261013"></script>
+<script src="js/admin.js?v=20261013"></script>
+<script src="js/player.js?v=20261013"></script>
+<script src="js/views.js?v=20261013"></script>
+<script src="js/versions.js?v=20261013"></script>
+<script src="js/genres.js?v=20261013"></script>
+<script src="js/manage.js?v=20261013"></script>
+<script src="js/main.js?v=20261013"></script>
 
 </body>
 </html>
