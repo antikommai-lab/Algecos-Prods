@@ -1101,7 +1101,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1119,9 +1119,9 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 5,
-    "label":"Coup2coeur de léquipe",
+    "label": "Coup2coeur de léquipe",
     "desc": "",
     "lyricsCreator": "",
     "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
@@ -1138,7 +1138,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1156,7 +1156,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1174,7 +1174,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1192,7 +1192,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1210,7 +1210,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1229,7 +1229,7 @@
       "horrorcore",
       "old school"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1248,7 +1248,7 @@
       "horrorcore",
       "old school"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1266,7 +1266,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1285,7 +1285,7 @@
       "horrorcore",
       "old school"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1306,7 +1306,7 @@
       "alternatif",
       "psychédélique"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school,alternatif,psychédélique",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school,alternatif,psychédélique",
     "rating": 3,
     "desc": "",
     "lyricsCreator": "",
@@ -1326,7 +1326,7 @@
       "old school",
       "rap de teuf"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school,rap de teuf",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school,rap de teuf",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1345,11 +1345,41 @@
       "horrorcore",
       "old school"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
     "soundCreator": "Composed&Arranged by N30 [@ANTIKOMM] on FL Studio, samples échantillonés sur audacity",
     "recordDate": "2026-10-07"
+  },
+  {
+    "title": "Cryin' Violin Ragtribe Pure Jazzidcore",
+    "file": "audio/techno/Cryin' Violin Ragtribe Pure Jazzidcore.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Phonograph Distortion hard Jazzidcore tribecore",
+    "file": "audio/techno/Phonograph Distortion hard Jazzidcore tribecore.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Phonograph Ragtime Jazzidcore",
+    "file": "audio/techno/Phonograph Ragtime Jazzidcore.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Ragtime and Swing are not Kitch Ragcore Jazzidcore Tribecore",
+    "file": "audio/techno/Ragtime and Swing are not Kitch Ragcore Jazzidcore Tribecore.mp3",
+    "tags": [],
+    "rating": 0
+  },
+  {
+    "title": "Ragtime Rave ragtribe Pure Jazzidcore",
+    "file": "audio/techno/Ragtime Rave ragtribe Pure Jazzidcore.mp3",
+    "tags": [],
+    "rating": 0
   }
 ]
