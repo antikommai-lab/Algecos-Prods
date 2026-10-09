@@ -512,7 +512,8 @@
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
     "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
     "recordDate": "2026-10-02",
-    "rating": 3
+    "rating": 3,
+    "vid": ""
   },
   {
     "title": "Atari Swing Vinyl - Jazzcore experiment 6",
@@ -1101,7 +1102,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1119,9 +1120,9 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 5,
-    "label":"Coup2coeur de léquipe",
+    "label": "Coup2coeur de léquipe",
     "desc": "",
     "lyricsCreator": "",
     "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
@@ -1138,7 +1139,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1156,7 +1157,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1174,7 +1175,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1192,7 +1193,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1210,7 +1211,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1229,7 +1230,7 @@
       "horrorcore",
       "old school"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1248,7 +1249,7 @@
       "horrorcore",
       "old school"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1266,7 +1267,7 @@
       "drill",
       "horrorcore"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1285,7 +1286,7 @@
       "horrorcore",
       "old school"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1306,7 +1307,7 @@
       "alternatif",
       "psychédélique"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school,alternatif,psychédélique",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school,alternatif,psychédélique",
     "rating": 3,
     "desc": "",
     "lyricsCreator": "",
@@ -1326,7 +1327,7 @@
       "old school",
       "rap de teuf"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school,rap de teuf",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school,rap de teuf",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1345,7 +1346,7 @@
       "horrorcore",
       "old school"
     ],
-    "style":"hiphop,rap,instru,trap,drill,horrorcoce,old school",
+    "style": "hiphop,rap,instru,trap,drill,horrorcoce,old school",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
