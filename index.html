@@ -131,11 +131,18 @@ body.adm #admBtn{display:block}
 .fold.open{max-height:none}
 .fold:not(.open):after{content:'\25BE';position:absolute;right:2px;bottom:0;color:var(--y);background:rgba(16,16,16,.9);padding:0 4px;font-size:.7rem}
 #mgList,#mgPlList,#mgPEList{max-height:42vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px}
-.mgrow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);background:#000;font-size:.76rem}
+.mgrow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);background:#000;font-size:.76rem;cursor:pointer}
 .mgrow:hover{outline:1px solid var(--y)}
 .mgrow input[type=checkbox]{flex:none}
 .mgrow .mt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mgrow .ms{color:var(--dim);font-size:.64rem}
+.mgrow[data-on]{background:var(--y);color:#000}
+.mgrow[data-on] .ms{color:#333}
+.mnum{color:var(--y);font-weight:700;min-width:26px;flex:none}
+.mgrow[data-on] .mnum{color:#000}
+.mgdel{flex:none;background:#000;color:var(--warn);border:1px solid var(--warn);cursor:pointer;font-size:.8rem;padding:3px 6px}
+.mgdel:hover{background:var(--warn);color:#000}
+#mgSelBar{display:none;background:var(--y);color:#000;padding:6px 10px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:8px 0}
 .mgact{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .mgact select,.mgact input[type=text]{padding:8px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;font-size:.78rem}
 .mgact input[type=text]{flex:1;min-width:120px}
@@ -419,26 +426,40 @@ audio{width:100%;height:40px}
 <div id="mgTr" style="display:none">
 <div class="mgact">
 <input type="text" id="mgQ" placeholder="FILTRE…" oninput="renderMgList()">
-<select id="mgSort" onchange="renderMgList()"><option value="title">TRI : TITRE</option><option value="date">TRI : DATE</option><option value="rating">TRI : NOTE</option><option value="added">TRI : AJOUT</option></select>
+<select id="mgSort" onchange="renderMgList()"><option value="title">TRI : TITRE</option><option value="id">TRI : ID</option><option value="date">TRI : DATE</option><option value="rating">TRI : NOTE</option><option value="added">TRI : AJOUT</option></select>
 <label style="display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--dim)"><input type="checkbox" id="mgAll" onchange="mgAll(this.checked)"> tout</label>
 </div>
+<div style="color:var(--dim);font-size:.62rem;margin-bottom:8px">clic = sélectionner · Ctrl+clic = sélection multiple · Shift+clic = plage</div>
 <div id="mgList"></div>
+<div id="mgSelBar"></div>
+<div id="mgEditBox" class="metaRow" style="display:none">
+<div class="mtt" id="mgEditTitle"></div>
+<div class="mtt" style="color:var(--dim)" id="mgEditMeta"></div>
+<div class="mgrid">
+<div><label>Titre</label><input id="e_title"></div>
+<div><label>Fichier audio</label><input id="e_file"></div>
+<div><label>Mots-clés (séparés par des virgules)</label><input id="e_tags"></div>
+<div><label>Style / mood</label><input id="e_style"></div>
+<div><label>Version</label><input id="e_version"></div>
+<div><label>ID version commune — lier plusieurs versions</label><input id="e_vid"></div>
+<div><label>ID créateur paroles</label><input id="e_lyr"></div>
+<div><label>ID créateur son</label><input id="e_snd"></div>
+<div><label>Date d&#39;enregistrement</label><input id="e_date" type="date"></div>
+<div><label>Image / cover explicite (img)</label><input id="e_img"></div>
+<div><label>Note (0-5)</label><input id="e_rating" type="number" min="0" max="5"></div>
+<div><label style="display:flex;align-items:center;gap:6px;padding-top:14px"><input type="checkbox" id="e_rcommon" style="width:auto"> appliquer la note à toute la sélection</label></div>
+</div>
+<label>Description</label><textarea id="e_desc" rows="2"></textarea>
+<div class="row">
+<button class="btn" onclick="mgSaveEdit()">&#10003; Enregistrer la sélection</button>
+<button class="btn2" onclick="mgDelSel()">&#x1F5D1; Supprimer la sélection</button>
+</div>
 <div class="mgact">
 <select id="mgPlSel"></select>
 <button class="btn" onclick="mgAddToPl()">+ Ajouter à la playlist</button>
-<button class="btn" onclick="openTrackForm(-1)">+ Nouveau</button>
-<button class="btn2" onclick="mgEditSel()">✎ Modifier</button>
-<button class="btn2" onclick="mgDelSel()">&#x1F5D1; Supprimer</button>
+<select id="mgFolder"><option value="">— dossier —</option><option value="instru">audio/instru</option><option value="instru rap">audio/instru rap</option><option value="techno">audio/techno</option><option value="album">audio/album</option></select>
+<button class="btn2" onclick="mgMoveFolder()">&#128193; Déplacer</button>
 </div>
-<div class="mgact">
-<input type="text" id="mgTagIn" placeholder="+ TAGS en lot (séparés par virgules)">
-<button class="btn" onclick="mgApplyTags()">✓ Appliquer tags</button>
-<input type="text" id="mgStyleIn" placeholder="STYLE en lot (remplace)">
-<button class="btn" onclick="mgApplyStyle()">✓ Appliquer style</button>
-</div>
-<div class="mgact">
-<select id="mgFolder"><option value="">— dossier —</option><option value="instru">audio/instru</option><option value="instru rap">audio/instru rap</option><option value="techno">audio/techno</option><option value="album">audio/album</option></select><button class="btn" onclick="mgMoveFolder()">&#128193; Déplacer</button>
-<button class="btn2" onclick="mgOpenMeta()">✎ Métadonnées cochés</button>
 </div>
 <div class="status" id="mgStatus"></div>
 </div>
@@ -458,14 +479,6 @@ audio{width:100%;height:40px}
 </div>
 <div class="status" id="mgPlStatus"></div>
 </div>
-</div></div>
-
-<div class="modal" id="mgMetaModal" onclick="if(event.target===this)closeModal('mgMetaModal')"><div class="mbox" style="width:min(720px,100%)">
-<button class="close" onclick="closeModal('mgMetaModal')">✕</button>
-<h3>✎ Métadonnées des morceaux cochés</h3>
-<div id="mgMetaList" style="max-height:52vh;overflow-y:auto"></div>
-<div class="row"><button class="btn" onclick="mgMetaSave()">Enregistrer tout</button><button class="btn2" onclick="closeModal('mgMetaModal')">Annuler</button></div>
-<div class="status" id="mgMetaStatus"></div>
 </div></div>
 
 <div class="modal" id="subModal"><div class="mbox">
@@ -590,16 +603,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261028"></script>
-<script src="js/data.js?v=20261028"></script>
-<script src="js/auth.js?v=20261028"></script>
-<script src="js/admin.js?v=20261028"></script>
-<script src="js/player.js?v=20261028"></script>
-<script src="js/views.js?v=20261028"></script>
-<script src="js/versions.js?v=20261028"></script>
-<script src="js/genres.js?v=20261028"></script>
-<script src="js/manage.js?v=20261028"></script>
-<script src="js/main.js?v=20261028"></script>
+<script src="js/config.js?v=20261029"></script>
+<script src="js/data.js?v=20261029"></script>
+<script src="js/auth.js?v=20261029"></script>
+<script src="js/admin.js?v=20261029"></script>
+<script src="js/player.js?v=20261029"></script>
+<script src="js/views.js?v=20261029"></script>
+<script src="js/versions.js?v=20261029"></script>
+<script src="js/genres.js?v=20261029"></script>
+<script src="js/manage.js?v=20261029"></script>
+<script src="js/main.js?v=20261029"></script>
 
 </body>
 </html>
