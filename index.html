@@ -40,8 +40,9 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .plh .seltracks .srow{display:flex;gap:8px;padding:6px 2px;border-bottom:1px solid var(--line);font-size:.72rem;cursor:pointer}
 .plh .seltracks .srow:hover{color:var(--y)}
 @media(max-width:700px){.plh .seltracks{display:none}.plh.open .seltracks{display:block}}
-#verWrap,#selWrap{display:none;max-width:1000px;margin:20px auto;padding:0 20px 90px}
-#verWrap.open,#selWrap.open{display:block}
+#verWrap,#selWrap,#newsWrap{display:none;max-width:1000px;margin:20px auto;padding:0 20px 90px}
+#verWrap.open,#selWrap.open,#newsWrap.open{display:block}
+#newsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .vg{background:rgba(16,16,16,.88);border:1px solid var(--line);border-left:4px solid var(--y);padding:14px;margin-bottom:14px}
 .vg h3{font-family:'Archivo Black',sans-serif;font-size:.9rem;text-transform:uppercase;color:var(--y);margin-bottom:8px}
 .vg h3 small{color:var(--dim);font-family:'Space Mono',monospace;font-size:.62rem}
@@ -248,6 +249,7 @@ audio{width:100%;height:40px}
 <button onclick="showList(true)" data-tip="Tous les morceaux">&#9835;</button>
 <button onclick="goStyles()" data-tip="Choisir un style">&#8803;</button>
 <button onclick="showPlaylists()" data-tip="Playlists">&#9776;</button>
+<button onclick="showNews()" data-tip="Nouveautés">&#128227;</button>
 <button onclick="shareSite()" data-tip="Partager le site">&#10548;</button>
 </div>
 <div id="ticker"><div id="tickInner"></div></div>
@@ -264,6 +266,7 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="showList(true)">■ Liste de tous les morceaux</button>
 <button class="mitem" onclick="showVersions()">★ Choisis ta version préférée</button>
 <button class="mitem" onclick="showSels()">⧉ Sélections</button>
+<button class="mitem" onclick="showNews()">&#128227; Nouveautés — derniers ajouts</button>
 <button class="mitem" onclick="openSub()">&#x1F4EC; Rester informé / RSS mail</button>
 <a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">✉ Nous contacter</a>
 <h2>Compte</h2>
@@ -316,6 +319,12 @@ audio{width:100%;height:40px}
 <section id="verWrap"><h2 class="secH">★ Choisis ta version préférée</h2><div id="verGrid"></div></section>
 
 <section id="selWrap"><h2 class="secH">⧉ Sélections</h2><div id="selGrid"></div></section>
+
+<section id="newsWrap">
+<h2 class="secH">&#128227; Nouveautés</h2>
+<div id="countNews" style="color:var(--dim);font-size:.72rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em"></div>
+<div id="newsGrid"></div>
+</section>
 
 <section id="listWrap">
 <div class="search-bar">
@@ -581,16 +590,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261026"></script>
-<script src="js/data.js?v=20261026"></script>
-<script src="js/auth.js?v=20261026"></script>
-<script src="js/admin.js?v=20261026"></script>
-<script src="js/player.js?v=20261026"></script>
-<script src="js/views.js?v=20261026"></script>
-<script src="js/versions.js?v=20261026"></script>
-<script src="js/genres.js?v=20261026"></script>
-<script src="js/manage.js?v=20261026"></script>
-<script src="js/main.js?v=20261026"></script>
+<script src="js/config.js?v=20261027"></script>
+<script src="js/data.js?v=20261027"></script>
+<script src="js/auth.js?v=20261027"></script>
+<script src="js/admin.js?v=20261027"></script>
+<script src="js/player.js?v=20261027"></script>
+<script src="js/views.js?v=20261027"></script>
+<script src="js/versions.js?v=20261027"></script>
+<script src="js/genres.js?v=20261027"></script>
+<script src="js/manage.js?v=20261027"></script>
+<script src="js/main.js?v=20261027"></script>
 
 </body>
 </html>

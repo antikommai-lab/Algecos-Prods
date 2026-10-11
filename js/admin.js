@@ -27,7 +27,7 @@ async function ghGetJson(path){
 
 /* ===== snapshot anti-ecrasement =====
    On photographie tracks/playlists au chargement (load).
-   Au publish : on relit le distant, et on n\u0027applique QUE les entr\u00E9es
+   Au publish : on relit le distant, et on n'applique QUE les entr\u00E9es
    ajout\u00E9es/modifi\u00E9es/supprim\u00E9es localement. Les \u00E9ditions faites
    directement sur GitHub (ou dans un autre onglet) sont toujours conserv\u00E9es. */
 var BASE_TR={},BASE_PL={};
@@ -111,7 +111,7 @@ async function saveTrack(){
  o.style=$('f_style').value.trim();o.version=$('f_version').value.trim();o.desc=$('f_desc').value.trim();o.vid=$('f_vid').value.trim();
  o.lyricsCreator=$('f_lyr').value.trim();o.soundCreator=$('f_snd').value.trim();
  o.recordDate=$('f_date').value;o.rating=+$('f_rating').value||0;
- if(tmIdx<0)o.added=new Date().toISOString().slice(0,10);
+ if(tmIdx<0){o.added=new Date().toISOString().slice(0,10);o.uploadTime=new Date().toISOString();}
  if(tmIdx>-1)TRACKS[tmIdx]=o;else TRACKS.push(o);
  var plSel=$('f_pladd')?$('f_pladd').value:'';
  var plNew=$('f_plnew')?$('f_plnew').value.trim():'';
@@ -353,12 +353,13 @@ async function uploadTracks(){
  if(!confirm('Uploader '+fs.length+' fichier(s) vers '+dir+'/ ?\n\nTitre = nom de fichier.'+(extra?'\nM\u00C9TADONN\u00C9ES PAR LOT :'+extra:'')+(alb?'\nUne playlist \u00AB '+alb+' \u00BB sera cr\u00E9\u00E9e/r\u00E9utilis\u00E9e.':'')+' ?'))return;
  upProg(0,fs.length);
  var ad=new Date().toISOString().slice(0,10);
+ var upTS=new Date().toISOString();
  var done=0,fail=0,titles=[],newTracks=[];
  for(var i=0;i<fs.length;i++){var f=fs[i];
   try{var dst=dir+'/'+f.name;
    await ghCreate(dst,toB64Buf(await f.arrayBuffer()),'upload : '+f.name);
    var ti=f.name.replace(/\.[a-z0-9]+$/i,'');
-   var nt={title:ti,file:dst,tags:lotTags.slice(),rating:lotR,added:ad};
+   var nt={title:ti,file:dst,tags:lotTags.slice(),rating:lotR,added:ad,uploadTime:upTS};
    if(lotStyle)nt.style=lotStyle;
    if(lotDesc)nt.desc=lotDesc;
    if(lotDate)nt.recordDate=lotDate;
