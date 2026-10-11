@@ -111,7 +111,7 @@ async function saveTrack(){
  o.style=$('f_style').value.trim();o.version=$('f_version').value.trim();o.desc=$('f_desc').value.trim();o.vid=$('f_vid').value.trim();
  o.lyricsCreator=$('f_lyr').value.trim();o.soundCreator=$('f_snd').value.trim();
  o.recordDate=$('f_date').value;o.rating=+$('f_rating').value||0;
- if(tmIdx<0){o.added=new Date().toISOString().slice(0,10);o.uploadTime=new Date().toISOString();}
+ if(tmIdx<0){o.id=nextId();o.added=new Date().toISOString().slice(0,10);o.uploadTime=new Date().toISOString();}
  if(tmIdx>-1)TRACKS[tmIdx]=o;else TRACKS.push(o);
  var plSel=$('f_pladd')?$('f_pladd').value:'';
  var plNew=$('f_plnew')?$('f_plnew').value.trim():'';
@@ -369,7 +369,7 @@ async function uploadTracks(){
   upProg(i+1,fs.length);}
  if(!newTracks.length){upSet('status err','AUCUN FICHIER UPLOAD\u00C9 — abandon');return;}
  /* le publishAll fusionnera avec le distant (anti-ecrasement) */
- newTracks.forEach(function(nt){TRACKS.push(nt);});
+ newTracks.forEach(function(nt){nt.id=nextId();TRACKS.push(nt);});
  if(alb&&titles.length){var PP=PLAYLISTS.find(function(x){return x.title===alb;});
   if(!PP){PP={title:alb,desc:'Album',tracks:[],upd:ad};PLAYLISTS.push(PP);}
   titles.forEach(function(t){if((PP.tracks||[]).indexOf(t)<0)PP.tracks.push(t);});PP.upd=ad;}

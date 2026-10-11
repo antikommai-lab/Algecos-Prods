@@ -12,21 +12,32 @@ function stripExt(s){s=String(s);var l=s.toLowerCase();var E=['.mp3','.wav','.og
  for(var i=0;i<E.length;i++){if(l.slice(-E[i].length)===E[i])return s.slice(0,s.length-E[i].length);}return s;}
 function base(s){s=String(s);var p=s.lastIndexOf('/');return p<0?s:s.slice(p+1);}
 function norm(s){return stripExt(String(s==null?'':s)).toLowerCase().trim();}
-/* ===== matching robuste titre OU chemin fichier ===== */
+/* ===== ID unique auto-incremente ===== */
+function nextId(){var m=0;TRACKS.forEach(function(t){if(typeof t.id==='number'&&t.id>m)m=t.id;});
+ if(!m){var i=0;TRACKS.forEach(function(t,k){t.id=k+1;if(t.id>i)i=t.id;});m=i;}
+ return m+1;}
+function trById(n){var v=parseInt(n,10);if(isNaN(v))return null;
+ return TRACKS.find(function(x){return x.id===v;})||null;}
+/* ===== matching robuste : ID OU titre OU chemin fichier ===== */
 function plMatch(ref){
  if(ref==null||typeof ref==='object')return null;
  var s=String(ref),t;
+ /* 1. ID numerique (ex : 42) */
+ t=trById(s);if(t)return t;
+ /* 2. titre exact ou chemin exact */
  t=TRACKS.find(function(x){return x.title===s||x.file===s;});if(t)return t;
+ /* 3. nom de fichier (base, sans extension) */
  var b=norm(base(s));
  t=TRACKS.find(function(x){return norm(base(x.file))===b;});if(t)return t;
  t=TRACKS.find(function(x){return norm(x.title)===norm(s);});if(t)return t;
+ /* 4. recherche partielle (titres longs) */
  if(s.trim().length>=8){var ns=norm(s);
   t=TRACKS.find(function(x){return norm(x.title).indexOf(ns)>-1;});if(t)return t;
   t=TRACKS.find(function(x){return norm(base(x.file)).indexOf(ns)>-1;});}
  return t||null;}
 function entSec(r){return (r&&typeof r==='object')?(r.section||r.SECTION||r.Section||''):'';}
 function entLabel(r){return (r&&typeof r==='object')?(r.label||r.LABEL||''):'';}
-function entRef(r){if(typeof r==='string')return r;if(r&&typeof r==='object')return r.ref||r.title||r.file||null;return null;}
+function entRef(r){if(typeof r==='string')return r;if(r&&typeof r==='object')return r.ref||r.title||r.file||r.id||null;return null;}
 function plFlat(){var out=[];((PLAYLIST&&PLAYLIST.tracks)||[]).forEach(function(r){var t=plMatch(entRef(r));if(t)out.push(t);});return out;}
 /* ===== covers ===== */
 function tryCovers(paths,cb){var i=0;
