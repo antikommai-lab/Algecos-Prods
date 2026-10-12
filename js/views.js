@@ -140,7 +140,7 @@ function render(){
 
 /* ===== onglet nouveautes ===== */
 function renderNews(){
- var list=TRACKS.slice().sort(function(a,b){return upTime(b.t).localeCompare(upTime(a.t));}).slice(0,30);
+ var list=TRACKS.slice().sort(function(a,b){return upTime(b).localeCompare(upTime(a));}).slice(0,30);
  $('countNews').textContent=list.length+' DERNIERS AJOUTS';
  $('newsGrid').innerHTML=list.map(function(t){return cardHTML(t,TRACKS.indexOf(t));}).join('');
  bindCards($('newsGrid'));}
@@ -157,10 +157,10 @@ function vnav(d){if(!VIEW.imgs.length)return;VIEW.i=(VIEW.i+d+VIEW.imgs.length)%
 
 function updTicker(){
  var tk=$('ticker'),inner=$('tickInner');if(!tk||!inner)return;
- var lt=null;TRACKS.forEach(function(t){if(t.recordDate&&(!lt||String(t.recordDate)>String(lt.recordDate)))lt=t;});
- var lp=PLAYLISTS.length?PLAYLISTS[PLAYLISTS.length-1]:null;
+ var lt=null;TRACKS.forEach(function(t){if(!lt||upTime(t)>upTime(lt))lt=t;});
+ var lp=null;PLAYLISTS.forEach(function(p){if(!lp||String(p.upd||'')>String(lp.upd||''))lp=p;});
  var parts=[];
- if(lt)parts.push('⬇ LAST UPLOAD : '+lt.title+(lt.version?' ['+lt.version+']':'')+' — '+lt.recordDate);
+ if(lt)parts.push('⬇ LAST UPLOAD : '+lt.title+(lt.version?' ['+lt.version+']':'')+' — '+(lt.uploadTime?lt.uploadTime.slice(0,10):(lt.added||lt.recordDate||'')));
  if(lp)parts.push('⚡ LAST PLAYLIST : '+lp.title+(lp.upd?' — '+lp.upd:''));
  if(!parts.length){tk.classList.remove('show');return;}
  inner.textContent=parts.join('   ✦   ');

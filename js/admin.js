@@ -225,9 +225,9 @@ function fillSelVals(p){
   if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
   return entRef(r)||'';}).join(String.fromCharCode(10));}
 function openSelForm(mode){
- if(mode===-1){smSelIdx=-1;$('smSelTitle').textContent='+ Nouvelle sélection';$('smSelSelWrap').style.display='none';
+ if(mode===-1){smSelIdx=-1;$('smSelTitle').textContent='+ Nouvelle playlist groupe';$('smSelSelWrap').style.display='none';
   $('s_title').value='';$('s_desc').value='';$('s_ref').value='';$('s_tracks').value='';}
- else{$('smSelTitle').textContent='✎ Modifier une sélection';$('smSelSelWrap').style.display='block';
+ else{$('smSelTitle').textContent='✎ Modifier une playlist groupe';$('smSelSelWrap').style.display='block';
   $('smSelSel').innerHTML=SELS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
   smSelIdx=0;fillSel();}
  $('sStatus').textContent='';openModal('selModal');}
@@ -244,7 +244,7 @@ async function saveSel(){
  p.upd=new Date().toISOString().slice(0,10);
  if(smSelIdx>-1)SELS[smSelIdx]=p;else SELS.push(p);
  $('sStatus').className='status ok';$('sStatus').textContent='⏳ PUBLICATION…';
- try{await publishAll('sélection : '+ti);
+ try{await publishAll('playlist groupe : '+ti);
   closeModal('selModal');await load();}
  catch(e){$('sStatus').className='status err';$('sStatus').textContent=e.message;}}
 /* ===== ajout playlist au morceau + messages RSS ===== */
@@ -287,8 +287,8 @@ function buildAdmDash(){
  +'<button class="mitem" onclick="admForm(0,0)">&#9998; Modifier un morceau</button>'
  +'<button class="mitem" onclick="admForm(1,-1)">+ Nouvelle playlist</button>'
  +'<button class="mitem" onclick="admForm(1,0)">&#9998; Modifier une playlist</button>'
- +'<button class="mitem" onclick="admForm(2,-1)">+ Nouvelle s\u00E9lection</button>'
- +'<button class="mitem" onclick="admForm(2,0)">&#9998; Modifier une s\u00E9lection</button>'
+ +'<button class="mitem" onclick="admForm(2,-1)">+ Nouvelle playlist groupe</button>'
+ +'<button class="mitem" onclick="admForm(2,0)">&#9998; Modifier une playlist groupe</button>'
  +'<button class="mitem" onclick="admForm(3)">&#9993; Message RSS / newsletter</button>'
  +'<h4>Donn\u00E9es</h4>'
  +'<button class="mitem" onclick="admReload()">&#10227; Recharger les donn\u00E9es du site (avant une session d\u0027\u00E9dition)</button>'

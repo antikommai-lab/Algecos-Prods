@@ -272,7 +272,7 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="showPlaylists()">☰ Toutes les playlists</button>
 <button class="mitem" onclick="showList(true)">■ Liste de tous les morceaux</button>
 <button class="mitem" onclick="showVersions()">★ Choisis ta version préférée</button>
-<button class="mitem" onclick="showSels()">⧉ Sélections</button>
+<button class="mitem" onclick="showSels()">⧉ Playlists groupe</button>
 <button class="mitem" onclick="showNews()">&#128227; Nouveautés — derniers ajouts</button>
 <button class="mitem" onclick="openSub()">&#x1F4EC; Rester informé / RSS mail</button>
 <a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">✉ Nous contacter</a>
@@ -287,8 +287,8 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
 <button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
 <button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
-<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle sélection</button>
-<button class="mitem" onclick="openSelForm(0)">✎ Modifier une sélection</button>
+<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle playlist groupe</button>
+<button class="mitem" onclick="openSelForm(0)">✎ Modifier une playlist groupe</button>
 <button class="mitem" onclick="openMsgForm()">✉ Message RSS / newsletter</button>
 <button class="mitem" onclick="admReload()">&#10227; Recharger les donn&#233;es du site</button>
 <label>Token GitHub (fine-grained, Contents: R/W)</label>
@@ -325,7 +325,7 @@ audio{width:100%;height:40px}
 
 <section id="verWrap"><h2 class="secH">★ Choisis ta version préférée</h2><div id="verGrid"></div></section>
 
-<section id="selWrap"><h2 class="secH">⧉ Sélections</h2><div id="selGrid"></div></section>
+<section id="selWrap"><h2 class="secH">⧉ Playlists groupe</h2><div id="selGrid"></div></section>
 
 <section id="newsWrap">
 <h2 class="secH">&#128227; Nouveautés</h2>
@@ -507,8 +507,8 @@ audio{width:100%;height:40px}
 
 <div class="modal" id="selModal"><div class="mbox">
 <button class="close" onclick="closeModal('selModal')">✕</button>
-<h3 id="smSelTitle">Sélection</h3>
-<div id="smSelSelWrap" style="display:none"><label>Quelle sélection ?</label><select id="smSelSel" onchange="fillSel()"></select></div>
+<h3 id="smSelTitle">Playlist groupe</h3>
+<div id="smSelSelWrap" style="display:none"><label>Quelle playlist groupe ?</label><select id="smSelSel" onchange="fillSel()"></select></div>
 <label>Titre</label><input id="s_title">
 <label>Description</label><textarea id="s_desc" rows="2"></textarea>
 <label>Référence courte (optionnel)</label><input id="s_ref" placeholder="ex : sel-nuit">
@@ -603,16 +603,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261029"></script>
-<script src="js/data.js?v=20261029"></script>
-<script src="js/auth.js?v=20261029"></script>
-<script src="js/admin.js?v=20261029"></script>
-<script src="js/player.js?v=20261029"></script>
-<script src="js/views.js?v=20261029"></script>
-<script src="js/versions.js?v=20261029"></script>
-<script src="js/genres.js?v=20261029"></script>
-<script src="js/manage.js?v=20261029"></script>
-<script src="js/main.js?v=20261029"></script>
+<script src="js/config.js?v=20261030"></script>
+<script src="js/data.js?v=20261030"></script>
+<script src="js/auth.js?v=20261030"></script>
+<script src="js/admin.js?v=20261030"></script>
+<script src="js/player.js?v=20261030"></script>
+<script src="js/views.js?v=20261030"></script>
+<script src="js/versions.js?v=20261030"></script>
+<script src="js/genres.js?v=20261030"></script>
+<script src="js/manage.js?v=20261030"></script>
+<script src="js/main.js?v=20261030"></script>
 
 </body>
 </html>

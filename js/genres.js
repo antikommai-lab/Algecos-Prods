@@ -7,7 +7,15 @@ function stylePlaylists(){
  var cnt={},order=[];
  TRACKS.forEach(function(t){var k=String(t.style||'').trim();if(!k)return;if(!cnt[k]){cnt[k]=[];order.push(k);}cnt[k].push(t.title);});
  return order.sort().map(function(k){return {title:'STYLE · '+k,desc:'G\u00E9n\u00E9r\u00E9e automatiquement \u2014 tous les morceaux de style '+k,auto:'style',tracks:cnt[k]};});}
-function autoPlaylists(){return genrePlaylists().concat(stylePlaylists());}
+function comboPlaylists(){
+ var cnt={};
+ TRACKS.forEach(function(t){var tg=(t.tags||[]).slice().sort(function(a,b){return a.localeCompare(b,'fr');});
+  for(var i=0;i<tg.length;i++)for(var j=i+1;j<tg.length;j++){var k=tg[i]+' + '+tg[j];
+   if(!cnt[k])cnt[k]=[];if(cnt[k].indexOf(t.title)<0)cnt[k].push(t.title);}});
+ var out=[];Object.keys(cnt).sort().forEach(function(k){if(cnt[k].length>=2)
+  out.push({title:'SÉLECTION · '+k,desc:'Générée automatiquement — combo '+k+' ('+cnt[k].length+' morceaux)',auto:'combo',tracks:cnt[k]});});
+ return out;}
+function autoPlaylists(){return comboPlaylists().concat(genrePlaylists()).concat(stylePlaylists());}
 /* ===== selections : collections de playlists ===== */
 function plByName(nm){
  var n=String(nm||'').toLowerCase().trim();
@@ -33,7 +41,7 @@ function selSelCardHTML(s){
  +'</div><div class="row" style="margin-top:8px"><button class="btn" data-selplay="'+esc(s.title)+'">\u25B6 LIRE</button></div></div>';
  return h;}
 function renderSels(){
- $('selGrid').innerHTML=SELS.map(selSelCardHTML).join('')||'<div style="color:var(--dim);font-size:.75rem">AUCUNE S\u00C9LECTION.</div>';
+ $('selGrid').innerHTML=SELS.map(selSelCardHTML).join('')||'<div style="color:var(--dim);font-size:.75rem">AUCUNE PLAYLIST GROUPE.</div>';
  bindSelCards($('selGrid'));}
 function bindSelCards(root){
  root.querySelectorAll('.plh').forEach(function(cd){
@@ -45,7 +53,7 @@ function bindSelCards(root){
   if(pb)pb.onclick=function(ev){ev.stopPropagation();var pl=plFlatOf(s||{tracks:[]});if(pl.length){PLAYLIST=s;renderPlaylist();play(pl[0],pl);}};
   var sb2=cd.querySelector('[data-selplay]');
   if(sb2)sb2.onclick=function(ev){ev.stopPropagation();
-   var flat=selFlat(s||{});if(!flat.length){alert('AUCUN MORCEAU DANS CETTE S\u00C9LECTION');return;}
+   var flat=selFlat(s||{});if(!flat.length){alert('AUCUN MORCEAU DANS CETTE PLAYLIST GROUPE');return;}
    PLAYLIST={title:s.title,desc:s.desc||'',tracks:flat.map(function(t){return t.title;})};
    renderPlaylist();showView('home');play(flat[0],flat);};
   cd.querySelectorAll('.srow').forEach(function(r){
@@ -65,6 +73,6 @@ function playFiltered(){
 function initGenres(){
  var bar=document.querySelector('.search-bar');
  if(!bar)return;
- var b=document.createElement('button');b.className='btn';b.textContent='\u25B6 LIRE S\u00C9LECTION';b.onclick=playFiltered;
+ var b=document.createElement('button');b.className='btn';b.textContent='\u25B6 LIRE PLAYLIST GROUPE';b.onclick=playFiltered;
  bar.appendChild(b);}
 document.addEventListener('DOMContentLoaded',initGenres);
