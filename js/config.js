@@ -1,6 +1,6 @@
 /* ===== CONFIG — à remplir ===== */
-var SUPABASE_URL='https://TON-PROJET.supabase.co';
-var SUPABASE_ANON_KEY='TA-CLE-ANON';
+var SUPABASE_URL='https://utbjwsasmetejghjyqrf.supabase.co';
+var SUPABASE_ANON_KEY='sb_publishable_Lwav2fu5zPgx-XZQXreQOg_QCpeChuB';
 var ADMIN_EMAILS=['antikomm.ai@gmail.com'];
 var ADMIN_GH=['antikommai-lab'];
 var SITE_URL='https://antikommai-lab.github.io/Algecos-Prods/';
