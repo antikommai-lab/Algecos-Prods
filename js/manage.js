@@ -72,6 +72,7 @@ function mgFillEdit(){
  setv('e_file',t0&&t0.file);
  setv('e_tags',t0&&(t0.tags||[]).join(', '));
  setv('e_moods',t0&&(t0.moods||[]).join(', '));
+ var ep=$('e_prov');if(ep)ep.value=one?(t0&&t0.prov||'C'):'';
  setv('e_style',t0&&t0.style);
  setv('e_version',t0&&t0.version);
  setv('e_vid',t0&&t0.vid);
@@ -97,6 +98,8 @@ async function mgSaveEdit(){
    t.lyricsCreator=v('e_lyr');t.soundCreator=v('e_snd');t.recordDate=v('e_date');}
   if(v('e_tags')!==''||one)t.tags=v('e_tags')!==''?v('e_tags').split(',').map(function(s){return s.trim();}).filter(Boolean):(one?t.tags||[]:t.tags||[]);
   if(v('e_moods')!==''||one)t.moods=v('e_moods')!==''?v('e_moods').split(',').map(function(s){return s.trim();}).filter(Boolean):(one?t.moods||[]:t.moods||[]);
+  if(one)t.prov=v('e_prov')||t.prov||'C';
+  else if(v('e_prov')!=='')t.prov=v('e_prov');
   if(v('e_style')!==''||one)t.style=v('e_style');
   if(v('e_version')!==''||one)t.version=v('e_version');
   if(v('e_img')!==''||one)t.img=v('e_img');
@@ -239,3 +242,23 @@ async function mgMoveFolder(){
  catch(e){$('mgStatus').className='status err';$('mgStatus').textContent='PUBLISH KO : '+e.message;return;}
  $('mgStatus').textContent='\u2713 '+done+' D\u00C9PLAC\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':'');
  await load();renderMgList();}
+
+/* ===== remplacement audio : version retravaillee ===== */
+async function mgRepAudio(input){
+ var f=input.files[0];input.value='';
+ if(!f)return;
+ if(MGSEL.length!==1){$('mgStatus').className='status err';$('mgStatus').textContent='S\u00C9LECTIONNE EXACTEMENT 1 MORCEAU';return;}
+ var t=TRACKS[MGSEL[0]];if(!t||!t.file){$('mgStatus').className='status err';$('mgStatus').textContent='PAS DE FICHIER AUDIO ASSOCI\u00C9';return;}
+ if(!GHTOK){$('mgStatus').className='status err';$('mgStatus').textContent='TOKEN GITHUB REQUIS';return;}
+ var keep=confirm('REMPLACER L\u0027AUDIO DE \u00AB '+t.title+' \u00BB ?\n\nOK = garder l\u0027original en *_original.ext\nAnnuler = \u00E9craser sans sauvegarde');
+ $('mgStatus').className='status ok';$('mgStatus').textContent='\u23F3 REMPLACEMENT\u2026';
+ try{
+  if(keep){var r=await fetch(encodeURI(t.file)+'?t='+Date.now(),{cache:'no-store'});
+   if(r.ok){var orig=String(t.file).replace(/\.([a-z0-9]+)$/i,'_original.$1');
+    await ghCreate(orig,toB64Buf(await r.arrayBuffer()),'audio original conserv\u00E9 : '+t.title);}}
+  await ghCreate(t.file,toB64Buf(await f.arrayBuffer()),'audio retravaill\u00E9 : '+t.title);
+  if(confirm('Marquer ce morceau HYBRIDE (B \u2014 retravaill\u00E9, vendable) ?')){t.prov='B';
+   try{await publishAll('provenance B : '+t.title);}catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;return;}}
+  $('mgStatus').textContent='\u2713 AUDIO REMPLAC\u00C9';
+  await load();renderMgList();mgUpdEdit();}
+ catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;}}

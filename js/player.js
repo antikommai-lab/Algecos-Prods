@@ -9,7 +9,7 @@ function play(t,list){
  $('pv').textContent=(t.version?'['+t.version+'] ':'')+(t.style||'');
  $('ptags').textContent=(t.tags||[]).join(' / ')+((t.tags||[]).length&&(t.moods||[]).length?' / ':'')+(t.moods||[]).join(' / ');
  $('pdesc').textContent=t.desc||'';
- $('pinfo').textContent='VO:'+(t.lyricsCreator||'—')+' / SND:'+(t.soundCreator||'—')+' / '+(t.recordDate||'—');
+ $('pinfo').textContent='VO:'+(t.lyricsCreator||'—')+' / SND:'+(t.soundCreator||'—')+' / '+(t.recordDate||'—')+' / '+(t.prov==='A'?'HUMAIN':(t.prov==='B'?'HYBRIDE':'IA — NON VENDABLE'));
  $('pstars').innerHTML=stars(t.rating);$('pAvg').textContent='';
  var seq=++PCV;
  tryCovers(trackCoverPaths(t),function(u){if(seq!==PCV)return;var c=$('tCover');if(u){c.src=u;c.style.display='block';}else c.style.display='none';});

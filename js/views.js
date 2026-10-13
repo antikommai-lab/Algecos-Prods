@@ -78,6 +78,7 @@ function showView(v){
  $('selWrap').classList.toggle('open',v==='sel');
  $('newsWrap').classList.toggle('open',v==='news');
  $('varWrap').classList.toggle('open',v==='var');
+ $('orderWrap').classList.toggle('open',v==='order');
  window.scrollTo({top:0});toggleMenuOff();}
 function showList(full){showView(full===true?'list':'home');}
 function showPlaylists(){showView('plists');}
@@ -93,6 +94,7 @@ function cardHTML(t,i){
  if(LOTSMODE)h+='<input type="checkbox" class="lotck" data-li="'+i+'"'+(LOTCARD.indexOf(i)>-1?' checked':'')+' style="position:absolute;top:10px;left:10px;z-index:5;width:20px;height:20px;cursor:pointer">';
  if(t.version)h+='<span class="ver">'+esc(t.version)+'</span>';
  h+='<div class="stars">'+stars(t.rating)+'</div><h3>'+esc(t.title)+'</h3>';
+ h+=provBadge(t);
  if(t.style)h+='<div class="style fold" title="cliquer pour déplier">[ '+esc(t.style)+' ]</div>';
  h+='<div class="meta">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div>';
  if((t.moods||[]).length)h+='<div class="meta">'+(t.moods||[]).map(function(k){return '<em style="color:var(--y);border-color:var(--y)">'+esc(k)+'</em>';}).join('')+'</div>';
@@ -224,3 +226,18 @@ function hitCounter(){
  try{fetch('https://abacus.jasoncameron.dev/hit/AlgecosProds/visites').then(function(r){return r.json();}).then(function(d){
   var e=document.getElementById('vCount');if(e&&d.value)e.textContent='\u{1F441} '+d.value+' visites';}).catch(function(){});}
  catch(e){}}
+
+/* ===== provenance (A humain / B hybride / C IA) ===== */
+function provOf(t){return t&&t.prov==='A'||t&&t.prov==='B'?t.prov:'C';}
+function provBadge(t){var p=provOf(t);
+ var lbl=p==='A'?'HUMAIN':(p==='B'?'HYBRIDE — VENDABLE':'IA — NON VENDABLE');
+ var tip=p==='A'?'Création humaine':(p==='B'?'IA retravaillée par l\u0027artiste — vendable, non exclusif':'Généré par IA — non vendable, partage gratuit uniquement');
+ return '<span class="pbadge pb'+p+'" title="'+tip+'">'+lbl+'</span>';}
+/* ===== commande sur mesure ===== */
+function goOrder(){showView('order');}
+function sendOrder(){
+ var ty=$('o_type').value,d=$('o_desc').value.trim(),st=$('o_style').value.trim();
+ if(!d){$('oStatus').className='status err';$('oStatus').textContent='D\u00C9CRIS TA COMMANDE D\u0027ABORD';return;}
+ var body='COMMANDE : '+ty+String.fromCharCode(10)+String.fromCharCode(10)+d+(st?String.fromCharCode(10)+String.fromCharCode(10)+'Styles : '+st:'')+String.fromCharCode(10)+String.fromCharCode(10)+'— envoy\u00E9 depuis le site ALGECOS-PRODS';
+ window.location.href='mailto:algecosprods@gmail.com?subject='+encodeURIComponent('[COMMANDE] '+ty)+'&body='+encodeURIComponent(body);
+ $('oStatus').className='status ok';$('oStatus').textContent='TON LOGICIEL MAIL S\u0027OUVRE — ENVOIE LE MESSAGE';}

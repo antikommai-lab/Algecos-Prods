@@ -40,8 +40,8 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .plh .seltracks .srow{display:flex;gap:8px;padding:6px 2px;border-bottom:1px solid var(--line);font-size:.72rem;cursor:pointer}
 .plh .seltracks .srow:hover{color:var(--y)}
 @media(max-width:700px){.plh .seltracks{display:none}.plh.open .seltracks{display:block}}
-#verWrap,#varWrap,#selWrap,#newsWrap{display:none;max-width:1000px;margin:20px auto;padding:0 20px 90px}
-#verWrap.open,#varWrap.open,#selWrap.open,#newsWrap.open{display:block}
+#verWrap,#varWrap,#orderWrap,#selWrap,#newsWrap{display:none;max-width:1000px;margin:20px auto;padding:0 20px 90px}
+#verWrap.open,#varWrap.open,#orderWrap.open,#selWrap.open,#newsWrap.open{display:block}
 #newsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .vg{background:rgba(16,16,16,.88);border:1px solid var(--line);border-left:4px solid var(--y);padding:14px;margin-bottom:14px}
 .vg h3{font-family:'Archivo Black',sans-serif;font-size:.9rem;text-transform:uppercase;color:var(--y);margin-bottom:8px}
@@ -133,6 +133,12 @@ body.adm #admBtn{display:block}
 #mgList,#mgPlList,#mgPEList{max-height:42vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px}
 .peord{cursor:grab}
 .peord:active{cursor:grabbing}
+.pbadge{display:inline-block;font-size:.55rem;padding:1px 6px;border:1px solid var(--dim);color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin:0 4px 4px 0}
+.pbA{color:#39d353;border-color:#39d353}
+.pbB{color:var(--y);border-color:var(--y)}
+.pbC{color:var(--warn);border-color:var(--warn)}
+#orderWrap input,#orderWrap textarea,#orderWrap select{width:100%;padding:10px;background:#000;color:var(--ink);border:1px solid var(--line);font-family:'Space Mono',monospace;margin:4px 0 10px}
+#orderWrap label{display:block;font-size:.68rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em}
 .mgrow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);background:#000;font-size:.76rem;cursor:pointer}
 .mgrow:hover{outline:1px solid var(--y)}
 .mgrow input[type=checkbox]{flex:none}
@@ -278,6 +284,7 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="showSels()">⧉ Playlists groupe</button>
 <button class="mitem" onclick="showNews()">&#128227; Nouveautés — derniers ajouts</button>
 <button class="mitem" onclick="showVars()">&#9854; One track, many variations</button>
+<button class="mitem" onclick="goOrder()">&#x270E; Commander un morceau / texte sur mesure</button>
 <button class="mitem" onclick="openSub()">&#x1F4EC; Rester informé / RSS mail</button>
 <a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">✉ Nous contacter</a>
 <h2>Compte</h2>
@@ -339,6 +346,26 @@ audio{width:100%;height:40px}
 </section>
 
 <section id="varWrap"><h2 class="secH">&#9854; One Track, Many Variations</h2><div id="varGrid"></div></section>
+
+<section id="orderWrap">
+<h2 class="secH">&#x270E; Commande sur mesure</h2>
+<div class="vg">
+<h3>Un morceau ou un texte fait pour toi</h3>
+<div style="color:var(--dim);font-size:.74rem;line-height:1.8">
+Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu veux dire, l&#39;ambiance, le style — je le cr&#232;e, le retravaille (FL Studio / Audacity) et te le livre avec sa licence.<br><br>
+<b style="color:var(--y)">TARIFS</b> — 2 itérations incluses dans le prix de départ · itération supplémentaire audio : +5 € · images / mini-vidéos synchronisées (PWA) : +5 à 10 € · livraison avec licence selon le palier choisi.<br><br>
+<b style="color:var(--y)">TEXTE</b> — Tu me dis ce que tu veux dire, je l&#39;écris moi-même : pas de génération IA. Mêmes conditions (2 itérations incluses, +5 € ensuite).
+</div>
+<label>Tu veux commander</label>
+<select id="o_type"><option>Un instrurap</option><option>Un morceau complet (instru + texte)</option><option>Un son / une ambiance</option><option>Un texte (paroles)</option></select>
+<label>Décris ta commande (ambiance, message, références…)</label>
+<textarea id="o_desc" rows="4"></textarea>
+<label>Styles / mots-clés préférés</label>
+<input id="o_style" placeholder="ex : jazzycore, manouche, dark, free party…">
+<div class="row"><button class="btn" onclick="sendOrder()">&#9993; Envoyer la commande par mail</button></div>
+<div class="status" id="oStatus"></div>
+</div>
+</section>
 
 <section id="listWrap">
 <div class="search-bar">
@@ -447,6 +474,7 @@ audio{width:100%;height:40px}
 <div><label>Fichier audio</label><input id="e_file"></div>
 <div><label>Mots-clés (séparés par des virgules)</label><input id="e_tags" list="tagSug"></div>
 <div><label>Moods (séparés par des virgules)</label><input id="e_moods" list="tagSug"></div>
+<div><label>Provenance (A humain / B hybride / C IA)</label><select id="e_prov"><option value=""></option><option value="A">A — humain (vendable, exclusif possible)</option><option value="B">B — hybride (vendable, non exclusif)</option><option value="C">C — IA (non vendable)</option></select></div>
 <div><label>Style / mood</label><input id="e_style"></div>
 <div><label>Version</label><input id="e_version"></div>
 <div><label>ID version commune — lier plusieurs versions</label><input id="e_vid"></div>
@@ -462,6 +490,7 @@ audio{width:100%;height:40px}
 <button class="btn" onclick="mgSaveEdit()">&#10003; Enregistrer la sélection</button>
 <button class="btn2" onclick="mgDelSel()">&#x1F5D1; Supprimer la sélection</button>
 </div>
+<div class="row"><button class="btn2" onclick="$('repFile').click()">&#x21E7; Remplacer l&#39;audio (version retravaill&#233;e)</button><input type="file" id="repFile" accept="audio/*" style="display:none" onchange="mgRepAudio(this)"></div>
 <div class="mgact">
 <select id="mgPlSel"></select>
 <button class="btn" onclick="mgAddToPl()">+ Ajouter à la playlist</button>
@@ -642,16 +671,16 @@ audio{width:100%;height:40px}
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261034"></script>
-<script src="js/data.js?v=20261034"></script>
-<script src="js/auth.js?v=20261034"></script>
-<script src="js/admin.js?v=20261034"></script>
-<script src="js/player.js?v=20261034"></script>
-<script src="js/views.js?v=20261034"></script>
-<script src="js/versions.js?v=20261034"></script>
-<script src="js/genres.js?v=20261034"></script>
-<script src="js/manage.js?v=20261034"></script>
-<script src="js/main.js?v=20261034"></script>
+<script src="js/config.js?v=20261035"></script>
+<script src="js/data.js?v=20261035"></script>
+<script src="js/auth.js?v=20261035"></script>
+<script src="js/admin.js?v=20261035"></script>
+<script src="js/player.js?v=20261035"></script>
+<script src="js/views.js?v=20261035"></script>
+<script src="js/versions.js?v=20261035"></script>
+<script src="js/genres.js?v=20261035"></script>
+<script src="js/manage.js?v=20261035"></script>
+<script src="js/main.js?v=20261035"></script>
 
 </body>
 </html>
