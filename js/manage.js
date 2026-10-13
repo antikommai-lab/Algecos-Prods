@@ -1,14 +1,16 @@
 /* ===== gestion par lots : tracks + playlists (mode explorateur) ===== */
 var MGTAB='tr',MGSEL=[],MGPL=null,MGPLSEL=[];
 var Q=String.fromCharCode(34);
-function openManage(tab){openModal('manageModal');mgTab(tab||'tr');}
-function mgTab(t){MGTAB=t;MGSEL=[];MGPLSEL=[];
+var _mgTab=mgTab;
+function openManage(tab){openModal('manageModal');try{mgTab(tab||'tr');}catch(e){var es=$('mgStatus');es.className='status err';es.textContent='ERREUR : '+e.message;}}
+function mgTab(t){try{MGTAB=t;MGSEL=[];MGPLSEL=[];
  $('mgTabTr').className=t==='tr'?'btn':'btn2';$('mgTabPl').className=t==='pl'?'btn':'btn2';
  $('mgTr').style.display=t==='tr'?'block':'none';$('mgPl').style.display=t==='pl'?'block':'none';
  $('mgTitle').textContent=t==='tr'?'Gestion des tracks':'Gestion des playlists';
  $('mgStatus').textContent='';$('mgPlStatus').textContent='';
  if(t==='tr'){renderMgList();}
  else{MGPL=null;$('mgPlEdit').style.display='none';renderMgPlList();}}
+ catch(e){var es=$('mgStatus');es.className='status err';es.textContent='ERREUR : '+e.message+' \u2014 copie ce message';}}
 function mgFiltered(){var q=($('mgQ').value||'').toLowerCase().trim();
  var L=TRACKS.map(function(t,i){return {t:t,i:i};}).filter(function(o){return !q||match(o.t,q);});
  var s=$('mgSort').value;
@@ -19,7 +21,7 @@ function mgFiltered(){var q=($('mgQ').value||'').toLowerCase().trim();
  else L.sort(function(a,b){return String(a.t.title||'').localeCompare(String(b.t.title||''));});
  return L;}
 function renderMgList(){
- var L=mgFiltered();
+ try{var L=mgFiltered();
  $('mgList').innerHTML=L.map(function(o){
   return '<div class='+Q+'mgrow'+Q+(MGSEL.indexOf(o.i)>-1?' data-on='+Q+'1'+Q:'')+' data-mi='+Q+''+o.i+''+Q+'>'
   +'<input type='+Q+'checkbox'+Q+' data-mi='+Q+''+o.i+''+Q+(MGSEL.indexOf(o.i)>-1?' checked':'')+'>'
@@ -30,6 +32,7 @@ function renderMgList(){
   +'</div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUN R\u00C9SULTAT</div>';
  $('mgAll').checked=L.length>0&&L.every(function(o){return MGSEL.indexOf(o.i)>-1;});
  bindMgRows();}
+ catch(e){$('mgStatus').className='status err';$('mgStatus').textContent='RENDER KO : '+e.message;}}
 /* --- selection facon explorateur : clic = selection unique, ctrl/clic = multiple, shift = plage --- */
 var MGLASTCLICK=-1;
 function bindMgRows(){
@@ -85,7 +88,7 @@ function mgFillEdit(){
  var rc=$('e_rcommon');if(rc)rc.checked=false;
  var h=one?('MORCEAU #'+(t0.id||'?')+' \u2014 '+esc(t0.title)):rows.length+' morceaux s\u00E9lectionn\u00E9s \u2014 seuls les champs remplis seront appliqu\u00E9s';
  $('mgEditTitle').textContent=h;
- $('mgEditMeta').textContent=one?('fichier : '+(t0.file||'—')+(t0.uploadTime?' \u00B7 upload\u00E9 '+esc(t0.uploadTime.slice(0,16)).replace('T',' '):'')):'';}
+ $('mgEditMeta').textContent=one?('fichier : '+(t0.file||'\u2014')+(t0.uploadTime?' \u00B7 upload\u00E9 '+esc(t0.uploadTime.slice(0,16)).replace('T',' '):'')):'';}
 async function mgSaveEdit(){
  if(!MGSEL.length){$('mgStatus').className='status err';$('mgStatus').textContent='RIEN S\u00C9LECTIONN\u00C9';return;}
  var rows=MGSEL.slice().sort(function(a,b){return a-b;});
@@ -151,7 +154,7 @@ function fillMgPlSel(){$('mgPlSel').innerHTML='<option value='+Q+''+Q+'>\u2014 p
 
 /* ===== playlists ===== */
 function renderMgPlList(){
- $('mgPlList').innerHTML=PLAYLISTS.map(function(p,i){
+ try{$('mgPlList').innerHTML=PLAYLISTS.map(function(p,i){
   return '<div class='+Q+'mgrow'+Q+(MGPLSEL.indexOf(i)>-1?' data-on='+Q+'1'+Q:'')+'>'
   +'<input type='+Q+'checkbox'+Q+' data-pi='+Q+''+i+''+Q+(MGPLSEL.indexOf(i)>-1?' checked':'')+' onchange='+Q+'mgPlPick('+i+',this.checked)'+Q+'>'
   +'<div class='+Q+'mt'+Q+'><b>'+esc(p.title)+'</b> <span class='+Q+'ms'+Q+'>'+((p.tracks||[]).length)+' tracks \u00B7 '+esc(p.upd||'')+'</span></div>'
@@ -162,6 +165,7 @@ function renderMgPlList(){
  fillMgPlSel();
  document.querySelectorAll('#mgPlList [data-pdel]').forEach(function(b){
   b.onclick=function(ev){ev.stopPropagation();mgDelPlAsk(+b.getAttribute('data-pdel'));};});}
+ catch(e){$('mgPlStatus').className='status err';$('mgPlStatus').textContent='RENDER KO : '+e.message;}}
 function mgPlPick(i,on){var ix=MGPLSEL.indexOf(i);if(on&&ix<0)MGPLSEL.push(i);if(!on&&ix>-1)MGPLSEL.splice(ix,1);}
 async function mgDelPlsSel(){
  if(!MGPLSEL.length){$('mgPlStatus').className='status err';$('mgPlStatus').textContent='RIEN S\u00C9LECTIONN\u00C9';return;}
@@ -186,7 +190,7 @@ function renderMgPE(){var p=PLAYLISTS[MGPL];if(!p){$('mgPlEdit').style.display='
  $('mgPEOrder').innerHTML=MGPEORD.map(function(e,ix){
   var sec=e.section||e.SECTION||e.Section;var t=plMatch(entRef(e));
   var disp=sec?('\u258C '+esc(sec)):(entLabel(e)?esc(entLabel(e))+' :: ':'')+(t?esc(t.title):esc(String(entRef(e)!=null?entRef(e):'?')));
-  return '<div class='+Q+'mgrow peord'+Q+' draggable='+Q+'true'+Q+' data-oi='+Q+''+ix+''+Q+'><span class='+Q+'mnum'+Q+'>'+(ix+1)+'</span><span style='+Q+'color:var(--dim)'+Q+'>\u2630</span><div class='+Q+'mt'+Q+'><b>'+disp+'</b></div><button class='+Q+'mgdel'+Q+' data-ox='+Q+''+ix+''+Q+'>\u2715</button></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:10px;font-size:.68rem'+Q+'>VIDE — coche des morceaux ci-dessous</div>';
+  return '<div class='+Q+'mgrow peord'+Q+' draggable='+Q+'true'+Q+' data-oi='+Q+''+ix+''+Q+'><span class='+Q+'mnum'+Q+'>'+(ix+1)+'</span><span style='+Q+'color:var(--dim)'+Q+'>\u2630</span><div class='+Q+'mt'+Q+'><b>'+disp+'</b></div><button class='+Q+'mgdel'+Q+' data-ox='+Q+''+ix+''+Q+'>\u2715</button></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:10px;font-size:.68rem'+Q+'>VIDE \u2014 coche des morceaux ci-dessous</div>';
  document.querySelectorAll('#mgPEOrder .peord').forEach(function(row){
   var ix=+row.getAttribute('data-oi');
   row.ondragstart=function(){MGPEDRAG=ix;};
