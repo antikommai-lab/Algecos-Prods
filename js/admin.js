@@ -187,10 +187,11 @@ function fillPlVals(p){
   if(typeof r==='string')return r;
   if(entSec(r))return 'SECTION: '+entSec(r);
   if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
-  return entRef(r)||'';}).join(String.fromCharCode(10));}
+  return entRef(r)||'';}).join(String.fromCharCode(10));
+ plOrdSync();}
 function openPlForm(mode){
  if(mode===-1){pmIdx=-1;$('pmTitle').textContent='+ Nouvelle playlist';$('pmSelWrap').style.display='none';
-  $('p_title').value='';$('p_desc').value='';$('p_cover').value='';$('p_img').value='';$('p_tracks').value='';}
+  $('p_title').value='';$('p_desc').value='';$('p_cover').value='';$('p_img').value='';$('p_tracks').value='';plOrdSync();}
  else{$('pmTitle').textContent='\u270e Modifier une playlist';$('pmSelWrap').style.display='block';
   $('pmSel').innerHTML=PLAYLISTS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
   pmIdx=0;fillPl();}
@@ -203,6 +204,7 @@ function fillPl(){pmIdx=+$('pmSel').value;var p=PLAYLISTS[pmIdx];if(p)fillPlVals
 async function savePl(){
  var ti=$('p_title').value.trim();
  if(!ti){$('pStatus').className='status err';$('pStatus').textContent='TITRE REQUIS';return;}
+ plOrdOut();
  var lines=$('p_tracks').value.split(String.fromCharCode(10)).map(function(s){return s.trim();}).filter(Boolean);
  var tracks=lines.map(function(l){
   var m=l.match(/^SECTION\s*:\s*(.+)$/i);
@@ -225,10 +227,11 @@ function fillSelVals(p){
  $('s_tracks').value=(p.playlists||[]).map(function(r){
   if(typeof r==='string')return r;
   if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
-  return entRef(r)||'';}).join(String.fromCharCode(10));}
+  return entRef(r)||'';}).join(String.fromCharCode(10));
+ slOrdSync();}
 function openSelForm(mode){
  if(mode===-1){smSelIdx=-1;$('smSelTitle').textContent='+ Nouvelle playlist s\u00e9lection';$('smSelSelWrap').style.display='none';
-  $('s_title').value='';$('s_desc').value='';$('s_ref').value='';$('s_tracks').value='';}
+  $('s_title').value='';$('s_desc').value='';$('s_ref').value='';$('s_tracks').value='';slOrdSync();}
  else{$('smSelTitle').textContent='\u270e Modifier une playlist s\u00e9lection';$('smSelSelWrap').style.display='block';
   $('smSelSel').innerHTML=SELS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
   smSelIdx=0;fillSel();}
@@ -237,6 +240,7 @@ function fillSel(){smSelIdx=+$('smSelSel').value;var p=SELS[smSelIdx];if(p)fillS
 async function saveSel(){
  var ti=$('s_title').value.trim();
  if(!ti){$('sStatus').className='status err';$('sStatus').textContent='TITRE REQUIS';return;}
+ slOrdOut();
  var lines=$('s_tracks').value.split(String.fromCharCode(10)).map(function(s){return s.trim();}).filter(Boolean);
  var pls=lines.map(function(l){
   var m=l.match(/^LABEL\s*:\s*(.+?)\s*::\s*(.+)$/i);
@@ -411,3 +415,43 @@ function refreshTagSug(){var d=document.getElementById('tagSug');if(!d)return;
  window.load=function(){var p=_l.apply(this,arguments);
   return Promise.resolve(p).then(function(v){refreshTagSug();return v;});};})();
 
+
+/* ===== explorateur morceaux (plModal) : titres seuls, filtre, cases, drag ===== */
+var PLORD=[],PLDRAG=-1,PLCHK=[];
+function plOrdSync(){PLORD=($('p_tracks').value||'').split(String.fromCharCode(10)).map(function(s){return s.trim();}).filter(Boolean);PLCHK=[];plOrdRender();plExpRender();}
+function plOrdOut(){$('p_tracks').value=PLORD.join(String.fromCharCode(10));}
+function plOrdDisp(l){var m=l.match(/^SECTION\s*:\s*(.+)$/i);if(m)return '\u258c '+m[1];m=l.match(/^LABEL\s*:\s*(.+?)\s*::\s*(.+)$/i);if(m)return m[1]+' :: '+m[2];return l;}
+function plOrdRender(){var w=$('p_order');if(!w)return;
+ w.innerHTML=PLORD.map(function(l,ix){return '<div class="mgrow peord" draggable="true" data-oi="'+ix+'"><span class="mnum">'+(ix+1)+'</span><span style="color:var(--dim)">\u2630</span><div class="mt"><b>'+esc(plOrdDisp(l))+'</b></div><button class="mgdel" data-ox="'+ix+'">\u2715</button></div>';}).join('')||'<div style="color:var(--dim);padding:10px;font-size:.68rem">VIDE \u2014 coche des morceaux ci-dessous puis \u00ab + Ajouter coch\u00e9s \u00bb</div>';
+ w.querySelectorAll('.peord').forEach(function(row){var ix=+row.getAttribute('data-oi');
+  row.ondragstart=function(){PLDRAG=ix;};
+  row.ondragover=function(ev){ev.preventDefault();};
+  row.ondrop=function(ev){ev.preventDefault();if(PLDRAG<0||PLDRAG===ix)return;var it=PLORD.splice(PLDRAG,1)[0];PLORD.splice(ix,0,it);PLDRAG=-1;plOrdRender();};
+  var rm=row.querySelector('[data-ox]');if(rm)rm.onclick=function(){PLORD.splice(ix,1);plOrdRender();};});}
+function plExpRender(){var w=$('p_expList');if(!w)return;
+ var q=($('p_expQ').value||'').toLowerCase().trim();
+ var inPl={};PLORD.forEach(function(l){inPl[String(l).toLowerCase()]=1;});
+ var list=TRACKS.filter(function(t){if(inPl[String(t.title).toLowerCase()])return false;if(!q)return true;return ((t.title||'')+' '+(t.tags||[]).join(' ')).toLowerCase().indexOf(q)>-1;});
+ w.innerHTML=list.map(function(t){return '<label class="mgrow" style="cursor:pointer"><input type="checkbox" data-et="'+esc(t.title)+'"'+(PLCHK.indexOf(t.title)>-1?' checked':'')+'><div class="mt"><b>'+esc(t.title)+'</b></div></label>';}).join('')||'<div style="color:var(--dim);padding:10px;font-size:.68rem">AUCUN MORCEAU'+(q?' (filtre)':'')+'</div>';
+ w.querySelectorAll('[data-et]').forEach(function(ck){ck.onchange=function(){var ti=ck.getAttribute('data-et');var ix=PLCHK.indexOf(ti);if(ck.checked&&ix<0)PLCHK.push(ti);if(!ck.checked&&ix>-1)PLCHK.splice(ix,1);};});}
+function plExpAdd(){if(!PLCHK.length)return;PLCHK.forEach(function(ti){PLORD.push(ti);});PLCHK=[];plOrdRender();plExpRender();}
+
+/* ===== explorateur playlists (selModal) ===== */
+var SLORD=[],SLDRAG=-1,SLCHK=[];
+function slOrdSync(){SLORD=($('s_tracks').value||'').split(String.fromCharCode(10)).map(function(s){return s.trim();}).filter(Boolean);SLCHK=[];slOrdRender();slExpRender();}
+function slOrdOut(){$('s_tracks').value=SLORD.join(String.fromCharCode(10));}
+function slOrdDisp(l){var m=l.match(/^LABEL\s*:\s*(.+?)\s*::\s*(.+)$/i);if(m)return m[1]+' :: '+m[2];return l;}
+function slOrdRender(){var w=$('s_order');if(!w)return;
+ w.innerHTML=SLORD.map(function(l,ix){return '<div class="mgrow peord" draggable="true" data-oi="'+ix+'"><span class="mnum">'+(ix+1)+'</span><span style="color:var(--dim)">\u2630</span><div class="mt"><b>'+esc(slOrdDisp(l))+'</b></div><button class="mgdel" data-ox="'+ix+'">\u2715</button></div>';}).join('')||'<div style="color:var(--dim);padding:10px;font-size:.68rem">VIDE \u2014 coche des playlists ci-dessous puis \u00ab + Ajouter coch\u00e9es \u00bb</div>';
+ w.querySelectorAll('.peord').forEach(function(row){var ix=+row.getAttribute('data-oi');
+  row.ondragstart=function(){SLDRAG=ix;};
+  row.ondragover=function(ev){ev.preventDefault();};
+  row.ondrop=function(ev){ev.preventDefault();if(SLDRAG<0||SLDRAG===ix)return;var it=SLORD.splice(SLDRAG,1)[0];SLORD.splice(ix,0,it);SLDRAG=-1;slOrdRender();};
+  var rm=row.querySelector('[data-ox]');if(rm)rm.onclick=function(){SLORD.splice(ix,1);slOrdRender();};});}
+function slExpRender(){var w=$('s_expList');if(!w)return;
+ var q=($('s_expQ').value||'').toLowerCase().trim();
+ var inPl={};SLORD.forEach(function(l){inPl[String(l).replace(/^LABEL\s*:\s*.+?\s*::\s*/i,'').toLowerCase()]=1;});
+ var list=PLAYLISTS.filter(function(p){if(inPl[String(p.title).toLowerCase()])return false;if(!q)return true;return (p.title||'').toLowerCase().indexOf(q)>-1;});
+ w.innerHTML=list.map(function(p){return '<label class="mgrow" style="cursor:pointer"><input type="checkbox" data-ep="'+esc(p.title)+'"'+(SLCHK.indexOf(p.title)>-1?' checked':'')+'><div class="mt"><b>'+esc(p.title)+'</b></div></label>';}).join('')||'<div style="color:var(--dim);padding:10px;font-size:.68rem">AUCUNE PLAYLIST'+(q?' (filtre)':'')+'</div>';
+ w.querySelectorAll('[data-ep]').forEach(function(ck){ck.onchange=function(){var ti=ck.getAttribute('data-ep');var ix=SLCHK.indexOf(ti);if(ck.checked&&ix<0)SLCHK.push(ti);if(!ck.checked&&ix>-1)SLCHK.splice(ix,1);};});}
+function slExpAdd(){if(!SLCHK.length)return;SLCHK.forEach(function(ti){SLORD.push(ti);});SLCHK=[];slOrdRender();slExpRender();}

@@ -13,13 +13,13 @@ function tgN(s){return String(s==null?'':s).toLowerCase().trim()
  .replace(/[\u00E0-\u00FC]/g,function(c){return 'aaaeeeeiioouuuaaaeeeeiioouuu'['\u00E0\u00E1\u00E2\u00E3\u00E4\u00E7\u00E8\u00E9\u00EA\u00EB\u00EC\u00ED\u00EE\u00EF\u00F1\u00F2\u00F3\u00F4\u00F5\u00F6\u00F9\u00FA\u00FB\u00FC'.indexOf(c)]||c;});}
 function comboPlaylists(){
  var cnt={};
- var disp={};
+ var disp={},disp2={};
  TRACKS.forEach(function(t){var tg=(t.tags||[]).map(tgN).filter(Boolean).sort();
   for(var i=0;i<tg.length;i++)for(var j=i+1;j<tg.length;j++){var k=tg[i]+' + '+tg[j];
-   if(!cnt[k]){cnt[k]=[];disp[k]=(t.tags||[]).filter(function(x){return tgN(x)===tg[i];})[0]||tg[i];}
+   if(!cnt[k]){cnt[k]=[];disp[k]=(t.tags||[]).filter(function(x){return tgN(x)===tg[i];})[0]||tg[i];disp2[k]=(t.tags||[]).filter(function(x){return tgN(x)===tg[j];})[0]||tg[j];}
    if(cnt[k].indexOf(t.title)<0)cnt[k].push(t.title);}});
  var out=[];Object.keys(cnt).sort().forEach(function(k){if(cnt[k].length>=2)
-  out.push({title:'S\u00c9LECTION \u00b7 '+(disp[k]||k),desc:'Playlist s\u00e9lection auto \u2014 combo '+(disp[k]||k)+' ('+cnt[k].length+' morceaux)',auto:'combo',tracks:cnt[k]});});
+  out.push({title:'S\u00c9LECTION \u00b7 '+(disp[k]||k)+' \u00b7 '+(disp2[k]||''),desc:'Playlist s\u00e9lection auto \u2014 combo '+(disp[k]||k)+' + '+(disp2[k]||'')+' ('+cnt[k].length+' morceaux)',auto:'combo',tracks:cnt[k]});});
  return out;}
 function autoPlaylists(){return comboPlaylists().concat(genrePlaylists()).concat(stylePlaylists());}
 /* ===== selections : collections de playlists ===== */

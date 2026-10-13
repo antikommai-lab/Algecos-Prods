@@ -569,7 +569,11 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <label>Titre</label><input id="s_title">
 <label>Description</label><textarea id="s_desc" rows="2"></textarea>
 <label>R&#xe9;f&#xe9;rence courte (optionnel)</label><input id="s_ref" placeholder="ex : sel-nuit">
-<label>Playlists &#x2014; 1 par ligne (nom exact de la playlist) &#xb7; ou LABEL: note :: nom de la playlist</label><textarea id="s_tracks" rows="7" style="font-size:.74rem"></textarea>
+<label>Playlists &#x2014; gliss&#xe9;-d&#xe9;pos&#xe9; pour r&#xe9;ordonner</label>
+<div id="s_order" style="max-height:24vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px"></div>
+<div class="mgact"><input type="text" id="s_expQ" placeholder="FILTRER PLAYLISTS&#x2026;" oninput="slExpRender()"><button class="btn2" onclick="slExpAdd()">+ Ajouter coch&#xe9;es</button></div>
+<div id="s_expList" style="max-height:24vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px"></div>
+<textarea id="s_tracks" rows="2" style="display:none"></textarea>
 <div class="row"><button class="btn" onclick="saveSel()">Enregistrer</button><button class="btn2" onclick="closeModal('selModal')">Annuler</button></div>
 <div class="status" id="sStatus"></div>
 </div></div>
@@ -668,8 +672,11 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <label>Description</label><textarea id="p_desc" rows="2"></textarea>
 <label>Cover (nom fichier, ex : MACONPLCOVER1)</label><input id="p_cover">
 <label>Image de fond / background (nom fichier, ex : MACONPLBACK1)</label><input id="p_img">
-<label>Morceaux &#x2014; 1 par ligne : SECTION: FACE A &#xb7; LABEL: BONUS :: r&#xe9;f&#xe9;rence &#xb7; ou la r&#xe9;f&#xe9;rence (titre ou chemin)</label>
-<textarea id="p_tracks" rows="7" style="font-size:.74rem"></textarea>
+<label>Morceaux &#x2014; gliss&#xe9;-d&#xe9;pos&#xe9; pour r&#xe9;ordonner &#xb7; &#x2715; pour retirer</label>
+<div id="p_order" style="max-height:24vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px"></div>
+<div class="mgact"><input type="text" id="p_expQ" placeholder="FILTRER MORCEAUX&#x2026;" oninput="plExpRender()"><button class="btn2" onclick="plExpAdd()">+ Ajouter coch&#xe9;s</button></div>
+<div id="p_expList" style="max-height:24vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px"></div>
+<textarea id="p_tracks" rows="2" style="display:none"></textarea>
 <div class="row"><button class="btn" onclick="savePl()">Enregistrer</button><button class="btn2" onclick="closeModal('plModal')">Annuler</button></div>
 <div class="status" id="pStatus"></div>
 </div></div>
@@ -691,16 +698,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261040"></script>
-<script src="js/data.js?v=20261040"></script>
-<script src="js/auth.js?v=20261040"></script>
-<script src="js/admin.js?v=20261040"></script>
-<script src="js/player.js?v=20261040"></script>
-<script src="js/views.js?v=20261040"></script>
-<script src="js/versions.js?v=20261040"></script>
-<script src="js/genres.js?v=20261040"></script>
-<script src="js/manage.js?v=20261040"></script>
-<script src="js/main.js?v=20261040"></script>
+<script src="js/config.js?v=20261041"></script>
+<script src="js/data.js?v=20261041"></script>
+<script src="js/auth.js?v=20261041"></script>
+<script src="js/admin.js?v=20261041"></script>
+<script src="js/player.js?v=20261041"></script>
+<script src="js/views.js?v=20261041"></script>
+<script src="js/versions.js?v=20261041"></script>
+<script src="js/genres.js?v=20261041"></script>
+<script src="js/manage.js?v=20261041"></script>
+<script src="js/main.js?v=20261041"></script>
 
 </body>
 </html>
