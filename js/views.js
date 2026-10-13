@@ -77,6 +77,7 @@ function showView(v){
  $('verWrap').classList.toggle('open',v==='ver');
  $('selWrap').classList.toggle('open',v==='sel');
  $('newsWrap').classList.toggle('open',v==='news');
+ $('varWrap').classList.toggle('open',v==='var');
  window.scrollTo({top:0});toggleMenuOff();}
 function showList(full){showView(full===true?'list':'home');}
 function showPlaylists(){showView('plists');}
