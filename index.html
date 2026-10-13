@@ -210,6 +210,10 @@ body.adm .card .shB{display:none}
 .play{width:100%;padding:9px;background:var(--y);color:#000;border:2px solid #000;font-family:'Space Mono',monospace;font-weight:700;cursor:pointer;text-transform:uppercase}
 .play:hover{background:var(--ink)}
 .stars{position:absolute;top:12px;right:12px;font-size:.9rem;letter-spacing:2px;user-select:none}
+#pstars{cursor:pointer}
+#pstars:hover span{color:var(--y)}
+#pstars span{transition:color .15s,transform .15s;display:inline-block}
+#pstars:hover span:hover{transform:scale(1.35)}
 .stars span{color:#3a3833}
 .stars span.on{color:var(--y)}
 #empty{display:none;text-align:center;color:var(--dim);padding:40px;text-transform:uppercase}
@@ -698,16 +702,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261041"></script>
-<script src="js/data.js?v=20261041"></script>
-<script src="js/auth.js?v=20261041"></script>
-<script src="js/admin.js?v=20261041"></script>
-<script src="js/player.js?v=20261041"></script>
-<script src="js/views.js?v=20261041"></script>
-<script src="js/versions.js?v=20261041"></script>
-<script src="js/genres.js?v=20261041"></script>
-<script src="js/manage.js?v=20261041"></script>
-<script src="js/main.js?v=20261041"></script>
+<script src="js/config.js?v=20261042"></script>
+<script src="js/data.js?v=20261042"></script>
+<script src="js/auth.js?v=20261042"></script>
+<script src="js/admin.js?v=20261042"></script>
+<script src="js/player.js?v=20261042"></script>
+<script src="js/views.js?v=20261042"></script>
+<script src="js/versions.js?v=20261042"></script>
+<script src="js/genres.js?v=20261042"></script>
+<script src="js/manage.js?v=20261042"></script>
+<script src="js/main.js?v=20261042"></script>
 
 </body>
 </html>

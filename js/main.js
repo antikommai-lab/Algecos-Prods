@@ -29,3 +29,12 @@ if(GHTOK)$('ghTok').value=GHTOK;
 initAuth();
 load().then(applyDeepLink);
 hitCounter();
+
+document.addEventListener('keydown',function(e){
+ if(e.code!=='Space'&&e.key!==' ')return;
+ var t=e.target;
+ if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='SELECT'||t.tagName==='BUTTON'||t.isContentEditable))return;
+ if(document.querySelector('.modal.open'))return;
+ var pw=$('player');if(!pw||!pw.classList.contains('show'))return;
+ e.preventDefault();
+ var a=$('audio');if(a.paused)a.play();else a.pause();});

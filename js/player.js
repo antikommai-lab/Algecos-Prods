@@ -9,7 +9,7 @@ function play(t,list){
  $('pv').textContent=(t.version?'['+t.version+'] ':'')+(t.style||'');
  $('ptags').textContent=(t.tags||[]).join(' / ')+((t.tags||[]).length&&(t.moods||[]).length?' / ':'')+(t.moods||[]).join(' / ');
  $('pdesc').textContent=t.desc||'';
- $('pinfo').textContent='VO:'+(t.lyricsCreator||'—')+' / SND:'+(t.soundCreator||'—')+' / '+(t.recordDate||'—')+' / '+(t.prov==='A'?'HUMAIN':(t.prov==='B'?'HYBRIDE':'IA — NON VENDABLE'));
+ $('pinfo').textContent='VO:'+(t.lyricsCreator||'\u2014')+' / SND:'+(t.soundCreator||'\u2014')+' / '+(t.recordDate||'\u2014')+' / '+(t.prov==='A'?'HUMAIN':(t.prov==='B'?'HYBRIDE':'IA \u2014 NON VENDABLE'));
  $('pstars').innerHTML=stars(t.rating);$('pAvg').textContent='';
  var seq=++PCV;
  tryCovers(trackCoverPaths(t),function(u){if(seq!==PCV)return;var c=$('tCover');if(u){c.src=u;c.style.display='block';}else c.style.display='none';});
@@ -29,9 +29,12 @@ async function rate(k){
  if(!CURRENT)return;
  if(!USER){openCmt();return;}
  if(!sbReady())return;
- var r=await SB.from('ratings').upsert({track:CURRENT.title,email:USER.email,stars:k});
- if(r.error){$('pAvg').textContent='ERREUR NOTE';return;}
- $('pstars').innerHTML=stars(k);
+ var ti=CURRENT.title,em=USER.email,r;
+ var ex=await SB.from('ratings').select('id').eq('track',ti).eq('email',em).limit(1);
+ if(!ex.error&&ex.data&&ex.data.length)r=await SB.from('ratings').update({stars:k}).eq('track',ti).eq('email',em);
+ else r=await SB.from('ratings').insert({track:ti,email:em,stars:k});
+ if(r.error){$('pAvg').className='status err';$('pAvg').textContent='NOTE KO : '+r.error.message;return;}
+ $('pAvg').className='';$('pstars').innerHTML=stars(k);
  SB.from('ratings').select('stars').eq('track',CURRENT.title).then(function(res){
   if(!res.data||!res.data.length)return;
   var avg=res.data.reduce(function(a,b){return a+b.stars;},0)/res.data.length;
@@ -42,9 +45,9 @@ function stripHtml(s){return String(s).replace(/<style[\s\S]*?<\/style>/gi,'').r
 function toggleLyr(){var m=$('lyrModal');
  if(m.classList.contains('open')){m.classList.remove('open');LYR.open=false;return;}
  m.classList.add('open');LYR.open=true;
- var b=$('lyrBox');b.textContent='…';
- if(!CURRENT){b.textContent='—';return;}
- $('lyrTitle').textContent='Lyrics — '+CURRENT.title;
+ var b=$('lyrBox');b.textContent='\u2026';
+ if(!CURRENT){b.textContent='\u2014';return;}
+ $('lyrTitle').textContent='Lyrics \u2014 '+CURRENT.title;
  var tb=encodeURI('lyrics/'+CURRENT.title);
  var get=function(ext){return fetch(tb+'.'+ext+'?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;});};
  get('lyrics').then(function(x){return x!=null?x:get('txt');}).then(function(x){return x!=null?x:get('md');}).then(function(x){return x!=null?x:get('json');}).then(function(x){return x!=null?x:get('html');}).then(function(tx){
@@ -62,16 +65,16 @@ function scrollLyr(){var a=$('audio');
 async function openCmt(){
  $('cmtModal').classList.add('open');
  $('cmtStatus').textContent='';
- if(!sbReady()){$('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">Bientôt disponible.</div>';$('cmtForm').innerHTML='';return;}
- if(!USER){$('cmtForm').innerHTML='<div style="color:var(--dim);font-size:.75rem;line-height:1.6">Connecte-toi (☰ → Google ou GitHub) pour noter et commenter.</div>';$('cmtList').innerHTML='';return;}
+ if(!sbReady()){$('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">Bient\u00f4t disponible.</div>';$('cmtForm').innerHTML='';return;}
+ if(!USER){$('cmtForm').innerHTML='<div style="color:var(--dim);font-size:.75rem;line-height:1.6">Connecte-toi (\u2630 \u2192 Google ou GitHub) pour noter et commenter.</div>';$('cmtList').innerHTML='';return;}
  $('cmtForm').innerHTML='<label>Ton commentaire</label><textarea id="cmtTxt" rows="3"></textarea><div class="row"><button class="btn" onclick="sendCmt()">Envoyer</button></div>';
- $('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">…</div>';
+ $('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">\u2026</div>';
  if(!CURRENT)return;
  var res=await SB.from('comments').select('*').eq('track',CURRENT.title).order('created_at',{ascending:false}).limit(50);
  if(res.error){$('cmtList').innerHTML='<div style="color:var(--warn);font-size:.75rem">'+esc(res.error.message)+'</div>';return;}
- if(!res.data.length){$('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">Aucun commentaire — sois le premier !</div>';return;}
+ if(!res.data.length){$('cmtList').innerHTML='<div style="color:var(--dim);font-size:.75rem">Aucun commentaire \u2014 sois le premier !</div>';return;}
  $('cmtList').innerHTML=res.data.map(function(c){
-  return '<div class="cmt"><div class="cH">'+esc(c.name||c.email||'?')+' · '+String(c.created_at||'').slice(0,10)+'</div><div class="cB">'+esc(c.body)+'</div></div>';}).join('');}
+  return '<div class="cmt"><div class="cH">'+esc(c.name||c.email||'?')+' \u00b7 '+String(c.created_at||'').slice(0,10)+'</div><div class="cB">'+esc(c.body)+'</div></div>';}).join('');}
 async function sendCmt(){
  if(!USER||!CURRENT||!sbReady())return;
  var el=$('cmtTxt');var b=el?el.value.trim():'';
