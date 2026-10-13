@@ -2104,10 +2104,18 @@
     "title": "Ce monde est maudit - feat Le Clown Sadique vRapINSTRUvers1_VoixBanale",
     "file": "audio/techno/Ce monde est maudit - feat Le Clown Sadique vRapINSTRUvers1_VoixBanale.mp3",
     "tags": [],
-    "rating": 0,
+    "rating": 3,
     "added": "2026-10-11",
     "uploadTime": "2026-10-11T23:08:05.494Z",
-    "id": 98
+    "id": 98,
+    "style": "",
+    "version": "",
+    "desc": "",
+    "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
+    "lyricsCreator": "",
+    "soundCreator": "",
+    "recordDate": "",
+    "moods": []
   },
   {
     "title": "Ce monde est maudit - feat Le Clown Sadique vRapINSTRUvers1_VoixDemon",
@@ -2296,7 +2304,8 @@
     "soundCreator": "created by N30 (@ANTIKOMM6tm)",
     "recordDate": "2026-10-09",
     "moods": [
-      "melancolic", "hypnotic"
+      "melancolic",
+      "hypnotic"
     ]
   }
 ]
