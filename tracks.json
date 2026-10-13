@@ -2229,11 +2229,30 @@
   {
     "title": "Ethereal Piano Voice song",
     "file": "audio/instru rap/Ethereal Piano Voice song.mp3",
-    "tags": [],
-    "rating": 0,
+    "tags": [
+      "rap",
+      "intru",
+      "instru rap",
+      "old school",
+      "trap",
+      "drill",
+      "piano",
+      "voix"
+    ],
+    "rating": 3,
     "added": "2026-10-12",
     "uploadTime": "2026-10-12T02:20:49.851Z",
-    "id": 104
+    "id": 104,
+    "style": "instru rap melancolic",
+    "version": "1",
+    "desc": "instru rap/old school/trap piano voix melancolique",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "created by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-09",
+    "moods": [
+      "melancolic"
+    ]
   },
   {
     "title": "my Piano is Sad",
