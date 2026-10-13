@@ -5,7 +5,7 @@ a.ontimeupdate=function(){
  scrollLyr();};
 a.onended=function(){if(typeof PLREP!=='undefined'&&PLREP&&CURRENTLIST.length){play(CURRENTLIST[0],CURRENTLIST);return;}var i=CURRENTLIST.indexOf(CURRENT);if(i>-1&&i<CURRENTLIST.length-1)play(CURRENTLIST[i+1],CURRENTLIST);}
 $('grid').addEventListener('click',function(e){var b=e.target.closest('.play');if(b)play(TRACKS[+b.getAttribute('data-i')],TRACKS);});
-$('plist').addEventListener('click',function(e){var r=e.target.closest('.prow');if(!r)return;
+var PLQ=$('plist');if(PLQ)PLQ.addEventListener('click',function(e){var r=e.target.closest('.prow');if(!r)return;
  var t=TRACKS.find(function(x){return x.title===r.getAttribute('data-t')&&String(x.file||'')===r.getAttribute('data-f');});
  if(t)play(t,plFlat());});
 $('pstars').addEventListener('click',function(e){

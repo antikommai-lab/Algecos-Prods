@@ -44,7 +44,7 @@ function selSelCardHTML(s){
  +'<h3>'+esc(s.title)+(s.ref?' <small style="color:var(--dim);font-size:.6rem">['+esc(s.ref)+']</small>':'')+(s.auto?' <small style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</small>':'')+'</h3><div class="m">'+esc(s.desc||'')+' \u00B7 '+en.length+' playlist(s) \u00B7 '+flat.length+' morceaux'+(s.upd?' \u00B7 '+esc(s.upd):'')+'</div><div class="seltracks">'
  +en.map(function(e){var tr=plFlatOf(e.pl);
    return '<div class="srow" data-spl="'+esc(e.pl.title)+'">'+(e.label?'<span class="plabel">'+esc(e.label)+'</span>':'')+'<b>'+esc(e.pl.title)+'</b>&nbsp;<small style="color:var(--dim)">'+tr.length+' morceaux</small></div>';}).join('')
- +'</div><div class="row" style="margin-top:8px"><button class="btn" data-selplay="'+esc(s.title)+'">\u25B6 LIRE</button><button class="btn" data-selsh="'+esc(s.title)+'" title="Lecture al\u00e9atoire">\uD83D\uDD00 AL\u00c9A</button><button class="btn" data-selrep="'+esc(s.title)+'" title="R\u00e9p\u00e9ter en boucle">\uD83D\uDD01 REPEAT</button></div></div>';
+ +'</div><div class="row" style="margin-top:8px"><button class="btn" data-selplay="'+esc(s.title)+'">\u25b6</button><button class="btn" data-selsh="'+esc(s.title)+'" title="Lecture al\u00e9atoire">\u21c4</button><button class="btn" data-selrep="'+esc(s.title)+'" title="R\u00e9p\u00e9ter en boucle">\u21bb</button></div></div>';
  return h;}
 function renderSels(){
  var autos=comboPlaylists();

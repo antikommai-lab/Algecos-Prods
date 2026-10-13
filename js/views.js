@@ -77,7 +77,7 @@ function upClock(t){return (t.uploadTime&&t.uploadTime.indexOf('T00:00')<0)?' '+
 
 /* ===== playlist accueil ===== */
 function renderPlaylist(){
- if(!PLAYLIST)return;
+ if(!PLAYLIST||!$('plTitle'))return;
  var adm=document.body.classList.contains('adm');
  var pi=PLAYLISTS.indexOf(PLAYLIST);
  if(adm&&pi>-1){
