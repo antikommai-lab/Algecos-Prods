@@ -2,6 +2,7 @@
 var LOTSMODE=false,LOTCARD=[],LASTLIST=[];
 function toggleLots(){LOTSMODE=!LOTSMODE;LOTCARD=[];render();updLotsBtns();}
 function updLotsBtns(){
+ var lp=$('lotPanel');if(lp){lp.classList.toggle('show',LOTCARD.length>0);var ln=$('lotN');if(ln)ln.textContent=LOTCARD.length;}
  var b=$('btnLots');if(!b)return;
  b.innerHTML=LOTSMODE?'\u2611 LOTS':'\u2610 LOTS';
  $('btnLotsAll').style.display=LOTSMODE?'inline-block':'none';
@@ -11,6 +12,58 @@ function lotsAll(){
  if(LOTCARD.length&&LOTCARD.length===LASTLIST.length)LOTCARD=[];
  else LOTCARD=LASTLIST.map(function(o){return o.i;});
  render();updLotsBtns();}
+function lotToggle(){var p=$('lotPanel');if(p)p.classList.toggle('open');}
+function lotClear(){LOTCARD=[];render();updLotsBtns();var p=$('lotPanel');if(p)p.classList.remove('open');}
+function lotStat(m,c){var s=$('lotStatus');if(s){s.className='status '+(c||'');s.textContent=m;}}
+function lotToPl(){
+ if(!LOTCARD.length){lotStat('COCHE DES MORCEAUX D\u2019ABORD','err');return;}
+ MGSEL=LOTCARD.slice().sort(function(a,b){return a-b;});
+ openManage('tr');fillMgPlSel();
+ var sel=$('mgPlSel');sel.value='';
+ $('mgEditBox').style.display='block';mgFillEdit();
+ $('mgSelBar').style.display='block';$('mgSelBar').textContent=MGSEL.length+' MORCEAU(X) \u2014 AJOUT \u00C0 UNE PLAYLIST';
+ sel.onchange=function(){if(sel.value)mgAddToPl();};}
+function lotMatch(bn,sel){
+ var n=norm(bn),k,t;
+ for(k=0;k<sel.length;k++){t=TRACKS[sel[k]];if(t&&norm(t.title)===n)return t;}
+ for(k=0;k<sel.length;k++){t=TRACKS[sel[k]];if(t&&norm(base(t.file))===n)return t;}
+ for(k=0;k<sel.length;k++){t=TRACKS[sel[k]];if(t&&norm(t.title).indexOf(n)>-1)return t;}
+ return null;}
+async function lotImgs(input){
+ var fs=[].slice.call(input.files);input.value='';
+ if(!fs.length)return;
+ if(!GHTOK){lotStat('TOKEN GITHUB REQUIS','err');return;}
+ if(!LOTCARD.length){lotStat('COCHE DES MORCEAUX D\u2019ABORD','err');return;}
+ var ok=0,miss=0;
+ for(var i=0;i<fs.length;i++){var f=fs[i];
+  var bn=f.name.replace(/\.[a-z0-9]+$/i,'').replace(/_cover$/i,'');
+  var t=lotMatch(bn,LOTCARD);
+  if(!t){miss++;continue;}
+  var ext=(f.name.match(/\.([a-z0-9]+)$/i)||[])[1]||'jpg';
+  try{await ghCreate('img/'+t.title+'_cover.'+ext,toB64Buf(await f.arrayBuffer()),'image : '+t.title);ok++;}
+  catch(e){miss++;}
+  lotStat('PUBLICATION IMAGE '+(i+1)+'/'+fs.length+'\u2026','ok');}
+ lotStat(ok+' IMAGE(S) PUBLI\u00C9E(S)'+(miss?' \u2014 '+miss+' NON MATCH\u00C9E(S) (nom = titre du morceau)':''),'ok');
+ render();}
+async function lotLyrs(input){
+ var fs=[].slice.call(input.files);input.value='';
+ if(!fs.length)return;
+ if(!GHTOK){lotStat('TOKEN GITHUB REQUIS','err');return;}
+ if(!LOTCARD.length){lotStat('COCHE DES MORCEAUX D\u2019ABORD','err');return;}
+ var ok=0,miss=0;
+ for(var i=0;i<fs.length;i++){var f=fs[i];
+  var bn=f.name.replace(/\.[a-z0-9]+$/i,'');
+  var t=lotMatch(bn,LOTCARD);
+  if(!t){miss++;continue;}
+  var ext=(f.name.match(/\.([a-z0-9]+)$/i)||[])[1]||'txt';
+  if(LYREXTS.indexOf(ext)<0)ext='txt';
+  try{var txt=await f.text();
+   await ghCreate('lyrics/'+t.title+'.'+ext,toB64(txt),'lyrics : '+t.title);
+   await ghCreate('lyrics/'+t.title+'.lyrics',toB64(normLyrics(txt,ext)),'lyrics normalises : '+t.title);
+   ok++;}
+  catch(e){miss++;}
+  lotStat('PUBLICATION LYRICS '+(i+1)+'/'+fs.length+'\u2026','ok');}
+ lotStat(ok+' LYRICS PUBLI\u00C9(S)'+(miss?' \u2014 '+miss+' NON MATCH\u00C9(S) (nom = titre du morceau)':''),'ok');}
 function lotsGo(){
  if(!LOTCARD.length){alert('RIEN COCH\u00C9');return;}
  MGSEL=LOTCARD.slice().sort(function(a,b){return a-b;});

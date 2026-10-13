@@ -137,6 +137,15 @@ body.adm #admBtn{display:block}
 .fold.nofold{max-height:none;overflow:visible;cursor:default}
 .fold.nofold:after{display:none}
 #mgList,#mgPlList,#mgPEList{max-height:42vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px}
+#lotPanel{position:fixed;top:76px;right:16px;z-index:30;display:none}
+#lotPanel.show{display:block}
+#lotGear{width:56px;height:56px;background:#000;color:var(--y);border:3px solid var(--y);font-size:1.3rem;cursor:pointer;box-shadow:4px 4px 0 #000;position:relative}
+#lotGear:hover{background:var(--y);color:#000}
+#lotGear b{position:absolute;top:-8px;right:-8px;background:var(--y);color:#000;border:2px solid #000;border-radius:50%;min-width:20px;height:20px;font-size:.62rem;line-height:16px}
+#lotMenu{display:none;position:absolute;top:64px;right:0;width:min(330px,90vw);background:var(--panel);border:2px solid var(--y);padding:12px;box-shadow:6px 6px 0 #000}
+#lotPanel.open #lotMenu{display:block}
+#lotMenu .mitem{display:block;width:100%;text-align:left;margin-bottom:6px;padding:10px 12px;background:#000;color:var(--ink);border:1px solid var(--line);border-left:4px solid var(--y);font-family:'Space Mono',monospace;font-size:.74rem;cursor:pointer;text-transform:uppercase;letter-spacing:.05em}
+#lotMenu .mitem:hover{background:var(--y);color:#000}
 .peord{cursor:grab}
 .peord:active{cursor:grabbing}
 .pbadge{display:inline-block;font-size:.55rem;padding:1px 6px;border:1px solid var(--dim);color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin:0 4px 4px 0}
@@ -409,6 +418,20 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a></footer>
 </main>
 
+<div id="lotPanel">
+<button id="lotGear" onclick="lotToggle()" title="Actions par lot sur la s&#xe9;lection coch&#xe9;e">&#9881;<b id="lotN">0</b></button>
+<div id="lotMenu">
+<button class="mitem" onclick="lotsGo()">&#9878; M&#xe9;tadonn&#xe9;es par lot (sauf titre / ID / chemin / date upload)</button>
+<button class="mitem" onclick="lotToPl()">&#9776; Ajouter &#xe0; une playlist</button>
+<button class="mitem" onclick="document.getElementById('lotImgF').click()">&#128444; Images par lot &#x2014; fichier = titre du morceau (_cover auto)</button>
+<button class="mitem" onclick="document.getElementById('lotLyrF').click()">&#128221; Lyrics par lot &#x2014; fichier = titre du morceau (.md/.txt/.json/.html)</button>
+<button class="mitem" onclick="lotClear()">&#10005; Vider la s&#xe9;lection</button>
+<div class="status" id="lotStatus"></div>
+</div>
+<input type="file" id="lotImgF" accept="image/*" multiple style="display:none" onchange="lotImgs(this)">
+<input type="file" id="lotLyrF" accept=".txt,.md,.json,.html,.htm" multiple style="display:none" onchange="lotLyrs(this)">
+</div>
+
 <div id="player">
 <div id="pTop">
 <img id="tCover" alt="cover morceau" style="display:none">
@@ -679,16 +702,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261038"></script>
-<script src="js/data.js?v=20261038"></script>
-<script src="js/auth.js?v=20261038"></script>
-<script src="js/admin.js?v=20261038"></script>
-<script src="js/player.js?v=20261038"></script>
-<script src="js/views.js?v=20261038"></script>
-<script src="js/versions.js?v=20261038"></script>
-<script src="js/genres.js?v=20261038"></script>
-<script src="js/manage.js?v=20261038"></script>
-<script src="js/main.js?v=20261038"></script>
+<script src="js/config.js?v=20261039"></script>
+<script src="js/data.js?v=20261039"></script>
+<script src="js/auth.js?v=20261039"></script>
+<script src="js/admin.js?v=20261039"></script>
+<script src="js/player.js?v=20261039"></script>
+<script src="js/views.js?v=20261039"></script>
+<script src="js/versions.js?v=20261039"></script>
+<script src="js/genres.js?v=20261039"></script>
+<script src="js/manage.js?v=20261039"></script>
+<script src="js/main.js?v=20261039"></script>
 
 </body>
 </html>
