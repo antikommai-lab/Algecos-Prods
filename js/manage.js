@@ -262,3 +262,13 @@ async function mgRepAudio(input){
   $('mgStatus').textContent='\u2713 AUDIO REMPLAC\u00C9';
   await load();renderMgList();mgUpdEdit();}
  catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;}}
+
+/* ===== ajout rapide : 1 morceau -> playlist (depuis les cartes) ===== */
+function quickAddPl(i){
+ MGSEL=[i];fillMgPlSel();
+ var sel=$('mgPlSel');sel.value='';
+ var box=$('mgEditBox');box.style.display='block';mgFillEdit();
+ $('mgSelBar').style.display='block';$('mgSelBar').textContent='AJOUT \u00C0 UNE PLAYLIST : '+esc(TRACKS[i].title);
+ openManage('tr');
+ sel.onchange=function(){if(sel.value)mgAddToPl();};
+ $('mgStatus').textContent='CHOISIS LA PLAYLIST DANS LE MENU D\u00C9ROULANT CI-DESSOUS';$('mgStatus').className='status';}

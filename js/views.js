@@ -5,14 +5,14 @@ function updLotsBtns(){
  var b=$('btnLots');if(!b)return;
  b.innerHTML=LOTSMODE?'\u2611 LOTS':'\u2610 LOTS';
  $('btnLotsAll').style.display=LOTSMODE?'inline-block':'none';
- $('btnLotsGo').style.display=LOTSMODE?'inline-block':'none';
+ $('btnLotsGo').style.display=(LOTSMODE||LOTCARD.length)?'inline-block':'none';
  $('btnLotsAll').textContent=(LOTCARD.length&&LOTCARD.length===LASTLIST.length)?'\u2610 TOUT D\u00C9COCHER':'\u2713 TOUT COCHER';}
 function lotsAll(){
  if(LOTCARD.length&&LOTCARD.length===LASTLIST.length)LOTCARD=[];
  else LOTCARD=LASTLIST.map(function(o){return o.i;});
  render();updLotsBtns();}
 function lotsGo(){
- if(!LOTCARD.length){alert('RIEN COCH\u00C9 \u2014 active le mode LOTS et coche des morceaux');return;}
+ if(!LOTCARD.length){alert('RIEN COCH\u00C9');return;}
  MGSEL=LOTCARD.slice().sort(function(a,b){return a-b;});
  LOTSMODE=false;LOTCARD=[];updLotsBtns();
  openManage('tr');mgUpdEdit();}
@@ -91,7 +91,7 @@ function stars(n){var s='';for(var i=1;i<=5;i++)s+='<span class="'+(i<=(n||0)?'o
 function match(t,q){var hay=[t.title,(t.tags||[]).join(' '),(t.moods||[]).join(' '),t.desc||'',t.style||'',t.version||'',t.lyricsCreator||'',t.soundCreator||''].join(' ').toLowerCase();return hay.indexOf(q)>-1;}
 function cardHTML(t,i){
  var h='<div class="card" data-i="'+i+'">';
- if(LOTSMODE)h+='<input type="checkbox" class="lotck" data-li="'+i+'"'+(LOTCARD.indexOf(i)>-1?' checked':'')+' style="position:absolute;top:10px;left:10px;z-index:5;width:20px;height:20px;cursor:pointer">';
+ if(LOTSMODE||document.body.classList.contains('adm'))h+='<input type="checkbox" class="lotck" data-li="'+i+'"'+(LOTCARD.indexOf(i)>-1?' checked':'')+' style="position:absolute;top:10px;left:10px;z-index:5;width:20px;height:20px;cursor:pointer">';
  if(t.version)h+='<span class="ver">'+esc(t.version)+'</span>';
  h+='<div class="stars">'+stars(t.rating)+'</div><h3>'+esc(t.title)+'</h3>';
  h+=provBadge(t);
@@ -101,7 +101,9 @@ function cardHTML(t,i){
  h+='<div class="info">VO:'+esc(t.lyricsCreator||'—')+' / SND:'+esc(t.soundCreator||'—')+' / '+esc(t.recordDate||'—')+(t.added?' / +'+esc(t.added)+upClock(t):'')+'</div>';
  h+='<div class="desc fold" title="cliquer pour déplier">'+esc(t.desc||'')+'</div>';
  h+='<button class="play" data-i="'+i+'">▶ Écouter</button>';
- h+='<button class="edit" data-e="'+i+'" title="Éditer ce morceau">⚙</button><button class="shB" data-shtr="'+i+'" title="Partager ce morceau">&#10548;</button></div>';return h;}
+ h+='<button class="edit" data-e="'+i+'" title="Éditer ce morceau">⚙</button><button class="shB" data-shtr="'+i+'" title="Partager ce morceau">&#10548;</button>';
+ if(document.body.classList.contains('adm'))h+='<button class="edit" data-vg="'+i+'" title="Ajouter au groupe de versions" style="top:76px">&#9854;</button><button class="edit" data-qpl="'+i+'" title="Ajouter à une playlist" style="top:108px">&#9776;</button>';
+ h+='</div>';return h;}
 function bindCards(root){
  root.querySelectorAll('.card').forEach(function(card){
   var t=TRACKS[+card.getAttribute('data-i')];if(!t)return;
@@ -109,7 +111,15 @@ function bindCards(root){
   tryCovers(cps,function(u){if(u)card.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';});});
  root.querySelectorAll('.edit[data-e]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();editTrack(+b.getAttribute('data-e'));};});
  root.querySelectorAll('.card .fold').forEach(function(el){el.onclick=function(ev){ev.stopPropagation();el.classList.toggle('open');};});
- root.querySelectorAll('.card .play').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();play(TRACKS[+b.getAttribute('data-i')],[TRACKS[+b.getAttribute('data-i')]]);};});}
+ root.querySelectorAll('.card .play').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();play(TRACKS[+b.getAttribute('data-i')],[TRACKS[+b.getAttribute('data-i')]]);};});
+ root.querySelectorAll('.card [data-vg]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();openVG(+b.getAttribute('data-vg'));};});
+ root.querySelectorAll('.card [data-qpl]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();quickAddPl(+b.getAttribute('data-qpl'));};});
+ root.querySelectorAll('.lotck').forEach(function(ck){
+  ck.onclick=function(ev){ev.stopPropagation();};
+  ck.onchange=function(){var i=+ck.getAttribute('data-li');var ix=LOTCARD.indexOf(i);
+   if(ck.checked&&ix<0)LOTCARD.push(i);
+   if(!ck.checked&&ix>-1)LOTCARD.splice(ix,1);
+   updLotsBtns();};});}
 function render(){
  var q=$('q').value.toLowerCase().trim();
  var mo=$('moreOpts')?$('moreOpts').value:'';
@@ -135,12 +145,7 @@ function render(){
  $('grid').innerHTML=list.map(function(o){return cardHTML(o.t,o.i);}).join('');
  $('empty').style.display=list.length?'none':'block';
  bindCards($('grid'));
- document.querySelectorAll('.lotck').forEach(function(ck){
-  ck.onclick=function(ev){ev.stopPropagation();};
-  ck.onchange=function(){var i=+ck.getAttribute('data-li');var ix=LOTCARD.indexOf(i);
-   if(ck.checked&&ix<0)LOTCARD.push(i);
-   if(!ck.checked&&ix>-1)LOTCARD.splice(ix,1);
-   updLotsBtns();};});}
+}
 
 /* ===== onglet nouveautes ===== */
 function renderNews(){
