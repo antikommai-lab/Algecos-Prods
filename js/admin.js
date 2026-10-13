@@ -58,12 +58,12 @@ function toB64(str){var B='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0
 function buildFeed(){
  var items=TRACKS.slice().sort(function(a,b){return String(b.recordDate||'').localeCompare(String(a.recordDate||''));}).slice(0,20).map(function(t){
   var d=t.recordDate?new Date(t.recordDate+'T12:00:00Z'):new Date();
-  return '<item><title>'+esc(t.title)+(t.version?' ['+esc(t.version)+']':'')+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-'+esc(t.title)+'-'+esc(t.version||'')+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc((t.style||'')+' â '+(t.desc||''))+'</description></item>';}).join('');
- var msgItems=MSGS.map(function(m){var d=m.date?new Date(m.date+'T12:00:00Z'):new Date();return '<item><title>NEWS â '+esc(m.title)+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-msg-'+esc(m.date)+'-'+esc(m.title)+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc(m.body||'')+'</description></item>';}).join('');
-var plItems=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));}).slice(0,10).map(function(p){var d=p.upd?new Date(p.upd+'T12:00:00Z'):new Date();return '<item><title>PLAYLIST â '+esc(p.title)+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-pl-'+esc(p.title)+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc(p.desc||'')+'</description></item>';}).join('');
- return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>ALGECOS-PRODS</title><link>'+SITE_URL+'</link><description>Nouveaux morceaux ANTIKOMM â division ALGECOS</description>'+items+msgItems+plItems+'</channel></rss>';}
+  return '<item><title>'+esc(t.title)+(t.version?' ['+esc(t.version)+']':'')+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-'+esc(t.title)+'-'+esc(t.version||'')+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc((t.style||'')+' \u2014 '+(t.desc||''))+'</description></item>';}).join('');
+ var msgItems=MSGS.map(function(m){var d=m.date?new Date(m.date+'T12:00:00Z'):new Date();return '<item><title>NEWS \u2014 '+esc(m.title)+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-msg-'+esc(m.date)+'-'+esc(m.title)+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc(m.body||'')+'</description></item>';}).join('');
+var plItems=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));}).slice(0,10).map(function(p){var d=p.upd?new Date(p.upd+'T12:00:00Z'):new Date();return '<item><title>PLAYLIST \u2014 '+esc(p.title)+'</title><link>'+SITE_URL+'</link><guid isPermaLink="false">algecos-pl-'+esc(p.title)+'</guid><pubDate>'+d.toUTCString()+'</pubDate><description>'+esc(p.desc||'')+'</description></item>';}).join('');
+ return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>ALGECOS-PRODS</title><link>'+SITE_URL+'</link><description>Nouveaux morceaux ANTIKOMM \u2014 division ALGECOS</description>'+items+msgItems+plItems+'</channel></rss>';}
 async function publishAll(msg){
- if(!GHTOK)throw new Error('TOKEN GITHUB REQUIS (â° Admin)');
+ if(!GHTOK)throw new Error('TOKEN GITHUB REQUIS (\u2630 Admin)');
  /* --- anti-ecrasement : relire le distant et fusionner --- */
  var fT=await ghGetJson('tracks.json');
  var fP=await ghGetJson('playlists.json');
@@ -94,13 +94,13 @@ function openTrackForm(mode){
  if(mode===-1){tmIdx=-1;$('tmTitle').textContent='+ Ajouter un morceau';$('tmSelWrap').style.display='none';
   ['f_title','f_file','f_tags','f_moods','f_style','f_version','f_vid','f_desc','f_lyr','f_snd','f_date'].forEach(function(id){$(id).value='';});
   $('f_rating').value=3;$('f_lyrFile').value='';$('f_pladd').value='';$('f_plnew').value='';}
- else{$('tmTitle').textContent='â Modifier un morceau';$('tmSelWrap').style.display='block';
+ else{$('tmTitle').textContent='\u270e Modifier un morceau';$('tmSelWrap').style.display='block';
   $('tmSel').innerHTML=TRACKS.map(function(t,i){return '<option value="'+i+'">'+esc(t.title)+'</option>';}).join('');
   tmIdx=0;fillTrack();}
  $('mStatus').textContent='';fillLyricsSel();fillPlAdd();openModal('trackModal');}
 function editTrack(i){
  var t=TRACKS[i];if(!t)return;
- tmIdx=i;$('tmTitle').textContent='â Modifier : '+t.title;$('tmSelWrap').style.display='none';
+ tmIdx=i;$('tmTitle').textContent='\u270e Modifier : '+t.title;$('tmSelWrap').style.display='none';
  fillTrackVals(t);$('mStatus').textContent='';fillLyricsSel();fillPlAdd();openModal('trackModal');}
 function fillTrack(){tmIdx=+$('tmSel').value;var t=TRACKS[tmIdx];if(t)fillTrackVals(t);}
 async function saveTrack(){
@@ -120,7 +120,7 @@ async function saveTrack(){
  if(plSel==='__new'&&plNew){PLAYLISTS.push({title:plNew,desc:'',tracks:[o.title],upd:new Date().toISOString().slice(0,10)});}
  else if(plSel){var PP=PLAYLISTS.find(function(x){return x.title===plSel;});
   if(PP){(PP.tracks=PP.tracks||[]).push(o.title);PP.upd=new Date().toISOString().slice(0,10);}}
- $('mStatus').className='status ok';$('mStatus').textContent='â³ PUBLICATIONâ¦';
+ $('mStatus').className='status ok';$('mStatus').textContent='\u23f3 PUBLICATION\u2026';
  try{await publishAll((tmIdx>-1?'edit':'add')+' : '+ti);
   closeModal('trackModal');await load();}
  catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
@@ -135,19 +135,19 @@ async function lyrExists(title){
 async function saveLyrics(){
  var ti=$('f_title').value.trim();
  if(!ti){$('mStatus').className='status err';$('mStatus').textContent='RENSIGNE D&#39;ABORD LE TITRE DU MORCEAU';return;}
- if(!GHTOK){$('mStatus').className='status err';$('mStatus').textContent='TOKEN GITHUB REQUIS (â° Admin)';return;}
+ if(!GHTOK){$('mStatus').className='status err';$('mStatus').textContent='TOKEN GITHUB REQUIS (\u2630 Admin)';return;}
  var f=$('f_lyrFile').files[0];
  if(!f){$('mStatus').className='status err';$('mStatus').textContent='CHOISIS UN FICHIER (.md, .txt, .json, .html)';return;}
  var ext=lyrExtOf(f.name)||'md';
  if(LYREXTS.indexOf(ext)<0)ext='md';
  var old=await lyrExists(ti);
- if(old&&!confirm('Des paroles existent dÃ©jÃ  pour Â« '+ti+' Â» ('+old+').\n\nRemplacer par ce nouveau fichier ?'))return;
- $('mStatus').className='status ok';$('mStatus').textContent='â³ UPLOAD LYRICSâ¦';
+ if(old&&!confirm('Des paroles existent d\u00e9j\u00e0 pour \u00ab '+ti+' \u00bb ('+old+').\n\nRemplacer par ce nouveau fichier ?'))return;
+ $('mStatus').className='status ok';$('mStatus').textContent='\u23f3 UPLOAD LYRICS\u2026';
  try{
   var txt=await f.text();
   await ghPut('lyrics/'+ti+'.'+ext,toB64(txt),'lyrics : '+ti);
   await ghPut('lyrics/'+ti+'.lyrics',toB64(normLyrics(txt,ext)),'lyrics normalises : '+ti);
-  $('mStatus').className='status ok';$('mStatus').textContent='â LYRICS PUBLIÃS ('+ext+')';
+  $('mStatus').className='status ok';$('mStatus').textContent='\u2713 LYRICS PUBLI\u00c9S ('+ext+')';
   $('f_lyrFile').value='';}
  catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
 async function fillLyricsSel(){
@@ -157,8 +157,8 @@ async function fillLyricsSel(){
   if(!r.ok)throw new Error('KO');
   var L=await r.json();
   if(!Array.isArray(L)||!L.length)throw new Error('KO');
-  sl.innerHTML='<option value="">â choisir un fichier lyrics â</option>'+L.map(function(f){return '<option value="'+esc(f.name)+'">'+esc(f.name)+'</option>';}).join('');
- }catch(e){sl.innerHTML='<option value="">(liste indisponible â upload direct)</option>';}}
+  sl.innerHTML='<option value="">\u2014 choisir un fichier lyrics \u2014</option>'+L.map(function(f){return '<option value="'+esc(f.name)+'">'+esc(f.name)+'</option>';}).join('');
+ }catch(e){sl.innerHTML='<option value="">(liste indisponible \u2014 upload direct)</option>';}}
 async function applyLyricsSel(){
  var ti=$('f_title').value.trim();
  if(!ti){$('mStatus').className='status err';$('mStatus').textContent='TITRE DU MORCEAU REQUIS';return;}
@@ -168,15 +168,15 @@ async function applyLyricsSel(){
  var ext=lyrExtOf(nm)||'md';
  if(LYREXTS.indexOf(ext)<0)ext='md';
  var old=await lyrExists(ti);
- if(old&&!confirm('Des paroles existent dÃ©jÃ  pour Â« '+ti+' Â» ('+old+').\n\nRemplacer par Â« '+nm+' Â» ?'))return;
- $('mStatus').className='status ok';$('mStatus').textContent='â³ COPIE LYRICSâ¦';
+ if(old&&!confirm('Des paroles existent d\u00e9j\u00e0 pour \u00ab '+ti+' \u00bb ('+old+').\n\nRemplacer par \u00ab '+nm+' \u00bb ?'))return;
+ $('mStatus').className='status ok';$('mStatus').textContent='\u23f3 COPIE LYRICS\u2026';
  try{
   var src=await fetch(encodeURI('lyrics/'+nm)+'?t='+Date.now(),{cache:'no-store'});
   if(!src.ok)throw new Error('FICHIER SOURCE INTROUVABLE');
   var txt=await src.text();
   await ghPut('lyrics/'+ti+'.'+ext,toB64(txt),'lyrics : '+ti+' (reutilise '+nm+')');
   await ghPut('lyrics/'+ti+'.lyrics',toB64(normLyrics(txt,ext)),'lyrics normalises : '+ti);
-  $('mStatus').className='status ok';$('mStatus').textContent='â LYRICS PUBLIÃS ('+ext+') â source : '+nm;
+  $('mStatus').className='status ok';$('mStatus').textContent='\u2713 LYRICS PUBLI\u00c9S ('+ext+') \u2014 source : '+nm;
   $('f_lyrSel').value='';}
  catch(e){$('mStatus').className='status err';$('mStatus').textContent=e.message;}}
 
@@ -191,13 +191,13 @@ function fillPlVals(p){
 function openPlForm(mode){
  if(mode===-1){pmIdx=-1;$('pmTitle').textContent='+ Nouvelle playlist';$('pmSelWrap').style.display='none';
   $('p_title').value='';$('p_desc').value='';$('p_cover').value='';$('p_img').value='';$('p_tracks').value='';}
- else{$('pmTitle').textContent='â Modifier une playlist';$('pmSelWrap').style.display='block';
+ else{$('pmTitle').textContent='\u270e Modifier une playlist';$('pmSelWrap').style.display='block';
   $('pmSel').innerHTML=PLAYLISTS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
   pmIdx=0;fillPl();}
  $('pStatus').textContent='';openModal('plModal');}
 function editPl(i){
  var p=PLAYLISTS[i];if(!p)return;
- pmIdx=i;$('pmTitle').textContent='â Modifier : '+p.title;$('pmSelWrap').style.display='none';
+ pmIdx=i;$('pmTitle').textContent='\u270e Modifier : '+p.title;$('pmSelWrap').style.display='none';
  fillPlVals(p);$('pStatus').textContent='';openModal('plModal');}
 function fillPl(){pmIdx=+$('pmSel').value;var p=PLAYLISTS[pmIdx];if(p)fillPlVals(p);}
 async function savePl(){
@@ -213,12 +213,12 @@ async function savePl(){
  var p={title:ti,desc:$('p_desc').value.trim(),cover:$('p_cover').value.trim()||undefined,img:($('p_img')?$('p_img').value.trim():'')||undefined,tracks:tracks};
  p.upd=new Date().toISOString().slice(0,10);
  if(pmIdx>-1)PLAYLISTS[pmIdx]=p;else PLAYLISTS.push(p);
- $('pStatus').className='status ok';$('pStatus').textContent='â³ PUBLICATIONâ¦';
+ $('pStatus').className='status ok';$('pStatus').textContent='\u23f3 PUBLICATION\u2026';
  try{await publishAll('playlist : '+ti);
   closeModal('plModal');PLAYLIST=PLAYLISTS[0];await load();}
  catch(e){$('pStatus').className='status err';$('pStatus').textContent=e.message;}}
 
-/* ===== formulaires sÃ©lections ===== */
+/* ===== formulaires s\u00e9lections ===== */
 var smSelIdx=-1;
 function fillSelVals(p){
  $('s_title').value=p.title||'';$('s_desc').value=p.desc||'';$('s_ref').value=p.ref||'';
@@ -227,9 +227,9 @@ function fillSelVals(p){
   if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
   return entRef(r)||'';}).join(String.fromCharCode(10));}
 function openSelForm(mode){
- if(mode===-1){smSelIdx=-1;$('smSelTitle').textContent='+ Nouvelle playlist sélection';$('smSelSelWrap').style.display='none';
+ if(mode===-1){smSelIdx=-1;$('smSelTitle').textContent='+ Nouvelle playlist s\u00e9lection';$('smSelSelWrap').style.display='none';
   $('s_title').value='';$('s_desc').value='';$('s_ref').value='';$('s_tracks').value='';}
- else{$('smSelTitle').textContent='â Modifier une playlist sélection';$('smSelSelWrap').style.display='block';
+ else{$('smSelTitle').textContent='\u270e Modifier une playlist s\u00e9lection';$('smSelSelWrap').style.display='block';
   $('smSelSel').innerHTML=SELS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
   smSelIdx=0;fillSel();}
  $('sStatus').textContent='';openModal('selModal');}
@@ -245,19 +245,19 @@ async function saveSel(){
  var p={title:ti,desc:$('s_desc').value.trim(),ref:($('s_ref')?$('s_ref').value.trim():''),playlists:pls};
  p.upd=new Date().toISOString().slice(0,10);
  if(smSelIdx>-1)SELS[smSelIdx]=p;else SELS.push(p);
- $('sStatus').className='status ok';$('sStatus').textContent='â³ PUBLICATIONâ¦';
- try{await publishAll('playlist sélection : '+ti);
+ $('sStatus').className='status ok';$('sStatus').textContent='\u23f3 PUBLICATION\u2026';
+ try{await publishAll('playlist s\u00e9lection : '+ti);
   closeModal('selModal');await load();}
  catch(e){$('sStatus').className='status err';$('sStatus').textContent=e.message;}}
 /* ===== ajout playlist au morceau + messages RSS ===== */
 function fillPlAdd(){var s=$('f_pladd');if(!s)return;
- s.innerHTML='<option value="">â aucune â</option>'+PLAYLISTS.map(function(p){return '<option value="'+esc(p.title)+'">'+esc(p.title)+'</option>';}).join('')+'<option value="__new">+ Nouvelle playlistâ¦</option>';
+ s.innerHTML='<option value="">\u2014 aucune \u2014</option>'+PLAYLISTS.map(function(p){return '<option value="'+esc(p.title)+'">'+esc(p.title)+'</option>';}).join('')+'<option value="__new">+ Nouvelle playlist\u2026</option>';
  s.value='';}
 function openMsgForm(){$('msgTitle').value='';$('msgBody').value='';$('msgStatus').textContent='';openModal('msgModal');}
 async function saveMsg(){var t=$('msgTitle').value.trim(),b=$('msgBody').value.trim();
  if(!t){$('msgStatus').className='status err';$('msgStatus').textContent='TITRE REQUIS';return;}
  MSGS.unshift({title:t,body:b,date:new Date().toISOString().slice(0,10)});
- $('msgStatus').className='status ok';$('msgStatus').textContent='â³ PUBLICATIONâ¦';
+ $('msgStatus').className='status ok';$('msgStatus').textContent='\u23f3 PUBLICATION\u2026';
  try{await publishAll('message : '+t);
   closeModal('msgModal');await load();}
  catch(e){$('msgStatus').className='status err';$('msgStatus').textContent=e.message;}}
@@ -289,8 +289,8 @@ function buildAdmDash(){
  +'<button class="mitem" onclick="admForm(0,0)">&#9998; Modifier un morceau</button>'
  +'<button class="mitem" onclick="admForm(1,-1)">+ Nouvelle playlist</button>'
  +'<button class="mitem" onclick="admForm(1,0)">&#9998; Modifier une playlist</button>'
- +'<button class="mitem" onclick="admForm(2,-1)">+ Nouvelle playlist sélection</button>'
- +'<button class="mitem" onclick="admForm(2,0)">&#9998; Modifier une playlist sélection</button>'
+ +'<button class="mitem" onclick="admForm(2,-1)">+ Nouvelle playlist s\u00e9lection</button>'
+ +'<button class="mitem" onclick="admForm(2,0)">&#9998; Modifier une playlist s\u00e9lection</button>'
  +'<button class="mitem" onclick="admForm(3)">&#9993; Message RSS / newsletter</button>'
  +'<h4>Donn\u00E9es</h4>'
  +'<button class="mitem" onclick="admReload()">&#10227; Recharger les donn\u00E9es du site (avant une session d\u0027\u00E9dition)</button>'
@@ -337,7 +337,7 @@ function upProg(k,n,label){var w=document.getElementById('upBarW'),b=document.ge
 async function uploadTracks(){
  var fs=document.getElementById('upFiles').files;
  if(!fs.length){upSet('status err','CHOISIS AU MOINS 1 FICHIER');return;}
- if(fs.length>10){upSet('status err','MAX 10 FICHIERS PAR LOT (sÃ©lection : '+fs.length+')');return;}
+ if(fs.length>10){upSet('status err','MAX 10 FICHIERS PAR LOT (s\u00e9lection : '+fs.length+')');return;}
  if(!GHTOK){upSet('status err','TOKEN GITHUB REQUIS');return;}
  var F=document.getElementById('upDir').value,alb='',dir;
  var sub=(document.getElementById('upSub')?document.getElementById('upSub').value:'').trim().replace(/[\\/:*?''<>|]/g,'-');
@@ -373,7 +373,7 @@ async function uploadTracks(){
    titles.push(ti);done++;}
   catch(e){fail++;}
   upProg(i+1,fs.length);}
- if(!newTracks.length){upSet('status err','AUCUN FICHIER UPLOAD\u00C9 â abandon');return;}
+ if(!newTracks.length){upSet('status err','AUCUN FICHIER UPLOAD\u00C9 \u2014 abandon');return;}
  /* le publishAll fusionnera avec le distant (anti-ecrasement) */
  newTracks.forEach(function(nt){nt.id=nextId();TRACKS.push(nt);});
  if(alb&&titles.length){var PP=PLAYLISTS.find(function(x){return x.title===alb;});

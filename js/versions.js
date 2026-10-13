@@ -1,4 +1,7 @@
-/* ===== versions + sélections + home grid ===== */
+/* ===== versions + s\u00e9lections + home grid ===== */
+var PLREP=false;
+function shufArr(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
 function vidOf(t){return (t.vid||'').trim()||norm(t.title);}
 function showVersions(){showView('ver');renderVersions();}
 function showSels(){showView('sel');renderSels();}
@@ -9,7 +12,7 @@ function renderVersions(){
  order.forEach(function(k){var g=groups[k];
   h+='<div class="vg"><h3>'+esc(g.name)+' <small>('+g.tracks.length+' version'+(g.tracks.length>1?'s':'')+')</small></h3>';
   g.tracks.forEach(function(t){var mine=localStorage.getItem('vote_'+t.title)?' mine':'';
-   h+='<div class="vrow'+mine+'"><div class="vt"><b>'+esc(t.title)+'</b>'+(t.version?' <span class="ver">'+esc(t.version)+'</span>':'')+'<small>'+esc(t.recordDate||'')+' · '+esc(t.style||'')+' · '+stars(t.rating)+'</small></div>'+(mine?'<span class="vc">★ TON VOTE</span>':'')+'<button class="vbtn" data-vv="'+esc(t.title)+'">★ VOTER</button></div>';});
+   h+='<div class="vrow'+mine+'"><div class="vt"><b>'+esc(t.title)+'</b>'+(t.version?' <span class="ver">'+esc(t.version)+'</span>':'')+'<small>'+esc(t.recordDate||'')+' \u00b7 '+esc(t.style||'')+' \u00b7 '+stars(t.rating)+'</small></div>'+(mine?'<span class="vc">\u2605 TON VOTE</span>':'')+'<button class="vbtn" data-vv="'+esc(t.title)+'">\u2605 VOTER</button></div>';});
   h+='</div>';});
  $('verGrid').innerHTML=h||'<div style="color:var(--dim);font-size:.75rem">AUCUN MORCEAU.</div>';
  document.querySelectorAll('.vbtn').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();voteVer(b.getAttribute('data-vv'));};});}
@@ -19,14 +22,14 @@ async function voteVer(ti){
   var r=await SB.from('ratings').upsert({track:ti,email:USER.email,stars:5});
   if(r.error){alert('ERREUR VOTE : '+r.error.message);return;}}
  localStorage.setItem('vote_'+ti,'1');
- alert(sbReady()&&USER?'VOTE ENREGISTRÉ ✓':'VOTE LOCAL ✓ — il sera synchronisé quand la connexion sera active');
+ alert(sbReady()&&USER?'VOTE ENREGISTR\u00c9 \u2713':'VOTE LOCAL \u2713 \u2014 il sera synchronis\u00e9 quand la connexion sera active');
  renderVersions();}
 function plFlatOf(p){var old=PLAYLIST,out=[];try{PLAYLIST=p;out=plFlat();}catch(e){}PLAYLIST=old;return out;}
 function selCardHTML(p){
  var tr=plFlatOf(p);
- var h='<div class="plh" data-sel="'+esc(p.title)+'">'+(p.cover?'<img class="plc" data-plc="'+esc(p.cover)+'" style="display:none">':'')+'<h3>'+esc(p.title)+'</h3><div class="m">'+esc(p.desc||'')+' · '+tr.length+' morceaux'+(p.upd?' · '+esc(p.upd):'')+'</div><div class="seltracks">'
+ var h='<div class="plh" data-sel="'+esc(p.title)+'">'+(p.cover?'<img class="plc" data-plc="'+esc(p.cover)+'" style="display:none">':'')+'<h3>'+esc(p.title)+'</h3><div class="m">'+esc(p.desc||'')+' \u00b7 '+tr.length+' morceaux'+(p.upd?' \u00b7 '+esc(p.upd):'')+'</div><div class="seltracks">'
   +tr.map(function(t){return '<div class="srow" data-spt="'+esc(t.title)+'"><b>'+esc(t.title)+'</b>'+(t.version?' <span class="ver">'+esc(t.version)+'</span>':'')+'</div>';}).join('')
-  +'</div><div class="row" style="margin-top:8px"><button class="btn" data-spp="'+esc(p.title)+'">▶ LIRE</button></div></div>';
+  +'</div><div class="row" style="margin-top:8px"><button class="btn" data-spp="'+esc(p.title)+'">\u25b6 LIRE</button><button class="btn" data-sps="'+esc(p.title)+'" title="Lecture al\u00e9atoire">\ud83d\udd00 AL\u00c9A</button><button class="btn" data-spr="'+esc(p.title)+'" title="R\u00e9p\u00e9ter en boucle">\ud83d\udd01 REPEAT</button></div></div>';
  return h;}
 
 function renderHomeGrid(){var ps=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));});$('plGridH').innerHTML=ps.map(selCardHTML).join('');bindSelCards($('plGridH'));
@@ -103,7 +106,7 @@ async function vgNewGroup(){
  if(!GHTOK){vgErr('TOKEN GITHUB REQUIS');return;}
  if(VGROUPS.some(function(x){return x&&x.name===nn;})){vgErr('CE GROUPE EXISTE DEJA');return;}
  VGROUPS.push({name:nn,upd:new Date().toISOString()});
- $('vgStatus').className='status ok';$('vgStatus').textContent='PUBLICATION…';
+ $('vgStatus').className='status ok';$('vgStatus').textContent='PUBLICATION\u2026';
  try{await publishAll('nouveau groupe de versions : '+nn);await load();renderVG();
-  $('vgStatus').textContent='GROUPE « '+nn+' » CREE (vide)';}
+  $('vgStatus').textContent='GROUPE \u00ab '+nn+' \u00bb CREE (vide)';}
  catch(e){vgErr(e.message);}}

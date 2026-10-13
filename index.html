@@ -32,7 +32,7 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #ticker.show{display:block}
 #tickInner{display:inline-block;white-space:nowrap;color:#F74C00;font-family:'Archivo Black',sans-serif;font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;padding:8px 0;animation:tkmove 22s linear infinite}
 @keyframes tkmove{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
-#plGridH{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:18px}
+#plGridH{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:18px}
 .plh{position:relative;background:rgba(16,16,16,.88);border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;cursor:pointer}
 .plh h3{font-family:'Archivo Black',sans-serif;font-size:.95rem;text-transform:uppercase;margin-bottom:4px;color:var(--y)}
 .plh .m{color:var(--dim);font-size:.68rem;margin-bottom:8px;line-height:1.5}
@@ -42,6 +42,10 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .plh .seltracks{display:none}
 .plh.open .seltracks{display:block}
 .plh .plc{width:64px;height:64px;object-fit:cover;border:2px solid var(--y);float:right;margin:0 0 8px 10px}
+.plh .row{display:flex;gap:6px;flex-wrap:wrap}
+.plh .btn{padding:7px 10px;font-size:.62rem}
+.plh .btn.on{background:#39d353}
+@media(max-width:700px){#plGridH{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.plh{padding:10px}}
 #verWrap,#varWrap,#orderWrap,#selWrap,#newsWrap{display:none;max-width:1000px;margin:20px auto;padding:0 20px 90px}
 #verWrap.open,#varWrap.open,#orderWrap.open,#selWrap.open,#newsWrap.open{display:block}
 #newsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
@@ -167,7 +171,7 @@ body.adm #admBtn{display:block}
 /* ===== barre de progression upload ===== */
 .pbarW{height:16px;border:2px solid var(--y);background:#000;margin-top:8px;position:relative;overflow:hidden}
 .pbarW div{height:100%;background:var(--y);width:0;transition:width .25s}
-/* ===== roue crantée admin ===== */
+/* ===== roue crant&#xe9;e admin ===== */
 .edit{display:none;width:30px;height:30px;background:#000;color:var(--y);border:1px solid var(--y);cursor:pointer;font-size:1rem;line-height:1;text-align:center}
 .edit:hover{background:var(--y);color:#000}
 body.adm .edit{display:block}
@@ -261,35 +265,35 @@ audio{width:100%;height:40px}
 <header>
 <div class="brand">
 <img class="tri" src="logo.jpg" alt="ALGECOS-PRODS">
-<div><h1>ALGECOS<b>-</b>PRODS</h1><div class="tag">une division d&#39;ANTIKOMM™ — 2026</div></div>
+<div><h1>ALGECOS<b>-</b>PRODS</h1><div class="tag">une division d&#39;ANTIKOMM&#x2122; &#x2014; 2026</div></div>
 </div>
 <div id="hicons">
 <button onclick="showList(true)" data-tip="Tous les morceaux">&#9835;</button>
 <button onclick="goStyles()" data-tip="Choisir un style">&#8803;</button>
 <button onclick="showPlaylists()" data-tip="Playlists">&#9776;</button>
-<button onclick="showNews()" data-tip="Nouveautés">&#128227;</button>
+<button onclick="showNews()" data-tip="Nouveaut&#xe9;s">&#128227;</button>
 <button onclick="showVars()" data-tip="One track, many variations">&#9854;</button>
 <button onclick="shareSite()" data-tip="Partager le site">&#10548;</button>
 </div>
 <div id="ticker"><div id="tickInner"></div></div>
 <button id="admBtn" onclick="openAdmDash()" title="Dashboard admin">&#9881;</button>
-<button id="burger" onclick="toggleMenu()">☰</button>
+<button id="burger" onclick="toggleMenu()">&#x2630;</button>
 </header>
 
 <div id="menu" onclick="if(event.target.id==='menu')toggleMenu()">
 <div id="panel">
-<button style="float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer" onclick="toggleMenu()">✕</button>
+<button style="float:right;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer" onclick="toggleMenu()">&#x2715;</button>
 <h2>Navigation</h2>
-<button class="mitem" onclick="showList()">▶ Playlist accueil</button>
-<button class="mitem" onclick="showPlaylists()">☰ Toutes les playlists</button>
-<button class="mitem" onclick="showList(true)">■ Liste de tous les morceaux</button>
-<button class="mitem" onclick="showVersions()">★ Choisis ta version préférée</button>
-<button class="mitem" onclick="showSels()">⧉ Playlists sélections</button>
-<button class="mitem" onclick="showNews()">&#128227; Nouveautés — derniers ajouts</button>
+<button class="mitem" onclick="showList()">&#x25b6; Playlist accueil</button>
+<button class="mitem" onclick="showPlaylists()">&#x2630; Toutes les playlists</button>
+<button class="mitem" onclick="showList(true)">&#x25a0; Liste de tous les morceaux</button>
+<button class="mitem" onclick="showVersions()">&#x2605; Choisis ta version pr&#xe9;f&#xe9;r&#xe9;e</button>
+<button class="mitem" onclick="showSels()">&#x29c9; Playlists s&#xe9;lections</button>
+<button class="mitem" onclick="showNews()">&#128227; Nouveaut&#xe9;s &#x2014; derniers ajouts</button>
 <button class="mitem" onclick="showVars()">&#9854; One track, many variations</button>
 <button class="mitem" onclick="goOrder()">&#x270E; Commander un morceau / texte sur mesure</button>
-<button class="mitem" onclick="openSub()">&#x1F4EC; Rester informé / RSS mail</button>
-<a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">✉ Nous contacter</a>
+<button class="mitem" onclick="openSub()">&#x1F4EC; Rester inform&#xe9; / RSS mail</button>
+<a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">&#x2709; Nous contacter</a>
 <h2>Compte</h2>
 <div id="authZone"></div>
 <h2 id="admTitle" style="display:none">Admin</h2>
@@ -298,17 +302,17 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="openManage('pl')">&#x1F5C2; Gestion des playlists</button>
 <button class="mitem" onclick="admUpload()">&#11014; Upload de morceaux (lots de 10 max)</button>
 <button class="mitem" onclick="openTrackForm(-1)">+ Ajouter un morceau (saisie manuelle)</button>
-<button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
+<button class="mitem" onclick="openTrackForm(0)">&#x270e; Modifier un morceau</button>
 <button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
-<button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
-<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle playlist sélection</button>
-<button class="mitem" onclick="openSelForm(0)">✎ Modifier une playlist sélection</button>
-<button class="mitem" onclick="openVG()">&#9854; Groupes de versions — composer les variations</button>
-<button class="mitem" onclick="openMsgForm()">✉ Message RSS / newsletter</button>
+<button class="mitem" onclick="openPlForm(0)">&#x270e; Modifier une playlist</button>
+<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle playlist s&#xe9;lection</button>
+<button class="mitem" onclick="openSelForm(0)">&#x270e; Modifier une playlist s&#xe9;lection</button>
+<button class="mitem" onclick="openVG()">&#9854; Groupes de versions &#x2014; composer les variations</button>
+<button class="mitem" onclick="openMsgForm()">&#x2709; Message RSS / newsletter</button>
 <button class="mitem" onclick="admReload()">&#10227; Recharger les donn&#233;es du site</button>
 <label>Token GitHub (fine-grained, Contents: R/W)</label>
-<input id="ghTok" type="password" placeholder="github_pat_…">
-<button class="btn" style="width:100%" onclick="saveTok()">Mémoriser le token</button>
+<input id="ghTok" type="password" placeholder="github_pat_&#x2026;">
+<button class="btn" style="width:100%" onclick="saveTok()">M&#xe9;moriser le token</button>
 <div class="status" id="tokStatus"></div>
 </div>
 </div>
@@ -318,9 +322,8 @@ audio{width:100%;height:40px}
 <main>
 <section id="home">
 <div id="homeFlex">
-<img id="bigLogo" src="logo.jpg" alt="logo ALGECOS-PRODS">
 <div id="homeCol">
-<span class="tape">▶ mixtape du jour</span>
+<span class="tape">&#x25b6; mixtape du jour</span>
 <h2 id="plTitle">PLAYLIST</h2>
 <div id="plDesc"></div>
 <div id="plRow">
@@ -333,17 +336,17 @@ audio{width:100%;height:40px}
 </section>
 
 <section id="plistsWrap">
-<h2 class="secH">☰ Toutes les playlists</h2>
+<h2 class="secH">&#x2630; Toutes les playlists</h2>
 <button class="btn2 admOnly" onclick="openManage('pl')">&#9998; Gestion / traitement par lots des playlists</button>
 <div id="plGrid"></div>
 </section>
 
-<section id="verWrap"><h2 class="secH">★ Choisis ta version préférée</h2><div id="verGrid"></div></section>
+<section id="verWrap"><h2 class="secH">&#x2605; Choisis ta version pr&#xe9;f&#xe9;r&#xe9;e</h2><div id="verGrid"></div></section>
 
-<section id="selWrap"><h2 class="secH">⧉ Playlists sélections</h2><div id="selGrid"></div></section>
+<section id="selWrap"><h2 class="secH">&#x29c9; Playlists s&#xe9;lections</h2><div id="selGrid"></div></section>
 
 <section id="newsWrap">
-<h2 class="secH">&#128227; Nouveautés</h2>
+<h2 class="secH">&#128227; Nouveaut&#xe9;s</h2>
 <div id="countNews" style="color:var(--dim);font-size:.72rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em"></div>
 <div id="newsGrid"></div>
 </section>
@@ -355,16 +358,16 @@ audio{width:100%;height:40px}
 <div class="vg">
 <h3>Un morceau ou un texte fait pour toi</h3>
 <div style="color:var(--dim);font-size:.74rem;line-height:1.8">
-Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu veux dire, l&#39;ambiance, le style — je le cr&#232;e, le retravaille (FL Studio / Audacity) et te le livre avec sa licence.<br><br>
-<b style="color:var(--y)">TARIFS</b> — 2 itérations incluses dans le prix de départ · itération supplémentaire audio : +5 € · images / mini-vidéos synchronisées (PWA) : +5 à 10 € · livraison avec licence selon le palier choisi.<br><br>
-<b style="color:var(--y)">TEXTE</b> — Tu me dis ce que tu veux dire, je l&#39;écris moi-même : pas de génération IA. Mêmes conditions (2 itérations incluses, +5 € ensuite).
+Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu veux dire, l&#39;ambiance, le style &#x2014; je le cr&#232;e, le retravaille (FL Studio / Audacity) et te le livre avec sa licence.<br><br>
+<b style="color:var(--y)">TARIFS</b> &#x2014; 2 it&#xe9;rations incluses dans le prix de d&#xe9;part &#xb7; it&#xe9;ration suppl&#xe9;mentaire audio : +5 &#x20ac; &#xb7; images / mini-vid&#xe9;os synchronis&#xe9;es (PWA) : +5 &#xe0; 10 &#x20ac; &#xb7; livraison avec licence selon le palier choisi.<br><br>
+<b style="color:var(--y)">TEXTE</b> &#x2014; Tu me dis ce que tu veux dire, je l&#39;&#xe9;cris moi-m&#xea;me : pas de g&#xe9;n&#xe9;ration IA. M&#xea;mes conditions (2 it&#xe9;rations incluses, +5 &#x20ac; ensuite).
 </div>
 <label>Tu veux commander</label>
 <select id="o_type"><option>Un instrurap</option><option>Un morceau complet (instru + texte)</option><option>Un son / une ambiance</option><option>Un texte (paroles)</option></select>
-<label>Décris ta commande (ambiance, message, références…)</label>
+<label>D&#xe9;cris ta commande (ambiance, message, r&#xe9;f&#xe9;rences&#x2026;)</label>
 <textarea id="o_desc" rows="4"></textarea>
-<label>Styles / mots-clés préférés</label>
-<input id="o_style" placeholder="ex : jazzycore, manouche, dark, free party…">
+<label>Styles / mots-cl&#xe9;s pr&#xe9;f&#xe9;r&#xe9;s</label>
+<input id="o_style" placeholder="ex : jazzycore, manouche, dark, free party&#x2026;">
 <div class="row"><button class="btn" onclick="sendOrder()">&#9993; Envoyer la commande par mail</button></div>
 <div class="status" id="oStatus"></div>
 </div>
@@ -372,38 +375,38 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <section id="listWrap">
 <div class="search-bar">
-<input id="q" type="text" placeholder="TITRE / STYLE / MOT-CLÉ / VERSION…" autocomplete="off">
+<input id="q" type="text" placeholder="TITRE / STYLE / MOT-CL&#xc9; / VERSION&#x2026;" autocomplete="off">
 <button class="btn" id="btnSearch">GO</button>
-<button class="btn2" id="btnReset">✕</button>
+<button class="btn2" id="btnReset">&#x2715;</button>
 <button class="btn2 admOnly" id="btnLots" onclick="toggleLots()">&#9744; Lots</button>
 <button class="btn2 admOnly" id="btnLotsAll" onclick="lotsAll()" style="display:none">&#10003; Tout cocher</button>
-<button class="btn2 admOnly" id="btnLotsGo" onclick="lotsGo()" style="display:none">&#128193; Traiter la sélection</button>
+<button class="btn2 admOnly" id="btnLotsGo" onclick="lotsGo()" style="display:none">&#128193; Traiter la s&#xe9;lection</button>
 </div>
 <div class="tags" id="tags"></div>
 <div class="search-bar" style="margin-bottom:10px">
 <select id="sortSel" onchange="render()">
-<option value="">— TRI —</option>
-<option value="az">TRI : TITRE A→Z</option>
-<option value="za">TRI : TITRE Z→A</option>
-<option value="rec">TRI : DATE RÉCENTE</option>
+<option value="">&#x2014; TRI &#x2014;</option>
+<option value="az">TRI : TITRE A&#x2192;Z</option>
+<option value="za">TRI : TITRE Z&#x2192;A</option>
+<option value="rec">TRI : DATE R&#xc9;CENTE</option>
 <option value="old">TRI : DATE ANCIENNE</option>
-<option value="add">TRI : AJOUT RÉCENT</option>
-<option value="note">TRI : NOTE ↓</option>
-<option value="style">TRI : STYLE A→Z</option>
+<option value="add">TRI : AJOUT R&#xc9;CENT</option>
+<option value="note">TRI : NOTE &#x2193;</option>
+<option value="style">TRI : STYLE A&#x2192;Z</option>
 </select>
 <select id="moreOpts" onchange="render()">
-<option value="">— plus d&#39;options —</option>
-<option value="grp">même morceau · toutes versions</option>
-<option value="note4">note ≥ 4</option>
+<option value="">&#x2014; plus d&#39;options &#x2014;</option>
+<option value="grp">m&#xea;me morceau &#xb7; toutes versions</option>
+<option value="note4">note &#x2265; 4</option>
 <option value="notelow">note &lt; 3</option>
 <option value="noversion">sans version</option>
-<option value="recent">10 derniers ajoutés</option>
+<option value="recent">10 derniers ajout&#xe9;s</option>
 </select></div>
 <div id="count"></div>
-<div id="grid"></div><div id="empty">AUCUN MORCEAU TROUVÉ.</div>
+<div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">✉ contact &amp; bookings — <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a></footer>
 </main>
 
 <div id="player">
@@ -419,10 +422,10 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <span id="tTime">--:-- / --:--</span>
 </div>
 <div class="pctl">
-<button class="pbtn" id="prevBtn" onclick="plPrev()" title="Morceau précédent">⏮</button>
-<button class="pbtn" onclick="sk(-10)" title="Reculer 10s">−10s</button>
+<button class="pbtn" id="prevBtn" onclick="plPrev()" title="Morceau pr&#xe9;c&#xe9;dent">&#x23ee;</button>
+<button class="pbtn" onclick="sk(-10)" title="Reculer 10s">&#x2212;10s</button>
 <button class="pbtn" onclick="sk(10)" title="Avancer 10s">+10s</button>
-<button class="pbtn" id="nextBtn" onclick="plNext()" title="Morceau suivant">⏭</button>
+<button class="pbtn" id="nextBtn" onclick="plNext()" title="Morceau suivant">&#x23ed;</button>
 <button class="pbtn" onclick="toggleLyr()" title="Paroles">LYRICS</button>
 <button class="pbtn" onclick="openCmt()" title="Commentaires">&#128172;</button>
 <button class="pbtn" onclick="shareTrack(CURRENT)" title="Partager ce morceau">&#10548;</button>
@@ -432,21 +435,21 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 </div>
 
 <div class="modal" id="imgModal">
-<button class="vcross" onclick="closeViewer()">✕</button>
-<button class="vnav" id="vL" onclick="vnav(-1)">‹</button>
+<button class="vcross" onclick="closeViewer()">&#x2715;</button>
+<button class="vnav" id="vL" onclick="vnav(-1)">&#x2039;</button>
 <img id="imgBig" alt="">
-<button class="vnav" id="vR" onclick="vnav(1)">›</button>
+<button class="vnav" id="vR" onclick="vnav(1)">&#x203a;</button>
 <div id="imgCap"></div>
 </div>
 
 <div class="modal" id="lyrModal"><div class="mbox">
-<button class="close" onclick="toggleLyr()">✕</button>
+<button class="close" onclick="toggleLyr()">&#x2715;</button>
 <h3 id="lyrTitle">LYRICS</h3>
 <div id="lyrBox"></div>
 </div></div>
 
 <div class="modal" id="cmtModal"><div class="mbox">
-<button class="close" onclick="closeModal('cmtModal')">✕</button>
+<button class="close" onclick="closeModal('cmtModal')">&#x2715;</button>
 <h3>&#128172; Commentaires</h3>
 <div id="cmtList"></div>
 <div id="cmtForm"></div>
@@ -454,7 +457,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 </div></div>
 
 <div class="modal" id="manageModal"><div class="mbox" style="width:min(680px,100%)">
-<button class="close" onclick="closeModal('manageModal')">✕</button>
+<button class="close" onclick="closeModal('manageModal')">&#x2715;</button>
 <h3 id="mgTitle">Gestion</h3>
 <div class="row">
 <button class="btn" id="mgTabTr" onclick="mgTab('tr')">Tracks</button>
@@ -462,11 +465,11 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 </div>
 <div id="mgTr" style="display:none">
 <div class="mgact">
-<input type="text" id="mgQ" placeholder="FILTRE…" oninput="renderMgList()">
+<input type="text" id="mgQ" placeholder="FILTRE&#x2026;" oninput="renderMgList()">
 <select id="mgSort" onchange="renderMgList()"><option value="title">TRI : TITRE</option><option value="id">TRI : ID</option><option value="date">TRI : DATE</option><option value="rating">TRI : NOTE</option><option value="added">TRI : AJOUT</option></select>
 <label style="display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--dim)"><input type="checkbox" id="mgAll" onchange="mgAll(this.checked)"> tout</label>
 </div>
-<div style="color:var(--dim);font-size:.62rem;margin-bottom:8px">clic = sélectionner · Ctrl+clic = sélection multiple · Shift+clic = plage</div>
+<div style="color:var(--dim);font-size:.62rem;margin-bottom:8px">clic = s&#xe9;lectionner &#xb7; Ctrl+clic = s&#xe9;lection multiple &#xb7; Shift+clic = plage</div>
 <div id="mgList"></div>
 <div id="mgSelBar"></div>
 <div id="mgEditBox" class="metaRow" style="display:none">
@@ -475,30 +478,30 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div class="mgrid">
 <div><label>Titre</label><input id="e_title"></div>
 <div><label>Fichier audio</label><input id="e_file"></div>
-<div><label>Mots-clés (séparés par des virgules)</label><input id="e_tags" list="tagSug"></div>
-<div><label>Moods (séparés par des virgules)</label><input id="e_moods" list="tagSug"></div>
-<div><label>Provenance (A humain / B hybride / C IA)</label><select id="e_prov"><option value=""></option><option value="A">A — humain (vendable, exclusif possible)</option><option value="B">B — hybride (vendable, non exclusif)</option><option value="C">C — IA (non vendable)</option></select></div>
+<div><label>Mots-cl&#xe9;s (s&#xe9;par&#xe9;s par des virgules)</label><input id="e_tags" list="tagSug"></div>
+<div><label>Moods (s&#xe9;par&#xe9;s par des virgules)</label><input id="e_moods" list="tagSug"></div>
+<div><label>Provenance (A humain / B hybride / C IA)</label><select id="e_prov"><option value=""></option><option value="A">A &#x2014; humain (vendable, exclusif possible)</option><option value="B">B &#x2014; hybride (vendable, non exclusif)</option><option value="C">C &#x2014; IA (non vendable)</option></select></div>
 <div><label>Style / mood</label><input id="e_style"></div>
 <div><label>Version</label><input id="e_version"></div>
-<div><label>ID version commune — lier plusieurs versions</label><input id="e_vid"></div>
-<div><label>ID créateur paroles</label><input id="e_lyr"></div>
-<div><label>ID créateur son</label><input id="e_snd"></div>
+<div><label>ID version commune &#x2014; lier plusieurs versions</label><input id="e_vid"></div>
+<div><label>ID cr&#xe9;ateur paroles</label><input id="e_lyr"></div>
+<div><label>ID cr&#xe9;ateur son</label><input id="e_snd"></div>
 <div><label>Date d&#39;enregistrement</label><input id="e_date" type="date"></div>
 <div><label>Image / cover explicite (img)</label><input id="e_img"></div>
 <div><label>Note (0-5)</label><input id="e_rating" type="number" min="0" max="5"></div>
-<div><label style="display:flex;align-items:center;gap:6px;padding-top:14px"><input type="checkbox" id="e_rcommon" style="width:auto"> appliquer la note à toute la sélection</label></div>
+<div><label style="display:flex;align-items:center;gap:6px;padding-top:14px"><input type="checkbox" id="e_rcommon" style="width:auto"> appliquer la note &#xe0; toute la s&#xe9;lection</label></div>
 </div>
 <label>Description</label><textarea id="e_desc" rows="2"></textarea>
 <div class="row">
-<button class="btn" onclick="mgSaveEdit()">&#10003; Enregistrer la sélection</button>
-<button class="btn2" onclick="mgDelSel()">&#x1F5D1; Supprimer la sélection</button>
+<button class="btn" onclick="mgSaveEdit()">&#10003; Enregistrer la s&#xe9;lection</button>
+<button class="btn2" onclick="mgDelSel()">&#x1F5D1; Supprimer la s&#xe9;lection</button>
 </div>
 <div class="row"><button class="btn2" onclick="$('repFile').click()">&#x21E7; Remplacer l&#39;audio (version retravaill&#233;e)</button><input type="file" id="repFile" accept="audio/*" style="display:none" onchange="mgRepAudio(this)"></div>
 <div class="mgact">
 <select id="mgPlSel"></select>
-<button class="btn" onclick="mgAddToPl()">+ Ajouter à la playlist</button>
-<select id="mgFolder"><option value="">— dossier —</option><option value="instru">audio/instru</option><option value="instru rap">audio/instru rap</option><option value="techno">audio/techno</option><option value="album">audio/album</option></select>
-<button class="btn2" onclick="mgMoveFolder()">&#128193; Déplacer</button>
+<button class="btn" onclick="mgAddToPl()">+ Ajouter &#xe0; la playlist</button>
+<select id="mgFolder"><option value="">&#x2014; dossier &#x2014;</option><option value="instru">audio/instru</option><option value="instru rap">audio/instru rap</option><option value="techno">audio/techno</option><option value="album">audio/album</option></select>
+<button class="btn2" onclick="mgMoveFolder()">&#128193; D&#xe9;placer</button>
 </div>
 </div>
 <div class="status" id="mgStatus"></div>
@@ -507,14 +510,14 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="mgPlList"></div>
 <div class="mgact">
 <button class="btn" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
-<button class="btn2" onclick="mgDelPlsSel()">&#x1F5D1; Supprimer cochées</button>
+<button class="btn2" onclick="mgDelPlsSel()">&#x1F5D1; Supprimer coch&#xe9;es</button>
 </div>
 <div id="mgPlEdit" style="display:none">
 <div class="mgact">
-<input type="text" id="mgPEQ" placeholder="FILTRE TRACKS…" oninput="renderMgPE()">
+<input type="text" id="mgPEQ" placeholder="FILTRE TRACKS&#x2026;" oninput="renderMgPE()">
 <label style="display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--dim)"><input type="checkbox" id="mgPEAll" onchange="mgPEAll(this.checked)"> tout</label>
 </div>
-<div style="color:var(--dim);font-size:.62rem;margin-bottom:4px">☰ ordre — glisser-déposer les lignes</div>
+<div style="color:var(--dim);font-size:.62rem;margin-bottom:4px">&#x2630; ordre &#x2014; glisser-d&#xe9;poser les lignes</div>
 <div id="mgPEOrder" style="max-height:32vh;overflow-y:auto;border:1px dashed var(--y);margin-bottom:10px"></div>
 <div id="mgPEList"></div>
 <div class="row"><button class="btn" onclick="mgPESave()">Enregistrer la tracklist</button></div>
@@ -524,23 +527,23 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 </div></div>
 
 <div class="modal" id="subModal"><div class="mbox">
-<button class="close" onclick="closeModal('subModal')">✕</button>
-<h3>&#x1F4EC; Rester informé</h3>
+<button class="close" onclick="closeModal('subModal')">&#x2715;</button>
+<h3>&#x1F4EC; Rester inform&#xe9;</h3>
 <div id="subChoice">
-<button class="lbtn" onclick="subRss()">⦿ S&#39;abonner au flux RSS</button>
-<button class="lbtn" onclick="subMail()">✉ Recevoir les actualités par mail</button>
+<button class="lbtn" onclick="subRss()">&#x29bf; S&#39;abonner au flux RSS</button>
+<button class="lbtn" onclick="subMail()">&#x2709; Recevoir les actualit&#xe9;s par mail</button>
 </div>
 <div id="subForm" style="display:none">
 <label>Ton adresse mail</label><input id="subEmail" type="email" placeholder="toi@exemple.fr">
-<label style="text-transform:none;letter-spacing:0"><input type="checkbox" id="subOk" style="width:auto"> J&#39;accepte de recevoir des mails d&#39;actualité de ce site</label>
-<div class="row"><button class="btn" onclick="sendSub()">S&#39;inscrire</button><button class="btn2" onclick="backSub()">← Retour</button></div>
+<label style="text-transform:none;letter-spacing:0"><input type="checkbox" id="subOk" style="width:auto"> J&#39;accepte de recevoir des mails d&#39;actualit&#xe9; de ce site</label>
+<div class="row"><button class="btn" onclick="sendSub()">S&#39;inscrire</button><button class="btn2" onclick="backSub()">&#x2190; Retour</button></div>
 </div>
 <div class="status" id="subStatus"></div>
 </div></div>
 
 <div class="modal" id="msgModal"><div class="mbox">
-<button class="close" onclick="closeModal('msgModal')">✕</button>
-<h3>✉ Message RSS</h3>
+<button class="close" onclick="closeModal('msgModal')">&#x2715;</button>
+<h3>&#x2709; Message RSS</h3>
 <label>Titre</label><input id="msgTitle">
 <label>Message</label><textarea id="msgBody" rows="5"></textarea>
 <div class="row"><button class="btn" onclick="saveMsg()">Publier dans le flux</button><button class="btn2" onclick="closeModal('msgModal')">Annuler</button></div>
@@ -548,43 +551,43 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 </div></div>
 
 <div class="modal" id="selModal"><div class="mbox">
-<button class="close" onclick="closeModal('selModal')">✕</button>
-<h3 id="smSelTitle">Playlist sélection</h3>
-<div id="smSelSelWrap" style="display:none"><label>Quelle playlist sélection ?</label><select id="smSelSel" onchange="fillSel()"></select></div>
+<button class="close" onclick="closeModal('selModal')">&#x2715;</button>
+<h3 id="smSelTitle">Playlist s&#xe9;lection</h3>
+<div id="smSelSelWrap" style="display:none"><label>Quelle playlist s&#xe9;lection ?</label><select id="smSelSel" onchange="fillSel()"></select></div>
 <label>Titre</label><input id="s_title">
 <label>Description</label><textarea id="s_desc" rows="2"></textarea>
-<label>Référence courte (optionnel)</label><input id="s_ref" placeholder="ex : sel-nuit">
-<label>Playlists — 1 par ligne (nom exact de la playlist) · ou LABEL: note :: nom de la playlist</label><textarea id="s_tracks" rows="7" style="font-size:.74rem"></textarea>
+<label>R&#xe9;f&#xe9;rence courte (optionnel)</label><input id="s_ref" placeholder="ex : sel-nuit">
+<label>Playlists &#x2014; 1 par ligne (nom exact de la playlist) &#xb7; ou LABEL: note :: nom de la playlist</label><textarea id="s_tracks" rows="7" style="font-size:.74rem"></textarea>
 <div class="row"><button class="btn" onclick="saveSel()">Enregistrer</button><button class="btn2" onclick="closeModal('selModal')">Annuler</button></div>
 <div class="status" id="sStatus"></div>
 </div></div>
 
 <div class="modal" id="vgModal"><div class="mbox" style="width:min(680px,100%)">
-<button class="close" onclick="closeModal('vgModal')">✕</button>
+<button class="close" onclick="closeModal('vgModal')">&#x2715;</button>
 <h3>&#9854; Groupes de versions</h3>
 <label>Groupe existant</label>
 <select id="vgGroup"></select>
 <label>Ou nouveau groupe (nom court, ex : monmorceau01)</label>
 <input id="vgNew" placeholder="nom du nouveau groupe">
-<div class="mgact"><button class="btn" onclick="vgNewGroup()">+ Créer le groupe (vide, pour plus tard)</button></div>
+<div class="mgact"><button class="btn" onclick="vgNewGroup()">+ Cr&#xe9;er le groupe (vide, pour plus tard)</button></div>
 <div class="mgact">
-<input type="text" id="vgQ" placeholder="FILTRE TRACKS…" oninput="renderVG()">
+<input type="text" id="vgQ" placeholder="FILTRE TRACKS&#x2026;" oninput="renderVG()">
 <span id="vgCount" style="color:var(--y);font-size:.72rem"></span>
 </div>
 <div id="vgList" style="max-height:40vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px"></div>
 <div class="mgact">
-<input type="text" id="vgAdd" placeholder="AJOUT RAPIDE — ID (ex : 42) ou nom exact du morceau">
+<input type="text" id="vgAdd" placeholder="AJOUT RAPIDE &#x2014; ID (ex : 42) ou nom exact du morceau">
 <button class="btn" onclick="vgQuickAdd()">+</button>
 </div>
 <div class="row">
-<button class="btn" onclick="vgApply()">&#10003; Ajouter la sélection au groupe</button>
-<button class="btn2" onclick="vgClear()">&#x2715; Retirer la sélection de son groupe</button>
+<button class="btn" onclick="vgApply()">&#10003; Ajouter la s&#xe9;lection au groupe</button>
+<button class="btn2" onclick="vgClear()">&#x2715; Retirer la s&#xe9;lection de son groupe</button>
 </div>
 <div class="status" id="vgStatus"></div>
 </div></div>
 
 <div class="modal" id="trackModal"><div class="mbox">
-<button class="close" onclick="closeModal('trackModal')">✕</button>
+<button class="close" onclick="closeModal('trackModal')">&#x2715;</button>
 <h3 id="tmTitle">Morceau</h3>
 <h4 class="upH">&#11014; UPLOAD DE FICHIERS AUDIO (max 10 par lot)</h4>
 <label>Destination</label>
@@ -596,18 +599,18 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <option value="">audio/ (racine)</option>
 </select>
 <input id="upAlbum" placeholder="Nom de l&#39;album (si destination album)">
-<label>Sous-dossier à la volée (optionnel — date, compte Suno, session…)</label>
+<label>Sous-dossier &#xe0; la vol&#xe9;e (optionnel &#x2014; date, compte Suno, session&#x2026;)</label>
 <div class="mgact"><input type="text" id="upSub" placeholder="ex : 2026-10-13, suno, session42"><button class="btn2" type="button" onclick="upSubDate()" style="padding:6px 10px">&#128197; date du jour</button></div>
-<div style="color:var(--dim);font-size:.62rem;margin-bottom:6px">tags auto selon le dossier (instru rap → Instru, Rap, InstruRap · techno → Techno + style par défaut) — fusionnés avec tes mots-clés</div>
+<div style="color:var(--dim);font-size:.62rem;margin-bottom:6px">tags auto selon le dossier (instru rap &#x2192; Instru, Rap, InstruRap &#xb7; techno &#x2192; Techno + style par d&#xe9;faut) &#x2014; fusionn&#xe9;s avec tes mots-cl&#xe9;s</div>
 <label>Fichiers audio (.mp3, .wav&#8230;)</label>
 <input id="upFiles" type="file" multiple accept="audio/*" style="padding:6px">
-<h4 class="upH">&#9878; M&#201;TADONN&#201;ES PAR LOT — appliqu&#233;es &#224; tous les fichiers</h4>
-<label>Mots-clés communs (séparés par des virgules — plusieurs possibles)</label><input id="upTags" list="tagSug" placeholder="ex : rap, instru, 2026">
-<label>Moods communs (séparés par des virgules — happy, jumpy, dark, epic…)</label><input id="upMoods" list="tagSug" placeholder="ex : happy, jumpy">
+<h4 class="upH">&#9878; M&#201;TADONN&#201;ES PAR LOT &#x2014; appliqu&#233;es &#224; tous les fichiers</h4>
+<label>Mots-cl&#xe9;s communs (s&#xe9;par&#xe9;s par des virgules &#x2014; plusieurs possibles)</label><input id="upTags" list="tagSug" placeholder="ex : rap, instru, 2026">
+<label>Moods communs (s&#xe9;par&#xe9;s par des virgules &#x2014; happy, jumpy, dark, epic&#x2026;)</label><input id="upMoods" list="tagSug" placeholder="ex : happy, jumpy">
 <label>Style / mood commun</label><input id="upStyle" placeholder="ex : RAGGA MUFFIN PUNCHY">
 <label>Description commune</label><textarea id="upDesc" rows="2"></textarea>
 <label>Date d&#39;enregistrement commune</label><input id="upDate" type="date">
-<label>Note commune (0-5, 0 = pas encore noté)</label><input id="upRating" type="number" min="0" max="5" value="0">
+<label>Note commune (0-5, 0 = pas encore not&#xe9;)</label><input id="upRating" type="number" min="0" max="5" value="0">
 <div class="row"><button class="btn" onclick="uploadTracks()">&#11014; Uploader + cr&#233;er les entr&#233;es</button></div>
 <div class="status" id="upStatus"></div>
 <div class="pbarW" id="upBarW" style="display:none"><div id="upBar"></div></div>
@@ -619,31 +622,31 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 </div>
 <label>Titre</label><input id="f_title">
 <label>Fichier audio (ex : audio/MonMorceau.mp3)</label><input id="f_file">
-<label>Mots-clés (séparés par des virgules)</label><input id="f_tags" list="tagSug">
-<label>Moods (séparés par des virgules)</label><input id="f_moods" list="tagSug">
+<label>Mots-cl&#xe9;s (s&#xe9;par&#xe9;s par des virgules)</label><input id="f_tags" list="tagSug">
+<label>Moods (s&#xe9;par&#xe9;s par des virgules)</label><input id="f_moods" list="tagSug">
 <label>Style / mood</label><input id="f_style">
 <label>Version</label><input id="f_version">
 <label>Description</label><textarea id="f_desc" rows="2"></textarea>
-<label>ID version commune — lier plusieurs versions (ex : monmorceau01)</label><input id="f_vid">
-<label>ID créateur paroles</label><input id="f_lyr">
-<label>ID créateur son</label><input id="f_snd">
+<label>ID version commune &#x2014; lier plusieurs versions (ex : monmorceau01)</label><input id="f_vid">
+<label>ID cr&#xe9;ateur paroles</label><input id="f_lyr">
+<label>ID cr&#xe9;ateur son</label><input id="f_snd">
 <label>Date d&#39;enregistrement</label><input id="f_date" type="date">
-<label>Note par défaut (1-5)</label><input id="f_rating" type="number" min="1" max="5">
-<label>Ajouter à une playlist (optionnel)</label>
+<label>Note par d&#xe9;faut (1-5)</label><input id="f_rating" type="number" min="1" max="5">
+<label>Ajouter &#xe0; une playlist (optionnel)</label>
 <select id="f_pladd"></select>
 <input id="f_plnew" placeholder="ou nom d&#39;une nouvelle playlist">
-<label>Update Lyrics — fichier texte (.md Obsidian, .txt, .json, .html)</label>
+<label>Update Lyrics &#x2014; fichier texte (.md Obsidian, .txt, .json, .html)</label>
 <input id="f_lyrFile" type="file" accept=".md,.txt,.json,.html,.htm,text/*" style="padding:6px">
-<div class="row"><button class="btn2" onclick="saveLyrics()">⬆ Uploader les paroles</button></div>
-<label>Ou réutiliser un lyrics existant — même fichier pour plusieurs morceaux</label>
-<select id="f_lyrSel"><option value="">— choisir un fichier lyrics —</option></select>
-<div class="row"><button class="btn2" onclick="applyLyricsSel()">⤵ Utiliser le lyrics sélectionné</button></div>
+<div class="row"><button class="btn2" onclick="saveLyrics()">&#x2b06; Uploader les paroles</button></div>
+<label>Ou r&#xe9;utiliser un lyrics existant &#x2014; m&#xea;me fichier pour plusieurs morceaux</label>
+<select id="f_lyrSel"><option value="">&#x2014; choisir un fichier lyrics &#x2014;</option></select>
+<div class="row"><button class="btn2" onclick="applyLyricsSel()">&#x2935; Utiliser le lyrics s&#xe9;lectionn&#xe9;</button></div>
 <div class="row"><button class="btn" onclick="saveTrack()">Enregistrer</button><button class="btn2" onclick="closeModal('trackModal')">Annuler</button></div>
 <div class="status" id="mStatus"></div>
 </div></div>
 
 <div class="modal" id="plModal"><div class="mbox">
-<button class="close" onclick="closeModal('plModal')">✕</button>
+<button class="close" onclick="closeModal('plModal')">&#x2715;</button>
 <h3 id="pmTitle">Playlist</h3>
 <div id="pmSelWrap" style="display:none">
 <label>Quelle playlist ?</label>
@@ -653,7 +656,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <label>Description</label><textarea id="p_desc" rows="2"></textarea>
 <label>Cover (nom fichier, ex : MACONPLCOVER1)</label><input id="p_cover">
 <label>Image de fond / background (nom fichier, ex : MACONPLBACK1)</label><input id="p_img">
-<label>Morceaux — 1 par ligne : SECTION: FACE A · LABEL: BONUS :: référence · ou la référence (titre ou chemin)</label>
+<label>Morceaux &#x2014; 1 par ligne : SECTION: FACE A &#xb7; LABEL: BONUS :: r&#xe9;f&#xe9;rence &#xb7; ou la r&#xe9;f&#xe9;rence (titre ou chemin)</label>
 <textarea id="p_tracks" rows="7" style="font-size:.74rem"></textarea>
 <div class="row"><button class="btn" onclick="savePl()">Enregistrer</button><button class="btn2" onclick="closeModal('plModal')">Annuler</button></div>
 <div class="status" id="pStatus"></div>
@@ -676,16 +679,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261037"></script>
-<script src="js/data.js?v=20261037"></script>
-<script src="js/auth.js?v=20261037"></script>
-<script src="js/admin.js?v=20261037"></script>
-<script src="js/player.js?v=20261037"></script>
-<script src="js/views.js?v=20261037"></script>
-<script src="js/versions.js?v=20261037"></script>
-<script src="js/genres.js?v=20261037"></script>
-<script src="js/manage.js?v=20261037"></script>
-<script src="js/main.js?v=20261037"></script>
+<script src="js/config.js?v=20261038"></script>
+<script src="js/data.js?v=20261038"></script>
+<script src="js/auth.js?v=20261038"></script>
+<script src="js/admin.js?v=20261038"></script>
+<script src="js/player.js?v=20261038"></script>
+<script src="js/views.js?v=20261038"></script>
+<script src="js/versions.js?v=20261038"></script>
+<script src="js/genres.js?v=20261038"></script>
+<script src="js/manage.js?v=20261038"></script>
+<script src="js/main.js?v=20261038"></script>
 
 </body>
 </html>
