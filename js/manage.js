@@ -71,6 +71,7 @@ function mgFillEdit(){
  setv('e_title',t0&&t0.title);
  setv('e_file',t0&&t0.file);
  setv('e_tags',t0&&(t0.tags||[]).join(', '));
+ setv('e_moods',t0&&(t0.moods||[]).join(', '));
  setv('e_style',t0&&t0.style);
  setv('e_version',t0&&t0.version);
  setv('e_vid',t0&&t0.vid);
@@ -95,6 +96,7 @@ async function mgSaveEdit(){
   if(one){t.title=v('e_title')||t.title;t.file=v('e_file')||t.file;t.desc=v('e_desc');t.vid=v('e_vid');
    t.lyricsCreator=v('e_lyr');t.soundCreator=v('e_snd');t.recordDate=v('e_date');}
   if(v('e_tags')!==''||one)t.tags=v('e_tags')!==''?v('e_tags').split(',').map(function(s){return s.trim();}).filter(Boolean):(one?t.tags||[]:t.tags||[]);
+  if(v('e_moods')!==''||one)t.moods=v('e_moods')!==''?v('e_moods').split(',').map(function(s){return s.trim();}).filter(Boolean):(one?t.moods||[]:t.moods||[]);
   if(v('e_style')!==''||one)t.style=v('e_style');
   if(v('e_version')!==''||one)t.version=v('e_version');
   if(v('e_img')!==''||one)t.img=v('e_img');

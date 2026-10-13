@@ -7,7 +7,7 @@ function play(t,list){
  $('player').classList.add('show');
  $('pt').textContent=t.title;
  $('pv').textContent=(t.version?'['+t.version+'] ':'')+(t.style||'');
- $('ptags').textContent=(t.tags||[]).join(' / ');
+ $('ptags').textContent=(t.tags||[]).join(' / ')+((t.tags||[]).length&&(t.moods||[]).length?' / ':'')+(t.moods||[]).join(' / ');
  $('pdesc').textContent=t.desc||'';
  $('pinfo').textContent='VO:'+(t.lyricsCreator||'—')+' / SND:'+(t.soundCreator||'—')+' / '+(t.recordDate||'—');
  $('pstars').innerHTML=stars(t.rating);$('pAvg').textContent='';

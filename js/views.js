@@ -87,7 +87,7 @@ function toggleMenuOff(){var m=$('menu');if(m.classList.contains('open'))m.class
 
 /* ===== liste des morceaux ===== */
 function stars(n){var s='';for(var i=1;i<=5;i++)s+='<span class="'+(i<=(n||0)?'on':'')+'">★</span>';return s;}
-function match(t,q){var hay=[t.title,(t.tags||[]).join(' '),t.desc||'',t.style||'',t.version||'',t.lyricsCreator||'',t.soundCreator||''].join(' ').toLowerCase();return hay.indexOf(q)>-1;}
+function match(t,q){var hay=[t.title,(t.tags||[]).join(' '),(t.moods||[]).join(' '),t.desc||'',t.style||'',t.version||'',t.lyricsCreator||'',t.soundCreator||''].join(' ').toLowerCase();return hay.indexOf(q)>-1;}
 function cardHTML(t,i){
  var h='<div class="card" data-i="'+i+'">';
  if(LOTSMODE)h+='<input type="checkbox" class="lotck" data-li="'+i+'"'+(LOTCARD.indexOf(i)>-1?' checked':'')+' style="position:absolute;top:10px;left:10px;z-index:5;width:20px;height:20px;cursor:pointer">';
@@ -95,6 +95,7 @@ function cardHTML(t,i){
  h+='<div class="stars">'+stars(t.rating)+'</div><h3>'+esc(t.title)+'</h3>';
  if(t.style)h+='<div class="style fold" title="cliquer pour déplier">[ '+esc(t.style)+' ]</div>';
  h+='<div class="meta">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div>';
+ if((t.moods||[]).length)h+='<div class="meta">'+(t.moods||[]).map(function(k){return '<em style="color:var(--y);border-color:var(--y)">'+esc(k)+'</em>';}).join('')+'</div>';
  h+='<div class="info">VO:'+esc(t.lyricsCreator||'—')+' / SND:'+esc(t.soundCreator||'—')+' / '+esc(t.recordDate||'—')+(t.added?' / +'+esc(t.added)+upClock(t):'')+'</div>';
  h+='<div class="desc fold" title="cliquer pour déplier">'+esc(t.desc||'')+'</div>';
  h+='<button class="play" data-i="'+i+'">▶ Écouter</button>';
