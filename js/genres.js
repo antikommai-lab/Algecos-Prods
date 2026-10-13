@@ -19,7 +19,7 @@ function comboPlaylists(){
    if(!cnt[k]){cnt[k]=[];disp[k]=(t.tags||[]).filter(function(x){return tgN(x)===tg[i];})[0]||tg[i];}
    if(cnt[k].indexOf(t.title)<0)cnt[k].push(t.title);}});
  var out=[];Object.keys(cnt).sort().forEach(function(k){if(cnt[k].length>=2)
-  out.push({title:'GROUPE · '+(disp[k]||k),desc:'Playlist groupe auto — combo '+(disp[k]||k)+' ('+cnt[k].length+' morceaux)',auto:'combo',tracks:cnt[k]});});
+  out.push({title:'SÉLECTION · '+(disp[k]||k),desc:'Playlist sélection auto — combo '+(disp[k]||k)+' ('+cnt[k].length+' morceaux)',auto:'combo',tracks:cnt[k]});});
  return out;}
 function autoPlaylists(){return comboPlaylists().concat(genrePlaylists()).concat(stylePlaylists());}
 /* ===== selections : collections de playlists ===== */
@@ -50,9 +50,9 @@ function renderSels(){
  var autos=comboPlaylists();
  var h=SELS.map(selSelCardHTML).join('');
  h+=autos.map(function(p){return selSelCardHTML({title:p.title,desc:p.desc,auto:'combo',tracks:p.tracks});}).join('');
- $('selGrid').innerHTML=h||'<div style="color:var(--dim);font-size:.75rem">AUCUNE PLAYLIST GROUPE.</div>';
+ $('selGrid').innerHTML=h||'<div style="color:var(--dim);font-size:.75rem">AUCUNE PLAYLIST SÉLECTION.</div>';
  var hdr=document.querySelector('#selWrap .secH');
- if(hdr)hdr.textContent='⧉ Playlists groupe — '+(SELS.length+autos.length)+' ('+autos.length+' auto)';
+ if(hdr)hdr.textContent='⧉ Playlists sélections — '+(SELS.length+autos.length)+' ('+autos.length+' auto)';
  bindSelCards($('selGrid'));}
 function bindSelCards(root){
  root.querySelectorAll('.plh').forEach(function(cd){
@@ -64,7 +64,7 @@ function bindSelCards(root){
   if(pb)pb.onclick=function(ev){ev.stopPropagation();var pl=plFlatOf(s||{tracks:[]});if(pl.length){PLAYLIST=s;renderPlaylist();play(pl[0],pl);}};
   var sb2=cd.querySelector('[data-selplay]');
   if(sb2)sb2.onclick=function(ev){ev.stopPropagation();
-   var flat=selFlat(s||{});if(!flat.length){alert('AUCUN MORCEAU DANS CETTE PLAYLIST GROUPE');return;}
+   var flat=selFlat(s||{});if(!flat.length){alert('AUCUN MORCEAU DANS CETTE PLAYLIST SÉLECTION');return;}
    PLAYLIST={title:s.title,desc:s.desc||'',tracks:flat.map(function(t){return t.title;})};
    renderPlaylist();showView('home');play(flat[0],flat);};
   cd.querySelectorAll('.srow').forEach(function(r){
@@ -84,6 +84,6 @@ function playFiltered(){
 function initGenres(){
  var bar=document.querySelector('.search-bar');
  if(!bar)return;
- var b=document.createElement('button');b.className='btn';b.textContent='\u25B6 LIRE PLAYLIST GROUPE';b.onclick=playFiltered;
+ var b=document.createElement('button');b.className='btn';b.textContent='\u25B6 LIRE PLAYLIST SÉLECTION';b.onclick=playFiltered;
  bar.appendChild(b);}
 document.addEventListener('DOMContentLoaded',initGenres);

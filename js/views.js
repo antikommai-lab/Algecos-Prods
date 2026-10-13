@@ -47,7 +47,7 @@ function renderPlaylist(){
   h+='<div class="prow" data-t="'+esc(t.title)+'" data-f="'+esc(t.file||'')+'">'
    +(lab?'<span class="plabel">'+esc(lab)+'</span>':'')
    +'<span class="pidx">'+String(n).padStart(2,'0')+'</span>'
-   +'<span class="pt"><b>'+esc(t.title)+'</b><small>'+esc(t.style||'')+' · '+esc((t.tags||[]).slice(0,3).join(' / '))+'</small></span>'
+   +'<span class="pt"><b>'+esc(t.title)+'</b><small>'+esc(t.style||'')+' Â· '+esc((t.tags||[]).slice(0,3).join(' / '))+'</small></span>'
    +(t.version?'<span class="pver">'+esc(t.version)+'</span>':'')
    +(adm?'<button class="edit" data-et="'+TRACKS.indexOf(t)+'" title="Editer ce morceau">\u2699</button>':'')+'</div>';});
  $('plist').innerHTML=h||'<div style="padding:16px;color:var(--dim);font-size:.75rem">PLAYLIST VIDE</div>';
@@ -59,7 +59,7 @@ function renderPlists(){
  var all=PLAYLISTS.concat(autoPlaylists());
  $('plGrid').innerHTML=all.map(function(p,i){
   var nb=((p.tracks)||[]).map(function(r){return plMatch(entRef(r))?1:0;}).reduce(function(a,b){return a+b;},0);
- return '<div class="plcard" data-i="'+i+'">'+(p.auto?'':'<button class="edit" data-pe="'+i+'" title="Editer cette playlist">&#9881;</button>')+'<button class="pbtn shB2" data-shp="'+i+'" title="Partager cette playlist">&#10548;</button><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'—')+(p.auto?' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>':'')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="pln">'+nb+' morceaux</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
+ return '<div class="plcard" data-i="'+i+'">'+(p.auto?'':'<button class="edit" data-pe="'+i+'" title="Editer cette playlist">&#9881;</button>')+'<button class="pbtn shB2" data-shp="'+i+'" title="Partager cette playlist">&#10548;</button><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'â')+(p.auto?' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>':'')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="pln">'+nb+' morceaux</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
  document.querySelectorAll('.plcard').forEach(function(cd){
   var p=all[+cd.getAttribute('data-i')];
   if(p&&p.cover&&!p.auto)tryCovers(plCoverPaths(p.cover),function(u){var im=cd.querySelector('.plc');if(u){im.src=u;im.style.display='block';}});
@@ -87,7 +87,7 @@ function toggleMenu(){$('menu').classList.toggle('open');}
 function toggleMenuOff(){var m=$('menu');if(m.classList.contains('open'))m.classList.remove('open');}
 
 /* ===== liste des morceaux ===== */
-function stars(n){var s='';for(var i=1;i<=5;i++)s+='<span class="'+(i<=(n||0)?'on':'')+'">★</span>';return s;}
+function stars(n){var s='';for(var i=1;i<=5;i++)s+='<span class="'+(i<=(n||0)?'on':'')+'">â</span>';return s;}
 function match(t,q){var hay=[t.title,(t.tags||[]).join(' '),(t.moods||[]).join(' '),t.desc||'',t.style||'',t.version||'',t.lyricsCreator||'',t.soundCreator||''].join(' ').toLowerCase();return hay.indexOf(q)>-1;}
 function cardHTML(t,i){
  var h='<div class="card" data-i="'+i+'">';
@@ -95,14 +95,14 @@ function cardHTML(t,i){
  if(t.version)h+='<span class="ver">'+esc(t.version)+'</span>';
  h+='<div class="stars">'+stars(t.rating)+'</div><h3>'+esc(t.title)+'</h3>';
  h+=provBadge(t);
- if(t.style)h+='<div class="style fold" title="cliquer pour déplier">[ '+esc(t.style)+' ]</div>';
- h+='<div class="meta">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div>';
- if((t.moods||[]).length)h+='<div class="meta">'+(t.moods||[]).map(function(k){return '<em style="color:var(--y);border-color:var(--y)">'+esc(k)+'</em>';}).join('')+'</div>';
- h+='<div class="info">VO:'+esc(t.lyricsCreator||'—')+' / SND:'+esc(t.soundCreator||'—')+' / '+esc(t.recordDate||'—')+(t.added?' / +'+esc(t.added)+upClock(t):'')+'</div>';
- h+='<div class="desc fold" title="cliquer pour déplier">'+esc(t.desc||'')+'</div>';
- h+='<button class="play" data-i="'+i+'">▶ Écouter</button>';
- h+='<button class="edit" data-e="'+i+'" title="Éditer ce morceau">⚙</button><button class="shB" data-shtr="'+i+'" title="Partager ce morceau">&#10548;</button>';
- if(document.body.classList.contains('adm'))h+='<button class="edit" data-vg="'+i+'" title="Ajouter au groupe de versions" style="top:76px">&#9854;</button><button class="edit" data-qpl="'+i+'" title="Ajouter à une playlist" style="top:108px">&#9776;</button>';
+ if(t.style)h+='<div class="style fold" title="cliquer pour dÃ©plier">[ '+esc(t.style)+' ]</div>';
+ h+='<div class="meta fold">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div>';
+ if((t.moods||[]).length)h+='<div class="meta fold">'+(t.moods||[]).map(function(k){return '<em style="color:var(--y);border-color:var(--y)">'+esc(k)+'</em>';}).join('')+'</div>';
+ h+='<div class="info">VO:'+esc(t.lyricsCreator||'â')+' / SND:'+esc(t.soundCreator||'â')+' / '+esc(t.recordDate||'â')+(t.added?' / +'+esc(t.added)+upClock(t):'')+'</div>';
+ h+='<div class="desc fold" title="cliquer pour dÃ©plier">'+esc(t.desc||'')+'</div>';
+ h+='<button class="play" data-i="'+i+'">â¶ Ãcouter</button>';
+ h+='<button class="edit" data-e="'+i+'" title="Ãditer ce morceau">â</button><button class="shB" data-shtr="'+i+'" title="Partager ce morceau">&#10548;</button>';
+ if(document.body.classList.contains('adm'))h+='<button class="edit" data-vg="'+i+'" title="Ajouter au groupe de versions" style="top:76px">&#9854;</button><button class="edit" data-qpl="'+i+'" title="Ajouter Ã  une playlist" style="top:108px">&#9776;</button>';
  h+='</div>';return h;}
 function bindCards(root){
  root.querySelectorAll('.card').forEach(function(card){
@@ -110,7 +110,7 @@ function bindCards(root){
   var cps=t.img?(t.img.indexOf('/')>0?[t.img]:trackCoverPaths(t.img)):trackCoverPaths(t);
   tryCovers(cps,function(u){if(u)card.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';});});
  root.querySelectorAll('.edit[data-e]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();editTrack(+b.getAttribute('data-e'));};});
- root.querySelectorAll('.card .fold').forEach(function(el){el.onclick=function(ev){ev.stopPropagation();el.classList.toggle('open');};});
+ root.querySelectorAll('.card .fold').forEach(function(el){el.onclick=function(ev){ev.stopPropagation();el.classList.toggle('open');};setTimeout(function(){if(el.scrollHeight<=el.clientHeight+2)el.classList.add('nofold');},120);});
  root.querySelectorAll('.card .play').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();play(TRACKS[+b.getAttribute('data-i')],[TRACKS[+b.getAttribute('data-i')]]);};});
  root.querySelectorAll('.card [data-vg]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();openVG(+b.getAttribute('data-vg'));};});
  root.querySelectorAll('.card [data-qpl]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();quickAddPl(+b.getAttribute('data-qpl'));};});
@@ -169,10 +169,10 @@ function updTicker(){
  var lt=null;TRACKS.forEach(function(t){if(!lt||upTime(t)>upTime(lt))lt=t;});
  var lp=null;PLAYLISTS.forEach(function(p){if(!lp||String(p.upd||'')>String(lp.upd||''))lp=p;});
  var parts=[];
- if(lt)parts.push('⬇ LAST UPLOAD : '+lt.title+(lt.version?' ['+lt.version+']':'')+' — '+(lt.uploadTime?lt.uploadTime.slice(0,10):(lt.added||lt.recordDate||'')));
- if(lp)parts.push('⚡ LAST PLAYLIST : '+lp.title+(lp.upd?' — '+lp.upd:''));
+ if(lt)parts.push('â¬ LAST UPLOAD : '+lt.title+(lt.version?' ['+lt.version+']':'')+' â '+(lt.uploadTime?lt.uploadTime.slice(0,10):(lt.added||lt.recordDate||'')));
+ if(lp)parts.push('â¡ LAST PLAYLIST : '+lp.title+(lp.upd?' â '+lp.upd:''));
  if(!parts.length){tk.classList.remove('show');return;}
- inner.textContent=parts.join('   ✦   ');
+ inner.textContent=parts.join('   â¦   ');
  tk.classList.add('show');}
 
 /* ===== rester informe : RSS + mail ===== */
@@ -184,11 +184,11 @@ async function sendSub(){
  var em=$('subEmail').value.trim();
  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){$('subStatus').className='status err';$('subStatus').textContent='ADRESSE MAIL INVALIDE';return;}
  if(!$('subOk').checked){$('subStatus').className='status err';$('subStatus').textContent='IL FAUT COCHER L\'ACCORD POUR RECEVOIR LES MAILS';return;}
- if(!NEWS_ENDPOINT){$('subStatus').className='status err';$('subStatus').textContent='SERVICE MAIL EN COURS DE CONFIGURATION — RÉESSAIE BIENTÔT';return;}
- $('subStatus').className='status ok';$('subStatus').textContent='⏳ INSCRIPTION…';
+ if(!NEWS_ENDPOINT){$('subStatus').className='status err';$('subStatus').textContent='SERVICE MAIL EN COURS DE CONFIGURATION â RÃESSAIE BIENTÃT';return;}
+ $('subStatus').className='status ok';$('subStatus').textContent='â³ INSCRIPTIONâ¦';
  try{var r=await fetch(NEWS_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em})});
   if(!r.ok)throw new Error('ERREUR ('+r.status+')');
-  $('subStatus').className='status ok';$('subStatus').textContent='✓ INSCRIT — bienvenue !';}
+  $('subStatus').className='status ok';$('subStatus').textContent='â INSCRIT â bienvenue !';}
  catch(e){$('subStatus').className='status err';$('subStatus').textContent=e.message;}}
 
 /* ===== header : styles + partage ===== */
@@ -235,14 +235,15 @@ function hitCounter(){
 /* ===== provenance (A humain / B hybride / C IA) ===== */
 function provOf(t){return t&&t.prov==='A'||t&&t.prov==='B'?t.prov:'C';}
 function provBadge(t){var p=provOf(t);
- var lbl=p==='A'?'HUMAIN':(p==='B'?'HYBRIDE — VENDABLE':'IA — NON VENDABLE');
- var tip=p==='A'?'Création humaine':(p==='B'?'IA retravaillée par l\u0027artiste — vendable, non exclusif':'Généré par IA — non vendable, partage gratuit uniquement');
+ var lbl=p==='A'?'HUMAIN':(p==='B'?'HYBRIDE â VENDABLE':'IA â NON VENDABLE');
+ var tip=p==='A'?'CrÃ©ation humaine':(p==='B'?'IA retravaillÃ©e par l\u0027artiste â vendable, non exclusif':'GÃ©nÃ©rÃ© par IA â non vendable, partage gratuit uniquement');
  return '<span class="pbadge pb'+p+'" title="'+tip+'">'+lbl+'</span>';}
 /* ===== commande sur mesure ===== */
 function goOrder(){showView('order');}
 function sendOrder(){
  var ty=$('o_type').value,d=$('o_desc').value.trim(),st=$('o_style').value.trim();
  if(!d){$('oStatus').className='status err';$('oStatus').textContent='D\u00C9CRIS TA COMMANDE D\u0027ABORD';return;}
- var body='COMMANDE : '+ty+String.fromCharCode(10)+String.fromCharCode(10)+d+(st?String.fromCharCode(10)+String.fromCharCode(10)+'Styles : '+st:'')+String.fromCharCode(10)+String.fromCharCode(10)+'— envoy\u00E9 depuis le site ALGECOS-PRODS';
+ var body='COMMANDE : '+ty+String.fromCharCode(10)+String.fromCharCode(10)+d+(st?String.fromCharCode(10)+String.fromCharCode(10)+'Styles : '+st:'')+String.fromCharCode(10)+String.fromCharCode(10)+'â envoy\u00E9 depuis le site ALGECOS-PRODS';
  window.location.href='mailto:algecosprods@gmail.com?subject='+encodeURIComponent('[COMMANDE] '+ty)+'&body='+encodeURIComponent(body);
- $('oStatus').className='status ok';$('oStatus').textContent='TON LOGICIEL MAIL S\u0027OUVRE — ENVOIE LE MESSAGE';}
+ $('oStatus').className='status ok';$('oStatus').textContent='TON LOGICIEL MAIL S\u0027OUVRE â ENVOIE LE MESSAGE';}
+

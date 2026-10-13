@@ -24,12 +24,15 @@ async function voteVer(ti){
 function plFlatOf(p){var old=PLAYLIST,out=[];try{PLAYLIST=p;out=plFlat();}catch(e){}PLAYLIST=old;return out;}
 function selCardHTML(p){
  var tr=plFlatOf(p);
- var h='<div class="plh" data-sel="'+esc(p.title)+'"><h3>'+esc(p.title)+'</h3><div class="m">'+esc(p.desc||'')+' · '+tr.length+' morceaux'+(p.upd?' · '+esc(p.upd):'')+'</div><div class="seltracks">'
+ var h='<div class="plh" data-sel="'+esc(p.title)+'">'+(p.cover?'<img class="plc" data-plc="'+esc(p.cover)+'" style="display:none">':'')+'<h3>'+esc(p.title)+'</h3><div class="m">'+esc(p.desc||'')+' · '+tr.length+' morceaux'+(p.upd?' · '+esc(p.upd):'')+'</div><div class="seltracks">'
   +tr.map(function(t){return '<div class="srow" data-spt="'+esc(t.title)+'"><b>'+esc(t.title)+'</b>'+(t.version?' <span class="ver">'+esc(t.version)+'</span>':'')+'</div>';}).join('')
   +'</div><div class="row" style="margin-top:8px"><button class="btn" data-spp="'+esc(p.title)+'">▶ LIRE</button></div></div>';
  return h;}
 
-function renderHomeGrid(){var ps=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));});$('plGridH').innerHTML=ps.map(selCardHTML).join('');bindSelCards($('plGridH'));}
+function renderHomeGrid(){var ps=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));});$('plGridH').innerHTML=ps.map(selCardHTML).join('');bindSelCards($('plGridH'));
+ $('plGridH').querySelectorAll('.plh').forEach(function(cd,i){var p=ps[i];if(!p)return;
+  if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u){var im=cd.querySelector('.plc');if(im){im.src=encodeURI(u);im.style.display='block';}}});
+  if(p.img)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.88),rgba(16,16,16,.88)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';});}
 
 /* ===== ONE TRACK, MANY VARIATIONS ===== */
 function varGroups(){var gs={},order=[];
@@ -49,7 +52,7 @@ function renderVars(){
 /* --- gestionnaire admin --- */
 var VGCHK=[];
 function openVG(pre){openModal('vgModal');VGCHK=(typeof pre==='number'&&pre>-1)?[pre]:[];$('vgQ').value='';$('vgNew').value='';$('vgAdd').value='';renderVG();}
-function vgGroups(){var s={},o=[];TRACKS.forEach(function(t){var v=(t.vid||'').trim();if(!v)return;if(!s[v]){s[v]=0;o.push(v);}s[v]++;});return o.sort();}
+function vgGroups(){var s={},o=[];VGROUPS.forEach(function(g){if(g&&g.name&&!s[g.name]){s[g.name]=0;o.push(g.name);}});TRACKS.forEach(function(t){var v=(t.vid||'').trim();if(!v)return;if(!s[v]){s[v]=0;o.push(v);}s[v]++;});return o.sort();}
 function renderVG(){
  $('vgGroup').innerHTML='<option value="">\u2014 groupe existant \u2014</option>'+vgGroups().map(function(g){var n=TRACKS.filter(function(t){return (t.vid||'').trim()===g;}).length;return '<option value="'+esc(g)+'">'+esc(g)+' ('+n+')</option>';}).join('');
  var q=($('vgQ').value||'').toLowerCase().trim();
@@ -76,6 +79,8 @@ async function vgApply(){
  if(!g){vgErr('CHOISIS UN GROUPE EXISTANT OU TAPE UN NOM DE NOUVEAU GROUPE');return;}
  if(!GHTOK){vgErr('TOKEN GITHUB REQUIS');return;}
  var names=VGCHK.map(function(i){return TRACKS[i].title;});
+ var gi=VGROUPS.findIndex(function(x){return x&&x.name===g;});
+ if(gi<0)VGROUPS.push({name:g,upd:new Date().toISOString()});else VGROUPS[gi].upd=new Date().toISOString();
  VGCHK.forEach(function(i){TRACKS[i].vid=g;});
  $('vgStatus').className='status ok';$('vgStatus').textContent='\u23F3 PUBLICATION\u2026';
  try{await publishAll('groupe de versions '+g+' : '+names.join(', '));
@@ -91,4 +96,14 @@ async function vgClear(){
  try{await publishAll('retrait groupe de versions : '+VGCHK.map(function(i){return TRACKS[i].title;}).join(', '));
   VGCHK=[];await load();renderVG();renderVersions();
   $('vgStatus').textContent='\u2713 RETIR\u00C9(S) DU GROUPE';}
+ catch(e){vgErr(e.message);}}
+
+async function vgNewGroup(){
+ var nn=$('vgNew').value.trim();if(!nn){vgErr('TAPE UN NOM DE NOUVEAU GROUPE');return;}
+ if(!GHTOK){vgErr('TOKEN GITHUB REQUIS');return;}
+ if(VGROUPS.some(function(x){return x&&x.name===nn;})){vgErr('CE GROUPE EXISTE DEJA');return;}
+ VGROUPS.push({name:nn,upd:new Date().toISOString()});
+ $('vgStatus').className='status ok';$('vgStatus').textContent='PUBLICATION…';
+ try{await publishAll('nouveau groupe de versions : '+nn);await load();renderVG();
+  $('vgStatus').textContent='GROUPE « '+nn+' » CREE (vide)';}
  catch(e){vgErr(e.message);}}

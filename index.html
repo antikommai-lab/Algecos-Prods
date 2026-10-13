@@ -39,7 +39,9 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .plh .seltracks{border-top:1px solid var(--line);margin-top:8px}
 .plh .seltracks .srow{display:flex;gap:8px;padding:6px 2px;border-bottom:1px solid var(--line);font-size:.72rem;cursor:pointer}
 .plh .seltracks .srow:hover{color:var(--y)}
-@media(max-width:700px){.plh .seltracks{display:none}.plh.open .seltracks{display:block}}
+.plh .seltracks{display:none}
+.plh.open .seltracks{display:block}
+.plh .plc{width:64px;height:64px;object-fit:cover;border:2px solid var(--y);float:right;margin:0 0 8px 10px}
 #verWrap,#varWrap,#orderWrap,#selWrap,#newsWrap{display:none;max-width:1000px;margin:20px auto;padding:0 20px 90px}
 #verWrap.open,#varWrap.open,#orderWrap.open,#selWrap.open,#newsWrap.open{display:block}
 #newsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
@@ -85,8 +87,6 @@ body.adm #admBtn{display:block}
 #home{max-width:900px;margin:26px auto;padding:0 20px}
 #home.hidden{display:none}
 #homeFlex{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
-#bigLogo{display:none}
-@media(min-width:900px){#bigLogo{display:block;width:100%;max-width:340px;margin:0 auto;border:3px solid #000;box-shadow:7px 7px 0 #000;transform:rotate(-1.4deg)}}
 #homeCol{flex:1;min-width:270px}
 .tape{background:var(--y);color:#000;display:inline-block;padding:3px 10px;font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;transform:rotate(-1.2deg);box-shadow:2px 2px 0 #000}
 #plTitle{font-family:'Archivo Black',sans-serif;font-size:clamp(1.4rem,5vw,2.4rem);text-transform:uppercase;margin:14px 0 4px;color:var(--ink)}
@@ -130,6 +130,8 @@ body.adm #admBtn{display:block}
 .fold{max-height:2.7em;overflow:hidden;cursor:pointer;position:relative}
 .fold.open{max-height:none}
 .fold:not(.open):after{content:'\25BE';position:absolute;right:2px;bottom:0;color:var(--y);background:rgba(16,16,16,.9);padding:0 4px;font-size:.7rem}
+.fold.nofold{max-height:none;overflow:visible;cursor:default}
+.fold.nofold:after{display:none}
 #mgList,#mgPlList,#mgPEList{max-height:42vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px}
 .peord{cursor:grab}
 .peord:active{cursor:grabbing}
@@ -282,7 +284,7 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="showPlaylists()">☰ Toutes les playlists</button>
 <button class="mitem" onclick="showList(true)">■ Liste de tous les morceaux</button>
 <button class="mitem" onclick="showVersions()">★ Choisis ta version préférée</button>
-<button class="mitem" onclick="showSels()">⧉ Playlists groupe</button>
+<button class="mitem" onclick="showSels()">⧉ Playlists sélections</button>
 <button class="mitem" onclick="showNews()">&#128227; Nouveautés — derniers ajouts</button>
 <button class="mitem" onclick="showVars()">&#9854; One track, many variations</button>
 <button class="mitem" onclick="goOrder()">&#x270E; Commander un morceau / texte sur mesure</button>
@@ -299,8 +301,8 @@ audio{width:100%;height:40px}
 <button class="mitem" onclick="openTrackForm(0)">✎ Modifier un morceau</button>
 <button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
 <button class="mitem" onclick="openPlForm(0)">✎ Modifier une playlist</button>
-<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle playlist groupe</button>
-<button class="mitem" onclick="openSelForm(0)">✎ Modifier une playlist groupe</button>
+<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle playlist sélection</button>
+<button class="mitem" onclick="openSelForm(0)">✎ Modifier une playlist sélection</button>
 <button class="mitem" onclick="openVG()">&#9854; Groupes de versions — composer les variations</button>
 <button class="mitem" onclick="openMsgForm()">✉ Message RSS / newsletter</button>
 <button class="mitem" onclick="admReload()">&#10227; Recharger les donn&#233;es du site</button>
@@ -338,7 +340,7 @@ audio{width:100%;height:40px}
 
 <section id="verWrap"><h2 class="secH">★ Choisis ta version préférée</h2><div id="verGrid"></div></section>
 
-<section id="selWrap"><h2 class="secH">⧉ Playlists groupe</h2><div id="selGrid"></div></section>
+<section id="selWrap"><h2 class="secH">⧉ Playlists sélections</h2><div id="selGrid"></div></section>
 
 <section id="newsWrap">
 <h2 class="secH">&#128227; Nouveautés</h2>
@@ -547,8 +549,8 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <div class="modal" id="selModal"><div class="mbox">
 <button class="close" onclick="closeModal('selModal')">✕</button>
-<h3 id="smSelTitle">Playlist groupe</h3>
-<div id="smSelSelWrap" style="display:none"><label>Quelle playlist groupe ?</label><select id="smSelSel" onchange="fillSel()"></select></div>
+<h3 id="smSelTitle">Playlist sélection</h3>
+<div id="smSelSelWrap" style="display:none"><label>Quelle playlist sélection ?</label><select id="smSelSel" onchange="fillSel()"></select></div>
 <label>Titre</label><input id="s_title">
 <label>Description</label><textarea id="s_desc" rows="2"></textarea>
 <label>Référence courte (optionnel)</label><input id="s_ref" placeholder="ex : sel-nuit">
@@ -564,6 +566,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <select id="vgGroup"></select>
 <label>Ou nouveau groupe (nom court, ex : monmorceau01)</label>
 <input id="vgNew" placeholder="nom du nouveau groupe">
+<div class="mgact"><button class="btn" onclick="vgNewGroup()">+ Créer le groupe (vide, pour plus tard)</button></div>
 <div class="mgact">
 <input type="text" id="vgQ" placeholder="FILTRE TRACKS…" oninput="renderVG()">
 <span id="vgCount" style="color:var(--y);font-size:.72rem"></span>
@@ -649,6 +652,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <label>Titre</label><input id="p_title">
 <label>Description</label><textarea id="p_desc" rows="2"></textarea>
 <label>Cover (nom fichier, ex : MACONPLCOVER1)</label><input id="p_cover">
+<label>Image de fond / background (nom fichier, ex : MACONPLBACK1)</label><input id="p_img">
 <label>Morceaux — 1 par ligne : SECTION: FACE A · LABEL: BONUS :: référence · ou la référence (titre ou chemin)</label>
 <textarea id="p_tracks" rows="7" style="font-size:.74rem"></textarea>
 <div class="row"><button class="btn" onclick="savePl()">Enregistrer</button><button class="btn2" onclick="closeModal('plModal')">Annuler</button></div>
@@ -672,16 +676,17 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261036"></script>
-<script src="js/data.js?v=20261036"></script>
-<script src="js/auth.js?v=20261036"></script>
-<script src="js/admin.js?v=20261036"></script>
-<script src="js/player.js?v=20261036"></script>
-<script src="js/views.js?v=20261036"></script>
-<script src="js/versions.js?v=20261036"></script>
-<script src="js/genres.js?v=20261036"></script>
-<script src="js/manage.js?v=20261036"></script>
-<script src="js/main.js?v=20261036"></script>
+<script src="js/config.js?v=20261037"></script>
+<script src="js/data.js?v=20261037"></script>
+<script src="js/auth.js?v=20261037"></script>
+<script src="js/admin.js?v=20261037"></script>
+<script src="js/player.js?v=20261037"></script>
+<script src="js/views.js?v=20261037"></script>
+<script src="js/versions.js?v=20261037"></script>
+<script src="js/genres.js?v=20261037"></script>
+<script src="js/manage.js?v=20261037"></script>
+<script src="js/main.js?v=20261037"></script>
 
 </body>
 </html>
+
