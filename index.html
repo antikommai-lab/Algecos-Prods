@@ -131,6 +131,8 @@ body.adm #admBtn{display:block}
 .fold.open{max-height:none}
 .fold:not(.open):after{content:'\25BE';position:absolute;right:2px;bottom:0;color:var(--y);background:rgba(16,16,16,.9);padding:0 4px;font-size:.7rem}
 #mgList,#mgPlList,#mgPEList{max-height:42vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px}
+.peord{cursor:grab}
+.peord:active{cursor:grabbing}
 .mgrow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);background:#000;font-size:.76rem;cursor:pointer}
 .mgrow:hover{outline:1px solid var(--y)}
 .mgrow input[type=checkbox]{flex:none}
@@ -474,6 +476,8 @@ audio{width:100%;height:40px}
 <input type="text" id="mgPEQ" placeholder="FILTRE TRACKS…" oninput="renderMgPE()">
 <label style="display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--dim)"><input type="checkbox" id="mgPEAll" onchange="mgPEAll(this.checked)"> tout</label>
 </div>
+<div style="color:var(--dim);font-size:.62rem;margin-bottom:4px">☰ ordre — glisser-déposer les lignes</div>
+<div id="mgPEOrder" style="max-height:32vh;overflow-y:auto;border:1px dashed var(--y);margin-bottom:10px"></div>
 <div id="mgPEList"></div>
 <div class="row"><button class="btn" onclick="mgPESave()">Enregistrer la tracklist</button></div>
 </div>
@@ -603,16 +607,16 @@ audio{width:100%;height:40px}
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261031"></script>
-<script src="js/data.js?v=20261031"></script>
-<script src="js/auth.js?v=20261031"></script>
-<script src="js/admin.js?v=20261031"></script>
-<script src="js/player.js?v=20261031"></script>
-<script src="js/views.js?v=20261031"></script>
-<script src="js/versions.js?v=20261031"></script>
-<script src="js/genres.js?v=20261031"></script>
-<script src="js/manage.js?v=20261031"></script>
-<script src="js/main.js?v=20261031"></script>
+<script src="js/config.js?v=20261032"></script>
+<script src="js/data.js?v=20261032"></script>
+<script src="js/auth.js?v=20261032"></script>
+<script src="js/admin.js?v=20261032"></script>
+<script src="js/player.js?v=20261032"></script>
+<script src="js/views.js?v=20261032"></script>
+<script src="js/versions.js?v=20261032"></script>
+<script src="js/genres.js?v=20261032"></script>
+<script src="js/manage.js?v=20261032"></script>
+<script src="js/main.js?v=20261032"></script>
 
 </body>
 </html>

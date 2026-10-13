@@ -169,20 +169,44 @@ async function mgDelPlAsk(i){var p=PLAYLISTS[i];
  PLAYLISTS.splice(i,1);
  mgPublish('suppression playlist : '+p.title,'mgPlStatus');}
 function mgEditPlMeta(i){closeModal('manageModal');editPl(i);}
+var MGPEORD=[],MGPEDRAG=-1;
 function mgOpenPE(i){MGPL=i;var p=PLAYLISTS[i];
  $('mgPlEdit').style.display='block';$('mgPEQ').value='';
+ MGPEORD=(p.tracks||[]).slice();
  $('mgPlStatus').textContent='\u00C9DITION TRACKLIST : '+p.title;renderMgPE();}
 function mgPEFiltered(){var q=($('mgPEQ').value||'').toLowerCase().trim();
  return TRACKS.map(function(t,i){return {t:t,i:i};}).filter(function(o){return !q||match(o.t,q);});}
 function renderMgPE(){var p=PLAYLISTS[MGPL];if(!p){$('mgPlEdit').style.display='none';return;}
- var inPl=(p.tracks||[]).map(function(r){var t=plMatch(entRef(r));return t?t.title:null;}).filter(Boolean);
+ var inPl=MGPEORD.map(function(r){var t=plMatch(entRef(r));return t?t.title:null;}).filter(Boolean);
+ $('mgPEOrder').innerHTML=MGPEORD.map(function(e,ix){
+  var sec=e.section||e.SECTION||e.Section;var t=plMatch(entRef(e));
+  var disp=sec?('\u258C '+esc(sec)):(entLabel(e)?esc(entLabel(e))+' :: ':'')+(t?esc(t.title):esc(String(entRef(e)!=null?entRef(e):'?')));
+  return '<div class='+Q+'mgrow peord'+Q+' draggable='+Q+'true'+Q+' data-oi='+Q+''+ix+''+Q+'><span class='+Q+'mnum'+Q+'>'+(ix+1)+'</span><span style='+Q+'color:var(--dim)'+Q+'>\u2630</span><div class='+Q+'mt'+Q+'><b>'+disp+'</b></div><button class='+Q+'mgdel'+Q+' data-ox='+Q+''+ix+''+Q+'>\u2715</button></div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:10px;font-size:.68rem'+Q+'>VIDE — coche des morceaux ci-dessous</div>';
+ document.querySelectorAll('#mgPEOrder .peord').forEach(function(row){
+  var ix=+row.getAttribute('data-oi');
+  row.ondragstart=function(){MGPEDRAG=ix;};
+  row.ondragover=function(ev){ev.preventDefault();row.style.outline='2px dashed var(--y)';};
+  row.ondragleave=function(){row.style.outline='';};
+  row.ondrop=function(ev){ev.preventDefault();row.style.outline='';
+   if(MGPEDRAG<0||MGPEDRAG===ix)return;
+   var it=MGPEORD.splice(MGPEDRAG,1)[0];MGPEORD.splice(ix,0,it);MGPEDRAG=-1;renderMgPE();};
+  var rm=row.querySelector('[data-ox]');
+  if(rm)rm.onclick=function(ev){ev.stopPropagation();MGPEORD.splice(ix,1);renderMgPE();};});
  $('mgPEList').innerHTML=mgPEFiltered().map(function(o){
-  return '<div class='+Q+'mgrow'+Q+'><input type='+Q+'checkbox'+Q+' data-pe='+Q+''+o.i+''+Q+(inPl.indexOf(o.t.title)>-1?' checked':'')+'><div class='+Q+'mt'+Q+'><b>'+esc(o.t.title)+'</b></div></div>';}).join('');}
-function mgPEAll(on){document.querySelectorAll('#mgPEList input[data-pe]').forEach(function(x){x.checked=on;});}
+  return '<div class='+Q+'mgrow'+Q+'><input type='+Q+'checkbox'+Q+' data-pe='+Q+''+o.i+''+Q+(inPl.indexOf(o.t.title)>-1?' checked':'')+' onchange='+Q+'mgPEPick('+o.i+',this.checked)'+Q+'><div class='+Q+'mt'+Q+'><b>'+esc(o.t.title)+'</b></div></div>';}).join('');}
+function mgPEPick(i,on){var t=TRACKS[i];var r=t.id||t.title;var ix=-1;
+ MGPEORD.forEach(function(e,k){if(String(entRef(e))===String(r))ix=k;});
+ if(on&&ix<0)MGPEORD.push(r);
+ if(!on&&ix>-1)MGPEORD.splice(ix,1);
+ renderMgPE();}
+function mgPEAll(on){mgPEFiltered().forEach(function(o){var t=TRACKS[o.i];var r=t.id||t.title;var ix=-1;
+  MGPEORD.forEach(function(e,k){if(String(entRef(e))===String(r))ix=k;});
+  if(on&&ix<0)MGPEORD.push(r);
+  if(!on&&ix>-1)MGPEORD.splice(ix,1);});
+ renderMgPE();}
 async function mgPESave(){var p=PLAYLISTS[MGPL];if(!p)return;
- var sel=[];document.querySelectorAll('#mgPEList input[data-pe]').forEach(function(x){if(x.checked)sel.push(TRACKS[+x.getAttribute('data-pe')].id||TRACKS[+x.getAttribute('data-pe')].title);});
- p.tracks=sel;p.upd=new Date().toISOString().slice(0,10);
- mgPublish('playlist '+p.title+' : tracklist ('+sel.length+')','mgPlStatus');}
+ p.tracks=MGPEORD.slice();p.upd=new Date().toISOString().slice(0,10);
+ mgPublish('playlist '+p.title+' : tracklist ('+p.tracks.length+')','mgPlStatus');}
 async function mgPublish(msg,st){$(st).className='status ok';$(st).textContent='\u23F3 PUBLICATION\u2026';
  try{await publishAll(msg);$(st).textContent='\u2713 PUBLI\u00C9';renderMgPlList();await load();}
  catch(e){$(st).className='status err';$(st).textContent=e.message;}}

@@ -1,19 +1,25 @@
 /* ===== genres : multi-tags + playlists auto (tags + styles) + lecture selection ===== */
 function genrePlaylists(){
- var cnt={},order=[];
- TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){if(!cnt[k]){cnt[k]=[];order.push(k);}cnt[k].push(t.title);});});
- return order.sort().map(function(k){return {title:'GENRE · '+k,desc:'G\u00E9n\u00E9r\u00E9e automatiquement \u2014 tous les morceaux taggu\u00E9s '+k,auto:'tag',tracks:cnt[k]};});}
+ var cnt={},disp={},order=[];
+ TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){var kk=tgN(k);if(!kk)return;if(!cnt[kk]){cnt[kk]=[];order.push(kk);disp[kk]=k;}
+  if(cnt[kk].indexOf(t.title)<0)cnt[kk].push(t.title);});});
+ return order.sort().map(function(k){var k=disp[k]||k;return {title:'GENRE · '+k,desc:'G\u00E9n\u00E9r\u00E9e automatiquement \u2014 tous les morceaux taggu\u00E9s '+k,auto:'tag',tracks:cnt[k]};});}
 function stylePlaylists(){
- var cnt={},order=[];
- TRACKS.forEach(function(t){var k=String(t.style||'').trim();if(!k)return;if(!cnt[k]){cnt[k]=[];order.push(k);}cnt[k].push(t.title);});
- return order.sort().map(function(k){return {title:'STYLE · '+k,desc:'G\u00E9n\u00E9r\u00E9e automatiquement \u2014 tous les morceaux de style '+k,auto:'style',tracks:cnt[k]};});}
+ var cnt={},disp={},order=[];
+ TRACKS.forEach(function(t){var k=String(t.style||'').trim();var kk=tgN(k);if(!kk)return;if(!cnt[kk]){cnt[kk]=[];order.push(kk);disp[kk]=k;}
+  if(cnt[kk].indexOf(t.title)<0)cnt[kk].push(t.title);});
+ return order.sort().map(function(k){var k=disp[k]||k;return {title:'STYLE · '+k,desc:'G\u00E9n\u00E9r\u00E9e automatiquement \u2014 tous les morceaux de style '+k,auto:'style',tracks:cnt[k]};});}
+function tgN(s){return String(s==null?'':s).toLowerCase().trim()
+ .replace(/[\u00E0-\u00FC]/g,function(c){return 'aaaeeeeiioouuuaaaeeeeiioouuu'['\u00E0\u00E1\u00E2\u00E3\u00E4\u00E7\u00E8\u00E9\u00EA\u00EB\u00EC\u00ED\u00EE\u00EF\u00F1\u00F2\u00F3\u00F4\u00F5\u00F6\u00F9\u00FA\u00FB\u00FC'.indexOf(c)]||c;});}
 function comboPlaylists(){
  var cnt={};
- TRACKS.forEach(function(t){var tg=(t.tags||[]).slice().sort(function(a,b){return a.localeCompare(b,'fr');});
+ var disp={};
+ TRACKS.forEach(function(t){var tg=(t.tags||[]).map(tgN).filter(Boolean).sort();
   for(var i=0;i<tg.length;i++)for(var j=i+1;j<tg.length;j++){var k=tg[i]+' + '+tg[j];
-   if(!cnt[k])cnt[k]=[];if(cnt[k].indexOf(t.title)<0)cnt[k].push(t.title);}});
+   if(!cnt[k]){cnt[k]=[];disp[k]=(t.tags||[]).filter(function(x){return tgN(x)===tg[i];})[0]||tg[i];}
+   if(cnt[k].indexOf(t.title)<0)cnt[k].push(t.title);}});
  var out=[];Object.keys(cnt).sort().forEach(function(k){if(cnt[k].length>=2)
-  out.push({title:'GROUPE · '+k,desc:'Playlist groupe auto — combo '+k+' ('+cnt[k].length+' morceaux)',auto:'combo',tracks:cnt[k]});});
+  out.push({title:'GROUPE · '+(disp[k]||k),desc:'Playlist groupe auto — combo '+(disp[k]||k)+' ('+cnt[k].length+' morceaux)',auto:'combo',tracks:cnt[k]});});
  return out;}
 function autoPlaylists(){return comboPlaylists().concat(genrePlaylists()).concat(stylePlaylists());}
 /* ===== selections : collections de playlists ===== */
