@@ -13,7 +13,7 @@ function comboPlaylists(){
   for(var i=0;i<tg.length;i++)for(var j=i+1;j<tg.length;j++){var k=tg[i]+' + '+tg[j];
    if(!cnt[k])cnt[k]=[];if(cnt[k].indexOf(t.title)<0)cnt[k].push(t.title);}});
  var out=[];Object.keys(cnt).sort().forEach(function(k){if(cnt[k].length>=2)
-  out.push({title:'SÉLECTION · '+k,desc:'Générée automatiquement — combo '+k+' ('+cnt[k].length+' morceaux)',auto:'combo',tracks:cnt[k]});});
+  out.push({title:'GROUPE · '+k,desc:'Playlist groupe auto — combo '+k+' ('+cnt[k].length+' morceaux)',auto:'combo',tracks:cnt[k]});});
  return out;}
 function autoPlaylists(){return comboPlaylists().concat(genrePlaylists()).concat(stylePlaylists());}
 /* ===== selections : collections de playlists ===== */
@@ -34,18 +34,23 @@ function selFlat(s){var out=[];
 function selSelCardHTML(s){
  var en=selEntries(s),flat=selFlat(s);
  var h='<div class="plh" data-sel="'+esc(s.title)+'">'
- +((typeof document!=='undefined'&&document.body.classList.contains('adm'))?'<button class="edit" style="position:absolute;top:10px;right:10px" onclick="event.stopPropagation();editSelIdx('+SELS.indexOf(s)+')" title="Editer cette s\u00E9lection">\u2699</button>':'')
- +'<h3>'+esc(s.title)+(s.ref?' <small style="color:var(--dim);font-size:.6rem">['+esc(s.ref)+']</small>':'')+'</h3><div class="m">'+esc(s.desc||'')+' \u00B7 '+en.length+' playlist(s) \u00B7 '+flat.length+' morceaux'+(s.upd?' \u00B7 '+esc(s.upd):'')+'</div><div class="seltracks">'
+ +((typeof document!=='undefined'&&document.body.classList.contains('adm')&&SELS.indexOf(s)>-1)?'<button class="edit" style="position:absolute;top:10px;right:10px" onclick="event.stopPropagation();editSelIdx('+SELS.indexOf(s)+')" title="Editer cette s\u00E9lection">\u2699</button>':'')
+ +'<h3>'+esc(s.title)+(s.ref?' <small style="color:var(--dim);font-size:.6rem">['+esc(s.ref)+']</small>':'')+(s.auto?' <small style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</small>':'')+'</h3><div class="m">'+esc(s.desc||'')+' \u00B7 '+en.length+' playlist(s) \u00B7 '+flat.length+' morceaux'+(s.upd?' \u00B7 '+esc(s.upd):'')+'</div><div class="seltracks">'
  +en.map(function(e){var tr=plFlatOf(e.pl);
    return '<div class="srow" data-spl="'+esc(e.pl.title)+'">'+(e.label?'<span class="plabel">'+esc(e.label)+'</span>':'')+'<b>'+esc(e.pl.title)+'</b>&nbsp;<small style="color:var(--dim)">'+tr.length+' morceaux</small></div>';}).join('')
  +'</div><div class="row" style="margin-top:8px"><button class="btn" data-selplay="'+esc(s.title)+'">\u25B6 LIRE</button></div></div>';
  return h;}
 function renderSels(){
- $('selGrid').innerHTML=SELS.map(selSelCardHTML).join('')||'<div style="color:var(--dim);font-size:.75rem">AUCUNE PLAYLIST GROUPE.</div>';
+ var autos=comboPlaylists();
+ var h=SELS.map(selSelCardHTML).join('');
+ h+=autos.map(function(p){return selSelCardHTML({title:p.title,desc:p.desc,auto:'combo',tracks:p.tracks});}).join('');
+ $('selGrid').innerHTML=h||'<div style="color:var(--dim);font-size:.75rem">AUCUNE PLAYLIST GROUPE.</div>';
+ var hdr=document.querySelector('#selWrap .secH');
+ if(hdr)hdr.textContent='⧉ Playlists groupe — '+(SELS.length+autos.length)+' ('+autos.length+' auto)';
  bindSelCards($('selGrid'));}
 function bindSelCards(root){
  root.querySelectorAll('.plh').forEach(function(cd){
-  var s=SELS.find(function(x){return x.title===cd.getAttribute('data-sel');})||PLAYLISTS.find(function(x){return x.title===cd.getAttribute('data-sel');})||null;
+  var s=SELS.find(function(x){return x.title===cd.getAttribute('data-sel');})||PLAYLISTS.find(function(x){return x.title===cd.getAttribute('data-sel');})||comboPlaylists().find(function(x){return x.title===cd.getAttribute('data-sel');})||null;
   cd.onclick=function(ev){if(ev.target.closest('button')||ev.target.closest('.srow'))return;cd.classList.toggle('open');};
   var eb=cd.querySelector('.edit');
   if(eb)eb.onclick=function(ev){ev.stopPropagation();};
