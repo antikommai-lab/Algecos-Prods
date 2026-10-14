@@ -2,13 +2,13 @@
   {
     "title": "NAONED HAURROR STORIES (premiere edition)",
     "cover": "NAONEDHAURRORSTORIESCOVER1",
-    "desc": "4titres+3Bonus | Premiere selection de tracks en attendant l'Album 1ere edition (autres editions a venir: même textes mais songs styles differents)",
+    "desc": "4titres+3Bonus | Premiere selection de tracks en attendant l'Album 1ere edition (autres editions a venir: m\u00eame textes mais songs styles differents)",
     "tracks": [
       {
         "SECTION": "FACE A - Album"
       },
       "Migrant Story (HaurrorCore Positive) [chanson,slam,reggae,rap].mp3",
-      "Mel à Roulettes",
+      "Mel \u00e0 Roulettes",
       "TITA ON FAYA - Titita Titi Tati Tita_v.DEF",
       "Les Tontons Buveurs (Aldi's Stories)",
       "La Cour Des Mirages (HaurrorCore)",
@@ -98,9 +98,9 @@
       "Don't try to Exist Just Live gypsy old school rap",
       "Gypsy Vibe Old School rap",
       "Mama is drunk again",
-      "Police Fasciste État Fasciste Les ordres viennent d'en haut",
+      "Police Fasciste \u00c9tat Fasciste Les ordres viennent d'en haut",
       "Positive Russian Vibe",
-      "Résistance Loop On veut le bac pas la bac",
+      "R\u00e9sistance Loop On veut le bac pas la bac",
       "The Creature Living Under My Bed",
       "The Kind voice in my Head was killed by the Other",
       "Ukrain & Russian Brothers",
@@ -173,8 +173,49 @@
     "tracks": [
       "Ce monde est maudit - feat Le Clown Sadique vRapINSTRUvers1_VoixDemon",
       "Ce Monde Est Maudit feat Le Clown Sadique vRAP3",
-      "ce monde est maudit - feat Le Clown Sadique feat_occi.ai_punk métal hardcore v2",
-      "ce monde est maudit - feat Le Clown Sadique _occibots_nuMetal hardcore dark métal Black Metal"
+      "ce monde est maudit - feat Le Clown Sadique feat_occi.ai_punk m\u00e9tal hardcore v2",
+      "ce monde est maudit - feat Le Clown Sadique _occibots_nuMetal hardcore dark m\u00e9tal Black Metal"
+    ],
+    "upd": "2026-10-14"
+  },
+  {
+    "title": "Slavicor",
+    "desc": "Slavicore - Jazzidtribe - Russia & Baltic vibes",
+    "cover": "slavicore-background.jpg",
+    "img": "img/slavicore-background.jpg",
+    "tracks": [
+      "russian Jazzcore experiment (jazz hardcore acidcore tribecore experience)",
+      "A Tribute to Russian Antifas",
+      "Accordion Baltic mood slavcore Jazzidcore jazzidtribe",
+      "Acid gypsy violin Manouchcore Slavicore Jazzidcore jazzidtribe",
+      "Protect Slavic Culture against the mad dictator slavicore Jazzidcore jazzidtribe",
+      "Taiga free party Slavicore Jazzidcore jazzidtribe",
+      "the Siberian chemist Slavicore Jazzidcore jazzidtribe",
+      "Cryin' Violin Ragtribe Pure Jazzidcore",
+      "Phonograph Distortion hard Jazzidcore tribecore",
+      "Phonograph Ragtime Jazzidcore",
+      "Ragtime and Swing are not Kitch Ragcore Jazzidcore Tribecore",
+      "Ragtime Rave ragtribe Pure Jazzidcore",
+      "Positive Russian Vibe",
+      "Ukrain & Russian Brothers",
+      "My Phonograph Took Amphetamine",
+      "Raining in Moscow",
+      "Vlad The Sick Dictator",
+      "Baltic Dance",
+      "Did you ever heard Django in Clubs",
+      "Django Clubbing Jazzidtrance Infiltration slow jazzidtribe",
+      "Django haunt my computer my CPU burns Speed Pure Jazzidtribe Gypsycore",
+      "Django is sleeping in my RAM Pure Jazzidtribe Gypsycore",
+      "Do not listen this crap C nimp faceA tek",
+      "Fest Noz tribal Jazzidtribe Celticore",
+      "Gypsy Digital Madness Jazzidcore Gypsycore",
+      "Jumping in the forest slow jazzidtribe jazzidtrance",
+      "The Celtic Reality Sailor Tribal Jazzidtribe",
+      "The Celtic Weirdo videogame soundtrack C nimp faceB videogamecore",
+      "Britain makes me feel Happy Celticore Jazzidtribe",
+      "Celticore Spiral Acid Loop",
+      "Merlin take Celiticore in clubs Jazzidtribe",
+      "Tribal Celtic Spirit Tribal Celticore Jazzidcore"
     ],
     "upd": "2026-10-14"
   }
