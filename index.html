@@ -137,6 +137,11 @@ body.adm #admBtn{display:block}
 .fold.nofold{max-height:none;overflow:visible;cursor:default}
 .fold.nofold:after{display:none}
 #mgList,#mgPlList,#mgPEList{max-height:42vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px}
+#mgFab{position:fixed;bottom:22px;right:22px;z-index:44;display:none;gap:10px}
+#mgFab.show{display:flex}
+#mgFab button{width:54px;height:54px;background:#000;color:var(--y);border:3px solid var(--y);font-size:1.2rem;cursor:pointer;box-shadow:4px 4px 0 #000;position:relative}
+#mgFab button:hover{background:var(--y);color:#000}
+#mgFab button b{position:absolute;top:-8px;right:-8px;background:var(--y);color:#000;border:2px solid #000;border-radius:50%;min-width:20px;height:20px;font-size:.62rem;line-height:16px}
 #lotPanel{position:fixed;top:76px;right:16px;z-index:30;display:none}
 #lotPanel.show{display:block}
 #lotGear{width:56px;height:56px;background:#000;color:var(--y);border:3px solid var(--y);font-size:1.3rem;cursor:pointer;box-shadow:4px 4px 0 #000;position:relative}
@@ -426,6 +431,11 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <input type="file" id="lotLyrF" accept=".txt,.md,.json,.html,.htm" multiple style="display:none" onchange="lotLyrs(this)">
 </div>
 
+<div id="mgFab">
+<button onclick="mgFabEdit()" title="M&#233;tadonn&#233;es par lot (s&#233;lection)">&#9881;<b>0</b></button>
+<button onclick="mgFabPl()" title="Ajouter la s&#233;lection &#224; une playlist">&#9776;</button>
+</div>
+
 <div id="player">
 <div id="pTop">
 <img id="tCover" alt="cover morceau" style="display:none">
@@ -474,7 +484,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 </div></div>
 
 <div class="modal" id="manageModal"><div class="mbox" style="width:min(680px,100%)">
-<button class="close" onclick="closeModal('manageModal')">&#x2715;</button>
+<button class="close" onclick="closeModal('manageModal');mgFabUpd()">&#x2715;</button>
 <h3 id="mgTitle">Gestion</h3>
 <div class="row">
 <button class="btn" id="mgTabTr" onclick="mgTab('tr')">Tracks</button>
@@ -714,16 +724,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261045"></script>
-<script src="js/data.js?v=20261045"></script>
-<script src="js/auth.js?v=20261045"></script>
-<script src="js/admin.js?v=20261045"></script>
-<script src="js/player.js?v=20261045"></script>
-<script src="js/views.js?v=20261045"></script>
-<script src="js/versions.js?v=20261045"></script>
-<script src="js/genres.js?v=20261045"></script>
-<script src="js/manage.js?v=20261045"></script>
-<script src="js/main.js?v=20261045"></script>
+<script src="js/config.js?v=20261046"></script>
+<script src="js/data.js?v=20261046"></script>
+<script src="js/auth.js?v=20261046"></script>
+<script src="js/admin.js?v=20261046"></script>
+<script src="js/player.js?v=20261046"></script>
+<script src="js/views.js?v=20261046"></script>
+<script src="js/versions.js?v=20261046"></script>
+<script src="js/genres.js?v=20261046"></script>
+<script src="js/manage.js?v=20261046"></script>
+<script src="js/main.js?v=20261046"></script>
 
 </body>
 </html>

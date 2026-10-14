@@ -27,7 +27,7 @@ async function voteVer(ti){
 function plFlatOf(p){var old=PLAYLIST,out=[];try{PLAYLIST=p;out=plFlat();}catch(e){}PLAYLIST=old;return out;}
 function selCardHTML(p){
  var tr=plFlatOf(p);
- var h='<div class="plh" data-sel="'+esc(p.title)+'">'+(p.cover?'<img class="plc" data-plc="'+esc(p.cover)+'" style="display:none">':'')+'<h3>'+esc(p.title)+'</h3><div class="m">'+esc(p.desc||'')+' \u00b7 '+tr.length+' morceaux'+(p.upd?' \u00b7 '+esc(p.upd):'')+'</div><div class="seltracks">'
+ var h='<div class="plh" data-sel="'+esc(p.title)+'">'+(p.cover?'<img class="plc" data-plc="'+esc(p.cover)+'" style="display:none">':'')+(document.body.classList.contains('adm')?'<button class="edit" data-epl="'+esc(p.title)+'" style="position:absolute;top:10px;right:10px">&#9881;</button>':'')+'<h3>'+esc(p.title)+'</h3><div class="m">'+esc(p.desc||'')+' \u00b7 '+tr.length+' morceaux'+(p.upd?' \u00b7 '+esc(p.upd):'')+'</div><div class="seltracks">'
   +tr.map(function(t){return '<div class="srow" data-spt="'+esc(t.title)+'"><b>'+esc(t.title)+'</b>'+(t.version?' <span class="ver">'+esc(t.version)+'</span>':'')+'</div>';}).join('')
   +'</div><div class="row" style="margin-top:8px"><button class="btn" data-spp="'+esc(p.title)+'">\u25b6</button><button class="btn" data-sps="'+esc(p.title)+'" title="Lecture al\u00e9atoire">\u21c4</button><button class="btn" data-spr="'+esc(p.title)+'" title="R\u00e9p\u00e9ter en boucle">\u21bb</button></div></div>';
  return h;}
@@ -35,7 +35,8 @@ function selCardHTML(p){
 function renderHomeGrid(){var ps=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));});$('plGridH').innerHTML=ps.map(selCardHTML).join('');bindSelCards($('plGridH'));
  $('plGridH').querySelectorAll('.plh').forEach(function(cd,i){var p=ps[i];if(!p)return;
   if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u){var im=cd.querySelector('.plc');if(im){im.src=encodeURI(u);im.style.display='block';}}});
-  if(p.img)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.88),rgba(16,16,16,.88)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';});}
+  if(p.img)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.88),rgba(16,16,16,.88)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';});
+ document.querySelectorAll('#plGridH [data-epl]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();var ix=PLAYLISTS.findIndex(function(x){return x.title===b.getAttribute('data-epl');});if(ix>-1)editPl(ix);};});}
 
 /* ===== ONE TRACK, MANY VARIATIONS ===== */
 function varGroups(){var gs={},order=[];

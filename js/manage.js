@@ -9,7 +9,7 @@ function mgTab(t){try{MGTAB=t;MGSEL=[];MGPLSEL=[];
  $('mgTitle').textContent=t==='tr'?'Gestion des tracks':'Gestion des playlists';
  $('mgStatus').textContent='';$('mgPlStatus').textContent='';
  if(t==='tr'){renderMgList();}
- else{MGPL=null;$('mgPlEdit').style.display='none';renderMgPlList();}}
+ else{MGPL=null;$('mgPlEdit').style.display='none';renderMgPlList();}mgFabUpd();}
  catch(e){var es=$('mgStatus');es.className='status err';es.textContent='ERREUR : '+e.message+' \u2014 copie ce message';}}
 function mgFiltered(){var q=($('mgQ').value||'').toLowerCase().trim();
  var L=TRACKS.map(function(t,i){return {t:t,i:i};}).filter(function(o){return !q||match(o.t,q);});
@@ -31,7 +31,7 @@ function renderMgList(){
   +'<button class='+Q+'mgdel'+Q+' data-del='+Q+''+o.i+''+Q+' title='+Q+'Supprimer (track + audio)'+Q+'>\u{1F5D1}</button>'
   +'</div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUN R\u00C9SULTAT</div>';
  $('mgAll').checked=L.length>0&&L.every(function(o){return MGSEL.indexOf(o.i)>-1;});
- bindMgRows();}
+ bindMgRows();mgFabUpd();}
  catch(e){$('mgStatus').className='status err';$('mgStatus').textContent='RENDER KO : '+e.message;}}
 /* --- selection facon explorateur : clic = selection unique, ctrl/clic = multiple, shift = plage --- */
 var MGLASTCLICK=-1;
@@ -54,7 +54,7 @@ function bindMgRows(){
   var del=row.querySelector('.mgdel');
   if(del)del.onclick=function(ev){ev.stopPropagation();mgDelTrackAsk(i);};});
  $('mgAll').checked=mgFiltered().every(function(o){return MGSEL.indexOf(o.i)>-1;});}
-function mgToggle(i){var ix=MGSEL.indexOf(i);if(ix>-1)MGSEL.splice(ix,1);else MGSEL.push(i);}
+function mgToggle(i){var ix=MGSEL.indexOf(i);if(ix>-1)MGSEL.splice(ix,1);else MGSEL.push(i);mgFabUpd();}
 function mgAll(on){if(on)MGSEL=mgFiltered().map(function(o){return o.i;});else MGSEL=[];renderMgList();mgUpdEdit();}
 /* --- interface d'edition : apparait des qu'on a selectionne --- */
 function mgUpdEdit(){
@@ -296,3 +296,15 @@ async function qplAdd(){
   setTimeout(function(){closeModal('qplModal');},800);
   await load();}
  catch(e){st.className='status err';st.textContent=e.message;}}
+
+
+/* ===== fab flottant selection manage ===== */
+function mgFabUpd(){var f=$('mgFab');if(!f)return;var mm=$('manageModal');var show=mm&&mm.classList.contains('open')&&MGTAB==='tr'&&MGSEL.length>0;f.className=show?'show':'';var b=f.querySelector('b');if(b)b.textContent=MGSEL.length;}
+function mgFabEdit(){if(!MGSEL.length)return;var eb=$('mgEditBox');mgUpdEdit();if(eb&&eb.scrollIntoView)eb.scrollIntoView({behavior:'smooth',block:'nearest'});}
+async function mgFabPl(){if(!MGSEL.length)return;var nn=prompt('Nom de la playlist (existante ou nouvelle) :');if(!nn)return;nn=nn.trim();if(!nn)return;
+ var P=PLAYLISTS.find(function(x){return x.title===nn;});if(!P){P={title:nn,desc:'',tracks:[],upd:new Date().toISOString().slice(0,10)};PLAYLISTS.push(P);}
+ P.tracks=P.tracks||[];MGSEL.forEach(function(i){var t=TRACKS[i];var r=t.id||t.title;if(P.tracks.indexOf(r)<0)P.tracks.push(r);});
+ P.upd=new Date().toISOString().slice(0,10);
+ $('mgStatus').className='status ok';$('mgStatus').textContent='PUBLICATION...';
+ try{await publishAll('playlist '+nn+' : ajout '+MGSEL.length+' morceau(x)');await load();renderMgList();mgFabUpd();$('mgStatus').textContent='AJOUTE(S) A '+nn;}
+ catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;}}
