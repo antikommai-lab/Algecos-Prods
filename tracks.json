@@ -2638,24 +2638,27 @@
     "title": "Raining in Moscow",
     "file": "audio/techno/2026-10-14/Raining in Moscow Manouchcore Tribal Jazzidcore.mp3",
     "tags": [
-      "Manouchcore",
+      "hard",
+      "tribal",
+      "jazzidcore",
+      "hardcore",
       "slavicore",
-      "jazzidcore"
+      "manouchcore"
     ],
-    "rating": 5,
+    "rating": 4.5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:22:02.449Z",
-    "style": "Jazzidcore slavicore manouchcore",
+    "style": "hard Jazzidcore Slavicore",
     "id": 124,
     "version": "",
     "desc": "",
     "vid": "",
     "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
     "recordDate": "2026-10-12",
     "moods": [
-      "brutal",
-      "slavic"
+      "nostalgic",
+      "optimistic"
     ]
   },
   {
