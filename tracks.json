@@ -2775,21 +2775,32 @@
     ]
   },
   {
-    "title": "Baltic Dance Manouchcore Tribal Jazzidcore",
+    "title": "Baltic Dance",
     "file": "audio/techno/2026-10-14/Baltic Dance Manouchcore Tribal Jazzidcore.mp3",
     "tags": [
       "jazzidcore",
+      "tribal",
+      "manouchcore",
       "jazzidtribe",
       "acid",
       "hardcore",
       "Techno"
     ],
-    "rating": 4,
+    "rating": 3.5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:31:27.298Z",
-    "style": "jazzidcore",
+    "style": "jazzidcore slavicore",
     "recordDate": "2026-10-13",
-    "id": 123
+    "id": 123,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "moods": [
+      "happy",
+      "slavic"
+    ]
   },
   {
     "title": "Black Psycho dark speed hard Jazzidcore",
