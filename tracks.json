@@ -2628,13 +2628,23 @@
     "title": "Vinyl Crackle Pulse faceB Hard Jazzidcore Hardcore",
     "file": "audio/techno/2026-10-14/Vinyl Crackle Pulse faceB Hard Jazzidcore Hardcore.mp3",
     "tags": [
-      "Techno"
+      "acidcore",
+      "hardcore"
     ],
-    "rating": 0,
+    "rating": 3,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:22:02.449Z",
-    "style": "Techno",
-    "id": 127
+    "style": "acidcore,hardcore,psychedelic",
+    "id": 127,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-11",
+    "moods": [
+      "dark"
+    ]
   },
   {
     "title": "Vlad The Sick Dictator",
