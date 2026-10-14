@@ -2427,18 +2427,31 @@
     ]
   },
   {
-    "title": "Gypsy Vibe Old School rap",
+    "title": "Gypsy Vibe",
     "file": "audio/instru rap/2026-10-14/Gypsy Vibe Old School rap.mp3",
     "tags": [
       "Instru",
       "Rap",
-      "InstruRap"
+      "InstruRap",
+      "gypsy",
+      "old school",
+      "boom bap"
     ],
-    "rating": 0,
+    "rating": 4,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:07:26.600Z",
-    "style": "InstruRap",
-    "id": 111
+    "style": "gypsy rap old school",
+    "id": 111,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-13",
+    "moods": [
+      "happy",
+      "motivated"
+    ]
   },
   {
     "title": "Mama is drunk again",
