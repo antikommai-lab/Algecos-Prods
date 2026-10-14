@@ -3420,18 +3420,20 @@
     "tags": [
       "jazzidcore",
       "jazzidtribe",
-      "celticore",
+      "acid",
+      "hardcore",
       "tribal",
-      "tribe",
+      "slavicore",
+      "gypsycore",
+      "tribecore",
+      "acidcore",
       "Techno"
     ],
-    "rating": 5,
+    "rating": 4,
     "added": "2026-10-14",
-    "uploadTime": "2026-10-14T12:05:34.033Z",
-    "style": "jazzidcore celticore",
-    "moods": [
-      "happy jumpy"
-    ],
+    "uploadTime": "2026-10-14T11:52:58.653Z",
+    "style": "jazzidcore jazzidtribe celticore",
+    "recordDate": "2026-10-12",
     "id": 139
   },
   {
@@ -3501,6 +3503,28 @@
     "id": 142
   },
   {
+    "title": "Britain makes me feel Happy Celticore Jazzidtribe",
+    "file": "audio/techno/2026-10-14/Britain makes me feel Happy Celticore Jazzidtribe.mp3",
+    "tags": [
+      "jazzidcore",
+      "jazzidtribe",
+      "acid",
+      "hardcore",
+      "tribal",
+      "slavicore",
+      "gypsycore",
+      "tribecore",
+      "acidcore",
+      "Techno"
+    ],
+    "rating": 4,
+    "added": "2026-10-14",
+    "uploadTime": "2026-10-14T11:54:20.493Z",
+    "style": "jazzidcore jazzidtribe celticore",
+    "recordDate": "2026-10-12",
+    "id": 143
+  },
+  {
     "title": "Celticore Spiral Acid Loop",
     "file": "audio/techno/2026-10-14/Celticore Spiral Acid Loop.mp3",
     "tags": [
@@ -3545,6 +3569,26 @@
     "id": 145
   },
   {
+    "title": "Britain makes me feel Happy Celticore Jazzidtribe",
+    "file": "audio/techno/2026-10-14/Britain makes me feel Happy Celticore Jazzidtribe.mp3",
+    "tags": [
+      "jazzidcore",
+      "jazzidtribe",
+      "celticore",
+      "tribal",
+      "tribe",
+      "Techno"
+    ],
+    "rating": 5,
+    "added": "2026-10-14",
+    "uploadTime": "2026-10-14T12:05:34.033Z",
+    "style": "jazzidcore celticore",
+    "moods": [
+      "happy jumpy"
+    ],
+    "id": 139
+  },
+  {
     "title": "Celticore Spiral Acid Loop",
     "file": "audio/techno/2026-10-14/Celticore Spiral Acid Loop.mp3",
     "tags": [
@@ -3565,5 +3609,26 @@
     "style": "jazzidcore jazzidtribe celticore",
     "recordDate": "2026-10-12",
     "id": 147
+  },
+  {
+    "title": "Celticore Spiral Acid Loop",
+    "file": "audio/techno/2026-10-14/Celticore Spiral Acid Loop.mp3",
+    "tags": [
+      "jazzidcore",
+      "jazzidtribe",
+      "celticore",
+      "tribal",
+      "tribe",
+      "Techno"
+    ],
+    "rating": 2,
+    "added": "2026-10-14",
+    "uploadTime": "2026-10-14T12:08:36.071Z",
+    "style": "jazzidcore celticore",
+    "recordDate": "2026-10-13",
+    "moods": [
+      "happy jumpy"
+    ],
+    "id": 148
   }
 ]
