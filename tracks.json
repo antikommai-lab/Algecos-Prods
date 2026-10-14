@@ -2604,13 +2604,24 @@
     "title": "This is Real Accapella Jazzidcore Madness",
     "file": "audio/techno/2026-10-14/This is Real Accapella Jazzidcore Madness.mp3",
     "tags": [
-      "Techno"
+      "jazzidcore",
+      "acidcore"
     ],
-    "rating": 0,
+    "rating": 5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:22:02.449Z",
-    "style": "Techno",
-    "id": 125
+    "style": "Jazzidcore",
+    "id": 125,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-13",
+    "moods": [
+      "jazzy",
+      "happy"
+    ]
   },
   {
     "title": "Vinyl Crackle Pulse faceA Hard Jazzidcore Hardcore",
