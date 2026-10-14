@@ -2560,13 +2560,26 @@
     "tags": [
       "Instru",
       "Rap",
-      "InstruRap"
+      "InstruRap",
+      "trap",
+      "horrorcore"
     ],
-    "rating": 0,
+    "rating": 5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:07:26.600Z",
-    "style": "InstruRap",
-    "id": 116
+    "style": "trap horrorcore",
+    "id": 116,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-13",
+    "moods": [
+      "horror",
+      "dark",
+      "strange"
+    ]
   },
   {
     "title": "The Kind voice in my Head was killed by the Other",
