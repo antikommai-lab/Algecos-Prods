@@ -2889,7 +2889,7 @@
     ]
   },
   {
-    "title": "Fractured Acid Pulse Jazzidcore",
+    "title": "Fractured Acid Pulse",
     "file": "audio/techno/2026-10-14/Fractured Acid Pulse Jazzidcore.mp3",
     "tags": [
       "jazzidcore",
@@ -2898,11 +2898,17 @@
       "hardcore",
       "Techno"
     ],
-    "rating": 4,
+    "rating": 4.5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:31:27.298Z",
-    "style": "jazzidcore",
+    "style": "hard jazzidcore",
     "recordDate": "2026-10-13",
-    "id": 127
+    "id": 127,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "moods": []
   }
 ]
