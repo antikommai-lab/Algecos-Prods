@@ -2589,16 +2589,24 @@
     ]
   },
   {
-    "title": "Parked in Dark tribal Jazzidcore",
+    "title": "Parked in Dark",
     "file": "audio/techno/2026-10-14/Parked in Dark tribal Jazzidcore.mp3",
     "tags": [
-      "Techno"
+      "Jazzidcore",
+      "tribal"
     ],
-    "rating": 0,
+    "rating": 3.5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:22:02.449Z",
-    "style": "Techno",
-    "id": 122
+    "style": "Jazzidcore",
+    "id": 122,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-10",
+    "moods": []
   },
   {
     "title": "Ragtekcore Time Ragcore Jazzidcore Tribecore Hardcore",
