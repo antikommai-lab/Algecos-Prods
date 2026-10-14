@@ -2740,12 +2740,21 @@
       "hardcore",
       "Techno"
     ],
-    "rating": 4,
+    "rating": 3.5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:31:27.298Z",
-    "style": "jazzidcore",
+    "style": "jazzidcore, slavicore, dark",
     "recordDate": "2026-10-13",
-    "id": 121
+    "id": 121,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "moods": [
+      "dark",
+      "brutal"
+    ]
   },
   {
     "title": "Asylum Accapella Hypnotic Acid Swing",
