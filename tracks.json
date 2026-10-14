@@ -47,10 +47,10 @@
     "tags": [
       "rap",
       "valse",
-      "chanson française",
+      "chanson fran\u00e7aise",
       "accoustique"
     ],
-    "style": "rap,valse,chanson française,accoustique",
+    "style": "rap,valse,chanson fran\u00e7aise,accoustique",
     "version": "vDEF.1",
     "desc": "Haurror Stories: The migrant point of view - latest version",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
@@ -132,12 +132,12 @@
     "id": 7
   },
   {
-    "title": "LesTontonsBuveurs disco v2 chantée",
-    "file": "audio/LesTontonsBuveurs disco v2 chantée.mp3",
+    "title": "LesTontonsBuveurs disco v2 chant\u00e9e",
+    "file": "audio/LesTontonsBuveurs disco v2 chant\u00e9e.mp3",
     "tags": [
       "disco"
     ],
-    "style": "disco chanté",
+    "style": "disco chant\u00e9",
     "version": "v2",
     "desc": "les tontons disco 2",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
@@ -219,8 +219,8 @@
     "id": 12
   },
   {
-    "title": "haurrore accapella guitare sèche+beat",
-    "file": "audio/haurrore accapella guitare sèche+beat.mp3",
+    "title": "haurrore accapella guitare s\u00e8che+beat",
+    "file": "audio/haurrore accapella guitare s\u00e8che+beat.mp3",
     "tags": [
       "accapella",
       "accoustic",
@@ -256,8 +256,8 @@
     "id": 14
   },
   {
-    "title": "haurrore core (métal) v1_2cut_txt1audio2",
-    "file": "audio/haurrore core (métal) v1_2cut_txt1audio2.mp3",
+    "title": "haurrore core (m\u00e9tal) v1_2cut_txt1audio2",
+    "file": "audio/haurrore core (m\u00e9tal) v1_2cut_txt1audio2.mp3",
     "tags": [
       "metal"
     ],
@@ -290,8 +290,8 @@
     "id": 16
   },
   {
-    "title": "haurrore core txtV0.2(métal hip-hop)v2_txt1.5audio2",
-    "file": "audio/haurrore core txtV0.2(métal hip-hop)v2_txt1.5audio2.mp3",
+    "title": "haurrore core txtV0.2(m\u00e9tal hip-hop)v2_txt1.5audio2",
+    "file": "audio/haurrore core txtV0.2(m\u00e9tal hip-hop)v2_txt1.5audio2.mp3",
     "tags": [
       "metal",
       "hiphop"
@@ -408,7 +408,7 @@
     "title": "the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam)",
     "file": "audio/the migrant song_v-Officielle txt_v5 (chanson,slam,reggae,slam).mp3",
     "tags": [
-      "chanson française",
+      "chanson fran\u00e7aise",
       "reggae",
       "slam"
     ],
@@ -560,15 +560,15 @@
     "id": 31
   },
   {
-    "title": "Mel à Roulettes",
-    "file": "audio/Mel à Roulettes.mp3",
+    "title": "Mel \u00e0 Roulettes",
+    "file": "audio/Mel \u00e0 Roulettes.mp3",
     "tags": [
       "raggamuffin",
       "reggae",
       "ragga",
-      "chanson française"
+      "chanson fran\u00e7aise"
     ],
-    "style": "raggamuffin, reggae, ragga, chanson française",
+    "style": "raggamuffin, reggae, ragga, chanson fran\u00e7aise",
     "version": "vDEF.LATEST",
     "desc": "BONUS version haurrore ragga hardtek",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
@@ -952,35 +952,6 @@
     "id": 45
   },
   {
-    "title": "russian Jazzcore experiment (jazz hardcore acidcore tribecore experience)",
-    "file": "audio/russian Jazzcore experiment (jazz hardcore acidcore tribecore experience).mp3",
-    "tags": [
-      "jazzcore",
-      "tek",
-      "techno",
-      "hardcore",
-      "acidcore",
-      "tribecore",
-      "jazz",
-      "swing",
-      "fusion",
-      "experiment",
-      "hard jazzcore",
-      "hardtek",
-      "instrumental",
-      "jumpy"
-    ],
-    "style": "tek,hardtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore,jazz,swing,fusion,experiment,hard jazzcore",
-    "version": "experiment 16",
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-08",
-    "rating": 5,
-    "uploadTime": "2000-01-01T00:00:00",
-    "id": 46
-  },
-  {
     "title": "Cicada3310 to Bunker 42_tekHardcore faceA",
     "file": "audio/Cicada3310 to Bunker 42_tekHardcore_occi.ai-toRemix trimEnd.mp3",
     "tags": [
@@ -1001,28 +972,6 @@
     "rating": 3,
     "uploadTime": "2000-01-01T00:00:00",
     "id": 47
-  },
-  {
-    "title": "Cicada3310 to Bunker 42_tekHardcore faceA",
-    "file": "audio/Cicada3310 to Bunker 42_tekHardcore_occi.ai-toRemixWithLollipop.mp3",
-    "tags": [
-      "tek",
-      "techno",
-      "hardcore",
-      "acidcore",
-      "tribecore",
-      "instrumental",
-      "jumpy"
-    ],
-    "style": "tek,hardtek,jumpy,techno,instrumental,hardcore,acidcore,tribecore",
-    "version": "face B",
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-08",
-    "rating": 3,
-    "uploadTime": "2000-01-01T00:00:00",
-    "id": 48
   },
   {
     "title": "A Tribute to Russian Antifas",
@@ -1193,18 +1142,6 @@
     "id": 54
   },
   {
-    "title": "Circus Madness (instru)",
-    "file": "audio/instru rap/Circus Madness (instru).mp3",
-    "tags": [],
-    "rating": 4,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-09",
-    "uploadTime": "2000-01-01T00:00:00",
-    "id": 55
-  },
-  {
     "title": "Cirque de Cendres",
     "file": "audio/instru rap/Cirque de Cendres (instru).mp3",
     "tags": [
@@ -1237,53 +1174,13 @@
     ],
     "style": "hiphop,rap,instru,trap,drill,horrorcore",
     "rating": 5,
-    "label": "Coup2coeur de léquipe",
+    "label": "Coup2coeur de l\u00e9quipe",
     "desc": "",
     "lyricsCreator": "",
     "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
     "recordDate": "2026-10-09",
     "uploadTime": "2000-01-01T00:00:00",
     "id": 57
-  },
-  {
-    "title": "Horreur Positive vDEF (instru)",
-    "file": "audio/instru rap/Horreur Positive vDEF (instru).mp3",
-    "tags": [
-      "hiphop",
-      "rap",
-      "instru",
-      "trap",
-      "drill",
-      "horrorcore"
-    ],
-    "style": "hiphop,rap,instru,trap,drill,horrorcore",
-    "rating": 4,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-09",
-    "uploadTime": "2000-01-01T00:00:00",
-    "id": 58
-  },
-  {
-    "title": "Le Clown Sadique (instru)",
-    "file": "audio/instru rap/Le Clown Sadique (instru).mp3",
-    "tags": [
-      "hiphop",
-      "rap",
-      "instru",
-      "trap",
-      "drill",
-      "horrorcore"
-    ],
-    "style": "hiphop,rap,instru,trap,drill,horrorcore",
-    "rating": 5,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-09",
-    "uploadTime": "2000-01-01T00:00:00",
-    "id": 59
   },
   {
     "title": "life is Epic rap drill instrumental",
@@ -1326,68 +1223,6 @@
     "id": 61
   },
   {
-    "title": "Poisoned Lollipop (instru)",
-    "file": "audio/instru rap/Poisoned Lollipop (instru).mp3",
-    "tags": [
-      "hiphop",
-      "rap",
-      "instru",
-      "trap",
-      "drill",
-      "horrorcore"
-    ],
-    "style": "hiphop,rap,instru,trap,drill,horrorcore",
-    "rating": 5,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-09",
-    "uploadTime": "2000-01-01T00:00:00",
-    "id": 62
-  },
-  {
-    "title": "pure instrumental rap piano lyric old school v2",
-    "file": "audio/instru rap/pure instrumental rap piano lyric old school v2.mp3",
-    "tags": [
-      "hiphop",
-      "rap",
-      "instru",
-      "trap",
-      "drill",
-      "horrorcore",
-      "old school"
-    ],
-    "style": "hiphop,rap,instru,trap,drill,horrorcore,old school",
-    "rating": 5,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-07",
-    "uploadTime": "2000-01-01T00:00:00",
-    "id": 63
-  },
-  {
-    "title": "pure instrumental rap piano lyric old school",
-    "file": "audio/instru rap/pure instrumental rap piano lyric old school.mp3",
-    "tags": [
-      "hiphop",
-      "rap",
-      "instru",
-      "trap",
-      "drill",
-      "horrorcore",
-      "old school"
-    ],
-    "style": "hiphop,rap,instru,trap,drill,horrorcore,old school",
-    "rating": 5,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-07",
-    "uploadTime": "2000-01-01T00:00:00",
-    "id": 64
-  },
-  {
     "title": "They're coming for you Epic Orchestral rap drill instrumental",
     "file": "audio/instru rap/They're coming for you Epic Orchestral rap drill instrumental.mp3",
     "tags": [
@@ -1408,27 +1243,6 @@
     "id": 65
   },
   {
-    "title": "Childhood Madness Memories (instru)",
-    "file": "audio/instru rap/Childhood Madness Memories (instru).mp3",
-    "tags": [
-      "hiphop",
-      "rap",
-      "instru",
-      "trap",
-      "drill",
-      "horrorcore",
-      "old school"
-    ],
-    "style": "hiphop,rap,instru,trap,drill,horrorcore,old school",
-    "rating": 4,
-    "desc": "",
-    "lyricsCreator": "",
-    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
-    "recordDate": "2026-10-08",
-    "uploadTime": "2000-01-01T00:00:00",
-    "id": 66
-  },
-  {
     "title": "id2merde en speed",
     "file": "audio/instru rap/John id2merde en speed_5.mp3",
     "tags": [
@@ -1440,13 +1254,13 @@
       "horrorcore",
       "old school",
       "alternatif",
-      "psychédélique"
+      "psych\u00e9d\u00e9lique"
     ],
-    "style": "hiphop,rap,instru,trap,drill,horrorcore,old school,alternatif,psychédélique",
+    "style": "hiphop,rap,instru,trap,drill,horrorcore,old school,alternatif,psych\u00e9d\u00e9lique",
     "rating": 3,
     "desc": "",
     "lyricsCreator": "",
-    "soundCreator": "Composed&Arranged by N30 [@ANTIKOMM] on FL Studio, samples échantillonés sur audacity",
+    "soundCreator": "Composed&Arranged by N30 [@ANTIKOMM] on FL Studio, samples \u00e9chantillon\u00e9s sur audacity",
     "recordDate": "2025",
     "uploadTime": "2000-01-01T00:00:00",
     "id": 67
@@ -1468,7 +1282,7 @@
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
-    "soundCreator": "Composed&Arranged by N30 [@ANTIKOMM] on FL Studio, samples échantillonés sur audacity",
+    "soundCreator": "Composed&Arranged by N30 [@ANTIKOMM] on FL Studio, samples \u00e9chantillon\u00e9s sur audacity",
     "recordDate": "2026-02",
     "uploadTime": "2000-01-01T00:00:00",
     "id": 68
@@ -1489,7 +1303,7 @@
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
-    "soundCreator": "Composed&Arranged by N30 [@ANTIKOMM] on FL Studio, samples échantillonés sur audacity",
+    "soundCreator": "Composed&Arranged by N30 [@ANTIKOMM] on FL Studio, samples \u00e9chantillon\u00e9s sur audacity",
     "recordDate": "2026-10-07",
     "uploadTime": "2000-01-01T00:00:00",
     "id": 69
@@ -1644,11 +1458,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "melodic"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 3,
     "desc": "",
     "lyricsCreator": "",
@@ -1672,11 +1486,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1700,11 +1514,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1728,11 +1542,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1756,12 +1570,12 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "melodic",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1785,11 +1599,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1813,11 +1627,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1841,11 +1655,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -1879,11 +1693,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1907,11 +1721,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1935,11 +1749,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 5,
     "desc": "",
     "lyricsCreator": "",
@@ -1963,11 +1777,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 4.5,
     "desc": "",
     "lyricsCreator": "",
@@ -1991,11 +1805,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 4.5,
     "desc": "",
     "lyricsCreator": "",
@@ -2019,11 +1833,11 @@
       "trance",
       "chamanic",
       "hypnotic",
-      "psychédélique",
+      "psych\u00e9d\u00e9lique",
       "evolutive",
       "acid"
     ],
-    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psychédélique,evolutive",
+    "style": ",tek,techno,instrumental,tribal,slow mentalcore,tribe,trance,chamanic,hypnotic,psych\u00e9d\u00e9lique,evolutive",
     "rating": 4,
     "desc": "",
     "lyricsCreator": "",
@@ -2058,8 +1872,8 @@
     ]
   },
   {
-    "title": "ce monde est maudit - feat Le Clown Sadique feat_occibot v.punk métal hardcore v1",
-    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique _occi.ai_punk métal hardcore v1.mp3",
+    "title": "ce monde est maudit - feat Le Clown Sadique feat_occibot v.punk m\u00e9tal hardcore v1",
+    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique _occi.ai_punk m\u00e9tal hardcore v1.mp3",
     "tags": [
       "punk",
       "metal",
@@ -2072,7 +1886,7 @@
     "id": 91,
     "style": "punk metal hardcore",
     "version": "1",
-    "desc": "coup de gueule spontané. Texte v2",
+    "desc": "coup de gueule spontan\u00e9. Texte v2",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
     "soundCreator": "music by N30 (@ANTIKOMM6tm)",
@@ -2083,8 +1897,8 @@
     ]
   },
   {
-    "title": "ce monde est maudit - feat Le Clown Sadique feat_occi.ai_punk métal hardcore v2",
-    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique _occi.ai_punk métal hardcore v2.mp3",
+    "title": "ce monde est maudit - feat Le Clown Sadique feat_occi.ai_punk m\u00e9tal hardcore v2",
+    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique _occi.ai_punk m\u00e9tal hardcore v2.mp3",
     "tags": [
       "punk",
       "metal",
@@ -2097,7 +1911,7 @@
     "id": 92,
     "style": "punk metal hardcore",
     "version": "2",
-    "desc": "coup de gueule spontané. texte v2",
+    "desc": "coup de gueule spontan\u00e9. texte v2",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
     "soundCreator": "music by N30 (@ANTIKOMM6tm)",
@@ -2142,8 +1956,8 @@
     "moods": []
   },
   {
-    "title": "ce monde est maudit - feat Le Clown Sadique _occibots_nuMetal hardcore dark métal Black Metal",
-    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique & occibot v_dark métal",
+    "title": "ce monde est maudit - feat Le Clown Sadique _occibots_nuMetal hardcore dark m\u00e9tal Black Metal",
+    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique & occibot v_dark m\u00e9tal",
     "tags": [
       "dark metal"
     ],
@@ -2153,7 +1967,7 @@
     "id": 95,
     "style": "dark metal",
     "version": "",
-    "desc": "coup de gueule spontané. texte v2",
+    "desc": "coup de gueule spontan\u00e9. texte v2",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
     "soundCreator": "music by N30 (@ANTIKOMM6tm)",
@@ -2187,7 +2001,7 @@
     "id": 97,
     "style": "Nu Metal",
     "version": "2",
-    "desc": "Un coup de gueule spontané, désolé ;) ...",
+    "desc": "Un coup de gueule spontan\u00e9, d\u00e9sol\u00e9 ;) ...",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
     "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
@@ -2209,9 +2023,9 @@
     "added": "2026-10-11",
     "uploadTime": "2026-10-11T23:08:05.494Z",
     "id": 98,
-    "style": "coup de gueule spontané",
+    "style": "coup de gueule spontan\u00e9",
     "version": "1",
-    "desc": "coup de gueule spontané",
+    "desc": "coup de gueule spontan\u00e9",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
     "soundCreator": "music by N30 (@ANTIKOMM6tm)",
@@ -2235,7 +2049,7 @@
     "id": 99,
     "style": "rap old school",
     "version": "2",
-    "desc": "coup de gueule spontané",
+    "desc": "coup de gueule spontan\u00e9",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
     "soundCreator": "music by N30 (@ANTIKOMM6tm)",
@@ -2260,7 +2074,7 @@
     "id": 100,
     "style": "Nu Metal metalcore punk crust",
     "version": "",
-    "desc": "coup de gueule spontané",
+    "desc": "coup de gueule spontan\u00e9",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
     "soundCreator": "music by N30 (@ANTIKOMM6tm)",
@@ -2284,7 +2098,7 @@
     "id": 101,
     "style": "rap old school trap",
     "version": "3",
-    "desc": "coup de gueule spontané",
+    "desc": "coup de gueule spontan\u00e9",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
     "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
     "soundCreator": "music by N30 (@ANTIKOMM6tm)",
@@ -2540,8 +2354,8 @@
     ]
   },
   {
-    "title": "Police Fasciste État Fasciste Les ordres viennent d'en haut",
-    "file": "audio/instru rap/2026-10-14/Police Fasciste État Fasciste Les ordres viennent d'en haut.mp3",
+    "title": "Police Fasciste \u00c9tat Fasciste Les ordres viennent d'en haut",
+    "file": "audio/instru rap/2026-10-14/Police Fasciste \u00c9tat Fasciste Les ordres viennent d'en haut.mp3",
     "tags": [
       "Instru",
       "Rap",
@@ -2590,8 +2404,8 @@
     "moods": []
   },
   {
-    "title": "Résistance Loop On veut le bac pas la bac",
-    "file": "audio/instru rap/2026-10-14/Résistance Loop On veut le bac pas la bac.mp3",
+    "title": "R\u00e9sistance Loop On veut le bac pas la bac",
+    "file": "audio/instru rap/2026-10-14/R\u00e9sistance Loop On veut le bac pas la bac.mp3",
     "tags": [
       "Instru",
       "Rap",
@@ -3128,73 +2942,6 @@
     "moods": []
   },
   {
-    "title": "Ce monde est maudit - feat Le Clown Sadique vRapINSTRUvers1_VoixBanale",
-    "file": "audio/techno/Ce monde est maudit - feat Le Clown Sadique vRapINSTRUvers1_VoixBanale.mp3",
-    "tags": [],
-    "rating": 3,
-    "added": "2026-10-11",
-    "uploadTime": "2026-10-11T23:08:05.494Z",
-    "id": 98,
-    "style": "",
-    "version": "",
-    "desc": "",
-    "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
-    "lyricsCreator": "",
-    "soundCreator": "",
-    "recordDate": "",
-    "moods": []
-  },
-  {
-    "title": "ce monde est maudit - feat Le Clown Sadique _occibots_Metal musette electro rock folk",
-    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique & occibot v_Metal musette electro rock folk.mp3",
-    "tags": [
-      "musette",
-      "metal",
-      "electro",
-      "rock",
-      "folk"
-    ],
-    "rating": 5,
-    "added": "2026-10-11",
-    "uploadTime": "2026-10-11T23:01:41.507Z",
-    "id": 94,
-    "style": "metal musette electro rock folk",
-    "version": "",
-    "desc": "coup de gueule spontané.texte v2",
-    "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
-    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
-    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
-    "recordDate": "2026-10-08",
-    "moods": [
-      "positive"
-    ]
-  },
-  {
-    "title": "ce monde est maudit - feat Le Clown Sadique _occi.ai_punkcore crust",
-    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique & occibot_punkcore crust.mp3",
-    "tags": [
-      "punkcore",
-      "crust",
-      "dark",
-      "angry"
-    ],
-    "rating": 4.5,
-    "added": "2026-10-11",
-    "uploadTime": "2026-10-11T23:01:41.507Z",
-    "id": 93,
-    "style": "punkcore crust",
-    "version": "",
-    "desc": "coup de gueule spontané. texte v2",
-    "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
-    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
-    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
-    "recordDate": "2026-10-08",
-    "moods": [
-      "dark",
-      "angry"
-    ]
-  },
-  {
     "title": "Did you ever heard Django in Clubs",
     "file": "audio/techno/2026-10-14/Did you ever heard Django in Clubs.mp3",
     "tags": [
@@ -3501,93 +3248,5 @@
     "style": "jazzidcore jazzidtribe celticore",
     "recordDate": "2026-10-12",
     "id": 142
-  },
-  {
-    "title": "Britain makes me feel Happy Celticore Jazzidtribe",
-    "file": "audio/techno/2026-10-14/Britain makes me feel Happy Celticore Jazzidtribe.mp3",
-    "tags": [
-      "jazzidcore",
-      "jazzidtribe",
-      "acid",
-      "hardcore",
-      "tribal",
-      "slavicore",
-      "gypsycore",
-      "tribecore",
-      "acidcore",
-      "Techno"
-    ],
-    "rating": 4,
-    "added": "2026-10-14",
-    "uploadTime": "2026-10-14T11:54:20.493Z",
-    "style": "jazzidcore jazzidtribe celticore",
-    "recordDate": "2026-10-12",
-    "id": 143
-  },
-  {
-    "title": "Celticore Spiral Acid Loop",
-    "file": "audio/techno/2026-10-14/Celticore Spiral Acid Loop.mp3",
-    "tags": [
-      "jazzidcore",
-      "jazzidtribe",
-      "acid",
-      "hardcore",
-      "tribal",
-      "slavicore",
-      "gypsycore",
-      "tribecore",
-      "acidcore",
-      "Techno"
-    ],
-    "rating": 4,
-    "added": "2026-10-14",
-    "uploadTime": "2026-10-14T11:54:20.493Z",
-    "style": "jazzidcore jazzidtribe celticore",
-    "recordDate": "2026-10-12",
-    "id": 144
-  },
-  {
-    "title": "Britain makes me feel Happy Celticore Jazzidtribe",
-    "file": "audio/techno/2026-10-14/Britain makes me feel Happy Celticore Jazzidtribe.mp3",
-    "tags": [
-      "jazzidcore",
-      "jazzidtribe",
-      "acid",
-      "hardcore",
-      "tribal",
-      "slavicore",
-      "gypsycore",
-      "tribecore",
-      "acidcore",
-      "Techno"
-    ],
-    "rating": 4,
-    "added": "2026-10-14",
-    "uploadTime": "2026-10-14T11:54:20.493Z",
-    "style": "jazzidcore jazzidtribe celticore",
-    "recordDate": "2026-10-12",
-    "id": 143
-  },
-  {
-    "title": "Celticore Spiral Acid Loop",
-    "file": "audio/techno/2026-10-14/Celticore Spiral Acid Loop.mp3",
-    "tags": [
-      "jazzidcore",
-      "jazzidtribe",
-      "acid",
-      "hardcore",
-      "tribal",
-      "slavicore",
-      "gypsycore",
-      "tribecore",
-      "acidcore",
-      "Techno"
-    ],
-    "rating": 4,
-    "added": "2026-10-14",
-    "uploadTime": "2026-10-14T11:54:51.574Z",
-    "style": "jazzidcore jazzidtribe celticore",
-    "recordDate": "2026-10-12",
-    "id": 147
   }
 ]
