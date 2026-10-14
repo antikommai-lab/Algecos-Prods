@@ -2459,13 +2459,26 @@
     "tags": [
       "Instru",
       "Rap",
-      "InstruRap"
+      "InstruRap",
+      "music box",
+      "dark",
+      "trap",
+      "old school"
     ],
-    "rating": 0,
+    "rating": 5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:07:26.600Z",
-    "style": "InstruRap",
-    "id": 112
+    "style": "trap",
+    "id": 112,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-01-13",
+    "moods": [
+      "sad"
+    ]
   },
   {
     "title": "Police Fasciste État Fasciste Les ordres viennent d'en haut",
