@@ -1,9 +1,9 @@
 /* ===== gestion par lots : tracks + playlists (mode explorateur) ===== */
-var MGTAB='tr',MGSEL=[],MGPL=null,MGPLSEL=[];
+var MGTAB='tr',MGSEL=[],MGPL=null,MGPLSEL=[],MGFONLY=false;
 var Q=String.fromCharCode(34);
 var _mgTab=mgTab;
 function openManage(tab){openModal('manageModal');try{mgTab(tab||'tr');}catch(e){var es=$('mgStatus');es.className='status err';es.textContent='ERREUR : '+e.message;}}
-function mgTab(t){try{MGTAB=t;MGSEL=(t==='tr'&&typeof LOTCARD!=='undefined'&&LOTCARD.length)?LOTCARD.slice().sort(function(a,b){return a-b;}):[];MGPLSEL=[];
+function mgTab(t){try{MGTAB=t;MGSEL=(t==='tr'&&typeof LOTCARD!=='undefined'&&LOTCARD.length)?LOTCARD.slice().sort(function(a,b){return a-b;}):[];MGPLSEL=[];MGFONLY=MGSEL.length>0;
  $('mgTabTr').className=t==='tr'?'btn':'btn2';$('mgTabPl').className=t==='pl'?'btn':'btn2';
  $('mgTr').style.display=t==='tr'?'block':'none';$('mgPl').style.display=t==='pl'?'block':'none';
  $('mgTitle').textContent=t==='tr'?'Gestion des tracks':'Gestion des playlists';
@@ -19,6 +19,7 @@ function mgFiltered(){var q=($('mgQ').value||'').toLowerCase().trim();
  else if(s==='added')L.sort(function(a,b){return upTime(b.t).localeCompare(upTime(a.t));});
  else if(s==='id')L.sort(function(a,b){return (a.t.id||a.i)-(b.t.id||b.i);});
  else L.sort(function(a,b){return String(a.t.title||'').localeCompare(String(b.t.title||''));});
+ if(MGFONLY&&MGSEL.length)L=L.filter(function(o){return MGSEL.indexOf(o.i)>-1;});
  return L;}
 function renderMgList(){
  try{var L=mgFiltered();
@@ -31,6 +32,7 @@ function renderMgList(){
   +'<button class='+Q+'mgdel'+Q+' data-del='+Q+''+o.i+''+Q+' title='+Q+'Supprimer (track + audio)'+Q+'>\u{1F5D1}</button>'
   +'</div>';}).join('')||'<div style='+Q+'color:var(--dim);padding:12px;font-size:.74rem'+Q+'>AUCUN R\u00C9SULTAT</div>';
  $('mgAll').checked=L.length>0&&L.every(function(o){return MGSEL.indexOf(o.i)>-1;});
+ var mo=$('mgOnlySel');if(mo)mo.checked=MGFONLY;
  bindMgRows();mgFabUpd();}
  catch(e){$('mgStatus').className='status err';$('mgStatus').textContent='RENDER KO : '+e.message;}}
 /* --- selection facon explorateur : clic = selection unique, ctrl/clic = multiple, shift = plage --- */
@@ -54,6 +56,7 @@ function bindMgRows(){
   var del=row.querySelector('.mgdel');
   if(del)del.onclick=function(ev){ev.stopPropagation();mgDelTrackAsk(i);};});
  $('mgAll').checked=mgFiltered().every(function(o){return MGSEL.indexOf(o.i)>-1;});}
+function mgOnlySelChg(){MGFONLY=$('mgOnlySel').checked;renderMgList();mgUpdEdit();}
 function mgToggle(i){var ix=MGSEL.indexOf(i);if(ix>-1)MGSEL.splice(ix,1);else MGSEL.push(i);mgFabUpd();}
 function mgAll(on){if(on)MGSEL=mgFiltered().map(function(o){return o.i;});else MGSEL=[];renderMgList();mgUpdEdit();}
 /* --- interface d'edition : apparait des qu'on a selectionne --- */
