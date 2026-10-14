@@ -52,8 +52,25 @@
   {
     "title": "Tribal Chamanic ceremonial Experience",
     "desc": "Ouvre les Portes de la Perception",
-    "tracks": [],
-    "upd": "2026-10-09"
+    "cover": "img/shaman-bg.jpg",
+    "img": "img/shaman-bg.jpg",
+    "tracks": [
+      "BINARY CEREMONY Mental Audio Fly Computing",
+      "Binary Ritual Hypnosis",
+      "Cerebral Chimic Attack",
+      "Cerebral Puppets Master",
+      "Ceremonial Desorientation",
+      "Critical Error Reality Dysfunction",
+      "Echoes Of Other Dimensions tribal tribe mentalcore",
+      "numeric sound alchemy brain control",
+      "The Spiral Perpetual Rotation",
+      "Relax and Leave Your Body",
+      "Ritual Ceremonial Pulse",
+      "The Computers Coalition Secret Army",
+      "Sonor Consciousness Deconnexion",
+      "the sound alchemist Ritual"
+    ],
+    "upd": "2026-10-14"
   },
   {
     "title": "les Instru Rap",
