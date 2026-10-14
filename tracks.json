@@ -2033,21 +2033,29 @@
     "id": 89
   },
   {
-    "title": "ce monde est maudit  feat Le Clown Sadique _occi.ai_nuMetal",
+    "title": "ce monde est maudit  feat Le Clown Sadique feat_occibot vNuMetal",
     "file": "audio/techno/ce monde est maudit  feat Le Clown Sadique _occi.ai_nuMetal.mp3",
-    "tags": [],
-    "rating": 3,
+    "tags": [
+      "dark",
+      "angry",
+      "nu metal",
+      "hiphop"
+    ],
+    "rating": 4,
     "added": "2026-10-11",
     "uploadTime": "2026-10-11T23:01:41.507Z",
     "id": 90,
-    "style": "",
-    "version": "",
-    "desc": "",
+    "style": "Nu Metal",
+    "version": "2",
+    "desc": "coup de gueule en passant. Texte v2 Definitive",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
-    "lyricsCreator": "",
-    "soundCreator": "",
-    "recordDate": "",
-    "moods": []
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-08",
+    "moods": [
+      "dark",
+      "angry"
+    ]
   },
   {
     "title": "ce monde est maudit - feat Le Clown Sadique _occi.ai_punk métal hardcore v1",
