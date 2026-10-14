@@ -2486,13 +2486,25 @@
     "tags": [
       "Instru",
       "Rap",
-      "InstruRap"
+      "InstruRap",
+      "trap"
     ],
-    "rating": 0,
+    "rating": 5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:07:26.600Z",
-    "style": "InstruRap",
-    "id": 113
+    "style": "trap",
+    "id": 113,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-14",
+    "moods": [
+      "melancolic",
+      "dark",
+      "epic"
+    ]
   },
   {
     "title": "Positive Russian Vibe",
