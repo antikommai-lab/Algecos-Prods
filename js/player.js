@@ -97,4 +97,8 @@ function openModal(id){$(id).classList.add('open');}
 function spiralUpd(){/* bouton permanent */}
 function openSpiral(){var src=(PLAYLIST&&PLAYLIST.img&&/\.gif$/i.test(PLAYLIST.img))?PLAYLIST.img:'img/animated-spiral.gif';
  $('spiralImg').src=encodeURI(src)+'?nc='+Date.now();$('spiralOv').classList.add('open');}
+function imgFS(){var m=$('imgModal');
+ if(document.fullscreenElement){document.exitFullscreen();return;}
+ m.classList.toggle('fs');
+ if(m.requestFullscreen)m.requestFullscreen().catch(function(){});}
 function closeSpiral(){$('spiralOv').classList.remove('open');}

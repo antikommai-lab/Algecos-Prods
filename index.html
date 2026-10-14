@@ -292,6 +292,8 @@ audio{width:100%;height:40px}
 #imgBig{max-width:92vw;max-height:74vh;border:4px solid var(--y);border-radius:12px;box-shadow:10px 10px 0 #000;transition:transform .15s;cursor:zoom-in;background:#000}
 #imgBig.zoom{transform:scale(2);cursor:zoom-out}
 #imgCap{color:var(--dim);font-size:.68rem;margin-top:10px;text-transform:uppercase;letter-spacing:.1em}
+.vbtn{position:fixed;top:18px;right:64px;width:38px;height:38px;border-radius:50%;background:var(--y);color:#000;border:2px solid #000;font-weight:700;font-size:1rem;cursor:pointer;z-index:45;box-shadow:2px 2px 0 #000}
+#imgModal.fs #imgBig{max-width:99vw;max-height:99vh;border-width:4px}
 .vcross{position:fixed;top:18px;right:18px;width:38px;height:38px;border-radius:50%;background:var(--y);color:#000;border:2px solid #000;font-weight:700;font-size:1rem;cursor:pointer;z-index:45;box-shadow:2px 2px 0 #000}
 .vnav{position:fixed;top:50%;width:54px;height:54px;background:#000;color:var(--y);border:2px solid var(--y);font-size:2rem;line-height:1;cursor:pointer;display:none;z-index:45;box-shadow:4px 4px 0 #000}
 #vL{left:16px}
@@ -436,7 +438,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v57</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v58</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -478,7 +480,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <button class="pbtn" onclick="toggleLyr()" title="Paroles">LYRICS</button>
 <button class="pbtn" onclick="openCmt()" title="Commentaires">&#128172;</button>
 <button class="pbtn" onclick="shareTrack(CURRENT)" title="Partager ce morceau">&#10548;</button>
-<button class="pbtn" id="spBtn" onclick="openSpiral()" title="Spirale mentale plein &#233;cran">&#128371;</button>
+<button class="pbtn" id="spBtn" onclick="openSpiral()" title="Spirale mentale plein &#233;cran">&#127744;</button>
 </div>
 </div>
 <audio id="audio" controls></audio>
@@ -490,6 +492,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 </div>
 
 <div class="modal" id="imgModal">
+<button class="vbtn" id="imgFSBtn" onclick="imgFS()" title="Plein &#233;cran">&#x26F6;</button>
 <button class="vcross" onclick="closeViewer()">&#x2715;</button>
 <button class="vnav" id="vL" onclick="vnav(-1)">&#x2039;</button>
 <img id="imgBig" alt="">
@@ -753,16 +756,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261057"></script>
-<script src="js/data.js?v=20261057"></script>
-<script src="js/auth.js?v=20261057"></script>
-<script src="js/admin.js?v=20261057"></script>
-<script src="js/player.js?v=20261057"></script>
-<script src="js/views.js?v=20261057"></script>
-<script src="js/versions.js?v=20261057"></script>
-<script src="js/genres.js?v=20261057"></script>
-<script src="js/manage.js?v=20261057"></script>
-<script src="js/main.js?v=20261057"></script>
+<script src="js/config.js?v=20261058"></script>
+<script src="js/data.js?v=20261058"></script>
+<script src="js/auth.js?v=20261058"></script>
+<script src="js/admin.js?v=20261058"></script>
+<script src="js/player.js?v=20261058"></script>
+<script src="js/views.js?v=20261058"></script>
+<script src="js/versions.js?v=20261058"></script>
+<script src="js/genres.js?v=20261058"></script>
+<script src="js/manage.js?v=20261058"></script>
+<script src="js/main.js?v=20261058"></script>
 
 </body>
 </html>
