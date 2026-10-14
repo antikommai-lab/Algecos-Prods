@@ -2241,21 +2241,28 @@
     ]
   },
   {
-    "title": "Ce Monde Est Maudit feat Le Clown Sadique v.HardcoreMIX",
+    "title": "Ce Monde Est Maudit feat Le Clown Sadique vRAP3",
     "file": "audio/techno/Ce Monde Est Maudit feat Le Clown Sadique v.HardcoreMIX.mp3",
-    "tags": [],
-    "rating": 3,
+    "tags": [
+      "trap",
+      "rap",
+      "old school",
+      "dark"
+    ],
+    "rating": 4,
     "added": "2026-10-11",
     "uploadTime": "2026-10-11T23:08:05.494Z",
     "id": 101,
-    "style": "",
-    "version": "",
-    "desc": "",
+    "style": "rap old school trap",
+    "version": "3",
+    "desc": "coup de gueule spontané",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
-    "lyricsCreator": "",
-    "soundCreator": "",
-    "recordDate": "",
-    "moods": []
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-08",
+    "moods": [
+      "dark"
+    ]
   },
   {
     "title": "Ethereal Piano Voice song",
