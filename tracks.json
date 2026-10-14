@@ -2838,11 +2838,12 @@
     ]
   },
   {
-    "title": "Casual Depressing Day Old Times ragtekcore Ragcore jazzidtribe",
+    "title": "Casual Depressing Day Old Times ragtekcore",
     "file": "audio/techno/2026-10-14/Casual Depressing Day Old Times ragtekcore Ragcore jazzidtribe.mp3",
     "tags": [
       "jazzidcore",
       "jazzidtribe",
+      "ragcore",
       "acid",
       "hardcore",
       "Techno"
@@ -2850,9 +2851,17 @@
     "rating": 4,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:31:27.298Z",
-    "style": "jazzidcore",
+    "style": "hard break jazzidcore ragcore, hardcore",
     "recordDate": "2026-10-13",
-    "id": 125
+    "id": 125,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "moods": [
+      "melancolic"
+    ]
   },
   {
     "title": "Fracture hard Jazzcore Hardcore",
