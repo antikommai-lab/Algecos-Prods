@@ -33,7 +33,7 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #tickInner{display:inline-block;white-space:nowrap;color:#F74C00;font-family:'Archivo Black',sans-serif;font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;padding:8px 0;animation:tkmove 22s linear infinite}
 @keyframes tkmove{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 #plGridH{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:18px}
-.plh{position:relative;background:rgba(16,16,16,.88);border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;cursor:pointer}
+.plh{position:relative;background:rgba(16,16,16,.88);border:2px solid var(--y);border-radius:10px;padding:14px;cursor:pointer}
 .plh h3{font-family:'Archivo Black',sans-serif;font-size:.95rem;text-transform:uppercase;margin-bottom:4px;color:var(--y)}
 .plh .m{color:var(--dim);font-size:.68rem;margin-bottom:8px;line-height:1.5}
 .plh .seltracks{border-top:1px solid var(--line);margin-top:8px}
@@ -49,7 +49,7 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #verWrap,#varWrap,#orderWrap,#selWrap,#newsWrap{display:none;max-width:1000px;margin:20px auto;padding:0 20px 90px}
 #verWrap.open,#varWrap.open,#orderWrap.open,#selWrap.open,#newsWrap.open{display:block}
 #newsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.vg{background:rgba(16,16,16,.88);border:1px solid var(--line);border-left:4px solid var(--y);padding:14px;margin-bottom:14px}
+.vg{background:rgba(16,16,16,.88);border:2px solid var(--y);border-radius:10px;padding:14px;margin-bottom:14px}
 .vg h3{font-family:'Archivo Black',sans-serif;font-size:.9rem;text-transform:uppercase;color:var(--y);margin-bottom:8px}
 .vg h3 small{color:var(--dim);font-family:'Space Mono',monospace;font-size:.62rem}
 .vrow{display:flex;align-items:center;gap:10px;padding:8px;border:1px solid var(--line);margin-bottom:6px;background:#000;flex-wrap:wrap}
@@ -123,7 +123,7 @@ body.adm #admBtn{display:block}
 #plistsWrap.open{display:block}
 .secH{font-family:'Archivo Black',sans-serif;color:var(--y);text-transform:uppercase;letter-spacing:.08em;font-size:1.2rem;margin:10px 0 16px}
 #plGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.plcard{position:relative;background:rgba(16,16,16,.88);border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.plcard{position:relative;background:rgba(16,16,16,.88);border:2px solid var(--y);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
 .plcard:hover{outline:1px solid var(--y)}
 .plcard .plc{width:64px;height:64px;object-fit:cover;border:2px solid var(--y);flex:none}
 .plcard .plbox{flex:1;min-width:0}
@@ -199,7 +199,7 @@ body.adm .card .shB{display:none}
 .tag:hover,.tag.on{color:#000;background:var(--y);border-color:var(--y)}
 #count{color:var(--dim);font-size:.72rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em}
 #grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.card{background:rgba(16,16,16,.88);background-size:cover;background-position:center;border:1px solid var(--line);border-top:4px solid var(--y);padding:14px;position:relative}
+.card{background:rgba(16,16,16,.88);background-size:cover;background-position:center;border:2px solid var(--y);border-radius:10px;padding:14px;position:relative}
 .card h3{font-size:.92rem;margin:4px 0 6px;padding-right:100px;font-family:'Archivo Black',sans-serif;text-transform:uppercase}
 .ver{display:inline-block;margin-bottom:6px;font-size:.6rem;background:var(--y);color:#000;padding:2px 7px;font-weight:700;text-transform:uppercase}
 .card .meta{font-size:.68rem;color:var(--dim);margin-bottom:8px;display:flex;flex-wrap:wrap;gap:5px}
@@ -285,6 +285,7 @@ audio{width:100%;height:40px}
 <button onclick="goStyles()" data-tip="Choisir un style">&#8803;</button>
 <button onclick="showPlaylists()" data-tip="Playlists">&#9776;</button>
 <button onclick="showNews()" data-tip="Nouveaut&#xe9;s">&#128227;</button>
+<button onclick="openSub()" data-tip="Rester inform&#xe9; &#x2014; RSS / mail">&#128233;</button>
 <button onclick="showVars()" data-tip="One track, many variations">&#9854;</button>
 <button onclick="shareSite()" data-tip="Partager le site">&#10548;</button>
 </div>
@@ -702,16 +703,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261043"></script>
-<script src="js/data.js?v=20261043"></script>
-<script src="js/auth.js?v=20261043"></script>
-<script src="js/admin.js?v=20261043"></script>
-<script src="js/player.js?v=20261043"></script>
-<script src="js/views.js?v=20261043"></script>
-<script src="js/versions.js?v=20261043"></script>
-<script src="js/genres.js?v=20261043"></script>
-<script src="js/manage.js?v=20261043"></script>
-<script src="js/main.js?v=20261043"></script>
+<script src="js/config.js?v=20261044"></script>
+<script src="js/data.js?v=20261044"></script>
+<script src="js/auth.js?v=20261044"></script>
+<script src="js/admin.js?v=20261044"></script>
+<script src="js/player.js?v=20261044"></script>
+<script src="js/views.js?v=20261044"></script>
+<script src="js/versions.js?v=20261044"></script>
+<script src="js/genres.js?v=20261044"></script>
+<script src="js/manage.js?v=20261044"></script>
+<script src="js/main.js?v=20261044"></script>
 
 </body>
 </html>
