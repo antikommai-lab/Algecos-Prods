@@ -1,14 +1,21 @@
 /* ===== genres : multi-tags + playlists auto (tags + styles) + lecture selection ===== */
+function autoCov(k){k=String(k||'').toLowerCase();
+ if(/jazzidtribe|jazzytribe|jazzid tribe/.test(k))return 'logo-jazzidtribe.jpg';
+ if(/jazzidcore|jazzcore|jazz/.test(k)&&/hard|speed|angry|dark/.test(k))return 'logo-jazzidcore2.jpg';
+ if(/jazzidcore|jazzcore|jazzycore/.test(k))return 'logo-jazzidcore.jpg';
+ if(/manouch/.test(k))return 'Manouchecore_logo.jpg';
+ if(/ragcore|ragtekcore|ragtime/.test(k))return 'logo-ragcore.jpg';
+ return '';}
 function genrePlaylists(){
  var cnt={},disp={},order=[];
  TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){var kk=tgN(k);if(!kk)return;if(!cnt[kk]){cnt[kk]=[];order.push(kk);disp[kk]=k;}
   if(cnt[kk].indexOf(t.title)<0)cnt[kk].push(t.title);});});
- return order.sort().map(function(k){var k=disp[k]||k;return {title:'GENRE \u00b7 '+k,desc:'G\u00E9n\u00E9r\u00E9e automatiquement \u2014 tous les morceaux taggu\u00E9s '+k,auto:'tag',tracks:cnt[k]};});}
+ return order.sort().map(function(k){var k=disp[k]||k;return {title:'GENRE \u00b7 '+k,desc:'G\u00E9n\u00E9r\u00E9e automatiquement \u2014 tous les morceaux taggu\u00E9s '+k,auto:'tag',cover:autoCov(k),tracks:cnt[k]};});}
 function stylePlaylists(){
  var cnt={},disp={},order=[];
  TRACKS.forEach(function(t){var k=String(t.style||'').trim();var kk=tgN(k);if(!kk)return;if(!cnt[kk]){cnt[kk]=[];order.push(kk);disp[kk]=k;}
   if(cnt[kk].indexOf(t.title)<0)cnt[kk].push(t.title);});
- return order.sort().map(function(k){var k=disp[k]||k;return {title:'STYLE \u00b7 '+k,desc:'G\u00E9n\u00E9r\u00E9e automatiquement \u2014 tous les morceaux de style '+k,auto:'style',tracks:cnt[k]};});}
+ return order.sort().map(function(k){var k=disp[k]||k;return {title:'STYLE \u00b7 '+k,desc:'G\u00E9n\u00E9r\u00E9e automatiquement \u2014 tous les morceaux de style '+k,auto:'style',cover:autoCov(k),tracks:cnt[k]};});}
 function tgN(s){return String(s==null?'':s).toLowerCase().trim()
  .replace(/[\u00E0-\u00FC]/g,function(c){return 'aaaeeeeiioouuuaaaeeeeiioouuu'['\u00E0\u00E1\u00E2\u00E3\u00E4\u00E7\u00E8\u00E9\u00EA\u00EB\u00EC\u00ED\u00EE\u00EF\u00F1\u00F2\u00F3\u00F4\u00F5\u00F6\u00F9\u00FA\u00FB\u00FC'.indexOf(c)]||c;});}
 function comboPlaylists(){
