@@ -155,7 +155,7 @@ function cardHTML(t,i){
  h+='<div class="desc fold" title="cliquer pour d\u00e9plier">'+esc(t.desc||'')+'</div>';
  h+='<button class="play" data-i="'+i+'">\u25b6 \u00c9couter</button>';
  h+='<button class="edit" data-e="'+i+'" title="\u00c9diter ce morceau">\u2699</button><button class="shB" data-shtr="'+i+'" title="Partager ce morceau">&#10548;</button>';
- if(document.body.classList.contains('adm'))h+='<button class="edit" data-vg="'+i+'" title="Ajouter au groupe de versions" style="top:76px">&#9854;</button><button class="edit" data-qpl="'+i+'" title="Ajouter \u00e0 une playlist" style="top:108px">&#9776;</button>';
+ if(document.body.classList.contains('adm'))h+='<button class="edit" data-vg="'+i+'" title="Ajouter au groupe de versions" style="top:110px">&#9854;</button><button class="edit" data-qpl="'+i+'" title="Ajouter \u00e0 une playlist" style="top:76px">&#9776;</button>';
  h+='</div>';return h;}
 function bindCards(root){
  root.querySelectorAll('.card').forEach(function(card){

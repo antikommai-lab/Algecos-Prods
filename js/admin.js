@@ -189,19 +189,21 @@ function fillPlVals(p){
   if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
   return entRef(r)||'';}).join(String.fromCharCode(10));
  plOrdSync();}
-function openPlForm(mode){
+function openPlForm(mode){try{
  if(mode===-1){pmIdx=-1;$('pmTitle').textContent='+ Nouvelle playlist';$('pmSelWrap').style.display='none';
   $('p_title').value='';$('p_desc').value='';$('p_cover').value='';$('p_img').value='';$('p_tracks').value='';plOrdSync();}
  else{$('pmTitle').textContent='\u270e Modifier une playlist';$('pmSelWrap').style.display='block';
   $('pmSel').innerHTML=PLAYLISTS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
   pmIdx=0;fillPl();}
  $('pStatus').textContent='';openModal('plModal');}
+ catch(e){$('pStatus').className='status err';$('pStatus').textContent='OUVERTURE KO : '+e.message;}}
 function editPl(i){
  var p=PLAYLISTS[i];if(!p)return;
  pmIdx=i;$('pmTitle').textContent='\u270e Modifier : '+p.title;$('pmSelWrap').style.display='none';
  fillPlVals(p);$('pStatus').textContent='';openModal('plModal');}
 function fillPl(){pmIdx=+$('pmSel').value;var p=PLAYLISTS[pmIdx];if(p)fillPlVals(p);}
 async function savePl(){
+ try{
  var ti=$('p_title').value.trim();
  if(!ti){$('pStatus').className='status err';$('pStatus').textContent='TITRE REQUIS';return;}
  plOrdOut();
@@ -218,7 +220,8 @@ async function savePl(){
  $('pStatus').className='status ok';$('pStatus').textContent='\u23f3 PUBLICATION\u2026';
  try{await publishAll('playlist : '+ti);
   closeModal('plModal');PLAYLIST=PLAYLISTS[0];await load();}
- catch(e){$('pStatus').className='status err';$('pStatus').textContent=e.message;}}
+ catch(e){$('pStatus').className='status err';$('pStatus').textContent=e.message;}
+ }catch(e2){$('pStatus').className='status err';$('pStatus').textContent='ENREGISTREMENT KO : '+e2.message;}}
 
 /* ===== formulaires s\u00e9lections ===== */
 var smSelIdx=-1;

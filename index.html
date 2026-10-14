@@ -686,6 +686,17 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div class="status" id="pStatus"></div>
 </div></div>
 
+<div class="modal" id="qplModal"><div class="mbox">
+<button class="close" onclick="closeModal('qplModal')">&#x2715;</button>
+<h3>&#x2630; Ajouter &#x00e0; une playlist</h3>
+<div class="status" id="qplWhich"></div>
+<label>Playlist</label>
+<select id="qplSel" onchange="qplSelChg()"></select>
+<div id="qplNew" style="display:none"><label>Nom de la nouvelle playlist</label><input id="qplNewIn"></div>
+<div class="row"><button class="btn" onclick="qplAdd()">Ajouter</button><button class="btn2" onclick="closeModal('qplModal')">Annuler</button></div>
+<div class="status" id="qplStatus"></div>
+</div></div>
+
 <div class="modal" id="shareModal" onclick="if(event.target===this)closeModal('shareModal')"><div class="mbox">
 <button class="close" onclick="closeModal('shareModal')">&#10005;</button>
 <h3>&#10548; PARTAGER</h3>
@@ -703,16 +714,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261044"></script>
-<script src="js/data.js?v=20261044"></script>
-<script src="js/auth.js?v=20261044"></script>
-<script src="js/admin.js?v=20261044"></script>
-<script src="js/player.js?v=20261044"></script>
-<script src="js/views.js?v=20261044"></script>
-<script src="js/versions.js?v=20261044"></script>
-<script src="js/genres.js?v=20261044"></script>
-<script src="js/manage.js?v=20261044"></script>
-<script src="js/main.js?v=20261044"></script>
+<script src="js/config.js?v=20261045"></script>
+<script src="js/data.js?v=20261045"></script>
+<script src="js/auth.js?v=20261045"></script>
+<script src="js/admin.js?v=20261045"></script>
+<script src="js/player.js?v=20261045"></script>
+<script src="js/views.js?v=20261045"></script>
+<script src="js/versions.js?v=20261045"></script>
+<script src="js/genres.js?v=20261045"></script>
+<script src="js/manage.js?v=20261045"></script>
+<script src="js/main.js?v=20261045"></script>
 
 </body>
 </html>

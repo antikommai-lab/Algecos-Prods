@@ -268,12 +268,31 @@ async function mgRepAudio(input){
  catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;}}
 
 /* ===== ajout rapide : 1 morceau -> playlist (depuis les cartes) ===== */
+
 function quickAddPl(i){
- openManage('tr');
- MGSEL=[i];
- fillMgPlSel();
- var sel=$('mgPlSel');sel.value='';
- var box=$('mgEditBox');box.style.display='block';mgFillEdit();
- $('mgSelBar').style.display='block';$('mgSelBar').textContent='AJOUT \u00C0 UNE PLAYLIST : '+esc(TRACKS[i].title);
- sel.onchange=function(){if(sel.value)mgAddToPl();};
- $('mgStatus').textContent='CHOISIS LA PLAYLIST DANS LE MENU D\u00C9ROULANT CI-DESSOUS';$('mgStatus').className='status';}
+ var t=TRACKS[i];if(!t)return;QPLI=i;
+ fillQplSel();$('qplNew').style.display='none';$('qplNewIn').value='';
+ $('qplWhich').textContent='MORCEAU : '+t.title;
+ $('qplStatus').textContent='';$('qplStatus').className='status';
+ openModal('qplModal');}
+var QPLI=-1;
+function fillQplSel(){var sel=$('qplSel');
+ sel.innerHTML='<option value="">\u2014 choisir une playlist \u2014</option>'+PLAYLISTS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('')+'<option value="__new">+ Nouvelle playlist\u2026</option>';}
+function qplSelChg(){$('qplNew').style.display=($('qplSel').value==='__new')?'block':'none';}
+async function qplAdd(){
+ var st=$('qplStatus'),v=$('qplSel').value,t=TRACKS[QPLI];if(!t)return;
+ var p=null;
+ if(v==='__new'){var nn=$('qplNewIn').value.trim();
+  if(!nn){st.className='status err';st.textContent='TAPE UN NOM DE PLAYLIST';return;}
+  p=PLAYLISTS.find(function(x){return x.title===nn;});
+  if(!p){p={title:nn,desc:'',tracks:[],upd:new Date().toISOString().slice(0,10)};PLAYLISTS.push(p);}}
+ else if(v!==''){p=PLAYLISTS[+v];}
+ if(!p){st.className='status err';st.textContent='CHOISIS UNE PLAYLIST';return;}
+ if((p.tracks=p.tracks||[]).indexOf(t.title)<0)p.tracks.push(t.title);
+ p.upd=new Date().toISOString().slice(0,10);
+ st.className='status ok';st.textContent='\u23f3 PUBLICATION\u2026';
+ try{await publishAll('ajout : '+t.title+' \u2192 '+p.title);
+  st.textContent='\u2713 AJOUT\u00c9 \u00c0 '+p.title;
+  setTimeout(function(){closeModal('qplModal');},800);
+  await load();}
+ catch(e){st.className='status err';st.textContent=e.message;}}
