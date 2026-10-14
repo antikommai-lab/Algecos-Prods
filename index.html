@@ -39,6 +39,10 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .plh .seltracks{border-top:1px solid var(--line);margin-top:8px}
 .plh .seltracks .srow{display:flex;gap:8px;padding:6px 2px;border-bottom:1px solid var(--line);font-size:.72rem;cursor:pointer}
 .plh .seltracks .srow:hover{color:var(--y)}
+.plFoldBtn{cursor:pointer;color:var(--y);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin:2px 0 0;user-select:none;display:inline-block}
+.plFoldBtn:hover{outline:1px solid var(--y)}
+.plFoldBtn .plArr{display:inline-block;transition:transform .2s}
+.plh.open .plFoldBtn .plArr{transform:rotate(180deg)}
 .plh .seltracks{display:none}
 .plh.open .seltracks{display:block}
 .plh .plc{width:64px;height:64px;object-fit:cover;border:2px solid var(--y);float:right;margin:0 0 8px 10px}
@@ -732,16 +736,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261047"></script>
-<script src="js/data.js?v=20261047"></script>
-<script src="js/auth.js?v=20261047"></script>
-<script src="js/admin.js?v=20261047"></script>
-<script src="js/player.js?v=20261047"></script>
-<script src="js/views.js?v=20261047"></script>
-<script src="js/versions.js?v=20261047"></script>
-<script src="js/genres.js?v=20261047"></script>
-<script src="js/manage.js?v=20261047"></script>
-<script src="js/main.js?v=20261047"></script>
+<script src="js/config.js?v=20261048"></script>
+<script src="js/data.js?v=20261048"></script>
+<script src="js/auth.js?v=20261048"></script>
+<script src="js/admin.js?v=20261048"></script>
+<script src="js/player.js?v=20261048"></script>
+<script src="js/views.js?v=20261048"></script>
+<script src="js/versions.js?v=20261048"></script>
+<script src="js/genres.js?v=20261048"></script>
+<script src="js/manage.js?v=20261048"></script>
+<script src="js/main.js?v=20261048"></script>
 
 </body>
 </html>
