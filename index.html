@@ -22,7 +22,7 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .brand h1{font-family:'Archivo Black',sans-serif;font-size:clamp(1.2rem,4vw,2rem);letter-spacing:.06em;color:var(--ink);text-transform:uppercase;line-height:1.05}
 .brand h1 b{color:var(--y)}
 .brand .tag{font-size:.62rem;color:var(--dim);letter-spacing:.28em;text-transform:uppercase}
-#hicons{position:absolute;top:16px;right:126px;display:flex;gap:8px}
+#hicons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0 0}
 #hicons button{width:40px;height:40px;background:#000;color:var(--y);border:2px solid var(--y);font-size:1.15rem;cursor:pointer;position:relative;box-shadow:3px 3px 0 #000}
 #hicons button:hover{background:var(--y);color:#000}
 #hicons button::after{content:attr(data-tip);position:absolute;top:46px;right:0;background:#000;color:var(--y);border:1px solid var(--y);padding:4px 8px;font-size:.6rem;white-space:nowrap;display:none;z-index:5;text-transform:uppercase;letter-spacing:.08em}
@@ -39,14 +39,15 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .plh .seltracks{border-top:1px solid var(--line);margin-top:8px}
 .plh .seltracks .srow{display:flex;gap:8px;padding:6px 2px;border-bottom:1px solid var(--line);font-size:.72rem;cursor:pointer}
 .plh .seltracks .srow:hover{color:var(--y)}
-.plFoldBtn{cursor:pointer;color:var(--y);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin:2px 0 0;user-select:none;display:inline-block}
-.plFoldBtn:hover{outline:1px solid var(--y)}
+.plFoldBtn{cursor:pointer;color:var(--y);font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin:8px 0 0;user-select:none;display:flex;align-items:center;gap:8px;border:2px solid var(--y);background:#000;padding:7px 12px;box-shadow:3px 3px 0 #000}
+.plFoldBtn:hover{background:var(--y);color:#000}
+.plFoldBtn .plArr{font-size:1.05rem}
 .plFoldBtn .plArr{display:inline-block;transition:transform .2s}
 .plh.open .plFoldBtn .plArr{transform:rotate(180deg)}
 .plh .seltracks{display:none}
 .plh.open .seltracks{display:block}
 .plh .plc{width:64px;height:64px;object-fit:cover;border:2px solid var(--y);float:right;margin:0 0 8px 10px}
-.plh .row{display:flex;gap:6px;flex-wrap:wrap}
+.plh .row{display:flex;gap:6px;flex-wrap:wrap;clear:both;margin-top:10px}
 .plh .btn{padding:8px 10px;font-size:.9rem;line-height:1}
 .plh .btn.on{background:#39d353}
 @media(max-width:700px){#plGridH{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.plh{padding:10px}}
@@ -298,6 +299,7 @@ audio{width:100%;height:40px}
 <div><h1>ALGECOS<b>-</b>PRODS</h1><div class="tag">une division d&#39;ANTIKOMM&#x2122; &#x2014; 2026</div></div>
 </div>
 <div id="hicons">
+<button onclick="showList()" data-tip="Accueil">&#8962;</button>
 <button onclick="showList(true)" data-tip="Tous les morceaux">&#9835;</button>
 <button onclick="goStyles()" data-tip="Choisir un style">&#8803;</button>
 <button onclick="showPlaylists()" data-tip="Playlists">&#9776;</button>
@@ -736,16 +738,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261048"></script>
-<script src="js/data.js?v=20261048"></script>
-<script src="js/auth.js?v=20261048"></script>
-<script src="js/admin.js?v=20261048"></script>
-<script src="js/player.js?v=20261048"></script>
-<script src="js/views.js?v=20261048"></script>
-<script src="js/versions.js?v=20261048"></script>
-<script src="js/genres.js?v=20261048"></script>
-<script src="js/manage.js?v=20261048"></script>
-<script src="js/main.js?v=20261048"></script>
+<script src="js/config.js?v=20261049"></script>
+<script src="js/data.js?v=20261049"></script>
+<script src="js/auth.js?v=20261049"></script>
+<script src="js/admin.js?v=20261049"></script>
+<script src="js/player.js?v=20261049"></script>
+<script src="js/views.js?v=20261049"></script>
+<script src="js/versions.js?v=20261049"></script>
+<script src="js/genres.js?v=20261049"></script>
+<script src="js/manage.js?v=20261049"></script>
+<script src="js/main.js?v=20261049"></script>
 
 </body>
 </html>
