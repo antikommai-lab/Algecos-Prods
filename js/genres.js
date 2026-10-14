@@ -1,12 +1,14 @@
 /* ===== genres : multi-tags + playlists auto (tags + styles) + lecture selection ===== */
+function pickV(k,a,b,c){var h=0;for(var i=0;i<k.length;i++)h=(h*31+k.charCodeAt(i))>>>0;return [a,b,c][h%3];}
 function autoCov(k){k=String(k||'').toLowerCase();
  if(/jazzidtribe|jazzytribe|jazzid tribe/.test(k))return 'logo-jazzidtribe.jpg';
  if(/jazzidcore|jazzcore|jazz/.test(k)&&/hard|speed|angry|dark/.test(k))return 'logo-jazzidcore2.jpg';
  if(/jazzidcore|jazzcore|jazzycore/.test(k))return 'logo-jazzidcore.jpg';
  if(/manouch/.test(k))return 'Manouchecore_logo.jpg';
  if(/ragcore|ragtekcore|ragtime/.test(k))return 'logo-ragcore.jpg';
- return '';}
-function genrePlaylists(){
+ if(/gypsy/.test(k))return pickV(k,'logo-gypsycore.jpg','logo-gypsycore2.jpg','logo-gypsycore3.jpg');
+ if(/cel[ei]?t[ei]c/.test(k))return pickV(k,'logo-celticore.jpg','logo-celticore2.jpg','logo-celticore3.jpg');
+ return '';}function genrePlaylists(){
  var cnt={},disp={},order=[];
  TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){var kk=tgN(k);if(!kk)return;if(!cnt[kk]){cnt[kk]=[];order.push(kk);disp[kk]=k;}
   if(cnt[kk].indexOf(t.title)<0)cnt[kk].push(t.title);});});
