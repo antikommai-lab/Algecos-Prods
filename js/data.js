@@ -54,16 +54,16 @@ function trackCoverPaths(t){var out=[],i,b=String(t.title||'')+'_cover';
 
 /* ===== chargement ===== */
 async function load(){
- try{var r=await fetch('tracks.json',{cache:'no-store'});TRACKS=await r.json();}catch(e){TRACKS=[];}
- try{var p=await fetch('playlists.json',{cache:'no-store'});PLAYLISTS=await p.json();}catch(e){PLAYLISTS=[];}
+ try{var r=await fetch('tracks.json?nc='+Date.now(),{cache:'no-store'});TRACKS=await r.json();}catch(e){TRACKS=[];}
+ try{var p=await fetch('playlists.json?nc='+Date.now(),{cache:'no-store'});PLAYLISTS=await p.json();}catch(e){PLAYLISTS=[];}
  if(!Array.isArray(PLAYLISTS))PLAYLISTS=[];
- try{var sl=await fetch('selections.json',{cache:'no-store'});SELS=await sl.json();}catch(e){SELS=[];}
+ try{var sl=await fetch('selections.json?nc='+Date.now(),{cache:'no-store'});SELS=await sl.json();}catch(e){SELS=[];}
  if(!Array.isArray(SELS))SELS=[];
- try{var mg=await fetch('messages.json',{cache:'no-store'});MSGS=await mg.json();}catch(e){MSGS=[];}
+ try{var mg=await fetch('messages.json?nc='+Date.now(),{cache:'no-store'});MSGS=await mg.json();}catch(e){MSGS=[];}
  if(!Array.isArray(MSGS))MSGS=[];
- try{var vgd=await fetch('vg.json',{cache:'no-store'});VGROUPS=await vgd.json();}catch(e){VGROUPS=[];}
+ try{var vgd=await fetch('vg.json?nc='+Date.now(),{cache:'no-store'});VGROUPS=await vgd.json();}catch(e){VGROUPS=[];}
  if(!Array.isArray(VGROUPS))VGROUPS=[];
- if(!PLAYLIST||PLAYLISTS.indexOf(PLAYLIST)<0)PLAYLIST=PLAYLISTS[0]||{title:'—',desc:'',tracks:[]};
+ if(!PLAYLIST||PLAYLISTS.indexOf(PLAYLIST)<0)PLAYLIST=PLAYLISTS[0]||{title:'\u2014',desc:'',tracks:[]};
  renderPlaylist();renderPlists();renderHomeGrid();renderVersions();renderSels();
  var allTags=[];TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){if(allTags.indexOf(k)<0)allTags.push(k);});});
  allTags.sort();
