@@ -137,6 +137,14 @@ body.adm #admBtn{display:block}
 .fold.nofold{max-height:none;overflow:visible;cursor:default}
 .fold.nofold:after{display:none}
 #mgList,#mgPlList,#mgPEList{max-height:42vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px}
+.plTracks{display:none;margin:6px 0 8px;border:1px solid var(--line);background:#000;max-height:200px;overflow-y:auto}
+.plcard.openPl .plTracks{display:block}
+.plArr{display:inline-block;transition:transform .2s;color:var(--y)}
+.plcard.openPl .plArr{transform:rotate(180deg)}
+.plTrow{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border-bottom:1px solid var(--line);font-size:.68rem;cursor:pointer}
+.plTrow:last-child{border-bottom:none}
+.plTrow:hover{color:var(--y)}
+.plTrow small{color:var(--dim);font-size:.6rem;text-transform:uppercase}
 #mgFab{position:fixed;bottom:22px;right:22px;z-index:44;display:none;gap:10px}
 #mgFab.show{display:flex}
 #mgFab button{width:54px;height:54px;background:#000;color:var(--y);border:3px solid var(--y);font-size:1.2rem;cursor:pointer;box-shadow:4px 4px 0 #000;position:relative}
@@ -724,16 +732,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261046"></script>
-<script src="js/data.js?v=20261046"></script>
-<script src="js/auth.js?v=20261046"></script>
-<script src="js/admin.js?v=20261046"></script>
-<script src="js/player.js?v=20261046"></script>
-<script src="js/views.js?v=20261046"></script>
-<script src="js/versions.js?v=20261046"></script>
-<script src="js/genres.js?v=20261046"></script>
-<script src="js/manage.js?v=20261046"></script>
-<script src="js/main.js?v=20261046"></script>
+<script src="js/config.js?v=20261047"></script>
+<script src="js/data.js?v=20261047"></script>
+<script src="js/auth.js?v=20261047"></script>
+<script src="js/admin.js?v=20261047"></script>
+<script src="js/player.js?v=20261047"></script>
+<script src="js/views.js?v=20261047"></script>
+<script src="js/versions.js?v=20261047"></script>
+<script src="js/genres.js?v=20261047"></script>
+<script src="js/manage.js?v=20261047"></script>
+<script src="js/main.js?v=20261047"></script>
 
 </body>
 </html>

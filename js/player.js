@@ -12,7 +12,14 @@ function play(t,list){
  $('pinfo').textContent='VO:'+(t.lyricsCreator||'\u2014')+' / SND:'+(t.soundCreator||'\u2014')+' / '+(t.recordDate||'\u2014')+' / '+(t.prov==='A'?'HUMAIN':(t.prov==='B'?'HYBRIDE':'IA \u2014 NON VENDABLE'));
  $('pstars').innerHTML=stars(t.rating);$('pAvg').textContent='';
  var seq=++PCV;
- tryCovers(trackCoverPaths(t),function(u){if(seq!==PCV)return;var c=$('tCover');if(u){c.src=u;c.style.display='block';}else c.style.display='none';});
+ var pl=$('player');
+ tryCovers(trackCoverPaths(t),function(u){if(seq!==PCV)return;var c=$('tCover');
+  if(u){c.src=u;c.style.display='block';}else c.style.display='none';
+  if(u)pl.style.backgroundImage='linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.82)),url("'+encodeURI(u)+'")';
+  else if(PLAYLIST){var cps=PLAYLIST.img?(PLAYLIST.img.indexOf('/')>0?[PLAYLIST.img]:plCoverPaths(PLAYLIST.img)):plCoverPaths(PLAYLIST.cover||'');
+   if(cps&&cps.length)tryCovers(cps,function(u2){if(seq!==PCV)return;pl.style.backgroundImage=u2?'linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.82)),url("'+encodeURI(u2)+'")':'';});
+   else pl.style.backgroundImage='';}
+  else pl.style.backgroundImage='';});
  if(sbReady())SB.from('ratings').select('stars').eq('track',t.title).then(function(res){
   if(seq!==PCV||!res.data||!res.data.length)return;
   var avg=res.data.reduce(function(a,b){return a+b.stars;},0)/res.data.length;

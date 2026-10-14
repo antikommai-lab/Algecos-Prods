@@ -112,7 +112,9 @@ function renderPlists(){
  var all=PLAYLISTS.concat(autoPlaylists());
  $('plGrid').innerHTML=all.map(function(p,i){
   var nb=((p.tracks)||[]).map(function(r){return plMatch(entRef(r))?1:0;}).reduce(function(a,b){return a+b;},0);
- return '<div class="plcard" data-i="'+i+'">'+(p.auto?'':'<button class="edit" data-pe="'+i+'" title="Editer cette playlist">&#9881;</button>')+'<button class="pbtn shB2" data-shp="'+i+'" title="Partager cette playlist">&#10548;</button><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'\u2014')+(p.auto?' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>':'')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="pln">'+nb+' morceaux</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
+  var tr=((p.tracks)||[]).map(function(r){return plMatch(entRef(r));}).filter(function(x){return x;});
+  var tl=tr.map(function(t){return '<div class="plTrow" data-tt="'+esc(t.title)+'"><span>'+esc(t.title)+'</span><small>'+esc(t.style||'')+'</small></div>';}).join('');
+ return '<div class="plcard" data-i="'+i+'">'+(p.auto?'':'<button class="edit" data-pe="'+i+'" title="Editer cette playlist">&#9881;</button>')+'<button class="pbtn shB2" data-shp="'+i+'" title="Partager cette playlist">&#10548;</button><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'\u2014')+(p.auto?' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>':'')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="pln" data-fld="'+i+'" style="cursor:pointer">'+nb+' morceaux <span class="plArr">&#9662;</span></div><div class="plTracks">'+tl+'</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
  document.querySelectorAll('.plcard').forEach(function(cd){
   var p=all[+cd.getAttribute('data-i')];
   if(p&&p.cover&&!p.auto)tryCovers(plCoverPaths(p.cover),function(u){var im=cd.querySelector('.plc');if(u){im.src=u;im.style.display='block';}});
@@ -120,6 +122,9 @@ function renderPlists(){
   if(eb)eb.onclick=function(ev){ev.stopPropagation();editPl(PLAYLISTS.indexOf(p));};
   var sb=cd.querySelector('[data-shp]');
   if(sb)sb.onclick=function(ev){ev.stopPropagation();sharePl(p);};
+  var fb=cd.querySelector('[data-fld]');
+  if(fb)fb.onclick=function(ev){ev.stopPropagation();cd.classList.toggle('openPl');};
+  cd.querySelectorAll('.plTrow').forEach(function(rw){rw.onclick=function(ev){ev.stopPropagation();var t2=TRACKS.find(function(x){return x.title===rw.getAttribute('data-tt');});if(t2)play(t2,[t2]);};});
   cd.onclick=function(){PLAYLIST=p||PLAYLIST;renderPlaylist();showView('home');};});}
 
 /* ===== navigation ===== */
