@@ -2126,37 +2126,12 @@
   },
   {
     "title": "ce monde est maudit - feat Le Clown Sadique _occibots_Metal musette electro rock folk",
-    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique & occibot v_Metal musette electro rock folk.mp3",
-    "tags": [
-      "musette",
-      "metal",
-      "electro",
-      "rock",
-      "folk"
-    ],
-    "rating": 5,
-    "added": "2026-10-11",
-    "uploadTime": "2026-10-11T23:01:41.507Z",
-    "id": 94,
-    "style": "metal musette electro rock folk",
-    "version": "",
-    "desc": "coup de gueule spontané.texte v2",
-    "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
-    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
-    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
-    "recordDate": "2026-10-08",
-    "moods": [
-      "positive"
-    ]
-  },
-  {
-    "title": "ce monde est maudit - feat Le Clown Sadique _occibots_nuMetal hardcore dark métal Black Metal",
-    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique _occibots_nuMetal hardcore dark métal Black Metal.mp3",
+    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique _occibots_Metal musette electro rock folk.mp3",
     "tags": [],
     "rating": 3,
     "added": "2026-10-11",
     "uploadTime": "2026-10-11T23:01:41.507Z",
-    "id": 95,
+    "id": 94,
     "style": "",
     "version": "",
     "desc": "",
@@ -2165,6 +2140,28 @@
     "soundCreator": "",
     "recordDate": "",
     "moods": []
+  },
+  {
+    "title": "ce monde est maudit - feat Le Clown Sadique _occibots_nuMetal hardcore dark métal Black Metal",
+    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique & occibot v_dark métal",
+    "tags": [
+      "dark metal"
+    ],
+    "rating": 4.5,
+    "added": "2026-10-11",
+    "uploadTime": "2026-10-11T23:01:41.507Z",
+    "id": 95,
+    "style": "dark metal",
+    "version": "",
+    "desc": "coup de gueule spontané. texte v2",
+    "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-08",
+    "moods": [
+      "dark",
+      "angry"
+    ]
   },
   {
     "title": "ce monde est maudit - feat Le Clown Sadique _occibots_nuMetal hardcore",
@@ -3146,6 +3143,31 @@
     "soundCreator": "",
     "recordDate": "",
     "moods": []
+  },
+  {
+    "title": "ce monde est maudit - feat Le Clown Sadique _occibots_Metal musette electro rock folk",
+    "file": "audio/techno/ce monde est maudit - feat Le Clown Sadique & occibot v_Metal musette electro rock folk.mp3",
+    "tags": [
+      "musette",
+      "metal",
+      "electro",
+      "rock",
+      "folk"
+    ],
+    "rating": 5,
+    "added": "2026-10-11",
+    "uploadTime": "2026-10-11T23:01:41.507Z",
+    "id": 94,
+    "style": "metal musette electro rock folk",
+    "version": "",
+    "desc": "coup de gueule spontané.texte v2",
+    "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-08",
+    "moods": [
+      "positive"
+    ]
   },
   {
     "title": "ce monde est maudit - feat Le Clown Sadique _occi.ai_punkcore crust",
