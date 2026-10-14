@@ -2589,16 +2589,28 @@
     "id": 123
   },
   {
-    "title": "Raining in Moscow Manouchcore Tribal Jazzidcore",
+    "title": "Raining in Moscow",
     "file": "audio/techno/2026-10-14/Raining in Moscow Manouchcore Tribal Jazzidcore.mp3",
     "tags": [
-      "Techno"
+      "Manouchcore",
+      "slavicore",
+      "jazzidcore"
     ],
-    "rating": 0,
+    "rating": 5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:22:02.449Z",
-    "style": "Techno",
-    "id": 124
+    "style": "Jazzidcore slavicore manouchcore",
+    "id": 124,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-10-12",
+    "moods": [
+      "brutal",
+      "slavic"
+    ]
   },
   {
     "title": "This is Real Accapella Jazzidcore Madness",
