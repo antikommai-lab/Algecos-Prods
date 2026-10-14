@@ -151,6 +151,10 @@ body.adm #admBtn{display:block}
 .plTrow:last-child{border-bottom:none}
 .plTrow:hover{color:var(--y)}
 .plTrow small{color:var(--dim);font-size:.6rem;text-transform:uppercase}
+#spiralOv{position:fixed;inset:0;background:#000;z-index:60;display:none;align-items:center;justify-content:center}
+#spiralOv.open{display:flex}
+#spiralOv img{max-width:97vw;max-height:97vh;object-fit:contain}
+#spiralOv .vcross{z-index:61}
 #mgFab{position:fixed;bottom:22px;right:22px;z-index:44;display:none;gap:10px}
 #mgFab.show{display:flex}
 #mgFab button{width:54px;height:54px;background:#000;color:var(--y);border:3px solid var(--y);font-size:1.2rem;cursor:pointer;box-shadow:4px 4px 0 #000;position:relative}
@@ -432,7 +436,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v55</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v56</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -474,9 +478,15 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <button class="pbtn" onclick="toggleLyr()" title="Paroles">LYRICS</button>
 <button class="pbtn" onclick="openCmt()" title="Commentaires">&#128172;</button>
 <button class="pbtn" onclick="shareTrack(CURRENT)" title="Partager ce morceau">&#10548;</button>
+<button class="pbtn" id="spBtn" onclick="openSpiral()" style="display:none" title="Fixe la spirale">&#63;</button>
 </div>
 </div>
 <audio id="audio" controls></audio>
+</div>
+
+<div id="spiralOv" onclick="if(event.target===this)closeSpiral()">
+<img id="spiralImg" alt="spirale">
+<button class="vcross" onclick="closeSpiral()">&#x2715;</button>
 </div>
 
 <div class="modal" id="imgModal">
@@ -743,16 +753,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261055"></script>
-<script src="js/data.js?v=20261055"></script>
-<script src="js/auth.js?v=20261055"></script>
-<script src="js/admin.js?v=20261055"></script>
-<script src="js/player.js?v=20261055"></script>
-<script src="js/views.js?v=20261055"></script>
-<script src="js/versions.js?v=20261055"></script>
-<script src="js/genres.js?v=20261055"></script>
-<script src="js/manage.js?v=20261055"></script>
-<script src="js/main.js?v=20261055"></script>
+<script src="js/config.js?v=20261056"></script>
+<script src="js/data.js?v=20261056"></script>
+<script src="js/auth.js?v=20261056"></script>
+<script src="js/admin.js?v=20261056"></script>
+<script src="js/player.js?v=20261056"></script>
+<script src="js/views.js?v=20261056"></script>
+<script src="js/versions.js?v=20261056"></script>
+<script src="js/genres.js?v=20261056"></script>
+<script src="js/manage.js?v=20261056"></script>
+<script src="js/main.js?v=20261056"></script>
 
 </body>
 </html>

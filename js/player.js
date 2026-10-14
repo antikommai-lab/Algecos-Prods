@@ -24,7 +24,7 @@ function play(t,list){
   if(seq!==PCV||!res.data||!res.data.length)return;
   var avg=res.data.reduce(function(a,b){return a+b.stars;},0)/res.data.length;
   $('pAvg').textContent='MOY '+Math.round(avg*10)/10+'/5 ('+res.data.length+')';});
- updateCtl();
+ updateCtl();spiralUpd();
  document.querySelectorAll('.prow').forEach(function(r){r.classList.toggle('on',r.getAttribute('data-t')===t.title&&r.getAttribute('data-f')===(t.file||''));});}
 function updateCtl(){var i=CURRENTLIST.indexOf(CURRENT);
  $('prevBtn').disabled=i<=0;
@@ -91,3 +91,12 @@ async function sendCmt(){
  openCmt();}
 function closeModal(id){$(id).classList.remove('open');if(id==='lyrModal')LYR.open=false;}
 function openModal(id){$(id).classList.add('open');}
+
+
+/* ===== spirale mentale plein ecran ===== */
+function spiralUpd(){var b=$('spBtn');if(!b)return;var pl=PLAYLIST;
+ var ok=pl&&((pl.img&&/\.gif$/i.test(pl.img))||/tribal|chaman|jazzid|jazz|techno|tek|core|trance|mental/i.test((pl.title||'')+' '+(pl.desc||'')));
+ b.style.display=ok?'':'none';}
+function openSpiral(){var src=(PLAYLIST&&PLAYLIST.img&&/\.gif$/i.test(PLAYLIST.img))?PLAYLIST.img:'img/animated-spiral.gif';
+ $('spiralImg').src=encodeURI(src)+'?nc='+Date.now();$('spiralOv').classList.add('open');}
+function closeSpiral(){$('spiralOv').classList.remove('open');}
