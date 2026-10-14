@@ -2587,13 +2587,26 @@
     "tags": [
       "Instru",
       "Rap",
-      "InstruRap"
+      "InstruRap",
+      "horrorcore",
+      "trap"
     ],
-    "rating": 0,
+    "rating": 4,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:07:26.600Z",
-    "style": "InstruRap",
-    "id": 117
+    "style": "trap horrorcore",
+    "id": 117,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-14",
+    "moods": [
+      "dark",
+      "strange",
+      "horror"
+    ]
   },
   {
     "title": "Ukrain & Russian Brothers",
