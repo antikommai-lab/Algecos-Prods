@@ -15,82 +15,82 @@ et personne jamais ne prie
 c'est juste un centre d'hébergement 
 on a plus d'dents, on sombre lentement 
 
-La mort est de de'vnue une compagne 
+La mort est de devenue une compagne 
 Tout le monde est empli par la hargne
-toxicos,pharmaco, alcoolos
+toxico,pharmaco, alcoolo
 le monde est vilain moche pas beau
 
-le petit nom c'est aurore 
-seule règne la loi du plus fort
-avec les femmes les hommes sont des porcs
-on s'detruit en attendant la mort
+le petit nom c'est Aurore ,
+seule règne la loi du plus fort.
+Avec les femmes les hommes sont des porcs!
+On s'detruit en attendant la mort
 
 Aurore, Aurore, et triste sort 
 Aurore, Aurore j'attends la mort 
 Mellînet mellînet oppressé déprimé 
-mellînet mellînet, t'attends plus juste que d'être jugé 
+mellînet mellînet, t'attends plus juste que d'être jugé (que le jugement dernier)
 
 tous les jours la mort sonne à la porte 
 le diable s'habille discrètement en escorte
 les drogues dures c'est dans l'ahorte 
 ici l'bonheur n'est qu'une entité morte
 
-c'est ton vécu qu'il t'as vaincu
+c'est ton vécu qui t'as vaincu
 ta vie lentement a disparu 
-si t'as plus de veines un plug dans le cul
-tu suppure de partout tu dégouline de pus
+si t'as plus de veines : un plug dans le cul,
+tu suppures de partout tu dégoulines de pus
 
 Aurore, Aurore,le temps se tord 
-Aurore, Aurore plus vite la mort 
-Mellînet mellînet oppressé déprimé 
-mellînet mellînet, la réalité t'as rattrapé
+Aurore, Aurore ,plus vite la mort 
+Mellînet mellînet, oppressé déprimé 
+mellînet mellînet, la réalité t'a rattrapé
 
 Aurore, Aurore, un triste sort 
 Aurore, Aurore tu pries la mort 
-Mellînet mellînet   drogué bloqué détraqué 
+Mellînet mellînet  , drogué, bloqué, détraqué 
 mellînet mellînet, la vérité t'as tué 
 
-mellînet mellînet le monde qui t'entoure est si laid
-mellînet mellînet pour toi ya plus d'après 
+mellînet mellînet le monde qui t'entoure est si laid,
+mellînet mellînet pour toi ya plus d'après .
 mellînet mellînet tu voudrais que tout va soit pas vrai
-mellînet t'as déchiré t'appartiens déja au passé 
+mellînet t'as déchiré (*déconné) t'appartiens déja au passé 
 
-mélancolique heroine des années deux mille 
-puis s'est installé la morphine et des cachets en pile
-post 2020 c'est dépassé la meta a pris l' relais 
-pour tous dans l'aine tnes gonflé bientôt amputé 
+Mélancolique, heroine des années deux mille ,
+puis s'est installé la morphine et des cachets en pile.
+Post 2020 c'est dépassé la meta a pris l' relais ,
+pour tous dans l'aine ,t'es tout gonflé ,bientôt amputé ...
 
-Aurore, Aurore, un triste sort 
-Aurore, Aurore tu pries la mort 
-Mellînet mellînet   drogué bloqué détraqué 
-mellînet mellînet, la vérité t'as tué 
+Aurore, Aurore, un triste sort ,
+Aurore, Aurore tu pries la mort ,
+Mellînet mellînet  , drogué, bloqué, détraqué, 
+mellînet mellînet, la vérité t'as tué .
 
-mellînet mellînet le monde qui t'entoure est si laid
-mellînet mellînet pour toi ya plus d'après 
-mellînet mellînet tu voudrais que tout va soit pas vrai
-mellînet t'as déchiré t'appartiens déja au passé
+mellînet mellînet le monde qui t'entoure est si laid!
+mellînet mellînet pour toi ya plus d'après ...
+mellînet mellînet tu voudrais que tout ça soit pas vrai
+mellînet t'as déchiré (*déconné) t'appartiens déja au passé
 
-cte lieu c'est la cours des mirages
-ou atterrissent les enfants pas sages
-en arrivant t'étais sensé tourner la page
+Ce lieu c'est la Cour des Mirages,
+où atterrissent les enfants pas sages.
+En arrivant t'étais sensé tourner la page
 mais t'as échoué et t'as la rage
 
-mirage mirage 
-ici pas de miracles 
-mirages mirages
-ce sera ton dernier dérapage
+mirage, mirage ,
+ici pas de miracles. 
+mirages, mirages,
+ce sera ton dernier dérapage.
 
-pour tous ses habitants 2 solutions
-la pendaison ou la crémation
-dans ce milieu pas d'empathie
-50 ans c'est l'espérance de vie 
+Pour tous ces habitants 3 solutions:
+pendaison , od ... crémation ou détention!
+dans ce milieu pas d'empathie,
+50 ans c'est l'espérance de vie ...
 
-Aurore, Aurore, un triste sort 
-Aurore, Aurore tu pries la mort 
-Mellînet mellînet   drogué bloqué détraqué 
-mellînet mellînet, la vérité t'as tué 
+Aurore, Aurore, un triste sort ,
+Aurore, Aurore, tu pries la mort .
+Mellînet mellînet,   drogué, bloqué, détraqué ,
+mellînet mellînet, c'est la vérité qui t'as tué 
 
-mellînet mellînet le monde qui t'entoure est si laid
-mellînet mellînet pour toi ya plus d'après 
-mellînet mellînet tu voudrais que tout va soit pas vrai
-mellînet t'as déchiré t'appartiens déja au passé
+mellînet mellînet le monde qui t'entoure est si laid.
+mellînet mellînet pour toi ya plus d'après .
+mellînet mellînet tu voudrais que tout ça soit pas vrai,
+mellînet t'as déchiré (*déconné) t'appartiens déja au passé
