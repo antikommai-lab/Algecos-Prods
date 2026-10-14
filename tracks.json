@@ -576,7 +576,11 @@
     "recordDate": "2026-10-02",
     "rating": 3,
     "uploadTime": "2000-01-01T00:00:00",
-    "id": 32
+    "id": 32,
+    "vid": "",
+    "moods": [
+      "positive"
+    ]
   },
   {
     "title": "Atari Swing Vinyl - Jazzcore experiment 6",
