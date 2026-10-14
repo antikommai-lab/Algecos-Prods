@@ -2563,16 +2563,30 @@
     ]
   },
   {
-    "title": "My Phonograph Took Amphetamine SpeedJazzidcore Tribal Manouchcore",
+    "title": "My Phonograph Took Amphetamine",
     "file": "audio/techno/2026-10-14/My Phonograph Took Amphetamine SpeedJazzidcore Tribal Manouchcore.mp3",
     "tags": [
-      "Techno"
+      "acidcore",
+      "hard;tribal",
+      "speed",
+      "Jazzidcore",
+      "Manouchcore",
+      "Slavicore"
     ],
-    "rating": 0,
+    "rating": 4,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:22:02.449Z",
-    "style": "Techno",
-    "id": 121
+    "style": "hard Jazzidcore Breakcore",
+    "id": 121,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-11",
+    "moods": [
+      "epic"
+    ]
   },
   {
     "title": "Parked in Dark tribal Jazzidcore",
