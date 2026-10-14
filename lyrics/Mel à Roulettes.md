@@ -85,4 +85,3 @@ J'ai kiffé découvrir toutes ses différentes facettes
  
 C'est une sacrée zoulette,Mel à Roulettes
  Fier de la compter parmi mes potes : Mel à Roulettes
-Ragga with trap fusion, reggae raggamuffin and electro: dancehall synth stabs over a heavy sidechained sub-bass, loping dancehall groove, gravelly male deejay chant, repeated verses and refrain, tight electronic mix.
