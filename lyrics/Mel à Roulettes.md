@@ -85,20 +85,4 @@ J'ai kiffé découvrir toutes ses différentes facettes
  
 C'est une sacrée zoulette,Mel à Roulettes
  Fier de la compter parmi mes potes : Mel à Roulettes
-
-# STYLES
----------
-### vDEF.1 (SUNO V6)
-Ragga, trap-fusion reggae raggamuffin and electro; tight electronic mix with a loping dancehall groove, dancehall synth stabs over heavy sidechained sub-bass, gravelly male French deejay chant, clearly articulated repeated verses and refrain.
-
-### vDEF.0 (SUNO V5)
-Ragga with trap fusion, reggae raggamuffin and electro: dancehall synth stabs over a heavy sidechained sub-bass, loping dancehall groove, gravelly male deejay chant, repeated verses and refrain, tight electronic mix.
-
-### vALPHA.1 (Suno v1)
-Ragga with trap fusion, reggae raggamuffin and electro: dancehall synth stabs over a heavy sidechained sub-bass, loping dancehall groove, gravelly male deejay chant, repeated verses and refrain, tight electronic mix.
-
-### vALPHA.2 ( Suno v2)
-Ragga with trap fusion, reggae raggamuffin and electro: dancehall synth stabs over a heavy sidechained sub-bass, loping dancehall groove, gravelly male deejay chant, repeated verses and refrain, tight electronic mix.
-
-### vBETA.2 (Suno v4)
 Ragga with trap fusion, reggae raggamuffin and electro: dancehall synth stabs over a heavy sidechained sub-bass, loping dancehall groove, gravelly male deejay chant, repeated verses and refrain, tight electronic mix.
