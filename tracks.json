@@ -2757,12 +2757,22 @@
       "hardcore",
       "Techno"
     ],
-    "rating": 4,
+    "rating": 5,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:31:27.298Z",
     "style": "jazzidcore",
     "recordDate": "2026-10-13",
-    "id": 122
+    "id": 122,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "moods": [
+      "jazzy",
+      "happy",
+      "jumpy"
+    ]
   },
   {
     "title": "Baltic Dance Manouchcore Tribal Jazzidcore",
