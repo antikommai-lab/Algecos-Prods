@@ -2637,16 +2637,28 @@
     "id": 127
   },
   {
-    "title": "Vlad The Sick Dictator slavicore Jazzidcore Hardcore",
+    "title": "Vlad The Sick Dictator",
     "file": "audio/techno/2026-10-14/Vlad The Sick Dictator slavicore Jazzidcore Hardcore.mp3",
     "tags": [
-      "Techno"
+      "Techno",
+      "slavicore",
+      "Jazzidcore",
+      "Hardcore"
     ],
-    "rating": 0,
+    "rating": 4,
     "added": "2026-10-14",
     "uploadTime": "2026-10-14T00:22:02.449Z",
-    "style": "Techno",
-    "id": 128
+    "style": "Jazzidcore Hardcore",
+    "id": 128,
+    "version": "",
+    "desc": "",
+    "vid": "",
+    "lyricsCreator": "",
+    "soundCreator": "MUSIC by N30 [@ANTIKOMM] (Suno,FLStudio,Audacity)",
+    "recordDate": "2026-01-12",
+    "moods": [
+      "slavic"
+    ]
   },
   {
     "title": "Accapella Jazzidcore & Breakcore",
