@@ -311,3 +311,19 @@ async function mgFabPl(){if(!MGSEL.length)return;var nn=prompt('Nom de la playli
  $('mgStatus').className='status ok';$('mgStatus').textContent='PUBLICATION...';
  try{await publishAll('playlist '+nn+' : ajout '+MGSEL.length+' morceau(x)');await load();renderMgList();mgFabUpd();$('mgStatus').textContent='AJOUTE(S) A '+nn;}
  catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;}}
+
+async function cardDelTrack(title,upTS){
+ var cands=TRACKS.map(function(t,i){return {t:t,i:i};}).filter(function(o){return o.t.title===title;});
+ if(!cands.length){alert("INTROUVABLE");return;}
+ cands.sort(function(a,b){var ta=String(a.t.uploadTime||""),tb=String(b.t.uploadTime||"");
+  if(ta!==tb)return tb.localeCompare(ta);
+  return (b.t.id||0)-(a.t.id||0);});
+ var hit=cands[0];var t=hit.t;
+ var many=cands.length>1;
+ if(!confirm("Supprimer \u00ab "+title+" \u00bb ?"+(many?"\n"+cands.length+" entrees existent avec ce titre : seule la plus recente ("+(t.uploadTime||"?")+") sera supprimee.":"")))return;
+ var audioToo=confirm("SUPPRIMER AUSSI LE FICHIER AUDIO ("+(t.file||"?")+") ?\nOK = oui\nAnnuler = garder l\u0027audio, supprimer seulement l\u0027entree");
+ if(audioToo&&t.file&&GHTOK){try{await ghDelete(t.file,"suppression audio : "+t.title);}catch(e){alert("Audio non supprime : "+e.message);}}
+ TRACKS.splice(hit.i,1);
+ try{await publishAll("suppression track : "+t.title);
+  await load();render();renderPlaylist();alert("SUPPRIME");}
+ catch(e){alert("PUBLISH KO : "+e.message);}}

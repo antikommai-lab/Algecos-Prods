@@ -160,7 +160,7 @@ function cardHTML(t,i){
  h+='<div class="desc fold" title="cliquer pour d\u00e9plier">'+esc(t.desc||'')+'</div>';
  h+='<button class="play" data-i="'+i+'">\u25b6 \u00c9couter</button>';
  h+='<button class="edit" data-e="'+i+'" title="\u00c9diter ce morceau">\u2699</button><button class="shB" data-shtr="'+i+'" title="Partager ce morceau">&#10548;</button>';
- if(document.body.classList.contains('adm'))h+='<button class="edit" data-vg="'+i+'" title="Ajouter au groupe de versions" style="top:110px">&#9854;</button><button class="edit" data-qpl="'+i+'" title="Ajouter \u00e0 une playlist" style="top:76px">&#9776;</button>';
+ if(document.body.classList.contains('adm'))h+='<button class="edit" data-vg="'+i+'" title="Ajouter au groupe de versions" style="top:110px">&#9854;</button><button class="edit" data-qpl="'+i+'" title="Ajouter \u00e0 une playlist" style="top:76px">&#9776;</button><button class="edit" data-del="'+i+'" title="Supprimer (audio + entr\u00e9e la plus r\u00e9cente)" style="top:144px;color:var(--warn);border-color:var(--warn)">&#128465;</button>';
  h+='</div>';return h;}
 function bindCards(root){
  root.querySelectorAll('.card').forEach(function(card){
@@ -172,6 +172,7 @@ function bindCards(root){
  root.querySelectorAll('.card .play').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();play(TRACKS[+b.getAttribute('data-i')],[TRACKS[+b.getAttribute('data-i')]]);};});
  root.querySelectorAll('.card [data-vg]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();openVG(+b.getAttribute('data-vg'));};});
  root.querySelectorAll('.card [data-qpl]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();quickAddPl(+b.getAttribute('data-qpl'));};});
+ root.querySelectorAll('.card [data-del]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();var t=TRACKS[+b.getAttribute('data-del')];if(t)cardDelTrack(t.title,t.uploadTime);};});
  root.querySelectorAll('.lotck').forEach(function(ck){
   ck.onclick=function(ev){ev.stopPropagation();};
   ck.onchange=function(){var i=+ck.getAttribute('data-li');var ix=LOTCARD.indexOf(i);
