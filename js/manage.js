@@ -3,12 +3,12 @@ var MGTAB='tr',MGSEL=[],MGPL=null,MGPLSEL=[];
 var Q=String.fromCharCode(34);
 var _mgTab=mgTab;
 function openManage(tab){openModal('manageModal');try{mgTab(tab||'tr');}catch(e){var es=$('mgStatus');es.className='status err';es.textContent='ERREUR : '+e.message;}}
-function mgTab(t){try{MGTAB=t;MGSEL=[];MGPLSEL=[];
+function mgTab(t){try{MGTAB=t;MGSEL=(t==='tr'&&typeof LOTCARD!=='undefined'&&LOTCARD.length)?LOTCARD.slice().sort(function(a,b){return a-b;}):[];MGPLSEL=[];
  $('mgTabTr').className=t==='tr'?'btn':'btn2';$('mgTabPl').className=t==='pl'?'btn':'btn2';
  $('mgTr').style.display=t==='tr'?'block':'none';$('mgPl').style.display=t==='pl'?'block':'none';
  $('mgTitle').textContent=t==='tr'?'Gestion des tracks':'Gestion des playlists';
  $('mgStatus').textContent='';$('mgPlStatus').textContent='';
- if(t==='tr'){renderMgList();}
+ if(t==='tr'){renderMgList();mgUpdEdit();}
  else{MGPL=null;$('mgPlEdit').style.display='none';renderMgPlList();}mgFabUpd();}
  catch(e){var es=$('mgStatus');es.className='status err';es.textContent='ERREUR : '+e.message+' \u2014 copie ce message';}}
 function mgFiltered(){var q=($('mgQ').value||'').toLowerCase().trim();
@@ -61,7 +61,7 @@ function mgUpdEdit(){
  var n=MGSEL.length;
  $('mgSelBar').style.display=n?'block':'none';
  if(!n){$('mgEditBox').style.display='none';return;}
- $('mgSelBar').textContent=n+' S\u00C9LECTIONN\u00C9(S)';
+ $('mgSelBar').textContent=n+' S\u00C9LECTIONN\u00C9(S) : '+MGSEL.slice().sort(function(a,b){return a-b;}).map(function(i){return TRACKS[i]&&TRACKS[i].title?TRACKS[i].title:'?';}).slice(0,25).join(' | ')+(n>25?' | \u2026':'');
  $('mgEditBox').style.display='block';
  mgFillEdit();}
 function mgFillEdit(){
