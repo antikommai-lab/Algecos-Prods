@@ -2170,20 +2170,26 @@
   },
   {
     "title": "Ce monde est maudit - feat Le Clown Sadique vRapINSTRUvers1_VoixBanale",
-    "file": "audio/techno/Ce monde est maudit - feat Le Clown Sadique vRapINSTRUvers1_VoixBanale.mp3",
-    "tags": [],
+    "file": "audio/techno/Ce monde est maudit - feat Le Clown Sadique v1RAP instru1",
+    "tags": [
+      "rap",
+      "old school",
+      "dark"
+    ],
     "rating": 3,
     "added": "2026-10-11",
     "uploadTime": "2026-10-11T23:08:05.494Z",
     "id": 98,
-    "style": "",
-    "version": "",
-    "desc": "",
+    "style": "coup de gueule spontané",
+    "version": "1",
+    "desc": "coup de gueule spontané",
     "vid": "Ce Monde est Maudit -feat Le Clown Sadique",
-    "lyricsCreator": "",
-    "soundCreator": "",
-    "recordDate": "",
-    "moods": []
+    "lyricsCreator": "ALL LYRICS by N30 @ANTIKOMM",
+    "soundCreator": "music by N30 (@ANTIKOMM6tm)",
+    "recordDate": "2026-10-08",
+    "moods": [
+      "dark"
+    ]
   },
   {
     "title": "Ce monde est maudit - feat Le Clown Sadique vRapINSTRUvers1_VoixDemon",
