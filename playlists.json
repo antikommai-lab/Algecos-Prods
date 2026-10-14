@@ -54,5 +54,13 @@
     "desc": "Ouvre les Portes de la Perception",
     "tracks": [],
     "upd": "2026-10-09"
+  },
+  {
+    "title": "les Instru Rap",
+    "desc": "Des beats pour vos flows!",
+    "cover": "img/rap-background.jpg",
+    "img": "img/rap-background.jpg",
+    "tracks": [],
+    "upd": "2026-10-14"
   }
 ]
