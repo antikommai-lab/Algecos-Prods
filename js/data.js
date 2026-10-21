@@ -39,10 +39,20 @@ function entSec(r){return (r&&typeof r==='object')?(r.section||r.SECTION||r.Sect
 function entLabel(r){return (r&&typeof r==='object')?(r.label||r.LABEL||''):'';}
 function entRef(r){if(typeof r==='string')return r;if(r&&typeof r==='object')return r.ref||r.title||r.file||r.id||null;return null;}
 function plFlat(){var out=[];((PLAYLIST&&PLAYLIST.tracks)||[]).forEach(function(r){var t=plMatch(entRef(r));if(t)out.push(t);});return out;}
-/* ===== covers ===== */
-function tryCovers(paths,cb){var i=0;
- (function next(){if(i>=paths.length){cb(null);return;}
-  var im=new Image();im.onload=function(){cb(paths[i]);};im.onerror=function(){i++;next();};im.src=encodeURI(paths[i]);})();}
+/* ===== covers : resolution instantanee via imglist.json (fini le sondage sequentiel) ===== */
+var IMGS=[],IMGSI={},COVCACHE={};
+function tryCovers(paths,cb){
+ var key=paths.join('|');
+ if(COVCACHE[key]!==undefined){cb(COVCACHE[key]);return;}
+ if(IMGS.length){
+  var hit=null;
+  for(var i=0;i<paths.length&&!hit;i++){var le=IMGSI[base(paths[i]).toLowerCase()];if(le)hit=le;}
+  if(hit){COVCACHE[key]=hit;cb(hit);return;}}
+ var done=false,n=paths.length;
+ paths.forEach(function(p){var im=new Image();
+  im.onload=function(){if(done)return;done=true;COVCACHE[key]=p;cb(p);};
+  im.onerror=function(){n--;if(n===0&&!done){done=true;COVCACHE[key]=null;cb(null);}};
+  im.src=encodeURI(p);});}
 function plCoverPaths(c){c=String(c||'');var out=[],i;
  if(c.indexOf('.')>0){out.push('img/'+c,c);}
  else{for(i=0;i<EXTS.length;i++){out.push('img/'+c+'.'+EXTS[i]);}for(i=0;i<EXTS.length;i++){out.push(c+'.'+EXTS[i]);}}
@@ -63,6 +73,7 @@ async function load(){
  if(!Array.isArray(MSGS))MSGS=[];
  try{var vgd=await fetch('vg.json?nc='+Date.now(),{cache:'no-store'});VGROUPS=await vgd.json();}catch(e){VGROUPS=[];}
  if(!Array.isArray(VGROUPS))VGROUPS=[];
+ try{var il=await fetch('imglist.json?nc='+Date.now(),{cache:'no-store'});IMGS=await il.json();if(!Array.isArray(IMGS))IMGS=[];IMGS.forEach(function(p){IMGSI[base(p).toLowerCase()]=p;});}catch(e){IMGS=[];}
  if(!PLAYLIST||PLAYLISTS.indexOf(PLAYLIST)<0)PLAYLIST=PLAYLISTS[0]||{title:'\u2014',desc:'',tracks:[]};
  renderPlaylist();renderPlists();renderHomeGrid();renderVersions();renderSels();
  var allTags=[];TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){if(allTags.indexOf(k)<0)allTags.push(k);});});

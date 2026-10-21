@@ -1,0 +1,28 @@
+{
+  "name": "ALGECOS-PRODS",
+  "short_name": "ALGECOS",
+  "description": "la division musicale d'ANTIKOMM",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#161616",
+  "theme_color": "#FFD700",
+  "icons": [
+    {
+      "src": "img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
