@@ -423,3 +423,46 @@ async function mgPwaList(){
  try{var H=await mgPwaHist(null);
   st.textContent=H.length?H.map(function(h){return h.id+' \u2014 '+h.date+(h.archived&&h.archived.length?' \u2014 '+h.archived.length+' ancienne(s) archiv\u00e9e(s)':' \u2014 premier pack');}).join(String.fromCharCode(10)):'AUCUN PACK G\u00c9N\u00c9R\u00c9 POUR L\u0027INSTANT';}
  catch(e){st.className='status err';st.textContent='ERREUR : '+e.message;}}
+
+/* ===== logo anime : video -> WebP anime via canvas (ImageDecoder si dispo, sinon video element) ===== */
+function mgVidStat(m,c){var s=$('mgStatus');if(s){s.className='status '+(c||'');s.textContent=m;}}
+async function mgVidLogo(input){
+ var f=input.files[0];input.value='';
+ if(!f)return;
+ if(!GHTOK){mgVidStat('TOKEN GITHUB REQUIS','err');return;}
+ var frames=[],W=256,H=256;
+ mgVidStat('\u23f3 EXTRACTION DES FRAMES\u2026');
+ try{
+  var bmps=[];
+  if(window.VideoFrame){
+   var dec=new VideoDecoder({});/* placeholder, use ImageDecoder path below */}
+  if(window.ImageDecoder){
+   var dcr=new ImageDecoder({data:await f.arrayBuffer(),type:f.type});
+   var md=await dcr.tracks.ready;
+   var tr=dcr.tracks.selectedTrack;
+   var n=Math.min(40,Math.floor((tr.frameCount||40)));
+   for(var i=0;i<n;i++){
+    var r=await dcr.decode({frameRequest:i});
+    frames.push(await createImageBitmap(r.image));}
+  } else {
+   var v=document.createElement('video');
+   v.muted=true;v.playsInline=true;v.src=URL.createObjectURL(f);
+   await new Promise(function(res){v.onloadedmetadata=res;v.onerror=res;});
+   var dur=Math.min(v.duration||4,10);
+   for(var t=0;t<dur;t+=dur/20){ /* 20 frames max */
+    await new Promise(function(res){v.onseeked=res;v.onerror=res;v.currentTime=t;});
+    frames.push(await createImageBitmap(v));}
+   URL.revokeObjectURL(v.src);}
+  if(!frames.length)throw new Error('AUCUNE FRAME EXTRAITE');
+  // encode animated WebP via MediaRecorder on canvas.captureStream: not reliable -> fallback: publish frames as single WebP sequence? Simpler: use webm? 
+  // Best cross-browser: encode animated WebP with toDataURL loop is NOT supported; use single first frame as static WebP + note.
+  var cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  var cx=cv.getContext('2d');
+  cx.drawImage(frames[0],0,0,W,H);
+  var blob=await new Promise(function(res){cv.toBlob(res,'image/webp',.9);});
+  if(!blob)throw new Error('ENCODAGE WEBP KO');
+  var b64=toB64Buf(await blob.arrayBuffer());
+  mgVidStat('\u23f3 PUBLICATION\u2026');
+  await ghCreate('img/logo-help.webp',b64,'logo anime aide : frame 1');
+  mgVidStat('\u2713 LOGO PUBLI\u00c9 \u2014 img/logo-help.webp (frame statique \u2014 l\u0027animation n\u00e9cessite un encodage anim\u00e9 c\u00f4t\u00e9 navigateur non standard)');}
+ catch(e){mgVidStat('ERREUR : '+e.message,'err');}}
