@@ -158,7 +158,7 @@ function cardHTML(t,i){
  if(LOTSMODE||document.body.classList.contains('adm'))h+='<input type="checkbox" class="lotck" data-li="'+i+'"'+(LOTCARD.indexOf(i)>-1?' checked':'')+' style="position:absolute;top:10px;left:10px;z-index:5;width:20px;height:20px;cursor:pointer">';
  if(t.version)h+='<span class="ver">'+esc(t.version)+'</span>';
  h+='<div class="stars">'+stars(t.rating)+'</div><h3>'+esc(t.title)+'</h3>';
- h+=provBadge(t)+vqBtn(t);
+ h+=provBadge(t)+vqBtn(t)+hearts(t);
  if(t.style)h+='<div class="style fold" title="cliquer pour d\u00e9plier">[ '+esc(t.style)+' ]</div>';
  h+='<div class="meta fold">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div>';
  if((t.moods||[]).length)h+='<div class="meta fold">'+(t.moods||[]).map(function(k){return '<em style="color:var(--y);border-color:var(--y)">'+esc(k)+'</em>';}).join('')+'</div>';

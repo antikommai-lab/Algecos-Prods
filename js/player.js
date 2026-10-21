@@ -132,3 +132,13 @@ function plGripInit(){
   try{localStorage.removeItem('plh');}catch(e){}});
  g.title='Glisser pour redimensionner \u2014 double-clic : r\u00e9initialiser';}
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',plGripInit);
+
+/* ===== panneau versions dans le player ===== */
+function togglePVers(){var p=$('pVers');if(!p)return;
+ if(p.style.display==='block'){p.style.display='none';return;}
+ if(!CURRENT){p.innerHTML='<div style="color:var(--dim);font-size:.72rem">AUCUN MORCEAU EN LECTURE</div>';p.style.display='block';return;}
+ var grp=versOf(CURRENT);
+ p.innerHTML='<div style="color:var(--dim);font-size:.62rem;letter-spacing:.1em;margin-bottom:6px">'+grp.length+' VERSIONS</div>'+grp.map(function(u){var j=TRACKS.indexOf(u);
+  return '<div class="vrow" style="padding:6px 0;border-bottom:1px solid var(--line)"><div class="vt"><b>'+esc(u.title)+'</b>'+(u.version?' <span class="ver">'+esc(u.version)+'</span>':'')+'</div>'+hearts(u)+'<button class="vbtn" data-pvp="'+j+'">\u25b6</button></div>';}).join('');
+ p.style.display='block';
+ p.querySelectorAll('[data-pvp]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();playSingle(TRACKS[+b.getAttribute('data-pvp')]);};});}

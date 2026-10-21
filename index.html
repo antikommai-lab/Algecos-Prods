@@ -48,6 +48,15 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 .hlp h4{margin:14px 0 6px;color:var(--y);font-family:'Archivo Black',sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px dashed var(--line);padding-bottom:4px}
 .hlp p{font-size:.74rem;line-height:1.7;color:var(--ink);margin-bottom:6px}
 .hlp b{color:var(--y)}
+.hRow{display:inline-flex;align-items:center;margin-left:6px;vertical-align:middle}
+.hB{border:1px solid var(--line);background:#000;padding:0;width:20px;height:20px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;margin-left:4px;vertical-align:middle}
+.hB:hover{border-color:var(--y)}
+.hB.on{border-color:var(--y);box-shadow:0 0 0 1px var(--y) inset}
+.hB svg{display:block}
+#pVers{display:none;border:1px solid var(--line);padding:8px 10px;margin-bottom:8px;max-height:30vh;overflow-y:auto;background:rgba(0,0,0,.5)}
+.vgH .plArr{display:inline-block;margin-left:6px;transition:transform .2s}
+.vg.open .plArr{transform:rotate(180deg)}
+
 @media(max-width:760px){#hicons{display:none}}
 #ticker{grid-column:1/-1;justify-self:stretch;display:none;overflow:hidden;margin-top:14px;border-top:2px dashed #4a3305}
 #ticker.show{display:block}
@@ -498,7 +507,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v75&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v76&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -534,6 +543,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <span id="tTime">--:-- / --:--</span>
 </div>
 <div class="pctl">
+<button class="pbtn" id="pVersBtn" onclick="togglePVers()" title="One track, many variations &#8212; afficher la liste">&#9834;&#9836;</button>
 <button class="pbtn" id="prevBtn" onclick="plPrev()" title="Morceau pr&#xe9;c&#xe9;dent">&#x23ee;</button>
 <button class="pbtn" onclick="sk(-10)" title="Reculer 10s">&#x2212;10s</button>
 <button class="pbtn" onclick="sk(10)" title="Avancer 10s">+10s</button>
@@ -544,6 +554,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <button class="pbtn" id="spBtn" onclick="openSpiral()" title="Spirale mentale plein &#233;cran">&#127744;</button>
 </div>
 </div>
+<div id="pVers"></div>
 <audio id="audio" controls></audio>
 </div>
 
@@ -865,16 +876,16 @@ function hHelp(){
 (function(){var im=new Image();im.onload=function(){var l=document.getElementById('hAlLogo');if(l){l.src='img/logo-help.webp';l.style.display='block';}};im.src='img/logo-help.webp';})();
 </script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261075"></script>
-<script src="js/data.js?v=20261075"></script>
-<script src="js/auth.js?v=20261075"></script>
-<script src="js/admin.js?v=20261075"></script>
-<script src="js/player.js?v=20261075"></script>
-<script src="js/views.js?v=20261075"></script>
-<script src="js/versions.js?v=20261075"></script>
-<script src="js/genres.js?v=20261075"></script>
-<script src="js/manage.js?v=20261075"></script>
-<script src="js/main.js?v=20261075"></script>
+<script src="js/config.js?v=20261076"></script>
+<script src="js/data.js?v=20261076"></script>
+<script src="js/auth.js?v=20261076"></script>
+<script src="js/admin.js?v=20261076"></script>
+<script src="js/player.js?v=20261076"></script>
+<script src="js/views.js?v=20261076"></script>
+<script src="js/versions.js?v=20261076"></script>
+<script src="js/genres.js?v=20261076"></script>
+<script src="js/manage.js?v=20261076"></script>
+<script src="js/main.js?v=20261076"></script>
 
 </body>
 </html>
