@@ -141,11 +141,24 @@ function plGripInit(){
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',plGripInit);
 
 /* ===== panneau versions dans le player ===== */
+function pvMenu(){var p=$('pVers');if(!p||!CURRENT)return;
+ p.setAttribute('data-mode','menu');
+ p.innerHTML='<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:2px 0"><button class="vbtn" id="pvlBtn">\u25b8 LISTE DES VERSIONS</button>'+hearts(CURRENT)+'<button class="vbtn" id="pvxBtn" title="Fermer">\u2715</button></div>';
+ p.style.display='block';
+ $('pvlBtn').onclick=function(ev){ev.stopPropagation();showPVList();};
+ $('pvxBtn').onclick=function(ev){ev.stopPropagation();p.style.display='none';};}
+function pvHover(){var p=$('pVers');if(!p)return;if(p.style.display!=='block'&&CURRENT)pvMenu();}
+function showPVList(){var p=$('pVers');if(!p||!CURRENT)return;
+ var grp=versOf(CURRENT);
+ p.setAttribute('data-mode','list');
+ p.innerHTML='<div style="color:var(--y);font-size:.68rem;letter-spacing:.06em;margin-bottom:6px"><b>'+esc(CURRENT.title)+'</b> \u2014 '+grp.length+' VERSION(S)</div>'+
+  '<button class="vbtn" id="pvmBtn" style="margin-bottom:6px">\u25b8 MENU</button>'+
+  grp.map(function(u){var j=TRACKS.indexOf(u);var cur=(u===CURRENT);
+  return '<div class="vrow" style="padding:6px 0;border-bottom:1px solid var(--line)'+(cur?';border-left:2px solid var(--y);padding-left:6px':'')+'"><div class="vt"><b>'+esc(u.title)+'</b>'+(u.version?' <span class="ver">'+esc(u.version)+'</span>':'')+(u.style?' <span style="color:var(--dim);font-size:.6rem">'+esc(u.style)+'</span>':'')+'</div>'+hearts(u)+'<button class="vbtn" data-pvp="'+j+'">\u25b6</button></div>';}).join('');
+ p.style.display='block';
+ $('pvmBtn').onclick=function(ev){ev.stopPropagation();pvMenu();};
+ p.querySelectorAll('[data-pvp]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();playSingle(TRACKS[+b.getAttribute('data-pvp')]);};});}
 function togglePVers(){var p=$('pVers');if(!p)return;
  if(p.style.display==='block'){p.style.display='none';return;}
  if(!CURRENT){p.innerHTML='<div style="color:var(--dim);font-size:.72rem">AUCUN MORCEAU EN LECTURE</div>';p.style.display='block';return;}
- var grp=versOf(CURRENT);
- p.innerHTML='<div style="color:var(--y);font-size:.68rem;letter-spacing:.06em;margin-bottom:6px"><b>'+esc(CURRENT.title)+'</b> \u2014 '+grp.length+' VERSION(S)</div>'+grp.map(function(u){var j=TRACKS.indexOf(u);var cur=(u===CURRENT);
-  return '<div class="vrow" style="padding:6px 0;border-bottom:1px solid var(--line)'+(cur?';border-left:2px solid var(--y);padding-left:6px':'')+'"><div class="vt"><b>'+esc(u.title)+'</b>'+(u.version?' <span class="ver">'+esc(u.version)+'</span>':'')+(u.style?' <span style="color:var(--dim);font-size:.6rem">'+esc(u.style)+'</span>':'')+'</div>'+hearts(u)+'<button class="vbtn" data-pvp="'+j+'">\u25b6</button></div>';}).join('');
- p.style.display='block';
- p.querySelectorAll('[data-pvp]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();playSingle(TRACKS[+b.getAttribute('data-pvp')]);};});}
+ pvMenu();}
