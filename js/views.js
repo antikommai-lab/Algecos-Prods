@@ -298,8 +298,8 @@ function hitCounter(){
  catch(e){}}
 
 /* ===== provenance (A humain / B hybride / C IA) ===== */
-function provOf(t){return t&&t.prov==='A'||t&&t.prov==='B'?t.prov:'C';}
-function provBadge(t){var p=provOf(t);
+function provOf(t){return (t&&(t.prov==='A'||t.prov==='B'||t.prov==='C'))?t.prov:'';}
+function provBadge(t){var p=provOf(t);if(!p)return '';
  var lbl=p==='A'?'HUMAIN':(p==='B'?'HYBRIDE \u2014 VENDABLE':'IA \u2014 NON VENDABLE');
  var tip=p==='A'?'Cr\u00e9ation humaine':(p==='B'?'IA retravaill\u00e9e par l\u0027artiste \u2014 vendable, non exclusif':'G\u00e9n\u00e9r\u00e9 par IA \u2014 non vendable, partage gratuit uniquement');
  return '<span class="pbadge pb'+p+'" title="'+tip+'">'+lbl+'</span>';}

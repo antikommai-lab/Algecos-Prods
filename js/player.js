@@ -9,7 +9,7 @@ function play(t,list){
  $('pv').textContent=(t.version?'['+t.version+'] ':'')+(t.style||'');
  $('ptags').textContent=(t.tags||[]).join(' / ')+((t.tags||[]).length&&(t.moods||[]).length?' / ':'')+(t.moods||[]).join(' / ');
  $('pdesc').textContent=t.desc||'';
- $('pinfo').textContent='VO:'+(t.lyricsCreator||'\u2014')+' / SND:'+(t.soundCreator||'\u2014')+' / '+(t.recordDate||'\u2014')+' / '+(t.prov==='A'?'HUMAIN':(t.prov==='B'?'HYBRIDE':'IA \u2014 NON VENDABLE'));
+ $('pinfo').textContent='VO:'+(t.lyricsCreator||'\u2014')+' / SND:'+(t.soundCreator||'\u2014')+' / '+(t.recordDate||'\u2014')+(t.prov?' / '+(t.prov==='A'?'HUMAIN':(t.prov==='B'?'HYBRIDE':'IA \u2014 NON VENDABLE')):'');
  $('pstars').innerHTML=stars(t.rating);$('pAvg').textContent='';
  var seq=++PCV;
  var pl=$('player');
