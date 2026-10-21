@@ -35,7 +35,16 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #helpBtn span{position:absolute;top:-13px;right:-11px;font-size:1rem;pointer-events:none;animation:hpHand 5s infinite}
 @keyframes hpPing{0%{transform:scale(1) rotate(0)}4%{transform:scale(.68) rotate(-16deg)}8%{transform:scale(.68) rotate(16deg)}12%{transform:scale(1) rotate(0)}100%{transform:scale(1) rotate(0)}}
 @keyframes hpHand{0%,100%{transform:translateY(0)}4%,8%{transform:translateY(3px)}}
-#helpModal .mbox{width:min(560px,100%)}
+#helpModal .mbox{width:min(620px,100%);overflow:hidden}
+.hSlides{overflow:hidden;position:relative}
+.hTrack{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1);width:100%}
+.hSlide{flex:0 0 100%;min-width:100%}
+.hNav{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:14px}
+.hDots{display:flex;gap:6px}
+.hDot{width:10px;height:10px;border-radius:50%;background:#3a3833;cursor:pointer;border:1px solid var(--line)}
+.hDot.on{background:var(--y);border-color:var(--y)}
+.hGo{position:fixed;z-index:60;left:0;top:0;font-family:'Archivo Black',sans-serif;background:var(--y);color:#000;border:3px solid #000;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:4px 4px 0 #000;pointer-events:none}
+.hAlLogo{position:absolute;top:10px;left:12px;width:34px;height:34px;object-fit:contain;z-index:2;filter:drop-shadow(2px 2px 0 #000)}
 .hlp h4{margin:14px 0 6px;color:var(--y);font-family:'Archivo Black',sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px dashed var(--line);padding-bottom:4px}
 .hlp p{font-size:.74rem;line-height:1.7;color:var(--ink);margin-bottom:6px}
 .hlp b{color:var(--y)}
@@ -365,7 +374,7 @@ audio{width:100%;height:40px;flex:none}
 <button onclick="openSub()" data-tip="Rester inform&#xe9; &#x2014; RSS / mail">&#128233;</button>
 <button onclick="showVars()" data-tip="One track, many variations">&#9854;</button>
 <button onclick="shareSite()" data-tip="Partager le site">&#10548;</button>
-<button id="helpBtn" onclick="openModal('helpModal')" data-tip="Qu&#39;est-ce que c&#39;est ?">&#63;<span>&#128070;</span></button>
+<button id="helpBtn" onclick="hHelp()" data-tip="Qu&#39;est-ce que c&#39;est ?">&#63;<span>&#128070;</span></button>
 </div>
 <div id="ticker"><div id="tickInner"></div></div>
 <button id="admBtn" onclick="openAdmDash()" title="Dashboard admin">&#9881;</button>
@@ -386,7 +395,7 @@ audio{width:100%;height:40px;flex:none}
 <button class="mitem" onclick="goOrder()">&#x270E; Commander un morceau / texte sur mesure</button>
 <button class="mitem" onclick="openSub()">&#x1F4EC; Rester inform&#xe9; / RSS mail</button>
 <a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">&#x2709; Nous contacter</a>
-<button class="mitem" onclick="toggleMenuOff();openModal('helpModal')">&#63; Qu&#39;est-ce que c&#39;est ? (aide)</button>
+<button class="mitem" onclick="toggleMenuOff();hHelp()">&#63; Qu&#39;est-ce que c&#39;est ? (aide)</button>
 <h2>Compte</h2>
 <div id="authZone"></div>
 <h2 id="admTitle" style="display:none">Admin</h2>
@@ -489,7 +498,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v73&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v74&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -819,38 +828,49 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <button class="lbtn" onclick="copyShare()">&#128203; Copier le lien</button>
 </div></div>
 
-<div class="modal" id="helpModal" onclick="if(event.target===this)closeModal('helpModal')"><div class="mbox"><div class="hlp">
-<button class="close" onclick="closeModal('helpModal')">&#x2715;</button>
-<h3>&#63; ALGECOS-PRODS &#8212; QU&#39;EST-CE QUE C&#39;EST ?</h3>
-<h4>&#127911; LA PLATEFORME</h4>
-<p>Un <b>labo d&#39;exp&#xe9;rimentation musicale</b> d&#39;ANTIKOMM : cr&#xe9;ation et exploration de nouveaux sous-genres &#8212; <b>Jazzidcore</b>, <b>Jazzidtribe</b>, <b>Slavicore</b>, <b>Manouchecore</b>, <b>Gypsycore</b>, <b>Ragcore</b>&#8236; &#8212; plus des instru-rap retravaillables &#224; la demande pour personnaliser chaque morceau.</p>
-<h4>&#127925; CE QUE TU PEUX FAIRE ICI</h4>
-<p>&#9654; <b>Ecouter</b> tout le catalogue : playlists, albums, s&#xe9;lections, versions multiples d&#39;un m&#234;me morceau (<b>vote</b> pour ta pr&#xe9;f&#xe9;r&#xe9;e via l&#39;ic&#244;ne croche-c&#339;ur).</p>
-<p>&#128270; <b>Filtrer</b> : 1 clic sur un genre/tag = vert (inclus) &#183; 2 clics = rouge barr&#xe9; (exclu) &#183; 3 clics = neutre.</p>
-<p>&#127926; <b>Paroles</b> qui d&#xe9;filent en synchro pendant la lecture (bouton LYRICS du player).</p>
-<p>&#127911; <b>Lecture isol&#xe9;e</b> : &#233;coute n&#39;importe quel morceau sans perdre ta playlist en cours &#8212; il s&#39;intercale puis la playlist reprend.</p>
-<h4>&#9998; COMMANDES SUR MESURE</h4>
-<p><b>Morceaux</b>, <b>remixes</b>, <b>textes</b> (&#xe9;crits main, sans IA), instru-rap personnalis&#xe9;, ou <b>live sur mesure</b> : tu choisis une s&#xe9;lection de morceaux et le style du live (tribe, techno&#8236; ou autre chose).</p>
-<p>&#127908; Envoie tes <b>enregistrements vocaux</b> : je les remasterise et les retravaille.</p>
-<h4>&#128640; BIENT&#212;T DISPONIBLE</h4>
-<p>&#8987; <b>Timestamps interactifs</b> : dire j&#39;aime de l&#224; &#224; l&#224;, je n&#39;aime pas ce passage, r&#233;p&#232;te cette partie &#224; volont&#xe9; &#8212; pour ton avis, une commande, ou juste comme &#231;a.</p>
-<p>&#128722; <b>Boutique de produits d&#xe9;riv&#xe9;s</b> sans stock : hoodies, mugs, coques de smartphone g&#xe9;n&#xe9;r&#xe9;s automatiquement depuis les logos des albums et des styles (Slavicore, etc.).</p>
-</div></div></div>
+<div class="modal" id="helpModal" onclick="if(event.target===this)closeModal('helpModal')"><div class="mbox"><img class="hAlLogo" id="hAlLogo" src="logo.jpg" alt="ALGECOS" style="display:none"><button class="close" onclick="closeModal('helpModal')">&#x2715;</button><h3 id="hTitle">&#63; ALGECOS-PRODS</h3><div class="hSlides"><div class="hTrack" id="hTrack"></div></div><div class="hNav"><button class="btn2" id="hPrev" onclick="hSlide(-1)">&#9664;</button><div class="hDots" id="hDots"></div><button class="btn" id="hNext" onclick="hSlide(1)">SUIVANT &#9654;</button></div></div>
 
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <datalist id="tagSug"></datalist>
+<script>
+var HSLIDES=[
+'<div class="hlp hSlide"><h4>&#127911; LES ORIGINES</h4><p>ALGECOS-PRODS est le <b>labo d&#39;exp&#233;rimentation musicale</b> de l&#39;ANTIKOMM collective &#8212; une plateforme n&#233;e pour cr&#233;er et explorer de nouveaux sous-genres : <b>Jazzidcore</b>, <b>Jazzidtribe</b>, <b>Slavicore</b>, <b>Manouchecore</b>, <b>Gypsycore</b>, <b>Ragcore</b>&#8236;</p><p>Chaque style est un terrain de jeu : fusion, m&#233;tissage, pousser les codes jusqu&#39;au bout. Et des instru-rap retravaillables &#224; la demande, pour personnaliser chaque morceau.</p></div>',
+'<div class="hlp hSlide"><h4>&#127925; FONCTIONNALIT&#201;S DE BASE</h4><p>&#9654; <b>Ecouter</b> : playlists, albums, s&#233;lections, nouveaut&#233;s.</p><p>&#127926; <b>Paroles</b> qui d&#233;filent en synchro (bouton LYRICS).</p><p>&#127911; <b>Lecture isol&#233;e</b> : un morceau s&#39;intercale dans ta playlist sans la perdre.</p><p>&#9835;&#9836; <b>Versions</b> : plusieurs versions d&#39;un m&#234;me morceau &#8212; &#233;coute et <b>vote</b> pour ta pr&#xe9;f&#xe9;r&#xe9;e (ic&#244;ne croche-c&#339;ur).</p><p>&#128270; <b>Filtres</b> : 1 clic = vert, 2 clics = rouge barr&#xe9;, 3 clics = neutre.</p><p>&#9881;&#65039; <b>Cr&#xe9;e tes propres playlists</b> et s&#233;lections de playlists &#224; partir du catalogue.</p></div>',
+'<div class="hlp hSlide"><h4>&#128640; AVANC&#201; &#8212; COMMANDES &#183; LICENCES &#183; ABOS</h4><p>&#9998; <b>Commandes sur mesure</b> : morceaux, remixes, textes main, lives sur s&#233;lection (tribe, techno&#8236;), remaster de tes enregistrements vocaux.</p><p>&#128230; <b>Licences</b> : r&#233;enregistre, r&#233;utilise en <b>commercial</b>, ou t&#233;l&#233;charge pour le plaisir &#8212; tes playlists, les playlists existantes, les albums ou des tracks <b>&#224; l&#39;unit&#233;</b>.</p><p>&#128252; <b>Abonnement INSTRU/JOUR</b> : chaque jour une nouvelle instru hip-hop livr&#233;e, avec acc&#232;s <b>illimit&#233;</b> aux t&#233;l&#233;chargements.</p><p>&#127873; <b>Dons</b> : des morceaux en cadeau pour les donateurs.</p><p>&#8987; Bient&#244;t : <b>timestamps interactifs</b> (j&#39;aime de l&#224; &#224; l&#224;, r&#233;p&#232;te ce passage) + <b>boutique</b> sans stock (hoodies, mugs, coques g&#233;n&#233;r&#233;s des logos).</p></div>'
+];
+var HSI=0;
+function hRender(){
+ var tr=document.getElementById('hTrack');if(!tr)return;
+ if(!tr.children.length){tr.innerHTML=HSLIDES.join('');}
+ tr.style.transform='translateX(-'+(HSI*100)+'%)';
+ var d=document.getElementById('hDots');
+ d.innerHTML=HSLIDES.map(function(x,i){return '<span class="hDot'+(i===HSI?' on':'')+'" onclick="hGo('+i+')"></span>';}).join('');
+ document.getElementById('hPrev').disabled=HSI===0;
+ document.getElementById('hNext').textContent=HSI===HSLIDES.length-1?'FERMER \u2715':'SUIVANT \u25b6';
+}
+function hGo(i){HSI=Math.max(0,Math.min(HSLIDES.length-1,i));hRender();}
+function hSlide(d){if(HSI===HSLIDES.length-1&&d>0){closeModal('helpModal');return;}hGo(HSI+d);}
+function hHelp(){
+ var b=document.getElementById('helpBtn');
+ var ov=document.createElement('div');ov.className='hGo';ov.textContent='?';document.body.appendChild(ov);
+ var r=b.getBoundingClientRect();
+ ov.style.left=(r.left+r.width/2-22)+'px';ov.style.top=(r.top+r.height/2-22)+'px';ov.style.transform='scale(.4) rotate(-20deg)';ov.style.opacity='0';
+ requestAnimationFrame(function(){ov.style.transition='all .7s cubic-bezier(.32,.72,.24,1)';
+  ov.style.left='calc(50vw - 210px)';ov.style.top='38vh';ov.style.transform='scale(2.4) rotate(340deg)';ov.style.opacity='1';});
+ setTimeout(function(){ov.remove();HSI=0;hRender();openModal('helpModal');},700);}
+</script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261073"></script>
-<script src="js/data.js?v=20261073"></script>
-<script src="js/auth.js?v=20261073"></script>
-<script src="js/admin.js?v=20261073"></script>
-<script src="js/player.js?v=20261073"></script>
-<script src="js/views.js?v=20261073"></script>
-<script src="js/versions.js?v=20261073"></script>
-<script src="js/genres.js?v=20261073"></script>
-<script src="js/manage.js?v=20261073"></script>
-<script src="js/main.js?v=20261073"></script>
+<script src="js/config.js?v=20261074"></script>
+<script src="js/data.js?v=20261074"></script>
+<script src="js/auth.js?v=20261074"></script>
+<script src="js/admin.js?v=20261074"></script>
+<script src="js/player.js?v=20261074"></script>
+<script src="js/views.js?v=20261074"></script>
+<script src="js/versions.js?v=20261074"></script>
+<script src="js/genres.js?v=20261074"></script>
+<script src="js/manage.js?v=20261074"></script>
+<script src="js/main.js?v=20261074"></script>
 
 </body>
 </html>
