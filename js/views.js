@@ -109,7 +109,7 @@ function playPlaylist(){var pl=plFlat();if(!pl.length)return;play(pl[0],pl);}
 
 /* ===== toutes les playlists ===== */
 function renderPlists(){
- var all=PLAYLISTS.concat(autoPlaylists());
+ var all=PLAYLISTS.filter(function(p){return !p.album;}).concat(autoPlaylists());
  $('plGrid').innerHTML=all.map(function(p,i){
   var nb=((p.tracks)||[]).map(function(r){return plMatch(entRef(r))?1:0;}).reduce(function(a,b){return a+b;},0);
   var tr=((p.tracks)||[]).map(function(r){return plMatch(entRef(r));}).filter(function(x){return x;});

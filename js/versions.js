@@ -32,12 +32,39 @@ function selCardHTML(p){
   +'</div><div class="row"><button class="btn" data-spp="'+esc(p.title)+'">\u25b6</button><button class="btn" data-sps="'+esc(p.title)+'" title="Lecture al\u00e9atoire">\u21c4</button><button class="btn" data-spr="'+esc(p.title)+'" title="R\u00e9p\u00e9ter en boucle">\u21bb</button></div></div>';
  return h;}
 
-function renderHomeGrid(){var ps=PLAYLISTS.slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));});$('plGridH').innerHTML=ps.map(selCardHTML).join('');bindSelCards($('plGridH'));
- $('plGridH').querySelectorAll('.plh').forEach(function(cd,i){var p=ps[i];if(!p)return;
+function renderHomeGrid(){
+ var albums=PLAYLISTS.filter(function(p){return p.album;});
+ var pls=PLAYLISTS.filter(function(p){return !p.album;}).slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));});
+ var hl=$('homeLast');
+ if(hl){
+  var lastAl=albums[albums.length-1]||null;
+  var lastPl=pls[0]||null;
+  var lt=null;TRACKS.forEach(function(t){if(!lt||upTime(t)>upTime(lt))lt=t;});
+  var h='<h2 class="secH">\u2605 Derniers ajouts</h2><div id="hlGrid">';
+  if(lastAl)h+='<div class="hlCard hlAl"><small>DERNIER ALBUM</small><b>'+esc(lastAl.title)+'</b><span class="m">'+plFlatOf(lastAl).length+' morceaux</span><button class="btn" data-hlp="al">\u25b6 \u00c9COUTER</button></div>';
+  else h+='<div class="hlCard"><small>DERNIER ALBUM</small><b>\u2014</b></div>';
+  if(lastPl)h+='<div class="hlCard"><small>DERNI\u00c8RE PLAYLIST</small><b>'+esc(lastPl.title)+'</b><span class="m">'+plFlatOf(lastPl).length+' morceaux</span><button class="btn" data-hlp="pl">\u25b6 \u00c9COUTER</button></div>';
+  else h+='<div class="hlCard"><small>DERNI\u00c8RE PLAYLIST</small><b>\u2014</b></div>';
+  if(lt)h+='<div class="hlCard"><small>DERNIER TRACK</small><b>'+esc(lt.title)+'</b><span class="m">'+esc(lt.style||'')+(lt.bpm?' \u00b7 '+Math.round(lt.bpm)+' BPM':'')+(lt.version?' ['+esc(lt.version)+']':'')+'</span><button class="btn" data-hlt="'+TRACKS.indexOf(lt)+'">\u25b6 \u00c9COUTER</button></div>';
+  else h+='<div class="hlCard"><small>DERNIER TRACK</small><b>\u2014</b></div>';
+  h+='</div>';
+  if(albums.length){h+='<h2 class="secH">\u{1F4BF} Albums</h2><div id="hlAl">'+albums.map(function(p){return selCardHTML(p);}).join('')+'</div>';}
+  hl.innerHTML=h;
+  if(albums.length){bindSelCards($('hlAl'));
+   $('hlAl').querySelectorAll('.plh').forEach(function(cd,i){var p=albums[i];if(!p)return;
+    if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u){var im=cd.querySelector('.plc');if(im){im.src=encodeURI(u);im.style.display='block';}}});
+    if(p.img)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.88),rgba(16,16,16,.88)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';});}
+  var ab=hl.querySelector('[data-hlp="al"]');
+  if(ab&&lastAl)ab.onclick=function(ev){ev.stopPropagation();var pl=plFlatOf(lastAl);if(pl.length){PLAYLIST=lastAl;renderPlaylist();showView('home');play(pl[0],pl);}};
+  var pb=hl.querySelector('[data-hlp="pl"]');
+  if(pb&&lastPl)pb.onclick=function(ev){ev.stopPropagation();var pl=plFlatOf(lastPl);if(pl.length){PLAYLIST=lastPl;renderPlaylist();showView('home');play(pl[0],pl);}};
+  var tb=hl.querySelector('[data-hlt]');
+  if(tb)tb.onclick=function(ev){ev.stopPropagation();playSingle(TRACKS[+tb.getAttribute('data-hlt')]);};}
+ $('plGridH').innerHTML=pls.map(selCardHTML).join('');bindSelCards($('plGridH'));
+ $('plGridH').querySelectorAll('.plh').forEach(function(cd,i){var p=pls[i];if(!p)return;
   if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u){var im=cd.querySelector('.plc');if(im){im.src=encodeURI(u);im.style.display='block';}}});
   if(p.img)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.88),rgba(16,16,16,.88)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';});
  document.querySelectorAll('#plGridH [data-epl]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();var ix=PLAYLISTS.findIndex(function(x){return x.title===b.getAttribute('data-epl');});if(ix>-1)editPl(ix);};});}
-
 /* ===== ONE TRACK, MANY VARIATIONS ===== */
 function varGroups(){var gs={},order=[];
  TRACKS.forEach(function(t){var k=vidOf(t);if(!gs[k]){gs[k]={name:(t.vid||'').trim()||t.title,tracks:[]};order.push(k);}gs[k].tracks.push(t);});

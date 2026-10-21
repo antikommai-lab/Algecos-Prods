@@ -182,7 +182,7 @@ async function applyLyricsSel(){
 
 var pmIdx=-1;
 function fillPlVals(p){
- $('p_title').value=p.title||'';$('p_desc').value=p.desc||'';$('p_cover').value=p.cover||'';$('p_img').value=p.img||'';
+ $('p_title').value=p.title||'';$('p_desc').value=p.desc||'';$('p_cover').value=p.cover||'';$('p_img').value=p.img||'';if($('p_album'))$('p_album').checked=!!p.album;
  $('p_tracks').value=(p.tracks||[]).map(function(r){
   if(typeof r==='string')return r;
   if(entSec(r))return 'SECTION: '+entSec(r);
@@ -214,7 +214,7 @@ async function savePl(){
   m=l.match(/^LABEL\s*:\s*(.+?)\s*::\s*(.+)$/i);
   if(m)return {label:m[1].trim(),ref:m[2].trim()};
   return l;});
- var p={title:ti,desc:$('p_desc').value.trim(),cover:$('p_cover').value.trim()||undefined,img:($('p_img')?$('p_img').value.trim():'')||undefined,tracks:tracks};
+ var p={title:ti,desc:$('p_desc').value.trim(),cover:$('p_cover').value.trim()||undefined,img:($('p_img')?$('p_img').value.trim():'')||undefined,tracks:tracks,album:(($('p_album')&&$('p_album').checked)||undefined)};
  p.upd=new Date().toISOString().slice(0,10);
  if(pmIdx>-1)PLAYLISTS[pmIdx]=p;else PLAYLISTS.push(p);
  $('pStatus').className='status ok';$('pStatus').textContent='\u23f3 PUBLICATION\u2026';

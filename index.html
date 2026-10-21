@@ -36,6 +36,15 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #ticker.show{display:block}
 #tickInner{display:inline-block;white-space:nowrap;color:#F74C00;font-family:'Archivo Black',sans-serif;font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;padding:8px 0;animation:tkmove 22s linear infinite}
 @keyframes tkmove{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+#hlGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:10px}
+.hlCard{background:rgba(16,16,16,.9);border:2px solid var(--y);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-height:0}
+.hlCard small{color:var(--dim);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase}
+.hlCard b{color:var(--y);font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:.95rem;line-height:1.25}
+.hlCard .m{color:var(--dim);font-size:.68rem}
+.hlCard .btn{align-self:flex-start;margin-top:4px}
+.hlAl{border-color:var(--y)}
+#hlAl .plh{border:2px solid var(--y)}
+#homeLast{margin-bottom:26px}
 #plGridH{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:18px}
 .plh{position:relative;background:rgba(16,16,16,.88);border:2px solid var(--y);border-radius:10px;padding:14px;cursor:pointer;display:flex;flex-direction:column}
 .plh h3{font-family:'Archivo Black',sans-serif;font-size:.95rem;text-transform:uppercase;margin-bottom:4px;color:var(--y)}
@@ -395,6 +404,7 @@ audio{width:100%;height:40px;flex:none}
 
 <main>
 <section id="home">
+<div id="homeLast"></div>
 <div id="plGridH"></div>
 </section>
 
@@ -469,7 +479,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v71</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v72</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -758,6 +768,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <label>Description</label><textarea id="p_desc" rows="2"></textarea>
 <label>Cover (nom fichier, ex : MACONPLCOVER1)</label><input id="p_cover">
 <label>Image de fond / background (nom fichier, ex : MACONPLBACK1)</label><input id="p_img">
+<label style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="p_album"> ALBUM (type album &#8212; exCLU des playlists, ordre des morceaux forc&#xe9;)</label>
 <label>Morceaux &#x2014; gliss&#xe9;-d&#xe9;pos&#xe9; pour r&#xe9;ordonner &#xb7; &#x2715; pour retirer</label>
 <div id="p_order" style="max-height:24vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px"></div>
 <div class="mgact"><input type="text" id="p_expQ" placeholder="FILTRER MORCEAUX&#x2026;" oninput="plExpRender()"><button class="btn2" onclick="plExpAdd()">+ Ajouter coch&#xe9;s</button></div>
@@ -802,16 +813,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261071"></script>
-<script src="js/data.js?v=20261071"></script>
-<script src="js/auth.js?v=20261071"></script>
-<script src="js/admin.js?v=20261071"></script>
-<script src="js/player.js?v=20261071"></script>
-<script src="js/views.js?v=20261071"></script>
-<script src="js/versions.js?v=20261071"></script>
-<script src="js/genres.js?v=20261071"></script>
-<script src="js/manage.js?v=20261071"></script>
-<script src="js/main.js?v=20261071"></script>
+<script src="js/config.js?v=20261072"></script>
+<script src="js/data.js?v=20261072"></script>
+<script src="js/auth.js?v=20261072"></script>
+<script src="js/admin.js?v=20261072"></script>
+<script src="js/player.js?v=20261072"></script>
+<script src="js/views.js?v=20261072"></script>
+<script src="js/versions.js?v=20261072"></script>
+<script src="js/genres.js?v=20261072"></script>
+<script src="js/manage.js?v=20261072"></script>
+<script src="js/main.js?v=20261072"></script>
 
 </body>
 </html>
