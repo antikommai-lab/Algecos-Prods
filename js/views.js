@@ -100,7 +100,7 @@ function renderPlaylist(){
   h+='<div class="prow" data-t="'+esc(t.title)+'" data-f="'+esc(t.file||'')+'">'
    +(lab?'<span class="plabel">'+esc(lab)+'</span>':'')
    +'<span class="pidx">'+String(n).padStart(2,'0')+'</span>'
-   +'<span class="pt"><b>'+esc(t.title)+'</b><small>'+esc(t.style||'')+' \u00b7 '+esc((t.tags||[]).slice(0,3).join(' / '))+(t.bpm?' \u00b7 '+Math.round(t.bpm)+' BPM':'')+'</small></span>'
+   +'<span class="pt"><b>'+esc(t.title)+'</b><small>'+esc(t.style||'')+' \u00b7 '+esc((t.tags||[]).slice(0,3).join(' / '))+(t.bpm?' \u00b7 '+Math.round(t.bpm)+' BPM':'')+'</small>'+vqBtn(t)+'</span>'
    +(t.version?'<span class="pver">'+esc(t.version)+'</span>':'')
    +(adm?'<button class="edit" data-et="'+TRACKS.indexOf(t)+'" title="Editer ce morceau">\u2699</button>':'')+'</div>';});
  $('plist').innerHTML=h||'<div style="padding:16px;color:var(--dim);font-size:.75rem">PLAYLIST VIDE</div>';
@@ -114,10 +114,16 @@ function renderPlists(){
   var nb=((p.tracks)||[]).map(function(r){return plMatch(entRef(r))?1:0;}).reduce(function(a,b){return a+b;},0);
   var tr=((p.tracks)||[]).map(function(r){return plMatch(entRef(r));}).filter(function(x){return x;});
   var tl=tr.map(function(t){return '<div class="plTrow" data-tt="'+esc(t.title)+'"><span>'+esc(t.title)+'</span><small>'+esc(t.style||'')+'</small></div>';}).join('');
- return '<div class="plcard" data-i="'+i+'">'+(p.auto?'':'<button class="edit" data-pe="'+i+'" title="Editer cette playlist">&#9881;</button>')+'<button class="pbtn shB2" data-shp="'+i+'" title="Partager cette playlist">&#10548;</button><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'\u2014')+(p.auto?' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>':'')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="pln" data-fld="'+i+'" style="cursor:pointer">'+nb+' morceaux <span class="plArr">&#9662;</span></div><div class="plTracks">'+tl+'</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
+  var ptg=[];tr.forEach(function(x){(x.tags||[]).forEach(function(k){if(ptg.indexOf(k)<0)ptg.push(k);});});ptg=ptg.slice(0,10);
+ return '<div class="plcard" data-i="'+i+'">'+(p.auto?'':'<button class="edit" data-pe="'+i+'" title="Editer cette playlist">&#9881;</button>')+'<button class="pbtn shB2" data-shp="'+i+'" title="Partager cette playlist">&#10548;</button><img class="plc" alt="" style="display:none"><div class="plbox"><h3>'+esc(p.title||'\u2014')+(p.auto?' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>':'')+'</h3><div class="pld">'+esc(p.desc||'')+'</div><div class="ptags" title="cliquer pour d\u00e9plier tous les tags"><span class="pr">'+esc(ptg.join(' \u00b7 '))+'</span></div><div class="pln" data-fld="'+i+'" style="cursor:pointer">'+nb+' morceaux <span class="plArr">&#9662;</span></div><div class="plTracks">'+tl+'</div><button class="btn">Ouvrir</button></div></div>';}).join('')||'<div style="color:var(--dim);padding:20px;text-transform:uppercase;font-size:.75rem">AUCUNE PLAYLIST.</div>';
  document.querySelectorAll('.plcard').forEach(function(cd){
   var p=all[+cd.getAttribute('data-i')];
   if(p&&p.cover)tryCovers(plCoverPaths(p.cover),function(u){var im=cd.querySelector('.plc');if(u){im.src=u;im.style.display='block';}});
+  var dd=cd.querySelector('.pld');if(dd)dd.onclick=function(ev){ev.stopPropagation();dd.classList.toggle('exp');};
+  var ptgEl=cd.querySelector('.ptags');
+  if(ptgEl){ptgEl.onclick=function(ev){ev.stopPropagation();ptgEl.classList.toggle('open');var pr=ptgEl.querySelector('.pr');if(pr)pr.style.animation=ptgEl.classList.contains('open')?'none':'';};
+   var pr=ptgEl.querySelector('.pr');
+   if(pr&&pr.scrollWidth>ptgEl.clientWidth+2){var cc=pr.innerHTML;pr.innerHTML=cc+cc;ptgEl.classList.add('roll');pr.style.animationDuration=Math.max(8,pr.scrollWidth/50)+'s';}}
   var eb=cd.querySelector('.edit');
   if(eb)eb.onclick=function(ev){ev.stopPropagation();editPl(PLAYLISTS.indexOf(p));};
   var sb=cd.querySelector('[data-shp]');
@@ -152,7 +158,7 @@ function cardHTML(t,i){
  if(LOTSMODE||document.body.classList.contains('adm'))h+='<input type="checkbox" class="lotck" data-li="'+i+'"'+(LOTCARD.indexOf(i)>-1?' checked':'')+' style="position:absolute;top:10px;left:10px;z-index:5;width:20px;height:20px;cursor:pointer">';
  if(t.version)h+='<span class="ver">'+esc(t.version)+'</span>';
  h+='<div class="stars">'+stars(t.rating)+'</div><h3>'+esc(t.title)+'</h3>';
- h+=provBadge(t);
+ h+=provBadge(t)+vqBtn(t);
  if(t.style)h+='<div class="style fold" title="cliquer pour d\u00e9plier">[ '+esc(t.style)+' ]</div>';
  h+='<div class="meta fold">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div>';
  if((t.moods||[]).length)h+='<div class="meta fold">'+(t.moods||[]).map(function(k){return '<em style="color:var(--y);border-color:var(--y)">'+esc(k)+'</em>';}).join('')+'</div>';

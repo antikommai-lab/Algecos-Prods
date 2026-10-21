@@ -111,3 +111,16 @@ async function vgNewGroup(){
  try{await publishAll('nouveau groupe de versions : '+nn);await load();renderVG();
   $('vgStatus').textContent='GROUPE \u00ab '+nn+' \u00bb CREE (vide)';}
  catch(e){vgErr(e.message);}}
+
+/* ===== bouton versions (\u266a\u2665) sur cartes + lignes de playlist ===== */
+function versOf(t){var k=vidOf(t);return TRACKS.filter(function(x){return vidOf(x)===k;});}
+function vqBtn(t){try{if(!t||versOf(t).length<2)return '';}catch(e){return '';}
+ return '<button class="vq" data-vqi="'+TRACKS.indexOf(t)+'" title="'+versOf(t).length+' versions \u2014 \u00e9coute-les toutes et choisis ta pr\u00e9f\u00e9r\u00e9e">\u266a\u2665</button>';}
+function openVers(i){var t=TRACKS[i];if(!t)return;var grp=versOf(t);
+ $('versInfo').textContent=grp.length+' VERSIONS \u2014 \u00e9coute et choisis ta pr\u00e9f\u00e9r\u00e9e';
+ $('versList').innerHTML=grp.map(function(u){var j=TRACKS.indexOf(u);
+  return '<div class="vrow"><div class="vt"><b>'+esc(u.title)+'</b>'+(u.version?' <span class="ver">'+esc(u.version)+'</span>':'')+(u.bpm?' <small>'+Math.round(u.bpm)+' BPM</small>':'')+'<small>'+esc(u.style||'')+(u.recordDate?' \u00b7 '+esc(u.recordDate):'')+'</small></div><button class="vbtn" data-vp2="'+j+'">\u25b6 \u00c9COUTER</button></div>';}).join('');
+ document.querySelectorAll('#versList [data-vp2]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();var u=TRACKS[+b.getAttribute('data-vp2')];play(u,versOf(u));closeModal('versModal');};});
+ openModal('versModal');}
+function closeVers(){closeModal('versModal');}
+document.addEventListener('click',function(ev){var b=(ev.target&&ev.target.closest)?ev.target.closest('[data-vqi]'):null;if(b){ev.stopPropagation();ev.preventDefault();openVers(+b.getAttribute('data-vqi'));}},true);
