@@ -369,3 +369,27 @@ async function mgDetectBPM(){
   $('e_bpm').value=pick;
   bpmStat(pick+' BPM D\u00c9TECT\u00c9 \u2014 v\u00e9rifie puis ENREGISTRE la s\u00e9lection','ok');}
  catch(e){bpmStat('ERREUR : '+e.message,'err');}}
+
+/* ===== generateur icenes PWA/favicon : 1 image -> 4 PNG publies ===== */
+async function mgPwaIcons(input){
+ var f=input.files[0];input.value='';
+ if(!f)return;
+ var st=$('mgStatus');
+ if(!GHTOK){st.className='status err';st.textContent='TOKEN GITHUB REQUIS';return;}
+ st.className='status ok';st.textContent='\u23f3 LECTURE IMAGE\u2026';
+ try{
+  var bmp=await createImageBitmap(f);
+  var sizes=[[64,'favicon.png'],[180,'apple-touch-icon.png'],[192,'icon-192.png'],[512,'icon-512.png']];
+  for(var k=0;k<sizes.length;k++){
+   var s=sizes[k][0],nm=sizes[k][1];
+   var cv=document.createElement('canvas');cv.width=s;cv.height=s;
+   var cx=cv.getContext('2d');
+   var m2=Math.min(bmp.width,bmp.height);
+   cx.drawImage(bmp,(bmp.width-m2)/2,(bmp.height-m2)/2,m2,m2,0,0,s,s);
+   var blob=await new Promise(function(res){cv.toBlob(res,'image/png');});
+   if(!blob)throw new Error('ENCODAGE PNG KO');
+   var b64=toB64Buf(await blob.arrayBuffer());
+   st.textContent='\u23f3 PUBLICATION '+nm+' ('+s+'\u00d7'+s+')\u2026';
+   await ghCreate('img/'+nm,b64,'icone PWA : '+nm);}
+  st.textContent='\u2713 4 ICONES PUBLIEES \u2014 Ctrl+Maj+R pour voir le favicon';}
+ catch(e){st.className='status err';st.textContent='ERREUR : '+e.message;}}
