@@ -370,7 +370,25 @@ async function mgDetectBPM(){
   bpmStat(pick+' BPM D\u00c9TECT\u00c9 \u2014 v\u00e9rifie puis ENREGISTRE la s\u00e9lection','ok');}
  catch(e){bpmStat('ERREUR : '+e.message,'err');}}
 
-/* ===== generateur icenes PWA/favicon : 1 image -> 4 PNG publies ===== */
+/* ===== generateur icenes PWA/favicon : backup anciennes + historique packs ===== */
+async function mgPwaBackup(nm,pid){
+ try{var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/img/'+nm+'?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
+  if(!r.ok)return false;
+  var meta=await r.json();
+  if(!meta||!meta.content)return false;
+  await ghCreate('img/icons-history/'+pid+'/'+nm,meta.content.replace(/\s/g,''),'archive icone : '+nm);
+  return true;}
+ catch(e){return false;}}
+async function mgPwaHist(add){
+ var H=null;
+ try{var r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/img/icons-history/history.json?ref=main&t='+Date.now(),{headers:{Authorization:'Bearer '+GHTOK,Accept:'application/vnd.github+json'}});
+  if(r.ok){var m2=await r.json();if(m2&&m2.content){var bin=atob(m2.content.replace(/\s/g,''));var d2=decodeURIComponent(escape(bin));H=JSON.parse(d2);}}}catch(e){}
+ if(!Array.isArray(H))H=[];
+ if(add){var dup=H.filter(function(x){return x.id===add.id;})[0];
+  if(dup)H[H.indexOf(dup)]=add;else H.push(add);}
+ var b64=toB64(JSON.stringify(H,null,1));
+ await ghPut('img/icons-history/history.json',b64,(add?'pack icunes : ':'lecture Historique : ')+add.id);
+ return H;}
 async function mgPwaIcons(input){
  var f=input.files[0];input.value='';
  if(!f)return;
@@ -379,17 +397,29 @@ async function mgPwaIcons(input){
  st.className='status ok';st.textContent='\u23f3 LECTURE IMAGE\u2026';
  try{
   var bmp=await createImageBitmap(f);
+  var d=new Date(),pid=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0')+String(d.getSeconds()).padStart(2,'0');
   var sizes=[[64,'favicon.png'],[180,'apple-touch-icon.png'],[192,'icon-192.png'],[512,'icon-512.png']];
+  var saved=[],arch=[];
   for(var k=0;k<sizes.length;k++){
    var s=sizes[k][0],nm=sizes[k][1];
+   if(await mgPwaBackup(nm,pid))arch.push(nm);
    var cv=document.createElement('canvas');cv.width=s;cv.height=s;
    var cx=cv.getContext('2d');
-   var m2=Math.min(bmp.width,bmp.height);
-   cx.drawImage(bmp,(bmp.width-m2)/2,(bmp.height-m2)/2,m2,m2,0,0,s,s);
+   var m3=Math.min(bmp.width,bmp.height);
+   cx.drawImage(bmp,(bmp.width-m3)/2,(bmp.height-m3)/2,m3,m3,0,0,s,s);
    var blob=await new Promise(function(res){cv.toBlob(res,'image/png');});
    if(!blob)throw new Error('ENCODAGE PNG KO');
    var b64=toB64Buf(await blob.arrayBuffer());
    st.textContent='\u23f3 PUBLICATION '+nm+' ('+s+'\u00d7'+s+')\u2026';
-   await ghCreate('img/'+nm,b64,'icone PWA : '+nm);}
-  st.textContent='\u2713 4 ICONES PUBLIEES \u2014 Ctrl+Maj+R pour voir le favicon';}
+   await ghCreate('img/'+nm,b64,'icone PWA : '+nm);
+   saved.push('img/icons-history/'+pid+'/'+nm);}
+  await mgPwaHist({id:pid,date:d.toISOString().slice(0,10)+' '+d.toISOString().slice(11,16),archived:arch,files:saved});
+  st.textContent='\u2713 4 ICONES PUBLIEES \u2014 pack '+pid+(arch.length?' \u2014 '+arch.length+' ancienne(s) archiv\u00e9e(s)':' \u2014 premier pack')+' \u2014 Ctrl+Maj+R';}
+ catch(e){st.className='status err';st.textContent='ERREUR : '+e.message;}}
+async function mgPwaList(){
+ var st=$('mgStatus');
+ if(!GHTOK){st.className='status err';st.textContent='TOKEN GITHUB REQUIS';return;}
+ st.className='status ok';st.textContent='\u23f3 LECTURE HISTORIQUE\u2026';
+ try{var H=await mgPwaHist(null);
+  st.textContent=H.length?H.map(function(h){return h.id+' \u2014 '+h.date+(h.archived&&h.archived.length?' \u2014 '+h.archived.length+' ancienne(s) archiv\u00e9e(s)':' \u2014 premier pack');}).join(String.fromCharCode(10)):'AUCUN PACK G\u00c9N\u00c9R\u00c9 POUR L\u0027INSTANT';}
  catch(e){st.className='status err';st.textContent='ERREUR : '+e.message;}}
