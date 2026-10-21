@@ -221,9 +221,20 @@ body.adm .card .shB{display:none}
 .btn2{padding:10px 16px;background:transparent;color:var(--dim);border:1px solid var(--line);font-family:'Space Mono',monospace;cursor:pointer;text-transform:uppercase}
 .search-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .search-bar input{flex:1;min-width:180px;padding:12px 14px;background:rgba(16,16,16,.85);border:1px solid var(--line);color:var(--ink);font-family:'Space Mono',monospace}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;position:relative;align-items:flex-start}
 .tag{font-size:.68rem;padding:4px 10px;border:1px solid var(--line);color:var(--dim);cursor:pointer;background:rgba(16,16,16,.85);text-transform:uppercase}
 .tag:hover,.tag.on{color:#000;background:var(--y);border-color:var(--y)}
+.tag.off{color:#ff6b6b;background:rgba(70,0,0,.55);border-color:#ff6b6b;text-decoration:line-through}
+.tag.off:hover{color:#000;background:#ff6b6b;border-color:#ff6b6b}
+.tH{font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;align-self:center;margin:2px 2px 2px 0}
+.tgF{cursor:pointer;color:var(--y);border:1px solid var(--line);padding:3px 8px;background:rgba(16,16,16,.85)}
+.tgF:hover{border-color:var(--y)}
+#tagMore{display:flex;gap:6px;flex-wrap:wrap;width:100%}
+#tHelp{width:18px;height:18px;line-height:16px;text-align:center;flex:none;border:1px solid var(--y);color:var(--y);border-radius:50%;cursor:pointer;font-size:.62rem;font-weight:700;background:#000;margin-left:auto}
+#tTip{display:none;position:absolute;top:26px;right:0;z-index:20;background:#000;border:1px solid var(--y);padding:10px 12px;font-size:.66rem;line-height:1.6;color:var(--ink);max-width:340px;box-shadow:4px 4px 0 #000}
+#tTip.open{display:block}
+#tTip b.tg1{color:#3ecf5a}
+#tTip b.tg2{color:#ff6b6b;text-decoration:line-through}
 #count{color:var(--dim);font-size:.72rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em}
 #grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .card{background:rgba(16,16,16,.88);background-size:cover;background-position:center;border:2px solid var(--y);border-radius:10px;padding:14px;position:relative}
@@ -257,9 +268,11 @@ body.adm .card .shB{display:none}
 #contact a{color:var(--y);text-decoration:none;font-family:'Space Mono',monospace}
 #contact a:hover{text-decoration:underline}
 /* ===== player ===== */
-#player{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:4px solid var(--y);padding:12px 16px;display:none;z-index:14;max-height:48vh;overflow-y:auto}
-#player.show{display:block}
-#pTop{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}
+#player{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:4px solid var(--y);padding:8px 16px 12px;display:none;z-index:14;max-height:48vh;overflow-y:auto}
+#player.show{display:flex;flex-direction:column}
+#pGrip{flex:none;cursor:ns-resize;text-align:center;color:var(--dim);font-size:.62rem;letter-spacing:2px;user-select:none;padding:0 0 6px;touch-action:none}
+#pGrip:hover{color:var(--y)}
+#pTop{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px;flex:1 1 auto;overflow-y:auto;min-height:0}
 #tCover{width:72px;height:72px;object-fit:cover;border:2px solid var(--y);display:none;cursor:zoom-in;flex:none}
 #pInfo{flex:1;min-width:220px}
 #pInfo b{color:var(--y);font-size:.95rem;text-transform:uppercase;display:block;margin-bottom:3px}
@@ -274,7 +287,7 @@ body.adm .card .shB{display:none}
 .pbtn{background:#000;color:var(--y);border:1px solid var(--y);padding:9px 12px;font-family:'Space Mono',monospace;font-weight:700;font-size:.8rem;cursor:pointer}
 .pbtn:hover:not(:disabled){background:var(--y);color:#000}
 .pbtn:disabled{opacity:.25;cursor:default}
-audio{width:100%;height:40px}
+audio{width:100%;height:40px;flex:none}
 /* ===== modals ===== */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;z-index:40;padding:16px}
 .modal.open{display:flex}
@@ -456,7 +469,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v66</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v67</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -479,6 +492,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 </div>
 
 <div id="player">
+<div id="pGrip">&#8645; &#8645; &#8645;</div>
 <div id="pTop">
 <img id="tCover" alt="cover morceau" style="display:none">
 <div id="pInfo">
@@ -786,17 +800,18 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261066"></script>
-<script src="js/data.js?v=20261066"></script>
-<script src="js/auth.js?v=20261066"></script>
-<script src="js/admin.js?v=20261066"></script>
-<script src="js/player.js?v=20261066"></script>
-<script src="js/views.js?v=20261066"></script>
-<script src="js/versions.js?v=20261066"></script>
-<script src="js/genres.js?v=20261066"></script>
-<script src="js/manage.js?v=20261066"></script>
-<script src="js/main.js?v=20261066"></script>
+<script src="js/config.js?v=20261067"></script>
+<script src="js/data.js?v=20261067"></script>
+<script src="js/auth.js?v=20261067"></script>
+<script src="js/admin.js?v=20261067"></script>
+<script src="js/player.js?v=20261067"></script>
+<script src="js/views.js?v=20261067"></script>
+<script src="js/versions.js?v=20261067"></script>
+<script src="js/genres.js?v=20261067"></script>
+<script src="js/manage.js?v=20261067"></script>
+<script src="js/main.js?v=20261067"></script>
 
 </body>
 </html>
+
 

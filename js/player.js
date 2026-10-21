@@ -102,3 +102,21 @@ function imgFS(){var m=$('imgModal');
  m.classList.toggle('fs');
  if(m.requestFullscreen)m.requestFullscreen().catch(function(){});}
 function closeSpiral(){$('spiralOv').classList.remove('open');}
+
+
+/* ===== player : poignee de redimensionnement (drag) ===== */
+function plGripInit(){
+ var g=$('pGrip'),pl=$('player');if(!g||!pl)return;
+ var sy=0,sh=0,dr=false;
+ try{var h=localStorage.getItem('plh');
+  if(h){pl.style.height=h;pl.style.maxHeight=h;}}catch(e){}
+ g.addEventListener('pointerdown',function(e){dr=true;sy=e.clientY;sh=pl.offsetHeight;g.setPointerCapture(e.pointerId);e.preventDefault();});
+ g.addEventListener('pointermove',function(e){if(!dr)return;
+  var h=Math.max(70,Math.min(Math.round(window.innerHeight*0.92),sh+(sy-e.clientY)));
+  pl.style.height=h+'px';pl.style.maxHeight=h+'px';});
+ g.addEventListener('pointerup',function(){if(!dr)return;dr=false;
+  try{localStorage.setItem('plh',pl.style.height||'');}catch(e){}});
+ g.addEventListener('dblclick',function(){pl.style.height='';pl.style.maxHeight='';
+  try{localStorage.removeItem('plh');}catch(e){}});
+ g.title='Glisser pour redimensionner \u2014 double-clic : r\u00e9initialiser';}
+if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',plGripInit);

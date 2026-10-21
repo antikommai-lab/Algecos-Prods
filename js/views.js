@@ -190,7 +190,7 @@ function render(){
  var mo=$('moreOpts')?$('moreOpts').value:'';
  var st=$('sortSel')?$('sortSel').value:'';
  var list=TRACKS.map(function(t,i){return {t:t,i:i};}).filter(function(o){
-  var ok=activeTags.length===0||activeTags.some(function(a){return (o.t.tags||[]).indexOf(a)>-1;});
+  var ok=tagFilterOK(o.t);
   if(mo==='note4')ok=ok&&(o.t.rating||0)>=4;
   if(mo==='notelow')ok=ok&&(o.t.rating||0)<3;
   if(mo==='noversion')ok=ok&&!(o.t.version||'').trim();
@@ -311,4 +311,5 @@ function sendOrder(){
  var body='COMMANDE : '+ty+String.fromCharCode(10)+String.fromCharCode(10)+d+(st?String.fromCharCode(10)+String.fromCharCode(10)+'Styles : '+st:'')+String.fromCharCode(10)+String.fromCharCode(10)+'\u2014 envoy\u00E9 depuis le site ALGECOS-PRODS';
  window.location.href='mailto:algecosprods@gmail.com?subject='+encodeURIComponent('[COMMANDE] '+ty)+'&body='+encodeURIComponent(body);
  $('oStatus').className='status ok';$('oStatus').textContent='TON LOGICIEL MAIL S\u0027OUVRE \u2014 ENVOIE LE MESSAGE';}
+
 

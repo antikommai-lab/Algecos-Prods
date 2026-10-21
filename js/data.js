@@ -1,4 +1,4 @@
-var TRACKS=[],PLAYLISTS=[],PLAYLIST=null,activeTags=[],SELS=[],MSGS=[],VGROUPS=[];
+var TRACKS=[],PLAYLISTS=[],PLAYLIST=null,activeTags=[],negTags=[],SELS=[],MSGS=[],VGROUPS=[];
 var CURRENT=null,CURRENTLIST=[],PCV=0;
 var LYR={open:false,el:null};
 var VIEW={imgs:[],i:0};
@@ -62,6 +62,19 @@ function trackCoverPaths(t){var out=[],i,b=String(t.title||'')+'_cover';
  for(i=0;i<EXTS.length;i++)out.push(b+'.'+EXTS[i]);
  return out;}
 
+/* ===== filtres tri-state : 1 clic = vert (inclus), 2 clics = rouge barre (exclu), 3 clics = neutre ===== */
+function chipHit(t,key){var p=key.split('\u0001'),k=p[0],v=tgN(p[1]);
+ if(k==='g')return tgN(t.style)===v;
+ var arr=k==='m'?(t.moods||[]):(t.tags||[]);
+ return arr.some(function(x){return tgN(x)===v;});}
+function tagFilterOK(t){
+ if(activeTags.length&&!activeTags.some(function(a){return chipHit(t,a);}))return false;
+ if(negTags.some(function(a){return chipHit(t,a);}))return false;
+ return true;}
+function updChips(){document.querySelectorAll('#tags .tag').forEach(function(el){
+ var key=el.getAttribute('data-k')+'\u0001'+el.getAttribute('data-t');
+ el.classList.toggle('on',activeTags.indexOf(key)>-1);
+ el.classList.toggle('off',negTags.indexOf(key)>-1);});}
 /* ===== chargement ===== */
 async function load(){
  try{var r=await fetch('tracks.json?nc='+Date.now(),{cache:'no-store'});TRACKS=await r.json();}catch(e){TRACKS=[];}
@@ -76,14 +89,36 @@ async function load(){
  try{var il=await fetch('imglist.json?nc='+Date.now(),{cache:'no-store'});IMGS=await il.json();if(!Array.isArray(IMGS))IMGS=[];IMGS.forEach(function(p){IMGSI[base(p).toLowerCase()]=p;});}catch(e){IMGS=[];}
  if(!PLAYLIST||PLAYLISTS.indexOf(PLAYLIST)<0)PLAYLIST=PLAYLISTS[0]||{title:'\u2014',desc:'',tracks:[]};
  renderPlaylist();renderPlists();renderHomeGrid();renderVersions();renderSels();
- var allTags=[];TRACKS.forEach(function(t){(t.tags||[]).forEach(function(k){if(allTags.indexOf(k)<0)allTags.push(k);});});
- allTags.sort();
- $('tags').innerHTML=allTags.map(function(t){return '<span class="tag" data-t="'+esc(t)+'">'+esc(t)+'</span>';}).join('');
- document.querySelectorAll('#tags .tag').forEach(function(el){el.onclick=function(){
-  var v=el.getAttribute('data-t');var ix=activeTags.indexOf(v);
-  if(ix>-1)activeTags.splice(ix,1);else activeTags.push(v);
-  document.querySelectorAll('#tags .tag').forEach(function(x){x.classList.toggle('on',activeTags.indexOf(x.getAttribute('data-t'))>-1);});
-  render();};});
+ var sty=[],tgA=[],moA=[];
+ TRACKS.forEach(function(t){
+  var s=String(t.style||'').trim();if(s&&sty.indexOf(s)<0)sty.push(s);
+  (t.tags||[]).forEach(function(k){if(k&&tgA.indexOf(k)<0)tgA.push(k);});
+  (t.moods||[]).forEach(function(k){if(k&&moA.indexOf(k)<0)moA.push(k);});});
+ sty.sort();tgA.sort();moA.sort();
+ var chip=function(k,v){return '<span class="tag" data-k="'+k+'" data-t="'+esc(v)+'">'+esc(v)+'</span>';};
+ var NT=tgA.length+moA.length;
+ $('tags').innerHTML='<span class="tH">GENRES</span>'
+ +sty.map(function(v){return chip('g',v);}).join('')
+ +'<span class="tH tgF" id="tgF">&#9656; TAGS + MOODS ('+NT+')</span>'
+ +'<div id="tagMore" style="display:none">'
+ +'<span class="tH">TAGS</span>'+tgA.map(function(v){return chip('t',v);}).join('')
+ +'<span class="tH">MOODS</span>'+moA.map(function(v){return chip('m',v);}).join('')
+ +'</div>'
+ +'<span id="tHelp" title="Aide filtres">?</span>'
+ +'<span id="tTip">1 CLIC = <b class="tg1">VERT</b> : inclus &#183; 2 CLICS = <b class="tg2">ROUGE BARR&#xc9;</b> : exclu &#183; 3 CLICS = neutre. Ex : <b class="tg1">rap</b> vert + <b class="tg2">old school</b> rouge = tout le rap sauf l&#39;old school.</span>';
+ $('tags').addEventListener('click',function(e){
+  var el=e.target;
+  if(el.id==='tHelp'||(el.closest&&el.closest('#tHelp'))){$('tTip').classList.toggle('open');return;}
+  if(el.id==='tgF'){var m=$('tagMore'),o=m.style.display==='none';
+   m.style.display=o?'block':'none';
+   el.innerHTML=(o?'&#9662;':'&#9656;')+' TAGS + MOODS ('+NT+')';return;}
+  var cc=el.closest?el.closest('.tag'):null;if(!cc)return;
+  var key=cc.getAttribute('data-k')+'\u0001'+cc.getAttribute('data-t');
+  var ix=activeTags.indexOf(key);
+  if(ix>-1){activeTags.splice(ix,1);negTags.push(key);}
+  else{var nx=negTags.indexOf(key);if(nx>-1)negTags.splice(nx,1);else activeTags.push(key);}
+  updChips();render();});
+ 
  render();updTicker();}
 
 function normLyrics(txt,ext){try{

@@ -92,7 +92,7 @@ function editSelIdx(i){
  fillSelVals(s);$('sStatus').textContent='';openModal('selModal');}
 function playFiltered(){
  var q=$('q').value.toLowerCase().trim();
- var list=TRACKS.filter(function(t){return (!q||match(t,q))&&(activeTags.length===0||activeTags.some(function(a){return (t.tags||[]).indexOf(a)>-1;}));});
+ var list=TRACKS.filter(function(t){return (!q||match(t,q))&&tagFilterOK(t);});
  if(!list.length){alert('AUCUN MORCEAU DANS LA S\u00C9LECTION');return;}
  play(list[0],list);}
 function initGenres(){
@@ -101,3 +101,4 @@ function initGenres(){
  var b=document.createElement('button');b.className='btn';b.textContent='\u25B6 LIRE PLAYLIST S\u00c9LECTION';b.onclick=playFiltered;
  bar.appendChild(b);}
 document.addEventListener('DOMContentLoaded',initGenres);
+
