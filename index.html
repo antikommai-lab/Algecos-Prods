@@ -31,6 +31,14 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #hicons button:hover{background:var(--y);color:#000}
 #hicons button::after{content:attr(data-tip);position:absolute;top:46px;right:0;background:#000;color:var(--y);border:1px solid var(--y);padding:4px 8px;font-size:.6rem;white-space:nowrap;display:none;z-index:5;text-transform:uppercase;letter-spacing:.08em}
 #hicons button:hover::after{display:block}
+#helpBtn{font-family:'Archivo Black',sans-serif;font-size:1.45rem;animation:hpPing 5s infinite}
+#helpBtn span{position:absolute;top:-13px;right:-11px;font-size:1rem;pointer-events:none;animation:hpHand 5s infinite}
+@keyframes hpPing{0%{transform:scale(1) rotate(0)}4%{transform:scale(.68) rotate(-16deg)}8%{transform:scale(.68) rotate(16deg)}12%{transform:scale(1) rotate(0)}100%{transform:scale(1) rotate(0)}}
+@keyframes hpHand{0%,100%{transform:translateY(0)}4%,8%{transform:translateY(3px)}}
+#helpModal .mbox{width:min(560px,100%)}
+.hlp h4{margin:14px 0 6px;color:var(--y);font-family:'Archivo Black',sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px dashed var(--line);padding-bottom:4px}
+.hlp p{font-size:.74rem;line-height:1.7;color:var(--ink);margin-bottom:6px}
+.hlp b{color:var(--y)}
 @media(max-width:760px){#hicons{display:none}}
 #ticker{grid-column:1/-1;justify-self:stretch;display:none;overflow:hidden;margin-top:14px;border-top:2px dashed #4a3305}
 #ticker.show{display:block}
@@ -357,6 +365,7 @@ audio{width:100%;height:40px;flex:none}
 <button onclick="openSub()" data-tip="Rester inform&#xe9; &#x2014; RSS / mail">&#128233;</button>
 <button onclick="showVars()" data-tip="One track, many variations">&#9854;</button>
 <button onclick="shareSite()" data-tip="Partager le site">&#10548;</button>
+<button id="helpBtn" onclick="openModal('helpModal')" data-tip="Qu&#39;est-ce que c&#39;est ?">&#63;<span>&#128070;</span></button>
 </div>
 <div id="ticker"><div id="tickInner"></div></div>
 <button id="admBtn" onclick="openAdmDash()" title="Dashboard admin">&#9881;</button>
@@ -377,6 +386,7 @@ audio{width:100%;height:40px;flex:none}
 <button class="mitem" onclick="goOrder()">&#x270E; Commander un morceau / texte sur mesure</button>
 <button class="mitem" onclick="openSub()">&#x1F4EC; Rester inform&#xe9; / RSS mail</button>
 <a class="mitem" href="mailto:algecosprods@gmail.com" onclick="toggleMenuOff()">&#x2709; Nous contacter</a>
+<button class="mitem" onclick="toggleMenuOff();openModal('helpModal')">&#63; Qu&#39;est-ce que c&#39;est ? (aide)</button>
 <h2>Compte</h2>
 <div id="authZone"></div>
 <h2 id="admTitle" style="display:none">Admin</h2>
@@ -479,7 +489,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v72</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v73&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -809,20 +819,38 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <button class="lbtn" onclick="copyShare()">&#128203; Copier le lien</button>
 </div></div>
 
+<div class="modal" id="helpModal" onclick="if(event.target===this)closeModal('helpModal')"><div class="mbox"><div class="hlp">
+<button class="close" onclick="closeModal('helpModal')">&#x2715;</button>
+<h3>&#63; ALGECOS-PRODS &#8212; QU&#39;EST-CE QUE C&#39;EST ?</h3>
+<h4>&#127911; LA PLATEFORME</h4>
+<p>Un <b>labo d&#39;exp&#xe9;rimentation musicale</b> d&#39;ANTIKOMM : cr&#xe9;ation et exploration de nouveaux sous-genres &#8212; <b>Jazzidcore</b>, <b>Jazzidtribe</b>, <b>Slavicore</b>, <b>Manouchecore</b>, <b>Gypsycore</b>, <b>Ragcore</b>&#8236; &#8212; plus des instru-rap retravaillables &#224; la demande pour personnaliser chaque morceau.</p>
+<h4>&#127925; CE QUE TU PEUX FAIRE ICI</h4>
+<p>&#9654; <b>Ecouter</b> tout le catalogue : playlists, albums, s&#xe9;lections, versions multiples d&#39;un m&#234;me morceau (<b>vote</b> pour ta pr&#xe9;f&#xe9;r&#xe9;e via l&#39;ic&#244;ne croche-c&#339;ur).</p>
+<p>&#128270; <b>Filtrer</b> : 1 clic sur un genre/tag = vert (inclus) &#183; 2 clics = rouge barr&#xe9; (exclu) &#183; 3 clics = neutre.</p>
+<p>&#127926; <b>Paroles</b> qui d&#xe9;filent en synchro pendant la lecture (bouton LYRICS du player).</p>
+<p>&#127911; <b>Lecture isol&#xe9;e</b> : &#233;coute n&#39;importe quel morceau sans perdre ta playlist en cours &#8212; il s&#39;intercale puis la playlist reprend.</p>
+<h4>&#9998; COMMANDES SUR MESURE</h4>
+<p><b>Morceaux</b>, <b>remixes</b>, <b>textes</b> (&#xe9;crits main, sans IA), instru-rap personnalis&#xe9;, ou <b>live sur mesure</b> : tu choisis une s&#xe9;lection de morceaux et le style du live (tribe, techno&#8236; ou autre chose).</p>
+<p>&#127908; Envoie tes <b>enregistrements vocaux</b> : je les remasterise et les retravaille.</p>
+<h4>&#128640; BIENT&#212;T DISPONIBLE</h4>
+<p>&#8987; <b>Timestamps interactifs</b> : dire j&#39;aime de l&#224; &#224; l&#224;, je n&#39;aime pas ce passage, r&#233;p&#232;te cette partie &#224; volont&#xe9; &#8212; pour ton avis, une commande, ou juste comme &#231;a.</p>
+<p>&#128722; <b>Boutique de produits d&#xe9;riv&#xe9;s</b> sans stock : hoodies, mugs, coques de smartphone g&#xe9;n&#xe9;r&#xe9;s automatiquement depuis les logos des albums et des styles (Slavicore, etc.).</p>
+</div></div></div>
+
 <div class="modal" id="admDash" onclick="if(event.target===this)closeAdmDash()"></div>
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261072"></script>
-<script src="js/data.js?v=20261072"></script>
-<script src="js/auth.js?v=20261072"></script>
-<script src="js/admin.js?v=20261072"></script>
-<script src="js/player.js?v=20261072"></script>
-<script src="js/views.js?v=20261072"></script>
-<script src="js/versions.js?v=20261072"></script>
-<script src="js/genres.js?v=20261072"></script>
-<script src="js/manage.js?v=20261072"></script>
-<script src="js/main.js?v=20261072"></script>
+<script src="js/config.js?v=20261073"></script>
+<script src="js/data.js?v=20261073"></script>
+<script src="js/auth.js?v=20261073"></script>
+<script src="js/admin.js?v=20261073"></script>
+<script src="js/player.js?v=20261073"></script>
+<script src="js/views.js?v=20261073"></script>
+<script src="js/versions.js?v=20261073"></script>
+<script src="js/genres.js?v=20261073"></script>
+<script src="js/manage.js?v=20261073"></script>
+<script src="js/main.js?v=20261073"></script>
 
 </body>
 </html>
