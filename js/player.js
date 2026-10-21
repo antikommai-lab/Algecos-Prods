@@ -31,6 +31,18 @@ function updateCtl(){var i=CURRENTLIST.indexOf(CURRENT);
  $('nextBtn').disabled=i<0||i>=CURRENTLIST.length-1;}
 function plPrev(){var i=CURRENTLIST.indexOf(CURRENT);if(i>0)play(CURRENTLIST[i-1],CURRENTLIST);}
 function plNext(){var i=CURRENTLIST.indexOf(CURRENT);if(i>-1&&i<CURRENTLIST.length-1)play(CURRENTLIST[i+1],CURRENTLIST);}
+/* ===== ecoute isolee : intercale le morceau dans la playlist en cours sans la perdre ===== */
+function playSingle(t){
+ if(!t)return;
+ var a=$('audio');
+ if(a.src&&!a.paused&&CURRENT&&CURRENTLIST.length>1){
+  var L=CURRENTLIST.slice();
+  var ix=L.indexOf(t);
+  if(ix>-1)L.splice(ix,1);
+  var ci=L.indexOf(CURRENT);
+  L.splice(ci+1,0,t);
+  play(t,L);}
+ else play(t,[t]);}
 function sk(d){var a=$('audio');if(isFinite(a.duration))a.currentTime=Math.max(0,Math.min(a.duration,a.currentTime+d));}
 async function rate(k){
  if(!CURRENT)return;

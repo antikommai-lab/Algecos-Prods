@@ -175,7 +175,7 @@ function bindCards(root){
   tryCovers(cps,function(u){if(u)card.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';});});
  root.querySelectorAll('.edit[data-e]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();editTrack(+b.getAttribute('data-e'));};});
  root.querySelectorAll('.card .fold').forEach(function(el){el.onclick=function(ev){ev.stopPropagation();el.classList.toggle('open');};setTimeout(function(){if(el.scrollHeight<=el.clientHeight+2)el.classList.add('nofold');},120);});
- root.querySelectorAll('.card .play').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();play(TRACKS[+b.getAttribute('data-i')],[TRACKS[+b.getAttribute('data-i')]]);};});
+ root.querySelectorAll('.card .play').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();playSingle(TRACKS[+b.getAttribute('data-i')]);};});
  root.querySelectorAll('.card [data-vg]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();openVG(+b.getAttribute('data-vg'));};});
  root.querySelectorAll('.card [data-qpl]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();quickAddPl(+b.getAttribute('data-qpl'));};});
  root.querySelectorAll('.card [data-del]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();var t=TRACKS[+b.getAttribute('data-del')];if(t)cardDelTrack(t.title,t.uploadTime);};});
