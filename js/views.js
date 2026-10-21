@@ -100,7 +100,7 @@ function renderPlaylist(){
   h+='<div class="prow" data-t="'+esc(t.title)+'" data-f="'+esc(t.file||'')+'">'
    +(lab?'<span class="plabel">'+esc(lab)+'</span>':'')
    +'<span class="pidx">'+String(n).padStart(2,'0')+'</span>'
-   +'<span class="pt"><b>'+esc(t.title)+'</b><small>'+esc(t.style||'')+' \u00b7 '+esc((t.tags||[]).slice(0,3).join(' / '))+'</small></span>'
+   +'<span class="pt"><b>'+esc(t.title)+'</b><small>'+esc(t.style||'')+' \u00b7 '+esc((t.tags||[]).slice(0,3).join(' / '))+(t.bpm?' \u00b7 '+Math.round(t.bpm)+' BPM':'')+'</small></span>'
    +(t.version?'<span class="pver">'+esc(t.version)+'</span>':'')
    +(adm?'<button class="edit" data-et="'+TRACKS.indexOf(t)+'" title="Editer ce morceau">\u2699</button>':'')+'</div>';});
  $('plist').innerHTML=h||'<div style="padding:16px;color:var(--dim);font-size:.75rem">PLAYLIST VIDE</div>';
@@ -156,7 +156,7 @@ function cardHTML(t,i){
  if(t.style)h+='<div class="style fold" title="cliquer pour d\u00e9plier">[ '+esc(t.style)+' ]</div>';
  h+='<div class="meta fold">'+(t.tags||[]).map(function(k){return '<em>'+esc(k)+'</em>';}).join('')+'</div>';
  if((t.moods||[]).length)h+='<div class="meta fold">'+(t.moods||[]).map(function(k){return '<em style="color:var(--y);border-color:var(--y)">'+esc(k)+'</em>';}).join('')+'</div>';
- h+='<div class="info">VO:'+esc(t.lyricsCreator||'\u2014')+' / SND:'+esc(t.soundCreator||'\u2014')+' / '+esc(t.recordDate||'\u2014')+(t.added?' / +'+esc(t.added)+upClock(t):'')+'</div>';
+ h+='<div class="info">VO:'+esc(t.lyricsCreator||'\u2014')+' / SND:'+esc(t.soundCreator||'\u2014')+' / '+esc(t.recordDate||'\u2014')+(t.bpm?' / '+Math.round(t.bpm)+' BPM':'')+(t.added?' / +'+esc(t.added)+upClock(t):'')+'</div>';
  h+='<div class="desc fold" title="cliquer pour d\u00e9plier">'+esc(t.desc||'')+'</div>';
  h+='<button class="play" data-i="'+i+'">\u25b6 \u00c9couter</button>';
  h+='<button class="edit" data-e="'+i+'" title="\u00c9diter ce morceau">\u2699</button><button class="shB" data-shtr="'+i+'" title="Partager ce morceau">&#10548;</button>';

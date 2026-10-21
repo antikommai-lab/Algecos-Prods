@@ -88,11 +88,11 @@ function fillTrackVals(t){
  $('f_style').value=t.style||'';$('f_version').value=t.version||'';$('f_desc').value=t.desc||'';
  $('f_vid').value=t.vid||'';
  $('f_lyr').value=t.lyricsCreator||'';$('f_snd').value=t.soundCreator||'';$('f_moods').value=(t.moods||[]).join(', ');
- $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||3;
+ $('f_date').value=t.recordDate||'';$('f_rating').value=t.rating||3;$('f_bpm').value=t.bpm||'';
  $('f_lyrFile').value='';$('f_pladd').value='';$('f_plnew').value='';}
 function openTrackForm(mode){
  if(mode===-1){tmIdx=-1;$('tmTitle').textContent='+ Ajouter un morceau';$('tmSelWrap').style.display='none';
-  ['f_title','f_file','f_tags','f_moods','f_style','f_version','f_vid','f_desc','f_lyr','f_snd','f_date'].forEach(function(id){$(id).value='';});
+  ['f_title','f_file','f_tags','f_moods','f_style','f_version','f_vid','f_desc','f_lyr','f_snd','f_date','f_bpm'].forEach(function(id){$(id).value='';});
   $('f_rating').value=3;$('f_lyrFile').value='';$('f_pladd').value='';$('f_plnew').value='';}
  else{$('tmTitle').textContent='\u270e Modifier un morceau';$('tmSelWrap').style.display='block';
   $('tmSel').innerHTML=TRACKS.map(function(t,i){return '<option value="'+i+'">'+esc(t.title)+'</option>';}).join('');
@@ -111,7 +111,7 @@ async function saveTrack(){
  o.tags=$('f_tags').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
  o.style=$('f_style').value.trim();o.version=$('f_version').value.trim();o.desc=$('f_desc').value.trim();o.vid=$('f_vid').value.trim();
  o.lyricsCreator=$('f_lyr').value.trim();o.soundCreator=$('f_snd').value.trim();
- o.recordDate=$('f_date').value;o.rating=+$('f_rating').value||0;
+ o.recordDate=$('f_date').value;o.rating=+$('f_rating').value||0;var fb=+$('f_bpm').value;o.bpm=fb>0?Math.round(fb):undefined;
  o.moods=$('f_moods')?$('f_moods').value.split(',').map(function(s){return s.trim();}).filter(Boolean):[];
  if(tmIdx<0){o.id=nextId();o.added=new Date().toISOString().slice(0,10);o.uploadTime=new Date().toISOString();}
  if(tmIdx>-1)TRACKS[tmIdx]=o;else TRACKS.push(o);
@@ -361,7 +361,8 @@ async function uploadTracks(){
  var lotDesc=g('upDesc');
  var lotDate=g('upDate');
  var lotR=parseInt(g('upRating'),10);if(isNaN(lotR)||lotR<0)lotR=0;
- var extra=(lotTags.length?' tags='+lotTags.join('/'):'')+(lotMoods.length?' moods='+lotMoods.join('/'):'')+(lotStyle?' style='+lotStyle:'')+(lotDesc?' +description':'')+(lotDate?' date='+lotDate:'')+(lotR?' note='+lotR:'');
+ var lotBpm=parseFloat(g('upBpm'));if(isNaN(lotBpm)||lotBpm<=0)lotBpm=0;
+ var extra=(lotTags.length?' tags='+lotTags.join('/'):'')+(lotMoods.length?' moods='+lotMoods.join('/'):'')+(lotStyle?' style='+lotStyle:'')+(lotDesc?' +description':'')+(lotDate?' date='+lotDate:'')+(lotR?' note='+lotR:'')+(lotBpm?' bpm='+Math.round(lotBpm):'');
  if(!confirm('Uploader '+fs.length+' fichier(s) vers '+dir+'/ ?\n\nTitre = nom de fichier.'+(extra?'\nM\u00C9TADONN\u00C9ES PAR LOT :'+extra:'')+(alb?'\nUne playlist \u00AB '+alb+' \u00BB sera cr\u00E9\u00E9e/r\u00E9utilis\u00E9e.':'')+' ?'))return;
  upProg(0,fs.length);
  var ad=new Date().toISOString().slice(0,10);
@@ -376,6 +377,7 @@ async function uploadTracks(){
    if(lotDesc)nt.desc=lotDesc;
    if(lotDate)nt.recordDate=lotDate;
    if(lotMoods.length)nt.moods=lotMoods.slice();
+   if(lotBpm)nt.bpm=Math.round(lotBpm);
    newTracks.push(nt);
    titles.push(ti);done++;}
   catch(e){fail++;}

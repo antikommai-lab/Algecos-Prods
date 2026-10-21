@@ -87,6 +87,7 @@ function mgFillEdit(){
  setv('e_snd',t0&&t0.soundCreator);
  setv('e_date',t0&&t0.recordDate);
  setv('e_img',t0&&t0.img);
+ setv('e_bpm',t0&&t0.bpm);
  var r=$('e_rating');if(r)r.value=one?(t0&&t0.rating||0):'';
  var rc=$('e_rcommon');if(rc)rc.checked=false;
  var h=one?('MORCEAU #'+(t0.id||'?')+' \u2014 '+esc(t0.title)):rows.length+' morceaux s\u00E9lectionn\u00E9s \u2014 seuls les champs remplis seront appliqu\u00E9s';
@@ -109,6 +110,7 @@ async function mgSaveEdit(){
   if(v('e_style')!==''||one)t.style=v('e_style');
   if(v('e_version')!==''||one)t.version=v('e_version');
   if(v('e_img')!==''||one)t.img=v('e_img');
+  if(one){t.bpm=v('e_bpm')!==''?Math.round(+v('e_bpm')):t.bpm;}else if(v('e_bpm')!==''){t.bpm=Math.round(+v('e_bpm'));}
   if(one){var rv=$('e_rating').value;if(rv!==''&&!isNaN(+rv))t.rating=+rv;}
   if(rc&&$('e_rating').value!==''){t.rating=+$('e_rating').value;}
   n++;});
@@ -327,3 +329,43 @@ async function cardDelTrack(title,upTS){
  try{await publishAll("suppression track : "+t.title);
   await load();render();renderPlaylist();alert("SUPPRIME");}
  catch(e){alert("PUBLISH KO : "+e.message);}}
+
+/* ===== detection BPM via Web Audio (sans lib externe) ===== */
+function bpmStat(m,c){var e=$('bpmStatus');if(e){e.className='status '+(c||'');e.textContent=m;}}
+async function mgDetectBPM(){
+ if(MGSEL.length!==1){bpmStat('S\u00c9LECTIONNE EXACTEMENT 1 MORCEAU','err');return;}
+ var t=TRACKS[MGSEL[0]];
+ if(!t||!t.file){bpmStat('PAS DE FICHIER AUDIO ASSOCI\u00c9','err');return;}
+ var AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC){bpmStat('WEB AUDIO INDISPONIBLE','err');return;}
+ bpmStat('\u23f3 T\u00c9L\u00c9CHARGEMENT + ANALYSE\u2026','ok');
+ try{
+  var r=await fetch(encodeURI(t.file)+'?t='+Date.now(),{cache:'no-store'});
+  if(!r.ok)throw new Error('DL KO ('+r.status+')');
+  var ab=await r.arrayBuffer();
+  var ac=new AC();
+  var buf=await ac.decodeAudioData(ab);
+  try{ac.close();}catch(e2){}
+  var sr=buf.sampleRate,d=buf.getChannelData(0);
+  var hop=512;
+  var maxN=Math.min(Math.floor(d.length/hop),Math.floor(90*sr/hop));
+  if(maxN<Math.floor(20*sr/hop)){bpmStat('MORCEAU TROP COURT','err');return;}
+  var env=new Float32Array(maxN),i,j;
+  for(i=0;i<maxN;i++){var s=0,o=i*hop;for(j=0;j<hop;j++){var v2=d[o+j];s+=v2*v2;}env[i]=s;}
+  var fps=sr/hop;
+  var on=new Float32Array(maxN);
+  for(i=1;i<maxN;i++){var de=env[i]-env[i-1];on[i]=de>0?de:0;}
+  var bestC=-1,bestB=0,b;
+  for(b=60;b<=220;b+=0.5){
+   var lag=Math.round(60*fps/b);if(lag<2||lag*3>=maxN)continue;
+   var c=0,n2=0;
+   for(i=lag;i<maxN;i++){c+=on[i]*on[i-lag];n2++;}
+   c/=(n2||1);
+   if(c>bestC){bestC=c;bestB=b;}}
+  if(!bestB){bpmStat('AUCUN TEMPO D\u00c9TECT\u00c9','err');return;}
+  var cands=[bestB,bestB/2,bestB*2,bestB/4].filter(function(x){return x>=60&&x<=220;});
+  var pick=cands.filter(function(x){return x>=70&&x<=180;})[0]||bestB;
+  pick=Math.round(pick);
+  $('e_bpm').value=pick;
+  bpmStat(pick+' BPM D\u00c9TECT\u00c9 \u2014 v\u00e9rifie puis ENREGISTRE la s\u00e9lection','ok');}
+ catch(e){bpmStat('ERREUR : '+e.message,'err');}}

@@ -447,7 +447,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v64</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v65</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -556,6 +556,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div><label>ID cr&#xe9;ateur son</label><input id="e_snd"></div>
 <div><label>Date d&#39;enregistrement</label><input id="e_date" type="date"></div>
 <div><label>Image / cover explicite (img)</label><input id="e_img"></div>
+<div><label>BPM</label><input id="e_bpm" type="number" min="0" max="300" placeholder="ex : 140"></div>
 <div><label>Note (0-5)</label><input id="e_rating" type="number" min="0" max="5"></div>
 <div><label style="display:flex;align-items:center;gap:6px;padding-top:14px"><input type="checkbox" id="e_rcommon" style="width:auto"> appliquer la note &#xe0; toute la s&#xe9;lection</label></div>
 </div>
@@ -564,6 +565,8 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <button class="btn" onclick="mgSaveEdit()">&#10003; Enregistrer la s&#xe9;lection</button>
 <button class="btn2" onclick="mgDelSel()">&#x1F5D1; Supprimer la s&#xe9;lection</button>
 </div>
+<div class="row"><button class="btn2" onclick="mgDetectBPM()">&#9856; D&#xe9;tecter le BPM (analyse du fichier audio &#8212; s&#xe9;lection unique)</button></div>
+<div class="status" id="bpmStatus"></div>
 <div class="row"><button class="btn2" onclick="$('repFile').click()">&#x21E7; Remplacer l&#39;audio (version retravaill&#233;e)</button><input type="file" id="repFile" accept="audio/*" style="display:none" onchange="mgRepAudio(this)"></div>
 <div class="mgact">
 <select id="mgPlSel"></select>
@@ -683,6 +686,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <label>Description commune</label><textarea id="upDesc" rows="2"></textarea>
 <label>Date d&#39;enregistrement commune</label><input id="upDate" type="date">
 <label>Note commune (0-5, 0 = pas encore not&#xe9;)</label><input id="upRating" type="number" min="0" max="5" value="0">
+<label>BPM commun (optionnel &#8212; appliqu&#xe9; &#224; tous les fichiers du lot)</label><input id="upBpm" type="number" min="0" max="300">
 <div class="row"><button class="btn" onclick="uploadTracks()">&#11014; Uploader + cr&#233;er les entr&#233;es</button></div>
 <div class="status" id="upStatus"></div>
 <div class="pbarW" id="upBarW" style="display:none"><div id="upBar"></div></div>
@@ -704,6 +708,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <label>ID cr&#xe9;ateur son</label><input id="f_snd">
 <label>Date d&#39;enregistrement</label><input id="f_date" type="date">
 <label>Note par d&#xe9;faut (1-5)</label><input id="f_rating" type="number" min="1" max="5">
+<label>BPM</label><input id="f_bpm" type="number" min="0" max="300">
 <label>Ajouter &#xe0; une playlist (optionnel)</label>
 <select id="f_pladd"></select>
 <input id="f_plnew" placeholder="ou nom d&#39;une nouvelle playlist">
@@ -765,16 +770,16 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <datalist id="tagSug"></datalist>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261064"></script>
-<script src="js/data.js?v=20261064"></script>
-<script src="js/auth.js?v=20261064"></script>
-<script src="js/admin.js?v=20261064"></script>
-<script src="js/player.js?v=20261064"></script>
-<script src="js/views.js?v=20261064"></script>
-<script src="js/versions.js?v=20261064"></script>
-<script src="js/genres.js?v=20261064"></script>
-<script src="js/manage.js?v=20261064"></script>
-<script src="js/main.js?v=20261064"></script>
+<script src="js/config.js?v=20261065"></script>
+<script src="js/data.js?v=20261065"></script>
+<script src="js/auth.js?v=20261065"></script>
+<script src="js/admin.js?v=20261065"></script>
+<script src="js/player.js?v=20261065"></script>
+<script src="js/views.js?v=20261065"></script>
+<script src="js/versions.js?v=20261065"></script>
+<script src="js/genres.js?v=20261065"></script>
+<script src="js/manage.js?v=20261065"></script>
+<script src="js/main.js?v=20261065"></script>
 
 </body>
 </html>
