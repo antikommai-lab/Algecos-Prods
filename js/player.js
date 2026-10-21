@@ -48,11 +48,18 @@ async function rate(k){
  if(!CURRENT)return;
  if(!USER){openCmt();return;}
  if(!sbReady())return;
- var ti=CURRENT.title,em=USER.email,r;
- var ex=await SB.from('ratings').select('id').eq('track',ti).eq('email',em).limit(1);
- if(!ex.error&&ex.data&&ex.data.length)r=await SB.from('ratings').update({stars:k}).eq('track',ti).eq('email',em);
- else r=await SB.from('ratings').insert({track:ti,email:em,stars:k});
- if(r.error){$('pAvg').className='status err';$('pAvg').textContent='NOTE KO : '+r.error.message;return;}
+ var ti=CURRENT.title,em=USER.email,r=null;
+ try{
+  var ex=await SB.from('ratings').select('id').eq('track',ti).eq('email',em).limit(1);
+  if(!ex.error&&ex.data&&ex.data.length)r=await SB.from('ratings').update({stars:k}).eq('track',ti).eq('email',em);
+  else r=await SB.from('ratings').insert({track:ti,email:em,stars:k});
+  if(r&&r.error&&/email|column|relationship/i.test(r.error.message||'')){
+   r=await SB.from('ratings').insert({track:ti,stars:k});
+   if(!r.error)$('pAvg').className='status';}
+ }catch(e){r={error:{message:String((e&&e.message)||e)}};}
+ if(r&&r.error){$('pAvg').className='status err';
+  var mm=r.error.message||'';
+  $('pAvg').textContent=/email|column|relationship/i.test(mm)?'NOTE KO : Supabase \u2014 relancer le sch\u00e9ma (SQL: NOTIFY pgrst, \'reload schema\')':'NOTE KO : '+mm;return;}
  $('pAvg').className='';$('pstars').innerHTML=stars(k);
  SB.from('ratings').select('stars').eq('track',CURRENT.title).then(function(res){
   if(!res.data||!res.data.length)return;
@@ -138,7 +145,7 @@ function togglePVers(){var p=$('pVers');if(!p)return;
  if(p.style.display==='block'){p.style.display='none';return;}
  if(!CURRENT){p.innerHTML='<div style="color:var(--dim);font-size:.72rem">AUCUN MORCEAU EN LECTURE</div>';p.style.display='block';return;}
  var grp=versOf(CURRENT);
- p.innerHTML='<div style="color:var(--dim);font-size:.62rem;letter-spacing:.1em;margin-bottom:6px">'+grp.length+' VERSIONS</div>'+grp.map(function(u){var j=TRACKS.indexOf(u);
-  return '<div class="vrow" style="padding:6px 0;border-bottom:1px solid var(--line)"><div class="vt"><b>'+esc(u.title)+'</b>'+(u.version?' <span class="ver">'+esc(u.version)+'</span>':'')+'</div>'+hearts(u)+'<button class="vbtn" data-pvp="'+j+'">\u25b6</button></div>';}).join('');
+ p.innerHTML='<div style="color:var(--y);font-size:.68rem;letter-spacing:.06em;margin-bottom:6px"><b>'+esc(CURRENT.title)+'</b> \u2014 '+grp.length+' VERSION(S)</div>'+grp.map(function(u){var j=TRACKS.indexOf(u);var cur=(u===CURRENT);
+  return '<div class="vrow" style="padding:6px 0;border-bottom:1px solid var(--line)'+(cur?';border-left:2px solid var(--y);padding-left:6px':'')+'"><div class="vt"><b>'+esc(u.title)+'</b>'+(u.version?' <span class="ver">'+esc(u.version)+'</span>':'')+(u.style?' <span style="color:var(--dim);font-size:.6rem">'+esc(u.style)+'</span>':'')+'</div>'+hearts(u)+'<button class="vbtn" data-pvp="'+j+'">\u25b6</button></div>';}).join('');
  p.style.display='block';
  p.querySelectorAll('[data-pvp]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();playSingle(TRACKS[+b.getAttribute('data-pvp')]);};});}
