@@ -11,6 +11,7 @@ function play(t,list){
  $('pdesc').textContent=t.desc||'';
  $('pinfo').textContent='VO:'+(t.lyricsCreator||'\u2014')+' / SND:'+(t.soundCreator||'\u2014')+' / '+(t.recordDate||'\u2014')+(t.prov?' / '+(t.prov==='A'?'HUMAIN':(t.prov==='B'?'HYBRIDE':'IA \u2014 NON VENDABLE')):'');
  $('pstars').innerHTML=stars(t.rating);$('pAvg').textContent='';
+ if(typeof renderLike==='function')renderLike(t);
  var seq=++PCV;
  var pl=$('player');
  tryCovers(trackCoverPaths(t),function(u){if(seq!==PCV)return;var c=$('tCover');
