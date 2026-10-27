@@ -24,61 +24,7 @@ async function voteVer(ti){
  localStorage.setItem('vote_'+ti,'1');
  alert(sbReady()&&USER?'VOTE ENREGISTR\u00c9 \u2713':'VOTE LOCAL \u2713 \u2014 il sera synchronis\u00e9 quand la connexion sera active');
  renderVersions();}
-function plFlatOf(p){var old=PLAYLIST,out=[];try{PLAYLIST=p;out=plFlat();}catch(e){}PLAYLIST=old;return out;}
-function selCardHTML(p){
- var tr=plFlatOf(p);
- var h='<div class="plh" data-sel="'+esc(p.title)+'">'+(p.cover?'<img class="plc" data-plc="'+esc(p.cover)+'" style="display:none">':'')+(document.body.classList.contains('adm')?'<button class="edit" data-epl="'+esc(p.title)+'" style="position:absolute;top:10px;right:10px">&#9881;</button>':'')+'<h3>'+esc(p.title)+'</h3><div class="m">'+esc(p.desc||'')+' \u00b7 '+tr.length+' morceaux'+(p.upd?' \u00b7 '+esc(p.upd):'')+'</div><div class="plFoldBtn" onclick="event.stopPropagation();this.closest(\'.plh\').classList.toggle(\'open\')" title="Voir les morceaux"><span class="plArr">&#9662;</span> TRACKLIST</div><div class="seltracks">'
-  +tr.map(function(t){return '<div class="srow" data-spt="'+esc(t.title)+'"><b>'+esc(t.title)+'</b>'+(t.version?' <span class="ver">'+esc(t.version)+'</span>':'')+'</div>';}).join('')
-  +'</div><div class="row"><button class="btn" data-spp="'+esc(p.title)+'">\u25b6</button><button class="btn" data-sps="'+esc(p.title)+'" title="Lecture al\u00e9atoire">\u21c4</button><button class="btn" data-spr="'+esc(p.title)+'" title="R\u00e9p\u00e9ter en boucle">\u21bb</button></div></div>';
- return h;}
-
-var PGEXP=false;
-function renderHomeGrid(){
- var albums=PLAYLISTS.filter(function(p){return p.album;});
- var pls=PLAYLISTS.filter(function(p){return !p.album;}).slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));});
- var hl=$('homeLast');
- if(hl){
-  var lastAl=albums[albums.length-1]||null;
-  var lastPl=pls[0]||null;
-  var lt=null;TRACKS.forEach(function(t){if(!lt||upTime(t)>upTime(lt))lt=t;});
-  var h='<h2 class="secH">\u2605 Derniers ajouts</h2><div id="hlGrid">';
-  if(lastAl)h+='<div class="hlCard hlAl"><img class="hlcv" data-hcv="al" style="display:none"><small>DERNIER ALBUM</small><b>'+esc(lastAl.title)+'</b><span class="m">'+plFlatOf(lastAl).length+' morceaux</span><button class="btn" data-hlp="al">\u25b6 \u00c9COUTER</button></div>';
-  else h+='<div class="hlCard"><small>DERNIER ALBUM</small><b>\u2014</b></div>';
-  if(lastPl)h+='<div class="hlCard"><img class="hlcv" data-hcv="pl" style="display:none"><small>DERNI\u00c8RE PLAYLIST</small><b>'+esc(lastPl.title)+'</b><span class="m">'+plFlatOf(lastPl).length+' morceaux</span><button class="btn" data-hlp="pl">\u25b6 \u00c9COUTER</button></div>';
-  else h+='<div class="hlCard"><small>DERNI\u00c8RE PLAYLIST</small><b>\u2014</b></div>';
-  if(lt)h+='<div class="hlCard"><img class="hlcv" data-hcv="tr" style="display:none"><small>DERNIER TRACK</small><b>'+esc(lt.title)+'</b><span class="m">'+esc(lt.style||'')+(lt.bpm?' \u00b7 '+Math.round(lt.bpm)+' BPM':'')+(lt.version?' ['+esc(lt.version)+']':'')+'</span><button class="btn" data-hlt="'+TRACKS.indexOf(lt)+'">\u25b6 \u00c9COUTER</button></div>';
-  else h+='<div class="hlCard"><small>DERNIER TRACK</small><b>\u2014</b></div>';
-  h+='</div>';
-  if(albums.length){h+='<h2 class="secH">\u{1F4BF} Albums</h2><div id="hlAl">'+albums.map(function(p){return selCardHTML(p);}).join('')+'</div>';}
-  hl.innerHTML=h;
-  if(albums.length){bindSelCards($('hlAl'));
-   $('hlAl').querySelectorAll('.plh').forEach(function(cd,i){var p=albums[i];if(!p)return;
-    if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u){var im=cd.querySelector('.plc');if(im){im.src=encodeURI(u);im.style.display='block';}}});
-    if(p.img)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.88),rgba(16,16,16,.88)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';});}
-  var hlBg=function(im,u){if(!im||!u)return;im.src=encodeURI(u);im.style.display='block';var cd=im.closest('.hlCard');if(cd)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';};
-  var hcv=function(sel,p){var im=hl.querySelector('[data-hcv="'+sel+'"]');if(!im||!p)return;
-   if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u){im.src=encodeURI(u);im.style.display='block';}});
-   var cd=im.closest('.hlCard');
-   if(p.img&&cd)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';
-   else if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u&&cd)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';});};
-  hcv('al',lastAl);hcv('pl',lastPl);
-  var tim=hl.querySelector('[data-hcv="tr"]');
-  if(tim&&lt){var tcs=lt.img?((lt.img.indexOf('/')>0?[lt.img]:trackCoverPaths(lt.img))):trackCoverPaths(lt);
-   if(tcs&&tcs.length)tryCovers(tcs,function(u){hlBg(tim,u);});}
-  var ab=hl.querySelector('[data-hlp="al"]');
-  if(ab&&lastAl)ab.onclick=function(ev){ev.stopPropagation();var pl=plFlatOf(lastAl);if(pl.length){PLAYLIST=lastAl;renderPlaylist();showView('home');play(pl[0],pl);}};
-  var pb=hl.querySelector('[data-hlp="pl"]');
-  if(pb&&lastPl)pb.onclick=function(ev){ev.stopPropagation();var pl=plFlatOf(lastPl);if(pl.length){PLAYLIST=lastPl;renderPlaylist();showView('home');play(pl[0],pl);}};
-  var tb=hl.querySelector('[data-hlt]');
-  if(tb)tb.onclick=function(ev){ev.stopPropagation();playSingle(TRACKS[+tb.getAttribute('data-hlt')]);};}
- var PG6=6,pshown=PGEXP?pls:pls.slice(0,PG6);
- $('plGridH').innerHTML='<h2 class="secH">\u2630 PLAYLISTS</h2>'+pshown.map(selCardHTML).join('')+((!PGEXP&&pls.length>PG6)?'<button class="btn" id="pgMore" style="display:block;margin:12px auto">\u25be VOIR LES '+(pls.length-PG6)+' AUTRES PLAYLISTS</button>':'');
- bindSelCards($('plGridH'));
- $('plGridH').querySelectorAll('.plh').forEach(function(cd,i){var p=pshown[i];if(!p)return;
-  if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u){var im=cd.querySelector('.plc');if(im){im.src=encodeURI(u);im.style.display='block';}}});
-  if(p.img)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.88),rgba(16,16,16,.88)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';});
- var pgmb=$('pgMore');if(pgmb)pgmb.onclick=function(ev){ev.stopPropagation();PGEXP=true;renderHomeGrid();};
- document.querySelectorAll('#plGridH [data-epl]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();var ix=PLAYLISTS.findIndex(function(x){return x.title===b.getAttribute('data-epl');});if(ix>-1)editPl(ix);};});}
+/* (cartes playlists deplacees dans js/playlist.js, accueil dans js/home.js) */
 /* ===== ONE TRACK, MANY VARIATIONS ===== */
 function varGroups(){var gs={},order=[];
  TRACKS.forEach(function(t){var k=vidOf(t);if(!gs[k]){gs[k]={name:(t.vid||'').trim()||t.title,tracks:[]};order.push(k);}gs[k].tracks.push(t);});

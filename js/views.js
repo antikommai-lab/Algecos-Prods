@@ -229,17 +229,8 @@ function showViewer(){var im=VIEW.imgs[VIEW.i];if(!im)return closeViewer();
 function closeViewer(){$('imgModal').classList.remove('open');$('vL').style.display='none';$('vR').style.display='none';}
 function vnav(d){if(!VIEW.imgs.length)return;VIEW.i=(VIEW.i+d+VIEW.imgs.length)%VIEW.imgs.length;showViewer();}
 
-function updTicker(){
- var tk=$('ticker'),inner=$('tickInner');if(!tk||!inner)return;
- var lt=null;TRACKS.forEach(function(t){if(!lt||upTime(t)>upTime(lt))lt=t;});
- var lp=null;PLAYLISTS.forEach(function(p){if(!lp||String(p.upd||'')>String(lp.upd||''))lp=p;});
- var parts=[];
- if(typeof TICKER!=='undefined')TICKER.forEach(function(x){if(x)parts.push({h:1,t:String(x)});});
- if(lt)parts.push({t:'\u2b07 LAST UPLOAD : '+lt.title+(lt.version?' ['+lt.version+']':'')+' \u2014 '+(lt.uploadTime?lt.uploadTime.slice(0,10):(lt.added||lt.recordDate||''))});
- if(lp)parts.push({t:'\u26a1 LAST PLAYLIST : '+lp.title+(lp.upd?' \u2014 '+lp.upd:'')});
- if(!parts.length){tk.classList.remove('show');return;}
- inner.innerHTML=parts.map(function(p){return p.h?p.t:esc(p.t);}).join('   \u2726   ');
- tk.classList.add('show');}
+/* (ticker deplace dans js/ticker.js) */
+
 
 /* ===== rester informe : RSS + mail ===== */
 function openSub(){$('subChoice').style.display='block';$('subForm').style.display='none';$('subEmail').value='';$('subOk').checked=false;$('subStatus').textContent='';openModal('subModal');}
