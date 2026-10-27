@@ -32,6 +32,7 @@ function selCardHTML(p){
   +'</div><div class="row"><button class="btn" data-spp="'+esc(p.title)+'">\u25b6</button><button class="btn" data-sps="'+esc(p.title)+'" title="Lecture al\u00e9atoire">\u21c4</button><button class="btn" data-spr="'+esc(p.title)+'" title="R\u00e9p\u00e9ter en boucle">\u21bb</button></div></div>';
  return h;}
 
+var PGEXP=false;
 function renderHomeGrid(){
  var albums=PLAYLISTS.filter(function(p){return p.album;});
  var pls=PLAYLISTS.filter(function(p){return !p.album;}).slice().sort(function(a,b){return String(b.upd||'').localeCompare(String(a.upd||''));});
@@ -56,8 +57,10 @@ function renderHomeGrid(){
     if(p.img)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.88),rgba(16,16,16,.88)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';});}
   var hlBg=function(im,u){if(!im||!u)return;im.src=encodeURI(u);im.style.display='block';var cd=im.closest('.hlCard');if(cd)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';};
   var hcv=function(sel,p){var im=hl.querySelector('[data-hcv="'+sel+'"]');if(!im||!p)return;
-   var cs=p.img?((p.img.indexOf('/')>0?[p.img]:plCoverPaths(p.img))):plCoverPaths(p.cover||'');
-   if(!cs||!cs.length)return;tryCovers(cs,function(u){hlBg(im,u);});};
+   if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u){im.src=encodeURI(u);im.style.display='block';}});
+   var cd=im.closest('.hlCard');
+   if(p.img&&cd)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';
+   else if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u&&cd)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.86),rgba(16,16,16,.86)),url("'+encodeURI(u)+'")';});};
   hcv('al',lastAl);hcv('pl',lastPl);
   var tim=hl.querySelector('[data-hcv="tr"]');
   if(tim&&lt){var tcs=lt.img?((lt.img.indexOf('/')>0?[lt.img]:trackCoverPaths(lt.img))):trackCoverPaths(lt);
@@ -68,10 +71,13 @@ function renderHomeGrid(){
   if(pb&&lastPl)pb.onclick=function(ev){ev.stopPropagation();var pl=plFlatOf(lastPl);if(pl.length){PLAYLIST=lastPl;renderPlaylist();showView('home');play(pl[0],pl);}};
   var tb=hl.querySelector('[data-hlt]');
   if(tb)tb.onclick=function(ev){ev.stopPropagation();playSingle(TRACKS[+tb.getAttribute('data-hlt')]);};}
- $('plGridH').innerHTML='<h2 class="secH">\u2630 PLAYLISTS</h2>'+pls.map(selCardHTML).join('');bindSelCards($('plGridH'));
- $('plGridH').querySelectorAll('.plh').forEach(function(cd,i){var p=pls[i];if(!p)return;
+ var PG6=6,pshown=PGEXP?pls:pls.slice(0,PG6);
+ $('plGridH').innerHTML='<h2 class="secH">\u2630 PLAYLISTS</h2>'+pshown.map(selCardHTML).join('')+((!PGEXP&&pls.length>PG6)?'<button class="btn" id="pgMore" style="display:block;margin:12px auto">\u25be VOIR LES '+(pls.length-PG6)+' AUTRES PLAYLISTS</button>':'');
+ bindSelCards($('plGridH'));
+ $('plGridH').querySelectorAll('.plh').forEach(function(cd,i){var p=pshown[i];if(!p)return;
   if(p.cover)tryCovers(plCoverPaths(p.cover),function(u){if(u){var im=cd.querySelector('.plc');if(im){im.src=encodeURI(u);im.style.display='block';}}});
   if(p.img)cd.style.backgroundImage='linear-gradient(rgba(16,16,16,.88),rgba(16,16,16,.88)),url("'+encodeURI(p.img.indexOf('/')>0?p.img:'img/'+p.img)+'")';});
+ var pgmb=$('pgMore');if(pgmb)pgmb.onclick=function(ev){ev.stopPropagation();PGEXP=true;renderHomeGrid();};
  document.querySelectorAll('#plGridH [data-epl]').forEach(function(b){b.onclick=function(ev){ev.stopPropagation();var ix=PLAYLISTS.findIndex(function(x){return x.title===b.getAttribute('data-epl');});if(ix>-1)editPl(ix);};});}
 /* ===== ONE TRACK, MANY VARIATIONS ===== */
 function varGroups(){var gs={},order=[];
