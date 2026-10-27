@@ -62,6 +62,14 @@ header{padding:26px 20px 14px;border-bottom:4px solid var(--y);position:relative
 #ticker.show{display:block}
 #tickInner{display:inline-block;white-space:nowrap;color:#F74C00;font-family:'Archivo Black',sans-serif;font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;padding:8px 0;animation:tkmove 22s linear infinite}
 @keyframes tkmove{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+#tickInner h1,#tickInner h2,#tickInner h3,#tickInner h4{display:inline;font-family:inherit;margin:0;text-transform:inherit;letter-spacing:inherit}
+#tickInner h1{font-size:1.5em}#tickInner h2{font-size:1.3em}#tickInner h3{font-size:1.15em}#tickInner h4{font-size:1em}
+#tickInner label,#tickInner span{display:inline}
+.tkrow{display:flex;gap:8px;align-items:flex-start;border-bottom:1px solid var(--line);padding:6px 0}
+.tkord{color:var(--dim);font-size:.65rem;flex:none;padding-top:4px}
+.tktxt{flex:1;font-size:.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tkops{display:flex;gap:4px;flex:none}.tkops .btn{padding:2px 6px;font-size:.65rem}
+#tickPrev{border:1px dashed var(--line);padding:6px 8px;font-size:.72rem;overflow:hidden;white-space:nowrap}
 #hlGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:10px}
 .hlCard{background:rgba(16,16,16,.9);border:2px solid var(--y);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-height:0}
 .hlCard small{color:var(--dim);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase}
@@ -508,7 +516,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v81&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v82&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -679,6 +687,34 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div class="status" id="subStatus"></div>
 </div></div>
 
+<div class="modal" id="tickModal"><div class="mbox" style="width:min(660px,100%);max-height:86vh;overflow-y:auto">
+<button class="close" onclick="closeModal('tickModal')">&#10005;</button>
+<h3>&#9998; TICKER &#8212; TEXTE D&#xc9;FILANT</h3>
+<div id="tickList" style="max-height:32vh;overflow-y:auto"></div>
+<h4 style="margin-top:12px">FORMATAGE &#8212; s&#xe9;lectionne le texte puis clique</h4>
+<div class="row" style="flex-wrap:wrap;gap:6px">
+<button class="btn" onclick="tickFmt('b')"><b>B</b></button>
+<button class="btn" onclick="tickFmt('i')"><i>I</i></button>
+<button class="btn" onclick="tickFmt('u')"><u>U</u> SOULIGN&#xc9;</button>
+<button class="btn" onclick="tickFmt('s')"><s>S</s> BARR&#xc9;</button>
+<button class="btn" onclick="tickFmt('span')">SPAN</button>
+<button class="btn" onclick="tickFmt('label')">LABEL</button>
+<button class="btn" onclick="tickColor()">COLOR</button>
+<button class="btn" onclick="tickFmt('h1')">H1</button>
+<button class="btn" onclick="tickFmt('h2')">H2</button>
+<button class="btn" onclick="tickFmt('h3')">H3</button>
+<button class="btn" onclick="tickFmt('h4')">H4</button>
+</div>
+<textarea id="tickTxt" rows="3" style="width:100%;margin-top:10px"></textarea>
+<div class="row" style="margin-top:8px;flex-wrap:wrap;gap:6px">
+<button class="btn" onclick="tickAdd()">&#10133; AJOUTER / REMPLACER</button>
+<button class="btn" onclick="tickPub()">&#11014; PUBLIER</button>
+<button class="btn2" onclick="closeModal('tickModal')">Fermer</button>
+</div>
+<div style="margin-top:10px;color:var(--dim);font-size:.65rem">APER&#xc7;U :</div>
+<div id="tickPrev"></div>
+<div class="status" id="tickStatus"></div>
+</div></div>
 <div class="modal" id="msgModal"><div class="mbox">
 <button class="close" onclick="closeModal('msgModal')">&#x2715;</button>
 <h3>&#x2709; Message RSS</h3>
@@ -877,16 +913,16 @@ function hHelp(){
 (function(){var im=new Image();im.onload=function(){var l=document.getElementById('hAlLogo');if(l){l.src='img/logo-help.webp';l.style.display='block';}};im.src='img/logo-help.webp';})();
 </script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261081"></script>
-<script src="js/data.js?v=20261081"></script>
-<script src="js/auth.js?v=20261081"></script>
-<script src="js/admin.js?v=20261081"></script>
-<script src="js/player.js?v=20261081"></script>
-<script src="js/views.js?v=20261081"></script>
-<script src="js/versions.js?v=20261081"></script>
-<script src="js/genres.js?v=20261081"></script>
-<script src="js/manage.js?v=20261081"></script>
-<script src="js/main.js?v=20261081"></script>
+<script src="js/config.js?v=20261082"></script>
+<script src="js/data.js?v=20261082"></script>
+<script src="js/auth.js?v=20261082"></script>
+<script src="js/admin.js?v=20261082"></script>
+<script src="js/player.js?v=20261082"></script>
+<script src="js/views.js?v=20261082"></script>
+<script src="js/versions.js?v=20261082"></script>
+<script src="js/genres.js?v=20261082"></script>
+<script src="js/manage.js?v=20261082"></script>
+<script src="js/main.js?v=20261082"></script>
 
 </body>
 </html>

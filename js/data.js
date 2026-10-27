@@ -1,4 +1,4 @@
-var TRACKS=[],PLAYLISTS=[],PLAYLIST=null,activeTags=[],negTags=[],SELS=[],MSGS=[],VGROUPS=[];
+var TRACKS=[],PLAYLISTS=[],PLAYLIST=null,activeTags=[],negTags=[],SELS=[],MSGS=[],VGROUPS=[],TICKER=[];
 var CURRENT=null,CURRENTLIST=[],PCV=0;
 var LYR={open:false,el:null};
 var VIEW={imgs:[],i:0};
@@ -86,6 +86,8 @@ async function load(){
  if(!Array.isArray(MSGS))MSGS=[];
  try{var vgd=await fetch('vg.json?nc='+Date.now(),{cache:'no-store'});VGROUPS=await vgd.json();}catch(e){VGROUPS=[];}
  if(!Array.isArray(VGROUPS))VGROUPS=[];
+ try{var tkr=await fetch('ticker.json?nc='+Date.now(),{cache:'no-store'});TICKER=await tkr.json();}catch(e){TICKER=[];}
+ if(!Array.isArray(TICKER))TICKER=[];
  try{var il=await fetch('imglist.json?nc='+Date.now(),{cache:'no-store'});IMGS=await il.json();if(!Array.isArray(IMGS))IMGS=[];IMGS.forEach(function(p){IMGSI[base(p).toLowerCase()]=p;});}catch(e){IMGS=[];}
  if(!PLAYLIST||PLAYLISTS.indexOf(PLAYLIST)<0)PLAYLIST=PLAYLISTS[0]||{title:'\u2014',desc:'',tracks:[]};
  renderPlaylist();renderPlists();renderHomeGrid();renderVersions();renderSels();
