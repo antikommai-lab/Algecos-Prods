@@ -252,26 +252,35 @@ async function mgMoveFolder(){
  $('mgStatus').textContent='\u2713 '+done+' D\u00C9PLAC\u00C9(S)'+(fail?' \u2014 '+fail+' \u00C9CHEC(S)':'');
  await load();renderMgList();}
 
-/* ===== remplacement audio : version retravaillee ===== */
+/* ===== remplacement audio : nouveau fichier + suppression original (checkbox) ===== */
+function repNameOf(name,oldExt){var m=String(name||'').match(/\.([a-z0-9]+)$/i);var ext=m?m[1].toLowerCase():(oldExt||'mp3');
+ return String(name||'').replace(/\.[a-z0-9]+$/i,'').replace(/[^\w\-. ]+/g,'').trim().replace(/\s+/g,'_')+'.'+ext;}
 async function mgRepAudio(input){
  var f=input.files[0];input.value='';
  if(!f)return;
- if(MGSEL.length!==1){$('mgStatus').className='status err';$('mgStatus').textContent='S\u00C9LECTIONNE EXACTEMENT 1 MORCEAU';return;}
- var t=TRACKS[MGSEL[0]];if(!t||!t.file){$('mgStatus').className='status err';$('mgStatus').textContent='PAS DE FICHIER AUDIO ASSOCI\u00C9';return;}
+ if(MGSEL.length!==1){$('mgStatus').className='status err';$('mgStatus').textContent='S\u00c9LECTIONNE EXACTEMENT 1 MORCEAU';return;}
+ var t=TRACKS[MGSEL[0]];if(!t||!t.file){$('mgStatus').className='status err';$('mgStatus').textContent='PAS DE FICHIER AUDIO ASSOCI\u00c9';return;}
  if(!GHTOK){$('mgStatus').className='status err';$('mgStatus').textContent='TOKEN GITHUB REQUIS';return;}
- var keep=confirm('REMPLACER L\u0027AUDIO DE \u00AB '+t.title+' \u00BB ?\n\nOK = garder l\u0027original en *_original.ext\nAnnuler = \u00E9craser sans sauvegarde');
- $('mgStatus').className='status ok';$('mgStatus').textContent='\u23F3 REMPLACEMENT\u2026';
+ var del=($('repDel'))?($('repDel').checked):true;
+ var oldFile=String(t.file);
+ var dir=oldFile.indexOf('/')>-1?oldFile.slice(0,oldFile.lastIndexOf('/')):'audio';
+ var oldExt=(oldFile.match(/\.([a-z0-9]+)$/i)||[])[1]||'mp3';
+ var dst=dir+'/'+repNameOf(f.name,oldExt);
+ var same=dst===oldFile;
+ var info=same?'M\u00caME CHEMIN : le fichier original sera \u00c9CRAS\u00c9.':(del?'L\u0027audio ORIGINAL sera SUPPRIM\u00c9 (checkbox coch\u00e9e).':'L\u0027audio ORIGINAL sera CONSERV\u00c9 (checkbox d\u00e9coch\u00e9e).');
+ if(!confirm('REMPLACER L\u0027AUDIO DE \u00ab '+t.title+' \u00bb ?\n\n'+oldFile+'  \u2192  '+dst+'\n\n'+info+' ?'))return;
+ $('mgStatus').className='status ok';$('mgStatus').textContent='\u23f3 REMPLACEMENT\u2026';
  try{
-  if(keep){var r=await fetch(encodeURI(t.file)+'?t='+Date.now(),{cache:'no-store'});
-   if(r.ok){var orig=String(t.file).replace(/\.([a-z0-9]+)$/i,'_original.$1');
-    await ghCreate(orig,toB64Buf(await r.arrayBuffer()),'audio original conserv\u00E9 : '+t.title);}}
-  await ghCreate(t.file,toB64Buf(await f.arrayBuffer()),'audio retravaill\u00E9 : '+t.title);
-  if(confirm('Marquer ce morceau HYBRIDE (B \u2014 retravaill\u00E9, vendable) ?')){t.prov='B';
-   try{await publishAll('provenance B : '+t.title);}catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;return;}}
-  $('mgStatus').textContent='\u2713 AUDIO REMPLAC\u00C9';
+  await ghCreate(dst,toB64Buf(await f.arrayBuffer()),'audio remplac\u00e9 : '+t.title);
+  if(!same&&del){try{await ghDelete(oldFile,'suppression audio original : '+t.title);}catch(e){$('mgStatus').textContent='\u26a0 audio original non supprim\u00e9 : '+e.message;}}
+  t.file=dst;
+  var ef=$('e_file');if(ef)ef.value=dst;
+  if(confirm('Marquer ce morceau HYBRIDE (B \u2014 retravaill\u00e9, vendable) ?'))t.prov='B';
+  await publishAll('audio remplac\u00e9 : '+t.title);
+  $('mgStatus').className='status ok';
+  $('mgStatus').textContent='\u2713 AUDIO REMPLAC\u00c9'+(same?'':(del?' \u2014 ORIGINAL SUPPRIM\u00c9':' \u2014 ORIGINAL CONSERV\u00c9'));
   await load();renderMgList();mgUpdEdit();}
  catch(e){$('mgStatus').className='status err';$('mgStatus').textContent=e.message;}}
-
 /* ===== ajout rapide : 1 morceau -> playlist (depuis les cartes) ===== */
 
 function quickAddPl(i){
