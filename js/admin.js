@@ -73,7 +73,7 @@ async function publishAll(msg){
  try{
   await ghPut('tracks.json',toB64(JSON.stringify(TRACKS,null,2)),msg);
   await ghPut('playlists.json',toB64(JSON.stringify(PLAYLISTS,null,2)),msg);
-  await ghPut('selections.json',toB64(JSON.stringify(SELS,null,2)),msg);
+  await ghPut('collections.json',toB64(JSON.stringify(COLLS,null,2)),msg);
   await ghPut('messages.json',toB64(JSON.stringify(MSGS,null,2)),msg);
   await ghPut('vg.json',toB64(JSON.stringify(VGROUPS,null,2)),msg);
   await ghPut('feed.xml',toB64(buildFeed()),'flux RSS : '+msg);
@@ -223,39 +223,7 @@ async function savePl(){
  catch(e){$('pStatus').className='status err';$('pStatus').textContent=e.message;}
  }catch(e2){$('pStatus').className='status err';$('pStatus').textContent='ENREGISTREMENT KO : '+e2.message;}}
 
-/* ===== formulaires s\u00e9lections ===== */
-var smSelIdx=-1;
-function fillSelVals(p){
- $('s_title').value=p.title||'';$('s_desc').value=p.desc||'';$('s_ref').value=p.ref||'';
- $('s_tracks').value=(p.playlists||[]).map(function(r){
-  if(typeof r==='string')return r;
-  if(entLabel(r))return 'LABEL: '+entLabel(r)+' :: '+entRef(r);
-  return entRef(r)||'';}).join(String.fromCharCode(10));
- slOrdSync();}
-function openSelForm(mode){
- if(mode===-1){smSelIdx=-1;$('smSelTitle').textContent='+ Nouvelle playlist s\u00e9lection';$('smSelSelWrap').style.display='none';
-  $('s_title').value='';$('s_desc').value='';$('s_ref').value='';$('s_tracks').value='';slOrdSync();}
- else{$('smSelTitle').textContent='\u270e Modifier une playlist s\u00e9lection';$('smSelSelWrap').style.display='block';
-  $('smSelSel').innerHTML=SELS.map(function(p,i){return '<option value="'+i+'">'+esc(p.title)+'</option>';}).join('');
-  smSelIdx=0;fillSel();}
- $('sStatus').textContent='';openModal('selModal');}
-function fillSel(){smSelIdx=+$('smSelSel').value;var p=SELS[smSelIdx];if(p)fillSelVals(p);}
-async function saveSel(){
- var ti=$('s_title').value.trim();
- if(!ti){$('sStatus').className='status err';$('sStatus').textContent='TITRE REQUIS';return;}
- slOrdOut();
- var lines=$('s_tracks').value.split(String.fromCharCode(10)).map(function(s){return s.trim();}).filter(Boolean);
- var pls=lines.map(function(l){
-  var m=l.match(/^LABEL\s*:\s*(.+?)\s*::\s*(.+)$/i);
-  if(m)return {label:m[1].trim(),ref:m[2].trim()};
-  return l;});
- var p={title:ti,desc:$('s_desc').value.trim(),ref:($('s_ref')?$('s_ref').value.trim():''),playlists:pls};
- p.upd=new Date().toISOString().slice(0,10);
- if(smSelIdx>-1)SELS[smSelIdx]=p;else SELS.push(p);
- $('sStatus').className='status ok';$('sStatus').textContent='\u23f3 PUBLICATION\u2026';
- try{await publishAll('playlist s\u00e9lection : '+ti);
-  closeModal('selModal');await load();}
- catch(e){$('sStatus').className='status err';$('sStatus').textContent=e.message;}}
+/* (formulaires collections deplaces dans js/collections.js) */
 /* ===== ajout playlist au morceau + messages RSS ===== */
 function fillPlAdd(){var s=$('f_pladd');if(!s)return;
  s.innerHTML='<option value="">\u2014 aucune \u2014</option>'+PLAYLISTS.map(function(p){return '<option value="'+esc(p.title)+'">'+esc(p.title)+'</option>';}).join('')+'<option value="__new">+ Nouvelle playlist\u2026</option>';
@@ -274,7 +242,7 @@ function closeAdmDash(){var d=document.getElementById('admDash');if(d)d.classLis
 function openAdmDash(){buildAdmDash();document.getElementById('admDash').classList.add('open');}
 function admManage(pl){closeAdmDash();openManage(pl?'pl':'tr');}
 function admUpload(){closeAdmDash();openTrackForm(-1);var b=document.querySelector('#trackModal .mbox');if(b)b.scrollTop=0;}
-function admForm(t,m){closeAdmDash();if(t===0)openTrackForm(m);else if(t===1)openPlForm(m);else if(t===2)openSelForm(m);else openMsgForm();}
+function admForm(t,m){closeAdmDash();if(t===0)openTrackForm(m);else if(t===1)openPlForm(m);else if(t===2)openCollForm(m);else openMsgForm();}
 function admReload(){closeAdmDash();load().then(function(){render();renderPlaylist();});}
 function buildAdmDash(){
  var d=document.getElementById('admDash');
@@ -284,7 +252,7 @@ function buildAdmDash(){
  +'<div class="adstats">'
  +'<div><b>'+TRACKS.length+'</b>morceaux</div>'
  +'<div><b>'+PLAYLISTS.length+'</b>playlists</div>'
- +'<div><b>'+SELS.length+'</b>s\u00E9lections</div>'
+ +'<div><b>'+COLLS.length+'</b>collections</div>'
  +'<div><b>'+MSGS.length+'</b>messages</div>'
  +'</div>'
  +'<h4>Gestion</h4>'
@@ -297,8 +265,8 @@ function buildAdmDash(){
  +'<button class="mitem" onclick="admForm(0,0)">&#9998; Modifier un morceau</button>'
  +'<button class="mitem" onclick="admForm(1,-1)">+ Nouvelle playlist</button>'
  +'<button class="mitem" onclick="admForm(1,0)">&#9998; Modifier une playlist</button>'
- +'<button class="mitem" onclick="admForm(2,-1)">+ Nouvelle playlist s\u00e9lection</button>'
- +'<button class="mitem" onclick="admForm(2,0)">&#9998; Modifier une playlist s\u00e9lection</button>'
+ +'<button class="mitem" onclick="admForm(2,-1)">+ Nouvelle collection</button>'
+ +'<button class="mitem" onclick="admForm(2,0)">&#9998; Modifier une collection</button>'
  +'<button class="mitem" onclick="admForm(3)">&#9993; Message RSS / newsletter</button>'
  +'<h4>Donn\u00E9es</h4>'
  +'<button class="mitem" onclick="admReload()">&#10227; Recharger les donn\u00E9es du site (avant une session d\u0027\u00E9dition)</button>'
@@ -442,22 +410,4 @@ function plExpRender(){var w=$('p_expList');if(!w)return;
  w.querySelectorAll('[data-et]').forEach(function(ck){ck.onchange=function(){var ti=ck.getAttribute('data-et');var ix=PLCHK.indexOf(ti);if(ck.checked&&ix<0)PLCHK.push(ti);if(!ck.checked&&ix>-1)PLCHK.splice(ix,1);};});}
 function plExpAdd(){if(!PLCHK.length)return;PLCHK.forEach(function(ti){PLORD.push(ti);});PLCHK=[];plOrdRender();plExpRender();}
 
-/* ===== explorateur playlists (selModal) ===== */
-var SLORD=[],SLDRAG=-1,SLCHK=[];
-function slOrdSync(){SLORD=($('s_tracks').value||'').split(String.fromCharCode(10)).map(function(s){return s.trim();}).filter(Boolean);SLCHK=[];slOrdRender();slExpRender();}
-function slOrdOut(){$('s_tracks').value=SLORD.join(String.fromCharCode(10));}
-function slOrdDisp(l){var m=l.match(/^LABEL\s*:\s*(.+?)\s*::\s*(.+)$/i);if(m)return m[1]+' :: '+m[2];return l;}
-function slOrdRender(){var w=$('s_order');if(!w)return;
- w.innerHTML=SLORD.map(function(l,ix){return '<div class="mgrow peord" draggable="true" data-oi="'+ix+'"><span class="mnum">'+(ix+1)+'</span><span style="color:var(--dim)">\u2630</span><div class="mt"><b>'+esc(slOrdDisp(l))+'</b></div><button class="mgdel" data-ox="'+ix+'">\u2715</button></div>';}).join('')||'<div style="color:var(--dim);padding:10px;font-size:.68rem">VIDE \u2014 coche des playlists ci-dessous puis \u00ab + Ajouter coch\u00e9es \u00bb</div>';
- w.querySelectorAll('.peord').forEach(function(row){var ix=+row.getAttribute('data-oi');
-  row.ondragstart=function(){SLDRAG=ix;};
-  row.ondragover=function(ev){ev.preventDefault();};
-  row.ondrop=function(ev){ev.preventDefault();if(SLDRAG<0||SLDRAG===ix)return;var it=SLORD.splice(SLDRAG,1)[0];SLORD.splice(ix,0,it);SLDRAG=-1;slOrdRender();};
-  var rm=row.querySelector('[data-ox]');if(rm)rm.onclick=function(){SLORD.splice(ix,1);slOrdRender();};});}
-function slExpRender(){var w=$('s_expList');if(!w)return;
- var q=($('s_expQ').value||'').toLowerCase().trim();
- var inPl={};SLORD.forEach(function(l){inPl[String(l).replace(/^LABEL\s*:\s*.+?\s*::\s*/i,'').toLowerCase()]=1;});
- var list=PLAYLISTS.filter(function(p){if(inPl[String(p.title).toLowerCase()])return false;if(!q)return true;return (p.title||'').toLowerCase().indexOf(q)>-1;});
- w.innerHTML=list.map(function(p){return '<label class="mgrow" style="cursor:pointer"><input type="checkbox" data-ep="'+esc(p.title)+'"'+(SLCHK.indexOf(p.title)>-1?' checked':'')+'><div class="mt"><b>'+esc(p.title)+'</b></div></label>';}).join('')||'<div style="color:var(--dim);padding:10px;font-size:.68rem">AUCUNE PLAYLIST'+(q?' (filtre)':'')+'</div>';
- w.querySelectorAll('[data-ep]').forEach(function(ck){ck.onchange=function(){var ti=ck.getAttribute('data-ep');var ix=SLCHK.indexOf(ti);if(ck.checked&&ix<0)SLCHK.push(ti);if(!ck.checked&&ix>-1)SLCHK.splice(ix,1);};});}
-function slExpAdd(){if(!SLCHK.length)return;SLCHK.forEach(function(ti){SLORD.push(ti);});SLCHK=[];slOrdRender();slExpRender();}
+/* (explorateur collection : js/collections.js) */

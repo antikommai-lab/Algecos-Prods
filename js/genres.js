@@ -35,37 +35,10 @@ function autoPlaylists(){return comboPlaylists().concat(genrePlaylists()).concat
 function plByName(nm){
  var n=String(nm||'').toLowerCase().trim();
  return PLAYLISTS.concat(autoPlaylists()).find(function(x){return String(x.title||'').toLowerCase()===n;})||null;}
-function selEntries(s){
- var out=[];
- if(Array.isArray(s.playlists)){
-  s.playlists.forEach(function(r){var pl=plByName(entRef(r));
-   if(pl)out.push({label:entLabel(r),pl:pl});});
-  return out;}
- if(Array.isArray(s.tracks)&&s.tracks.length)return [{label:'',pl:{title:s.title,desc:s.desc||'',tracks:s.tracks}}];
- return out;}
-function selFlat(s){var out=[];
- selEntries(s).forEach(function(e){plFlatOf(e.pl).forEach(function(t){if(out.indexOf(t)<0)out.push(t);});});
- return out;}
-function selSelCardHTML(s){
- var en=selEntries(s),flat=selFlat(s);
- var h='<div class="plh" data-sel="'+esc(s.title)+'">'
- +((typeof document!=='undefined'&&document.body.classList.contains('adm')&&SELS.indexOf(s)>-1)?'<button class="edit" style="position:absolute;top:10px;right:10px" onclick="event.stopPropagation();editSelIdx('+SELS.indexOf(s)+')" title="Editer cette s\u00E9lection">\u2699</button>':'')
- +'<h3>'+esc(s.title)+(s.ref?' <small style="color:var(--dim);font-size:.6rem">['+esc(s.ref)+']</small>':'')+(s.auto?' <small style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</small>':'')+'</h3><div class="m">'+esc(s.desc||'')+' \u00B7 '+en.length+' playlist(s) \u00B7 '+flat.length+' morceaux'+(s.upd?' \u00B7 '+esc(s.upd):'')+'</div><div class="seltracks">'
- +en.map(function(e){var tr=plFlatOf(e.pl);
-   return '<div class="srow" data-spl="'+esc(e.pl.title)+'">'+(e.label?'<span class="plabel">'+esc(e.label)+'</span>':'')+'<b>'+esc(e.pl.title)+'</b>&nbsp;<small style="color:var(--dim)">'+tr.length+' morceaux</small></div>';}).join('')
- +'</div><div class="row" style="margin-top:8px"><button class="btn" data-selplay="'+esc(s.title)+'">\u25b6</button><button class="btn" data-selsh="'+esc(s.title)+'" title="Lecture al\u00e9atoire">\u21c4</button><button class="btn" data-selrep="'+esc(s.title)+'" title="R\u00e9p\u00e9ter en boucle">\u21bb</button></div></div>';
- return h;}
-function renderSels(){
- var autos=comboPlaylists();
- var h=SELS.map(selSelCardHTML).join('');
- h+=autos.map(function(p){return selSelCardHTML({title:p.title,desc:p.desc,auto:'combo',tracks:p.tracks});}).join('');
- $('selGrid').innerHTML=h||'<div style="color:var(--dim);font-size:.75rem">AUCUNE PLAYLIST S\u00c9LECTION.</div>';
- var hdr=document.querySelector('#selWrap .secH');
- if(hdr)hdr.textContent='\u29c9 Playlists s\u00e9lections \u2014 '+(SELS.length+autos.length)+' ('+autos.length+' auto)';
- bindSelCards($('selGrid'));}
+/* (cartes collections : js/collections.js) */
 function bindSelCards(root){
  root.querySelectorAll('.plh').forEach(function(cd){
-  var s=SELS.find(function(x){return x.title===cd.getAttribute('data-sel');})||PLAYLISTS.find(function(x){return x.title===cd.getAttribute('data-sel');})||comboPlaylists().find(function(x){return x.title===cd.getAttribute('data-sel');})||null;
+  var s=COLLS.find(function(x){return x.title===cd.getAttribute('data-sel');})||PLAYLISTS.find(function(x){return x.title===cd.getAttribute('data-sel');})||comboPlaylists().find(function(x){return x.title===cd.getAttribute('data-sel');})||null;
   cd.onclick=function(ev){if(ev.target.closest('button')||ev.target.closest('.srow'))return;cd.classList.toggle('open');};
   var eb=cd.querySelector('.edit');
   if(eb)eb.onclick=function(ev){ev.stopPropagation();};
@@ -85,11 +58,7 @@ function bindSelCards(root){
    var spl=r.getAttribute('data-spl');
    if(spl){r.onclick=function(ev){ev.stopPropagation();var pl=plByName(spl);if(pl){PLAYLIST=pl;renderPlaylist();showView('home');}};return;}
    r.onclick=function(ev){ev.stopPropagation();var t=TRACKS.find(function(x){return x.title===r.getAttribute('data-spt');});if(t){PLAYLIST=s;renderPlaylist();play(t,plFlatOf(s));}};});});}
-/* edition d'une selection depuis sa carte (admin) */
-function editSelIdx(i){
- var s=SELS[i];if(!s)return;
- smSelIdx=i;$('smSelTitle').textContent='\u270E Modifier : '+s.title;
- fillSelVals(s);$('sStatus').textContent='';openModal('selModal');}
+/* (edition collection : js/collections.js) */
 function playFiltered(){
  var q=$('q').value.toLowerCase().trim();
  var list=TRACKS.filter(function(t){return (!q||match(t,q))&&tagFilterOK(t);});

@@ -139,7 +139,7 @@ function showView(v){
  $('listWrap').classList.toggle('open',v==='list');
  $('plistsWrap').classList.toggle('open',v==='plists');
  $('verWrap').classList.toggle('open',v==='ver');
- $('selWrap').classList.toggle('open',v==='sel');
+ $('collWrap').classList.toggle('open',v==='coll');
  $('newsWrap').classList.toggle('open',v==='news');
  $('varWrap').classList.toggle('open',v==='var');
  $('orderWrap').classList.toggle('open',v==='order');

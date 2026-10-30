@@ -4,7 +4,7 @@ function shufArr(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()
 
 function vidOf(t){return (t.vid||'').trim()||norm(t.title);}
 function showVersions(){showView('ver');renderVersions();}
-function showSels(){showView('sel');renderSels();}
+function showColls(){showView('coll');renderColls();}
 function renderVersions(){
  var groups={},order=[];
  TRACKS.forEach(function(t){var k=vidOf(t);if(!groups[k]){groups[k]={name:(t.vid||'').trim()||t.title,tracks:[]};order.push(k);}groups[k].tracks.push(t);});

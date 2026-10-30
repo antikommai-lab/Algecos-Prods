@@ -411,7 +411,7 @@ audio{width:100%;height:40px;flex:none}
 <button class="mitem" onclick="showPlaylists()">&#x2630; Toutes les playlists</button>
 <button class="mitem" onclick="showList(true)">&#x25a0; Liste de tous les morceaux</button>
 <button class="mitem" onclick="showVersions()">&#x2605; Choisis ta version pr&#xe9;f&#xe9;r&#xe9;e</button>
-<button class="mitem" onclick="showSels()">&#x29c9; Playlists s&#xe9;lections</button>
+<button class="mitem" onclick="showColls()">&#9670; Collections</button>
 <button class="mitem" onclick="showNews()">&#128227; Nouveaut&#xe9;s &#x2014; derniers ajouts</button>
 <button class="mitem" onclick="showVars()">&#9854; One track, many variations</button>
 <button class="mitem" onclick="goOrder()">&#x270E; Commander un morceau / texte sur mesure</button>
@@ -429,8 +429,8 @@ audio{width:100%;height:40px;flex:none}
 <button class="mitem" onclick="openTrackForm(0)">&#x270e; Modifier un morceau</button>
 <button class="mitem" onclick="openPlForm(-1)">+ Nouvelle playlist</button>
 <button class="mitem" onclick="openPlForm(0)">&#x270e; Modifier une playlist</button>
-<button class="mitem" onclick="openSelForm(-1)">+ Nouvelle playlist s&#xe9;lection</button>
-<button class="mitem" onclick="openSelForm(0)">&#x270e; Modifier une playlist s&#xe9;lection</button>
+<button class="mitem" onclick="openCollForm(-1)">+ Nouvelle collection</button>
+<button class="mitem" onclick="openCollForm(0)">&#x270e; Modifier une collection</button>
 <button class="mitem" onclick="openVG()">&#9854; Groupes de versions &#x2014; composer les variations</button>
 <button class="mitem" onclick="openMsgForm()">&#x2709; Message RSS / newsletter</button>
 <button class="mitem" onclick="admReload()">&#10227; Recharger les donn&#233;es du site</button>
@@ -457,7 +457,7 @@ audio{width:100%;height:40px;flex:none}
 
 <section id="verWrap"><h2 class="secH">&#x2605; Choisis ta version pr&#xe9;f&#xe9;r&#xe9;e</h2><div id="verGrid"></div></section>
 
-<section id="selWrap"><h2 class="secH">&#x29c9; Playlists s&#xe9;lections</h2><div id="selGrid"></div></section>
+<section id="collWrap"><h2 class="secH">&#9670; Collections</h2><div id="collGrid"></div></section>
 
 <section id="newsWrap">
 <h2 class="secH">&#128227; Nouveaut&#xe9;s</h2>
@@ -520,7 +520,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v85&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v86&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -730,17 +730,17 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <div class="modal" id="selModal"><div class="mbox">
 <button class="close" onclick="closeModal('selModal')">&#x2715;</button>
-<h3 id="smSelTitle">Playlist s&#xe9;lection</h3>
-<div id="smSelSelWrap" style="display:none"><label>Quelle playlist s&#xe9;lection ?</label><select id="smSelSel" onchange="fillSel()"></select></div>
+<h3 id="smSelTitle">Collection</h3>
+<div id="smSelSelWrap" style="display:none"><label>Quelle collection ?</label><select id="smSelSel" onchange="fillColl()"></select></div>
 <label>Titre</label><input id="s_title">
 <label>Description</label><textarea id="s_desc" rows="2"></textarea>
-<label>R&#xe9;f&#xe9;rence courte (optionnel)</label><input id="s_ref" placeholder="ex : sel-nuit">
-<label>Playlists &#x2014; gliss&#xe9;-d&#xe9;pos&#xe9; pour r&#xe9;ordonner</label>
+<label>Auteur / cr&#xe9;ateur (optionnel &#8212; le nom propre de la collection)</label><input id="s_ref" placeholder="ex : ANTIKOMM AI">
+<label>Contenu &#8212; playlists et tracks en vrac &#8212; gliss&#xe9;-d&#xe9;pos&#xe9; pour r&#xe9;ordonner</label>
 <div id="s_order" style="max-height:24vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px"></div>
-<div class="mgact"><input type="text" id="s_expQ" placeholder="FILTRER PLAYLISTS&#x2026;" oninput="slExpRender()"><button class="btn2" onclick="slExpAdd()">+ Ajouter coch&#xe9;es</button></div>
+<div class="mgact"><input type="text" id="s_expQ" placeholder="FILTRER PLAYLISTS + TRACKS&#x2026;" oninput="clExpRender()"><button class="btn2" onclick="clExpAdd()">+ Ajouter coch&#233;s</button></div>
 <div id="s_expList" style="max-height:24vh;overflow-y:auto;border:1px solid var(--line);margin-bottom:10px"></div>
 <textarea id="s_tracks" rows="2" style="display:none"></textarea>
-<div class="row"><button class="btn" onclick="saveSel()">Enregistrer</button><button class="btn2" onclick="closeModal('selModal')">Annuler</button></div>
+<div class="row"><button class="btn" onclick="saveColl()">Enregistrer</button><button class="btn2" onclick="closeModal('selModal')">Annuler</button></div>
 <div class="status" id="sStatus"></div>
 </div></div>
 
@@ -917,20 +917,21 @@ function hHelp(){
 (function(){var im=new Image();im.onload=function(){var l=document.getElementById('hAlLogo');if(l){l.src='img/logo-help.webp';l.style.display='block';}};im.src='img/logo-help.webp';})();
 </script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261085"></script>
-<script src="js/data.js?v=20261085"></script>
-<script src="js/ticker.js?v=20261085"></script>
-<script src="js/playlist.js?v=20261085"></script>
-<script src="js/home.js?v=20261085"></script>
-<script src="js/likes.js?v=20261085"></script>
-<script src="js/auth.js?v=20261085"></script>
-<script src="js/admin.js?v=20261085"></script>
-<script src="js/player.js?v=20261085"></script>
-<script src="js/views.js?v=20261085"></script>
-<script src="js/versions.js?v=20261085"></script>
-<script src="js/genres.js?v=20261085"></script>
-<script src="js/manage.js?v=20261085"></script>
-<script src="js/main.js?v=20261085"></script>
+<script src="js/config.js?v=20261086"></script>
+<script src="js/data.js?v=20261086"></script>
+<script src="js/ticker.js?v=20261086"></script>
+<script src="js/playlist.js?v=20261086"></script>
+<script src="js/home.js?v=20261086"></script>
+<script src="js/likes.js?v=20261086"></script>
+<script src="js/auth.js?v=20261086"></script>
+<script src="js/admin.js?v=20261086"></script>
+<script src="js/player.js?v=20261086"></script>
+<script src="js/views.js?v=20261086"></script>
+<script src="js/versions.js?v=20261086"></script>
+<script src="js/genres.js?v=20261086"></script>
+<script src="js/collections.js?v=20261086"></script>
+<script src="js/manage.js?v=20261086"></script>
+<script src="js/main.js?v=20261086"></script>
 
 </body>
 </html>

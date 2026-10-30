@@ -35,7 +35,7 @@ function renderAuth(){
  }else{
   z.innerHTML=sqRow()+tmpForm(false);
   $('admTitle').style.display='none';$('admZone').style.display='none';}
- if(TRACKS.length||PLAYLISTS.length){render();renderPlaylist();renderPlists();renderHomeGrid();renderVersions();renderSels();}}
+ if(TRACKS.length||PLAYLISTS.length){render();renderPlaylist();renderPlists();renderHomeGrid();renderVersions();renderColls();}}
 function saveTok(){GHTOK=$('ghTok').value.trim();
  if(GHTOK){localStorage.setItem('gh_pat',GHTOK);$('tokStatus').className='status ok';$('tokStatus').textContent='M\u00c9MORIS\u00c9 \u2713';}
  else{$('tokStatus').className='status err';$('tokStatus').textContent='VIDE';}}
