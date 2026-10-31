@@ -65,9 +65,12 @@ function viDraw(){
   cx.lineWidth=Math.max(.3,th);
   /* spirale generee : palette LSD (magenta, cyan, vert acide, orange, violet, rose) */
   var hue=Math.floor(ar.h+VIROT*20)%360;
-  var op=.22+Math.random()*.25+e2*.45+amp*.15+VIKICK*.35;
+  var op=.35+Math.random()*.25+e2*.45+amp*.15+VIKICK*.35;
   if(op>1)op=1;
-  cx.strokeStyle='hsla('+hue+',100%,'+(48+e2*30+VIKICK*12)+'%,'+op.toFixed(3)+')';
+  var lig=55+e2*25+VIKICK*15;if(lig>85)lig=85;
+  var col='hsla('+hue+',100%,'+lig+'%,'+op.toFixed(3)+')';
+  cx.strokeStyle=col;
+  cx.shadowColor=col;cx.shadowBlur=10+VIKICK*25;
   cx.beginPath();
   for(var s2=0;s2<=140;s2++){
    var p=s2/140;
