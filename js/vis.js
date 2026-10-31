@@ -1,9 +1,10 @@
 /* ===== visualiseur audio : overlay plein ecran, GIF spirale en fond + spirale blanche reactive ===== */
-var VISM=0,VISA=null,VIAN=null,VIDATA=null,VIRAF=0,VIROT=0,VIARMS=[],VISPB=0;
+var VISM=0,VISA=null,VIAN=null,VIDATA=null,VIRAF=0,VIROT=0,VIARMS=[],VISPB=0,VISKB=0,VISAVG=0,VIKICK=0;
 var VIHU=[305,185,95,35,268,335];
 function visOpen(){
  var ov=$('visOv');if(!ov)return;
- ov.style.display='block';VISM=1;visApply();}
+ ov.style.display='block';VISM=1;visApply();
+ if(!VISKB){VISKB=1;document.addEventListener('keydown',function(e){if(e.key==='Escape'&&VISM)visClose();});}}
 function visClose(){
  VISM=0;var ov=$('visOv');if(ov)ov.style.display='none';
  if(VIRAF){cancelAnimationFrame(VIRAF);VIRAF=0;}}
@@ -23,9 +24,10 @@ function visApply(){
  if(!VIARMS.length){
   var nb=VIAN?VIAN.frequencyBinCount:128;
   for(var i=0;i<6;i++)VIARMS.push({
-   b:.4+Math.random()*1.1,
+   b:.3+Math.random()*3,
    ph:Math.random()*6.283,
    k:1+Math.floor(Math.random()*Math.min(48,nb)),
+   t:0,
    h:VIHU[i%VIHU.length],
    dir:Math.random()<.5?-1:1});}
  cv.style.display='block';
@@ -42,6 +44,9 @@ function viDraw(){
   for(var i=0;i<n;i++)s+=VIDATA[i]/255;
   amp=Math.max(amp,s/n);
   en=VIDATA[0]/255;}
+ if(VIAN&&VIDATA&&a&&!a.paused){
+  VISAVG=VISAVG*.92+en*.08;
+  if(en>VISAVG*1.35)VIKICK=Math.min(1,VIKICK+.5);else VIKICK*=.9;}
  VIROT+=.0022+amp*.02;
  /* fondu des trainees sans masquer le GIF : destination-out */
  cx.globalCompositeOperation='destination-out';
@@ -52,13 +57,17 @@ function viDraw(){
  cx.lineCap='round';
  var nb2=VIAN?VIAN.frequencyBinCount:128;
  VIARMS.forEach(function(ar){
+  ar.t++;
+  if(ar.t%20===0)ar.k=1+Math.floor(Math.random()*Math.min(48,nb2));
   var kk=ar.k%nb2;
   var e2=(VIAN&&VIDATA&&a&&!a.paused)?VIDATA[kk]/255:amp;
-  var th=ar.b+e2*(9+Math.random()*7)+amp*3;
-  cx.lineWidth=Math.max(.4,th);
+  var th=ar.b*(.35+Math.random()*1.5)+e2*(4+Math.random()*11)+amp*(1+Math.random()*4)+VIKICK*5;
+  cx.lineWidth=Math.max(.3,th);
   /* spirale generee : palette LSD (magenta, cyan, vert acide, orange, violet, rose) */
   var hue=Math.floor(ar.h+VIROT*20)%360;
-  cx.strokeStyle='hsla('+hue+',100%,'+(50+e2*30)+'%,.9)';
+  var op=.22+Math.random()*.25+e2*.45+amp*.15+VIKICK*.35;
+  if(op>1)op=1;
+  cx.strokeStyle='hsla('+hue+',100%,'+(48+e2*30+VIKICK*12)+'%,'+op.toFixed(3)+')';
   cx.beginPath();
   for(var s2=0;s2<=140;s2++){
    var p=s2/140;
