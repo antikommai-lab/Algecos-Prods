@@ -1,11 +1,15 @@
-/* ===== visualiseur audio : spirale reactive au lecteur (off / n&b / couleurs) ===== */
+/* ===== visualiseur audio : plein ecran fond noir, couleurs par frequence ===== */
 var VISM=0,VISA=null,VIAN=null,VIDATA=null,VIRAF=0,VIROT=0,VIARMS=[];
-function visCycle(){VISM=(VISM+1)%3;visApply();}
+function visOpen(){
+ var ov=$('visOv');if(!ov)return;
+ ov.style.display='block';VISM=2;visApply();}
+function visClose(){
+ VISM=0;var ov=$('visOv');if(ov)ov.style.display='none';
+ if(VIRAF){cancelAnimationFrame(VIRAF);VIRAF=0;}}
+function visCycle(){if(VISM)VISM=VISM===2?1:2;visApply();}
 function visApply(){
  var cv=$('visCv');if(!cv)return;
- var b=$('visBtn');
- if(!VISM){cv.style.display='none';if(VIRAF){cancelAnimationFrame(VIRAF);VIRAF=0;}
-  if(b)b.title='Visualiseur audio : OFF';return;}
+ if(!VISM){if(VIRAF){cancelAnimationFrame(VIRAF);VIRAF=0;}return;}
  if(!VISA){try{
   VISA=new (window.AudioContext||window.webkitAudioContext)();
   var src=VISA.createMediaElementSource($('audio'));
@@ -20,10 +24,8 @@ function visApply(){
    b:.5+Math.random()*2.4,
    ph:Math.random()*6.283,
    k:Math.floor(Math.random()*nb),
-   hue:Math.floor(Math.random()*360),
    dir:Math.random()<.5?-1:1});}
  cv.style.display='block';
- if(b)b.title='Visualiseur audio : '+(VISM===1?'N&B (clic pour couleurs)':'COULEURS (clic pour eteindre)');
  if(!VIRAF)VIRAF=requestAnimationFrame(viDraw);}
 function viDraw(){
  VIRAF=requestAnimationFrame(viDraw);
@@ -42,11 +44,14 @@ function viDraw(){
  cx.fillRect(0,0,w,h);
  var cxp=w/2,cyp=h/2,R=Math.min(w,h)*.46;
  cx.lineCap='round';
+ var nb2=VIAN?VIAN.frequencyBinCount:128;
  VIARMS.forEach(function(ar){
-  var e2=VIAN&&VIDATA?VIDATA[ar.k%VIDATA.length]/255:amp;
+  var kk=ar.k%nb2;
+  var e2=(VIAN&&VIDATA&&a&&!a.paused)?VIDATA[kk]/255:amp;
   var th=ar.b*(.5+Math.random()*.95)+e2*7*(.7+Math.random()*.6)+amp*4.5;
   cx.lineWidth=Math.max(.4,th);
-  if(VISM===2)cx.strokeStyle='hsla('+((ar.hue+VIROT*40)%360)+',85%,'+(45+e2*35)+'%,.85)';
+  var hue=Math.floor((kk/nb2)*360+VIROT*18)%360;
+  if(VISM===2)cx.strokeStyle='hsla('+hue+',90%,'+(32+e2*45+amp*8)+'%,.9)';
   else{var g2=150+Math.floor(e2*105);cx.strokeStyle='rgba('+g2+','+g2+','+g2+',.82)';}
   cx.beginPath();
   for(var s2=0;s2<=140;s2++){
