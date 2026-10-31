@@ -54,7 +54,7 @@ function viDraw(){
   cx.lineWidth=Math.max(.4,th);
   /* spirale generee : couleurs selon la bande de frequence (graves rouges -> aigus violets) */
   var hue=Math.floor((kk/nb2)*360+VIROT*18)%360;
-  cx.strokeStyle='hsla('+hue+',90%,'+(40+e2*40)+',.9)';
+  cx.strokeStyle='hsla('+hue+',90%,'+(45+e2*40)+'%,.9)';
   cx.beginPath();
   for(var s2=0;s2<=140;s2++){
    var p=s2/140;
