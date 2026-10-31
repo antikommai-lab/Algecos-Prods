@@ -1,5 +1,6 @@
 /* ===== visualiseur audio : overlay plein ecran, GIF spirale en fond + spirale blanche reactive ===== */
-var VISM=0,VISA=null,VIAN=null,VIDATA=null,VIRAF=0,VIROT=0,VIARMS=[];
+var VISM=0,VISA=null,VIAN=null,VIDATA=null,VIRAF=0,VIROT=0,VIARMS=[],VISPB=0;
+var VIHU=[305,185,95,35,268,335];
 function visOpen(){
  var ov=$('visOv');if(!ov)return;
  ov.style.display='block';VISM=1;visApply();}
@@ -17,12 +18,15 @@ function visApply(){
   src.connect(VIAN);VIAN.connect(VISA.destination);}
  catch(e){VISA=null;VIAN=null;VIDATA=null;}}
  if(VISA&&VISA.state==='suspended')VISA.resume();
+ if(!VISPB){VISPB=1;var au2=$('audio');
+  if(au2)au2.addEventListener('play',function(){if(VISA&&VISA.state==='suspended')VISA.resume();});}
  if(!VIARMS.length){
   var nb=VIAN?VIAN.frequencyBinCount:128;
   for(var i=0;i<6;i++)VIARMS.push({
-   b:.5+Math.random()*2.4,
+   b:.4+Math.random()*1.1,
    ph:Math.random()*6.283,
-   k:Math.floor(Math.random()*nb),
+   k:1+Math.floor(Math.random()*Math.min(48,nb)),
+   h:VIHU[i%VIHU.length],
    dir:Math.random()<.5?-1:1});}
  cv.style.display='block';
  if(!VIRAF)VIRAF=requestAnimationFrame(viDraw);}
@@ -50,11 +54,11 @@ function viDraw(){
  VIARMS.forEach(function(ar){
   var kk=ar.k%nb2;
   var e2=(VIAN&&VIDATA&&a&&!a.paused)?VIDATA[kk]/255:amp;
-  var th=ar.b*(.5+Math.random()*.95)+e2*7*(.7+Math.random()*.6)+amp*4.5;
+  var th=ar.b+e2*(9+Math.random()*7)+amp*3;
   cx.lineWidth=Math.max(.4,th);
-  /* spirale generee : couleurs selon la bande de frequence (graves rouges -> aigus violets) */
-  var hue=Math.floor((kk/nb2)*360+VIROT*18)%360;
-  cx.strokeStyle='hsla('+hue+',90%,'+(45+e2*40)+'%,.9)';
+  /* spirale generee : palette LSD (magenta, cyan, vert acide, orange, violet, rose) */
+  var hue=Math.floor(ar.h+VIROT*20)%360;
+  cx.strokeStyle='hsla('+hue+',100%,'+(50+e2*30)+'%,.9)';
   cx.beginPath();
   for(var s2=0;s2<=140;s2++){
    var p=s2/140;
