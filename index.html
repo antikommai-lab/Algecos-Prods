@@ -520,7 +520,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v86&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v87&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -565,12 +565,14 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <button class="pbtn" onclick="openCmt()" title="Commentaires">&#128172;</button>
 <button class="pbtn" onclick="shareTrack(CURRENT)" title="Partager ce morceau">&#10548;</button>
 <button class="pbtn" id="spBtn" onclick="openSpiral()" title="Spirale mentale plein &#233;cran">&#127744;</button>
+<button class="pbtn" id="visBtn" onclick="visCycle()" title="Visualiseur audio : OFF">&#9678;</button>
 </div>
 </div>
 <div id="pVers"></div>
 <audio id="audio" controls></audio>
 </div>
 
+<canvas id="visCv" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:13;pointer-events:none;display:none"></canvas>
 <div id="spiralOv" onclick="if(event.target===this)closeSpiral()">
 <img id="spiralImg" alt="spirale">
 <button class="vcross" onclick="closeSpiral()">&#x2715;</button>
@@ -917,21 +919,22 @@ function hHelp(){
 (function(){var im=new Image();im.onload=function(){var l=document.getElementById('hAlLogo');if(l){l.src='img/logo-help.webp';l.style.display='block';}};im.src='img/logo-help.webp';})();
 </script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261086"></script>
-<script src="js/data.js?v=20261086"></script>
-<script src="js/ticker.js?v=20261086"></script>
-<script src="js/playlist.js?v=20261086"></script>
-<script src="js/home.js?v=20261086"></script>
-<script src="js/likes.js?v=20261086"></script>
-<script src="js/auth.js?v=20261086"></script>
-<script src="js/admin.js?v=20261086"></script>
-<script src="js/player.js?v=20261086"></script>
-<script src="js/views.js?v=20261086"></script>
-<script src="js/versions.js?v=20261086"></script>
-<script src="js/genres.js?v=20261086"></script>
-<script src="js/collections.js?v=20261086"></script>
-<script src="js/manage.js?v=20261086"></script>
-<script src="js/main.js?v=20261086"></script>
+<script src="js/config.js?v=20261087"></script>
+<script src="js/data.js?v=20261087"></script>
+<script src="js/ticker.js?v=20261087"></script>
+<script src="js/playlist.js?v=20261087"></script>
+<script src="js/home.js?v=20261087"></script>
+<script src="js/likes.js?v=20261087"></script>
+<script src="js/auth.js?v=20261087"></script>
+<script src="js/admin.js?v=20261087"></script>
+<script src="js/player.js?v=20261087"></script>
+<script src="js/vis.js?v=20261087"></script>
+<script src="js/views.js?v=20261087"></script>
+<script src="js/versions.js?v=20261087"></script>
+<script src="js/genres.js?v=20261087"></script>
+<script src="js/collections.js?v=20261087"></script>
+<script src="js/manage.js?v=20261087"></script>
+<script src="js/main.js?v=20261087"></script>
 
 </body>
 </html>
