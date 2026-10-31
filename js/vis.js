@@ -1,12 +1,11 @@
-/* ===== visualiseur audio : plein ecran fond noir, couleurs par frequence ===== */
+/* ===== visualiseur audio : overlay plein ecran, GIF spirale en fond + spirale blanche reactive ===== */
 var VISM=0,VISA=null,VIAN=null,VIDATA=null,VIRAF=0,VIROT=0,VIARMS=[];
 function visOpen(){
  var ov=$('visOv');if(!ov)return;
- ov.style.display='block';VISM=2;visApply();}
+ ov.style.display='block';VISM=1;visApply();}
 function visClose(){
  VISM=0;var ov=$('visOv');if(ov)ov.style.display='none';
  if(VIRAF){cancelAnimationFrame(VIRAF);VIRAF=0;}}
-function visCycle(){if(VISM)VISM=VISM===2?1:2;visApply();}
 function visApply(){
  var cv=$('visCv');if(!cv)return;
  if(!VISM){if(VIRAF){cancelAnimationFrame(VIRAF);VIRAF=0;}return;}
@@ -40,8 +39,11 @@ function viDraw(){
   amp=Math.max(amp,s/n);
   en=VIDATA[0]/255;}
  VIROT+=.0022+amp*.02;
+ /* fondu des trainees sans masquer le GIF : destination-out */
+ cx.globalCompositeOperation='destination-out';
  cx.fillStyle='rgba(0,0,0,'+(.16+amp*.14)+')';
  cx.fillRect(0,0,w,h);
+ cx.globalCompositeOperation='source-over';
  var cxp=w/2,cyp=h/2,R=Math.min(w,h)*.46;
  cx.lineCap='round';
  var nb2=VIAN?VIAN.frequencyBinCount:128;
@@ -50,9 +52,8 @@ function viDraw(){
   var e2=(VIAN&&VIDATA&&a&&!a.paused)?VIDATA[kk]/255:amp;
   var th=ar.b*(.5+Math.random()*.95)+e2*7*(.7+Math.random()*.6)+amp*4.5;
   cx.lineWidth=Math.max(.4,th);
-  var hue=Math.floor((kk/nb2)*360+VIROT*18)%360;
-  if(VISM===2)cx.strokeStyle='hsla('+hue+',90%,'+(32+e2*45+amp*8)+'%,.9)';
-  else{var g2=150+Math.floor(e2*105);cx.strokeStyle='rgba('+g2+','+g2+','+g2+',.82)';}
+  /* spirale generee : blanche, luminosite selon la bande de frequence */
+  cx.strokeStyle='rgba(255,255,255,'+(.45+e2*.55)+')';
   cx.beginPath();
   for(var s2=0;s2<=140;s2++){
    var p=s2/140;
