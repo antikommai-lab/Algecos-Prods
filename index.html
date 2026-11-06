@@ -314,8 +314,11 @@ body.adm .card .shB{display:none}
 /* ===== player ===== */
 #player{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:4px solid var(--y);padding:8px 16px 12px;display:none;z-index:14;max-height:48vh;overflow-y:auto}
 #player.show{display:flex;flex-direction:column}
-#pGrip{flex:none;cursor:ns-resize;text-align:center;color:var(--dim);font-size:.62rem;letter-spacing:2px;user-select:none;padding:0 0 6px;touch-action:none}
-#pGrip:hover{color:var(--y)}
+#pGrip{flex:none;cursor:ns-resize;text-align:center;color:var(--y);font-size:.72rem;letter-spacing:2px;user-select:none;padding:6px 0;margin:0 0 4px;background:rgba(255,215,0,.08);border:1px dashed var(--y);touch-action:none}
+#pGrip:hover,#pGrip:active{background:rgba(255,215,0,.22)}
+#player.min #pTop,#player.min #pVers{display:none}
+#player.min{max-height:120px}
+@media(max-width:700px){#player{max-height:64vh;padding:6px 10px 10px}.pctl{width:100%}}
 #pTop{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px;flex:1 1 auto;overflow-y:auto;min-height:0}
 #tCover{width:72px;height:72px;object-fit:cover;border:2px solid var(--y);display:none;cursor:zoom-in;flex:none}
 #pInfo{flex:1;min-width:220px}
@@ -521,7 +524,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v98&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v99&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -920,24 +923,24 @@ function hHelp(){
 (function(){var im=new Image();im.onload=function(){var l=document.getElementById('hAlLogo');if(l){l.src='img/logo-help.webp';l.style.display='block';}};im.src='img/logo-help.webp';})();
 </script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261098"></script>
-<script src="js/data.js?v=20261098"></script>
-<script src="js/ticker.js?v=20261098"></script>
-<script src="js/playlist.js?v=20261098"></script>
-<script src="js/home.js?v=20261098"></script>
-<script src="js/likes.js?v=20261098"></script>
-<script src="js/auth.js?v=20261098"></script>
-<script src="js/admin.js?v=20261098"></script>
-<script src="js/player.js?v=20261098"></script>
-<script src="js/vis.js?v=20261098"></script>
-<script src="js/views.js?v=20261098"></script>
-<script src="js/history.js?v=20261098"></script>
-<script src="js/visits.js?v=20261098"></script>
-<script src="js/versions.js?v=20261098"></script>
-<script src="js/genres.js?v=20261098"></script>
-<script src="js/collections.js?v=20261098"></script>
-<script src="js/manage.js?v=20261098"></script>
-<script src="js/main.js?v=20261098"></script>
+<script src="js/config.js?v=20261099"></script>
+<script src="js/data.js?v=20261099"></script>
+<script src="js/ticker.js?v=20261099"></script>
+<script src="js/playlist.js?v=20261099"></script>
+<script src="js/home.js?v=20261099"></script>
+<script src="js/likes.js?v=20261099"></script>
+<script src="js/auth.js?v=20261099"></script>
+<script src="js/admin.js?v=20261099"></script>
+<script src="js/player.js?v=20261099"></script>
+<script src="js/vis.js?v=20261099"></script>
+<script src="js/views.js?v=20261099"></script>
+<script src="js/history.js?v=20261099"></script>
+<script src="js/visits.js?v=20261099"></script>
+<script src="js/versions.js?v=20261099"></script>
+<script src="js/genres.js?v=20261099"></script>
+<script src="js/collections.js?v=20261099"></script>
+<script src="js/manage.js?v=20261099"></script>
+<script src="js/main.js?v=20261099"></script>
 
 </body>
 </html>

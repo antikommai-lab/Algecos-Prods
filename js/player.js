@@ -5,6 +5,7 @@ function play(t,list){
  var a=$('audio');
  a.src=encodeURI(t.file||'');a.play();
  $('player').classList.add('show');
+ if(window.innerWidth<=700)$('player').classList.add('min');
  $('pt').textContent=t.title;
  $('pv').textContent=(t.version?'['+t.version+'] ':'')+(t.style||'');
  $('ptags').textContent=(t.tags||[]).join(' / ')+((t.tags||[]).length&&(t.moods||[]).length?' / ':'')+(t.moods||[]).join(' / ');
@@ -124,21 +125,28 @@ function imgFS(){var m=$('imgModal');
 function closeSpiral(){$('spiralOv').classList.remove('open');}
 
 
-/* ===== player : poignee de redimensionnement (drag) ===== */
+/* ===== player : poignee (drag + clic = mode reduit) ===== */
+function plMinToggle(){
+ var pl=$('player');if(!pl)return;
+ pl.classList.toggle('min');
+ pl.style.height='';pl.style.maxHeight='';
+ try{localStorage.removeItem('plh');}catch(e){}}
 function plGripInit(){
  var g=$('pGrip'),pl=$('player');if(!g||!pl)return;
  var sy=0,sh=0,dr=false;
  try{var h=localStorage.getItem('plh');
   if(h){pl.style.height=h;pl.style.maxHeight=h;}}catch(e){}
  g.addEventListener('pointerdown',function(e){dr=true;sy=e.clientY;sh=pl.offsetHeight;g.setPointerCapture(e.pointerId);e.preventDefault();});
- g.addEventListener('pointermove',function(e){if(!dr)return;
+ g.addEventListener('pointermove',function(e){if(!dr||Math.abs(e.clientY-sy)<8)return;
   var h=Math.max(70,Math.min(Math.round(window.innerHeight*0.92),sh+(sy-e.clientY)));
+  pl.classList.remove('min');
   pl.style.height=h+'px';pl.style.maxHeight=h+'px';});
- g.addEventListener('pointerup',function(){if(!dr)return;dr=false;
+ g.addEventListener('pointerup',function(e){if(!dr)return;dr=false;
+  if(Math.abs(e.clientY-sy)<8){plMinToggle();return;}
   try{localStorage.setItem('plh',pl.style.height||'');}catch(e){}});
- g.addEventListener('dblclick',function(){pl.style.height='';pl.style.maxHeight='';
+ g.addEventListener('dblclick',function(){pl.classList.remove('min');pl.style.height='';pl.style.maxHeight='';
   try{localStorage.removeItem('plh');}catch(e){}});
- g.title='Glisser pour redimensionner \u2014 double-clic : r\u00e9initialiser';}
+ g.title='Clic : r\u00e9duire / agrandir \u2014 glisser : redimensionner \u2014 double-clic : r\u00e9initialiser';}
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',plGripInit);
 
 /* ===== panneau versions dans le player ===== */
