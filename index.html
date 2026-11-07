@@ -322,7 +322,12 @@ body.adm .card .shB{display:none}
 #player.show{display:flex;flex-direction:column}
 #pGrip{flex:none;cursor:ns-resize;text-align:center;color:var(--y);font-size:.72rem;letter-spacing:2px;user-select:none;padding:6px 0;margin:0 0 4px;background:rgba(255,215,0,.08);border:1px dashed var(--y);touch-action:none}
 #pGrip:hover,#pGrip:active{background:rgba(255,215,0,.22)}
+#pLyr{flex:none;overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--line);margin-bottom:4px}
+#pLyrIn{display:inline-block;white-space:nowrap;color:var(--y);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:2px 0 4px}
+#pLyr.go #pLyrIn{animation:pltick 14s linear infinite}
+@keyframes pltick{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
 #player.min #pTop,#player.min #pVers{display:none}
+#player.min #pLyr{display:none}
 #player.min{max-height:120px}
 @media(max-width:700px){#player{max-height:64vh;padding:6px 10px 10px}.pctl{width:100%}}
 #pTop{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px;flex:1 1 auto;overflow-y:auto;min-height:0}
@@ -531,7 +536,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 <div id="grid"></div><div id="empty">AUCUN MORCEAU TROUV&#xc9;.</div>
 </section>
 
-<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v102&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
+<footer id="contact">&#x2709; contact &amp; bookings &#x2014; <a href="mailto:algecosprods@gmail.com">algecosprods@gmail.com</a> <span style="color:#3a3833">&#183; v103&#160;&#183;&#160;WEB APP D&#xc9;VELOPP&#xc9;E PAR ANTIKOMM AI</span></footer>
 </main>
 
 <div id="lotPanel">
@@ -555,6 +560,7 @@ Tu veux un instrurap, un son ou un texte qui te ressemble ? Explique ce que tu v
 
 <div id="player">
 <div id="pGrip">&#8645; &#8645; &#8645;</div>
+<div id="pLyr"><span id="pLyrIn"></span></div>
 <div id="pTop">
 <img id="tCover" alt="cover morceau" style="display:none">
 <div id="pInfo">
@@ -930,24 +936,24 @@ function hHelp(){
 (function(){var im=new Image();im.onload=function(){var l=document.getElementById('hAlLogo');if(l){l.src='img/logo-help.webp';l.style.display='block';}};im.src='img/logo-help.webp';})();
 </script>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="js/config.js?v=20261102"></script>
-<script src="js/data.js?v=20261102"></script>
-<script src="js/ticker.js?v=20261102"></script>
-<script src="js/playlist.js?v=20261102"></script>
-<script src="js/home.js?v=20261102"></script>
-<script src="js/likes.js?v=20261102"></script>
-<script src="js/auth.js?v=20261102"></script>
-<script src="js/admin.js?v=20261102"></script>
-<script src="js/player.js?v=20261102"></script>
-<script src="js/vis.js?v=20261102"></script>
-<script src="js/views.js?v=20261102"></script>
-<script src="js/history.js?v=20261102"></script>
-<script src="js/visits.js?v=20261102"></script>
-<script src="js/versions.js?v=20261102"></script>
-<script src="js/genres.js?v=20261102"></script>
-<script src="js/collections.js?v=20261102"></script>
-<script src="js/manage.js?v=20261102"></script>
-<script src="js/main.js?v=20261102"></script>
+<script src="js/config.js?v=20261103"></script>
+<script src="js/data.js?v=20261103"></script>
+<script src="js/ticker.js?v=20261103"></script>
+<script src="js/playlist.js?v=20261103"></script>
+<script src="js/home.js?v=20261103"></script>
+<script src="js/likes.js?v=20261103"></script>
+<script src="js/auth.js?v=20261103"></script>
+<script src="js/admin.js?v=20261103"></script>
+<script src="js/player.js?v=20261103"></script>
+<script src="js/vis.js?v=20261103"></script>
+<script src="js/views.js?v=20261103"></script>
+<script src="js/history.js?v=20261103"></script>
+<script src="js/visits.js?v=20261103"></script>
+<script src="js/versions.js?v=20261103"></script>
+<script src="js/genres.js?v=20261103"></script>
+<script src="js/collections.js?v=20261103"></script>
+<script src="js/manage.js?v=20261103"></script>
+<script src="js/main.js?v=20261103"></script>
 
 </body>
 </html>

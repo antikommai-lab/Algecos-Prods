@@ -26,7 +26,7 @@ function play(t,list){
   if(seq!==PCV||!res.data||!res.data.length)return;
   var avg=res.data.reduce(function(a,b){return a+b.stars;},0)/res.data.length;
   $('pAvg').textContent='MOY '+Math.round(avg*10)/10+'/5 ('+res.data.length+')';});
- updateCtl();spiralUpd();
+ updateCtl();spiralUpd();lyrLoad();
  document.querySelectorAll('.prow').forEach(function(r){r.classList.toggle('on',r.getAttribute('data-t')===t.title&&r.getAttribute('data-f')===(t.file||''));});}
 function updateCtl(){var i=CURRENTLIST.indexOf(CURRENT);
  $('prevBtn').disabled=i<=0;
@@ -171,3 +171,30 @@ function togglePVers(){var p=$('pVers');if(!p)return;
  if(p.style.display==='block'){p.style.display='none';return;}
  if(!CURRENT){p.innerHTML='<div style="color:var(--dim);font-size:.72rem">AUCUN MORCEAU EN LECTURE</div>';p.style.display='block';return;}
  pvMenu();}
+
+/* ===== lyrics ticker : ligne defilante sous la poignee ===== */
+var LYRTXT=null,LYRSEQ=0;
+function lyrLoad(){
+ LYRTXT=null;LYRSEQ++;
+ var el=$('pLyr'),inn=$('pLyrIn');
+ if(el)el.classList.remove('go');
+ if(inn)inn.textContent='';
+ if(!CURRENT)return;
+ var sq=LYRSEQ,tb=encodeURI('lyrics/'+CURRENT.title);
+ var get=function(ext){return fetch(tb+'.'+ext+'?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;});};
+ get('lyrics').then(function(x){return x!=null?x:get('txt');}).then(function(x){return x!=null?x:get('md');}).then(function(x){return x!=null?x:get('json');}).then(function(x){return x!=null?x:get('html');}).then(function(tx){
+  if(sq!==LYRSEQ)return;
+  if(tx==null){LYRTXT=[];return;}
+  if(/<html|<body|<div|<p[ >]/i.test(String(tx).slice(0,500)))tx=stripHtml(tx);
+  try{var j=JSON.parse(tx);var v=j.lyrics||j.text||j.content||null;
+   if(v==null&&Array.isArray(j.lines))v=j.lines.join(String.fromCharCode(10));
+   if(v!=null)tx=String(v);}catch(e){}
+  LYRTXT=String(tx).split(/\n+/).map(function(s){return s.trim();}).filter(Boolean);});}
+function pLyrTick(){
+ var el=$('pLyrIn'),wrap=$('pLyr');if(!el||!wrap)return;
+ if(typeof LYR!=='undefined'&&LYR.open){wrap.classList.remove('go');el.textContent='';return;}
+ if(!LYRTXT||!LYRTXT.length){wrap.classList.remove('go');return;}
+ var a=$('audio');if(!isFinite(a.duration)||!a.duration)return;
+ var i=Math.min(LYRTXT.length-1,Math.floor((a.currentTime/a.duration)*LYRTXT.length));
+ if(el.textContent!==LYRTXT[i]){el.textContent=LYRTXT[i];wrap.classList.remove('go');void wrap.offsetWidth;wrap.classList.add('go');}}
+if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',function(){var a=$('audio');if(a)a.addEventListener('timeupdate',pLyrTick);});
