@@ -39,7 +39,10 @@ function plByName(nm){
 function bindSelCards(root){
  root.querySelectorAll('.plh').forEach(function(cd){
   var s=COLLS.find(function(x){return x.title===cd.getAttribute('data-sel');})||PLAYLISTS.find(function(x){return x.title===cd.getAttribute('data-sel');})||comboPlaylists().find(function(x){return x.title===cd.getAttribute('data-sel');})||null;
-  cd.onclick=function(ev){if(ev.target.closest('button')||ev.target.closest('.srow'))return;cd.classList.toggle('open');};
+  cd.onclick=function(ev){if(ev.target.closest('button')||ev.target.closest('.srow'))return;
+   if(cd.classList.contains('big')){cd.classList.remove('big','open');return;}
+   cd.parentElement.querySelectorAll('.plh.big').forEach(function(o){o.classList.remove('big','open');});
+   cd.classList.add('big','open');cd.scrollIntoView({block:'nearest',behavior:'smooth'});};
   var eb=cd.querySelector('.edit');
   if(eb)eb.onclick=function(ev){ev.stopPropagation();};
   var pb=cd.querySelector('[data-spp]');

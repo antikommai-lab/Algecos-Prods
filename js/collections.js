@@ -46,7 +46,10 @@ function renderColls(){
 function bindCollCards(root){
  root.querySelectorAll('.plh').forEach(function(cd){
   var c=COLLREG[cd.getAttribute('data-coll')]||null;
-  cd.onclick=function(ev){if(ev.target.closest('button')||ev.target.closest('.srow'))return;cd.classList.toggle('open');};
+  cd.onclick=function(ev){if(ev.target.closest('button')||ev.target.closest('.srow'))return;
+  if(cd.classList.contains('big')){cd.classList.remove('big','open');return;}
+  cd.parentElement.querySelectorAll('.plh.big').forEach(function(o){o.classList.remove('big','open');});
+  cd.classList.add('big','open');cd.scrollIntoView({block:'nearest',behavior:'smooth'});};
   var eb=cd.querySelector('.edit');if(eb)eb.onclick=function(ev){ev.stopPropagation();};
   var flat=function(){return collFlat(c||{});};
   var goPlay=function(shuf){var fl=flat();if(!fl.length){alert('COLLECTION VIDE OU CONTENU INTROUVABLE');return;}
