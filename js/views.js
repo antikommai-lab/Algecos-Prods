@@ -275,14 +275,24 @@ function copyShare(){
  else prompt('Copie le lien :',SHARE.url);}
 function shareTrack(t){if(!t)return;openShare(t.title,location.origin+location.pathname+'?t='+encodeURIComponent(t.title));}
 function sharePl(p){if(!p)return;openShare(p.title,location.origin+location.pathname+'?p='+encodeURIComponent(p.title));}
+function shareColl(c){if(!c)return;openShare(c.title,location.origin+location.pathname+'?c='+encodeURIComponent(c.title));}
 document.addEventListener('click',function(e){
  var b=e.target.closest('[data-shtr]');
  if(b){e.stopPropagation();shareTrack(TRACKS[+b.getAttribute('data-shtr')]);}});
+document.addEventListener('click',function(e){
+ var b2=e.target.closest('[data-shpl],[data-shcol]');
+ if(b2){e.stopPropagation();
+  if(b2.hasAttribute('data-shcol')){var c=(typeof COLLS!=='undefined'?COLLS:[]).find(function(x){return x.title===b2.getAttribute('data-shcol');});shareColl(c||{title:b2.getAttribute('data-shcol')});}
+  else{var p=plByName(b2.getAttribute('data-shpl'));sharePl(p||{title:b2.getAttribute('data-shpl')});}}});
 function applyDeepLink(){
- try{var q=new URLSearchParams(location.search);var t=q.get('t'),p=q.get('p');
+ try{var q=new URLSearchParams(location.search);var t=q.get('t'),p=q.get('p'),cv=q.get('c');
   if(t){var tr=TRACKS.find(function(x){return x.title===t;});if(tr)play(tr,[tr]);}
   else if(p){var pl=PLAYLISTS.find(function(x){return x.title===p;})||(typeof autoPlaylists==='function'?autoPlaylists():[]).find(function(x){return x.title===p;});
-   if(pl){PLAYLIST=pl;renderPlaylist();showView('home');var fl=plFlat();if(fl.length)play(fl[0],fl);}}}
+   if(pl){PLAYLIST=pl;renderPlaylist();showView('home');var fl=plFlat();if(fl.length)play(fl[0],fl);}}
+  if(cv&&!t&&!p){var co2=(typeof COLLS!=='undefined'?COLLS:[]).find(function(x){return x.title===cv;});
+   if(co2){showView('coll');if(typeof renderColls==='function')renderColls();
+    document.querySelectorAll('#collGrid .plh').forEach(function(cd){if(cd.getAttribute('data-coll')===cv){cd.classList.add('open');cd.scrollIntoView({block:'center'});}});}}
+ }
  catch(e){}}
 function hitCounter(){
  try{fetch('https://abacus.jasoncameron.dev/hit/AlgecosProds/visites').then(function(r){return r.json();}).then(function(d){

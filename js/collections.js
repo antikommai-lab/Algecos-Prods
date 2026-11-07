@@ -30,7 +30,7 @@ function collCardHTML(c){
  +'<h3>'+esc(c.title)+(c.author?' <small style="color:var(--dim);font-size:.6rem">par '+esc(c.author)+'</small>':'')+(c.auto?' <span style="color:var(--y);font-size:.55rem;border:1px solid var(--y);padding:1px 4px">AUTO</span>':'')+'</h3>'
  +'<div class="m">'+esc(c.desc||'')+' &#183; '+(nPl?nPl+' playlist(s)':'')+(nPl&&nTr?' + ':'')+(nTr?nTr+' track(s)':'')+' &#183; '+flat.length+' morceaux'+(c.upd?' &#183; '+esc(c.upd):'')+'</div>'
  +'<div class="plFoldBtn" onclick="event.stopPropagation();this.closest('+"'"+'.plh'+"'"+').classList.toggle('+"'"+'open'+"'"+')" title="Voir le contenu"><span class="plArr">&#9662;</span> CONTENU</div><div class="seltracks">'+rows+'</div>'
- +'<div class="row" style="margin-top:8px"><button class="btn" data-cplay="'+esc(c.title)+'">&#9654;</button><button class="btn" data-cshuf="'+esc(c.title)+'" title="Lecture al&#233;atoire">&#8676;</button><button class="btn" data-crep="'+esc(c.title)+'" title="R&#233;p&#233;ter en boucle">&#8635;</button></div></div>';}
+ +'<div class="row" style="margin-top:8px"><button class="btn" data-cplay="'+esc(c.title)+'">&#9654;</button><button class="btn" data-cshuf="'+esc(c.title)+'" title="Lecture al&#233;atoire">&#8676;</button><button class="btn" data-crep="'+esc(c.title)+'" title="R&#233;p&#233;ter en boucle">&#8635;</button><button class="btn" data-shcol="'+esc(c.title)+'" title="Partager">&#10548;</button></div></div>';}
 var COLLREG={};
 function renderColls(){
  COLLREG={};var autos=[];
